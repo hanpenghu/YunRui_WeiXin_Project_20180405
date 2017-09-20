@@ -2,7 +2,7 @@ package com.winwin.picreport.Edto;
 
 public class ShouDingDanFromExcel {
 /////////////////////////////////////////////////////////////////////////////////////////////////
-    private String osDd	="";
+    private String    osDd	="";
     private String    estDd		="";
     private String    taxId	="";
     private String    osNo	="";

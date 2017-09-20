@@ -4,17 +4,16 @@ import com.winwin.picreport.Ddao.reportxmlmapper.PrdtMapper;
 import com.winwin.picreport.Ddao.reportxmlmapper.TfPosMapper;
 import com.winwin.picreport.Ddao.reportxmlmapper.TfPosZMapper;
 import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Futils.Msg;
 import com.winwin.picreport.Futils.TimeStampToDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service("a1")
 
+@Service("a1")
 public class A1ReportRestService {
     @Autowired
     private TfPosMapper tfPosMapper;
@@ -24,21 +23,23 @@ public class A1ReportRestService {
      private TfPosZMapper tfPosZMapper;
     @Autowired
     private PrdtMapper prdtMapper;
-/////////////////////////////////////////////////////////////////////
-   /* public void saveShouDingDanFromExcelToTable(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
-        for(ShouDingDanFromExcel s:shouDingDanFromExcels){
-            boolean a=(s==null);
-            boolean b = "".equals(s.getOsNo());
-            if((!a)&&(!b)){
-                saveOneShouDingDanFromExcelToTable(s);
+////////////////////////受订单号成功后是SO/////////////////////////////////////////////
+///////////////////////注意事务要加在所有调用的方法上面,如果方法套方法,就必须都加事务///////////////////////////////////////////////////
+    @Transactional
+    public void saveYiPiDingDanHaoXiangTongDe(List<ShouDingDanFromExcel> list3,List<Msg>listmsg){
+//        System.out.println(list3);
+        //循环插入所有
+
+            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
+
+                    saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
+
             }
 
-        }
+    }
 
-    }*/
-//////////////////////////////////////////////////////////////////////////
     @Transactional
-    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s){
+    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg){
         MfPosWithBLOBs m=new MfPosWithBLOBs();
         TfPosWithBLOBs t=new TfPosWithBLOBs();
         TfPosZ tz=new TfPosZ();
@@ -46,9 +47,9 @@ public class A1ReportRestService {
 
         String osDd=s.getOsDd();
         String estDd=s.getEstDd();
-        System.out.println("没有转换前");
+       /* System.out.println("没有转换前");
         System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
-        System.out.println("没有转换前");
+        System.out.println("没有转换前");*/
         if(osDd==null||"".equals(osDd)){
 //            osDd="32503564800000";//2999-12-31
             osDd=null;
@@ -87,6 +88,7 @@ public class A1ReportRestService {
         t.setTaxRto(new BigDecimal(s.getTaxRto()));
         t.setRem(s.getRemBody());
         t.setUp(new BigDecimal(s.getUp()));
+        t.setWh("0000");
         if(estDd==null){
             t.setEstDd(null);
         }else{
@@ -112,52 +114,82 @@ public class A1ReportRestService {
         pdt.setPrdNo(s.getPrdNo());
         pdt.setName(s.getPrdName());
 ////////////////////////////////////////////////
-        System.out.println("转换后");
+       /* System.out.println("转换后");
         System.out.println("===osDd===="+t.getOsDd()+"=======estDd===="+t.getEstDd()+"=============");
-        System.out.println("转换后");
+        System.out.println("转换后");*/
 
-        saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt);
+        saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt,listmsg);
 ///////////////////////////////////////////
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 @Transactional
-    public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz,PrdtWithBLOBs pdt){
-        //注册商品到商品库
-            PrdtExample prdtExample=new PrdtExample();
+    public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,List<Msg>listmsg){
+    try {
+        //注册商品到商品库//不能再自动注册了,老郑说了,自动注册的不行,因为客户可能手动输入输错了,所以,我们就不再自动插入prdt表来注册商品
+           /* PrdtExample prdtExample=new PrdtExample();
             prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo());
             long l2 = prdtMapper.countByExample(prdtExample);
             if(l2==0){
                 prdtMapper.insert(pdt);
-            }
-        //单独分出来是为了只在下面的几个插入使用事务
-        saveChuLePrdtDe(m,t,tz);
+            }*/
 
+        PrdtExample prdtExample=new PrdtExample();
+        prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo());
+        long l2 = prdtMapper.countByExample(prdtExample);
+        //此时数据库prdt表没有该条记录,我们下面不再插入其他记录,而是告诉客户,该记录在数据库prdt表不存在,请自行注册该商品到数据库,
+        //这也是老郑的要求
+        Msg msg=new Msg();
+        if(l2==0){
+            msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
+            msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
+            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面,导致无法插入数据,--------");
+            listmsg.add(msg);
+           //不再进行下面步骤
+            throw new RuntimeException(msg.getMsg());
+        }else{
+            //单独分出来是为了只在下面的几个插入使用事务
+            saveChuLePrdtDe(m,t,tz,listmsg);
+        }
+    } catch (RuntimeException e) {
+        e.printStackTrace();
+        throw new RuntimeException();
     }
+}
 //////////////////////////////////////////////////////////////////////////////////
 @Transactional
-    public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz){
-            MfPosExample mfe=new MfPosExample();
-            mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l1 = mfPosMapper.countByExample(mfe);
-            if(l1==0){
-                mfPosMapper.insert(m);
-            }
-            //测试事务
+    public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz,List<Msg>listmsg){
+    try {
+        MfPosExample mfe=new MfPosExample();
+        mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
+        long l1 = mfPosMapper.countByExample(mfe);
+        if(l1==0){
+            mfPosMapper.insert(m);
+        }
+        //测试事务
 //            System.out.println(1/0);
-            TfPosExample tfe=new TfPosExample();
-            tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l = tfPosMapper.countByExample(tfe);
-            t.setItm(new Long(l).intValue()+1);
-            tfPosMapper.insert(t);
+        TfPosExample tfe=new TfPosExample();
+        tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
+        long l = tfPosMapper.countByExample(tfe);
+        t.setItm(new Long(l).intValue()+1);
+        t.setEstItm(t.getItm());
+        tfPosMapper.insert(t);
 
 
-            TfPosZExample tfze=new TfPosZExample();
-            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long ll = tfPosZMapper.countByExample(tfze);
-            tz.setItm(new Long(ll).intValue()+1);
-            tfPosZMapper.insert(tz);
-
-
+        TfPosZExample tfze=new TfPosZExample();
+        tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
+        long ll = tfPosZMapper.countByExample(tfze);
+        tz.setItm(new Long(ll).intValue()+1);
+        tfPosZMapper.insert(tz);
+    } catch (Exception e) {
+        Msg msg=new Msg();
+        msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
+        msg.setMsg("-----订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据一个也没有插入--因为在插入时发生了不可预料的异常----");
+        listmsg.add(msg);
+        e.printStackTrace();
+        throw new RuntimeException(e);
     }
+
+
+}
 //////////////////////////////////////////////////////////////////////////////////
 }
