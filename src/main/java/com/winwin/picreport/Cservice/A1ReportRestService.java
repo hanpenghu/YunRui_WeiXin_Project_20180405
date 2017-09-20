@@ -7,14 +7,14 @@ import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.TimeStampToDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service("a1")
+
 public class A1ReportRestService {
     @Autowired
     private TfPosMapper tfPosMapper;
@@ -25,7 +25,7 @@ public class A1ReportRestService {
     @Autowired
     private PrdtMapper prdtMapper;
 /////////////////////////////////////////////////////////////////////
-    public void saveShouDingDanFromExcelToTable(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
+   /* public void saveShouDingDanFromExcelToTable(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
         for(ShouDingDanFromExcel s:shouDingDanFromExcels){
             boolean a=(s==null);
             boolean b = "".equals(s.getOsNo());
@@ -35,9 +35,9 @@ public class A1ReportRestService {
 
         }
 
-    }
+    }*/
 //////////////////////////////////////////////////////////////////////////
-
+    @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s){
         MfPosWithBLOBs m=new MfPosWithBLOBs();
         TfPosWithBLOBs t=new TfPosWithBLOBs();
@@ -50,10 +50,12 @@ public class A1ReportRestService {
         System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
         System.out.println("没有转换前");
         if(osDd==null||"".equals(osDd)){
-            osDd="32503564800000";//2999-12-31
+//            osDd="32503564800000";//2999-12-31
+            osDd=null;
         }
         if(estDd==null||"".equals(estDd)){
-            estDd="32503564800000";//2999-12-31
+            estDd=null;//2999-12-31
+//            estDd="32503564800000";
         }
         //////////////////////////////////////
         m.setOsNo(s.getOsNo());
@@ -64,7 +66,12 @@ public class A1ReportRestService {
         m.setTaxId(s.getTaxId());
         m.setCusOsNo(s.getCusOsNo());
         m.setOsId("SO");
-        m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+        if(osDd==null) {
+            m.setOsDd(null);
+        }else{
+            m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+        }
+
 
 ///////////////////////
         t.setOsNo(s.getOsNo());
@@ -80,8 +87,18 @@ public class A1ReportRestService {
         t.setTaxRto(new BigDecimal(s.getTaxRto()));
         t.setRem(s.getRemBody());
         t.setUp(new BigDecimal(s.getUp()));
-        t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
-        t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+        if(estDd==null){
+            t.setEstDd(null);
+        }else{
+            t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+        }
+
+        if(osDd==null){
+            t.setOsDd(null);
+        }else{
+            t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+        }
+
         //t.setItm();
  ////////////////////////////////////////////////
         tz.setOsNo(s.getOsNo());
@@ -89,6 +106,7 @@ public class A1ReportRestService {
         tz.setSaphh(s.getSaphh());
         tz.setSapph(s.getSapph());
         tz.setCfdm(s.getCfdm());
+        tz.setOsId("SO");
         //tz.setItm();
 ////////////////////////////////////////////////
         pdt.setPrdNo(s.getPrdNo());
@@ -102,7 +120,7 @@ public class A1ReportRestService {
 ///////////////////////////////////////////
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
-//    @Transactional
+@Transactional
     public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz,PrdtWithBLOBs pdt){
         //注册商品到商品库
             PrdtExample prdtExample=new PrdtExample();
@@ -111,14 +129,21 @@ public class A1ReportRestService {
             if(l2==0){
                 prdtMapper.insert(pdt);
             }
+        //单独分出来是为了只在下面的几个插入使用事务
+        saveChuLePrdtDe(m,t,tz);
 
-        MfPosExample mfe=new MfPosExample();
+    }
+//////////////////////////////////////////////////////////////////////////////////
+@Transactional
+    public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz){
+            MfPosExample mfe=new MfPosExample();
             mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
             long l1 = mfPosMapper.countByExample(mfe);
             if(l1==0){
                 mfPosMapper.insert(m);
             }
-
+            //测试事务
+//            System.out.println(1/0);
             TfPosExample tfe=new TfPosExample();
             tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
             long l = tfPosMapper.countByExample(tfe);
@@ -131,6 +156,7 @@ public class A1ReportRestService {
             long ll = tfPosZMapper.countByExample(tfze);
             tz.setItm(new Long(ll).intValue()+1);
             tfPosZMapper.insert(tz);
+
 
     }
 //////////////////////////////////////////////////////////////////////////////////

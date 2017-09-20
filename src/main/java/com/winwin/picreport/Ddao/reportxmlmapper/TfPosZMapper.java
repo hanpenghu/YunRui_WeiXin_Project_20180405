@@ -4,8 +4,9 @@ import java.util.List;
 import com.winwin.picreport.Edto.TfPosZ;
 import com.winwin.picreport.Edto.TfPosZExample;
 import com.winwin.picreport.Edto.TfPosZKey;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface TfPosZMapper {
     long countByExample(TfPosZExample example);
 

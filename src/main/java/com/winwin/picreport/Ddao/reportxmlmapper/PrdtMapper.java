@@ -4,8 +4,9 @@ import java.util.List;
 import com.winwin.picreport.Edto.Prdt;
 import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtWithBLOBs;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface PrdtMapper {
     long countByExample(PrdtExample example);
 

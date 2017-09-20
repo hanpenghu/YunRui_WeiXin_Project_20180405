@@ -36,7 +36,10 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
     List<Msg> list=new ArrayList<>();
     Msg msg=new Msg();
     if((!a)&&(!b)){
-       a1.saveShouDingDanFromExcelToTable(shouDingDanFromExcels);
+        for(ShouDingDanFromExcel shouDingDanFromExcel:shouDingDanFromExcels){
+            a1.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel);
+        }
+
         //数据已经传入controller
         msg.setMsg("shouDingDanExcelToTable_ShuJu_YiJing_ChuanDao_Controller");
     }else{

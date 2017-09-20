@@ -5,8 +5,9 @@ import com.winwin.picreport.Edto.TfPos;
 import com.winwin.picreport.Edto.TfPosExample;
 import com.winwin.picreport.Edto.TfPosKey;
 import com.winwin.picreport.Edto.TfPosWithBLOBs;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface TfPosMapper {
     long countByExample(TfPosExample example);
 

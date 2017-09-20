@@ -5,8 +5,9 @@ import com.winwin.picreport.Edto.MfPos;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.MfPosKey;
 import com.winwin.picreport.Edto.MfPosWithBLOBs;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface MfPosMapper {
     long countByExample(MfPosExample example);
 
