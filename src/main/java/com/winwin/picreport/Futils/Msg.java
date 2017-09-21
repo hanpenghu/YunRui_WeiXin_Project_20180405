@@ -1,9 +1,18 @@
 package com.winwin.picreport.Futils;
 
 public class Msg {
+    private String xiaoHaoShiJian="";
     private String Msg="";
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
+
+    public String getXiaoHaoShiJian() {
+        return xiaoHaoShiJian;
+    }
+
+    public void setXiaoHaoShiJian(String xiaoHaoShiJian) {
+        this.xiaoHaoShiJian = xiaoHaoShiJian;
+    }
 
     public String getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao() {
         return weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao;
@@ -32,7 +41,8 @@ public class Msg {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.Msg{");
-        sb.append("Msg='").append(Msg).append('\'');
+        sb.append("xiaoHaoShiJian='").append(xiaoHaoShiJian).append('\'');
+        sb.append(", Msg='").append(Msg).append('\'');
         sb.append(", notExsitThisPrdtNoInPrdtTab='").append(notExsitThisPrdtNoInPrdtTab).append('\'');
         sb.append(", weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao='").append(weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao).append('\'');
         sb.append('}');

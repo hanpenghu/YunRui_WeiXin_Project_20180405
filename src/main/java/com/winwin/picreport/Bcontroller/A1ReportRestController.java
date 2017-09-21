@@ -5,10 +5,7 @@ import com.winwin.picreport.Futils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 *   select os_dd as '受订日期',rem as '表头备注', cur_id as '币别',exc_rto as '汇率',cus_no as '客户编号',
@@ -33,48 +30,43 @@ public class A1ReportRestController {
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value="shouDingDanExcelToTable",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
-//    System.out.println(shouDingDanFromExcels);
     List<Msg> listmsg=new ArrayList<>();
+    long time01=new Date().getTime();
     try {
-        boolean a=(shouDingDanFromExcels.get(0)==null);
-        boolean c=shouDingDanFromExcels.get(0).getOsNo()==null;
-        boolean b = "".equals(shouDingDanFromExcels.get(0).getOsNo());
-        boolean d = "undefined".equals(shouDingDanFromExcels.get(0).getOsNo());
         Msg msg=new Msg();
-        if(!a||!c||!b||!d){
-            //guo lv suo you bu chong fu de osNo
-            //分离出所有不相同的订单号
+        if(this.panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi(shouDingDanFromExcels)){
+            //guo lv suo you bu chong fu de osNo//分离出所有不相同的订单号
             Set<String> set = this.fenLeiQuChongFuDingDanHaoDaoSetJiHe(shouDingDanFromExcels);
-//            System.out.println(set);
             List<List<ShouDingDanFromExcel>> list1=this.anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe(set, shouDingDanFromExcels);
             //按批号分批插入数据库,一个批号下的不成功都不成功在service成实现，listmsg暗传输msg错误信息
-//            System.out.println(list1);
             this.anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(list1,listmsg);
             msg.setMsg("数据插入成功");
-        }else{
-            msg.setMsg("第一条数据就没有OsNo(订单号),拒绝所有操作,检查您的数据信息再次插入");
-        }
-
+        }else{ msg.setMsg("第一条数据就没有OsNo(订单号),拒绝所有操作,检查您的数据信息再次插入");}
+        //把当前的msg放入将要返回给前端的集合
         listmsg.add(msg);
         //如果msg列表中有2个及2个以上,说明数据没有完全插入成功,就把那个数据插入成功的message删掉
-        if(listmsg.size()>1){
-            for(Msg msg11:listmsg){
-                if("数据插入成功".equals(msg11.getMsg())){
-                        listmsg.remove(msg11);
-                }
-            }
-        }
-
-
+        this.quChuDuoYuDeSuccessMsg(listmsg,"数据插入成功");
     } catch (Exception e) {
         e.printStackTrace();
     }
+    long time02=new Date().getTime();
+    Msg msg001=new Msg();
+    msg001.setXiaoHaoShiJian(String.valueOf((time02-time01)/1000));
+    listmsg.add(msg001);
     ////////////////////////////////////////////////////////////////////////
     return listmsg;
 ////////////////////////////////
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////
+    public boolean panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi(List<ShouDingDanFromExcel> shouDingDanFromExcels){
+        boolean a=(shouDingDanFromExcels.get(0)==null);
+        boolean c=shouDingDanFromExcels.get(0).getOsNo()==null;
+        boolean b = "".equals(shouDingDanFromExcels.get(0).getOsNo());
+        boolean d = "undefined".equals(shouDingDanFromExcels.get(0).getOsNo());
+        boolean e=!a||!c||!b||!d;
+        return e;
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////
 
     public Set<String> fenLeiQuChongFuDingDanHaoDaoSetJiHe(List<ShouDingDanFromExcel> shouDingDanFromExcels){
@@ -104,13 +96,72 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
     public void anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(List<List<ShouDingDanFromExcel>> list1,List<Msg> listmsg){
         for(List<ShouDingDanFromExcel> list3:list1){
             try {
-                a1.saveYiPiDingDanHaoXiangTongDe(list3,listmsg);
-            } catch (Exception e) {
-                e.printStackTrace();
+                //for一次就是处理同一批号osNo一次
+                List<ShouDingDanFromExcel> list001 = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
+                a1.saveYiPiDingDanHaoXiangTongDe(list001,listmsg);
+            } catch (Exception e) { e.printStackTrace(); }
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////
+    public List<ShouDingDanFromExcel> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3){
+        Map<String,List>map=new HashMap();
+        //用list00来装入合并同一货号的几个东西后的ShouDingDanFromExcel
+        List<ShouDingDanFromExcel> list=new ArrayList<>();
+        //收集同一货号的list
+        List<List<ShouDingDanFromExcel>>samePrdNoList=new ArrayList<>();
+
+        //注意:传进来的list3已经是同一订单号下面了
+        //去重所有相同的货号放入set集合
+        Set<String>set =new HashSet<>();
+        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
+            set.add(shouDingDanFromExcel.getPrdNo().trim());
+        }
+
+        //循环所有去重后的货号
+        for(String prdNo:set){
+            //循环所有同一单号下的订单,对当前货号下的订单合并
+            List<ShouDingDanFromExcel>list0=new ArrayList<>();
+            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
+                if(prdNo.equals(shouDingDanFromExcel.getPrdNo().trim())){
+                    list0.add(shouDingDanFromExcel);
+                }
+            }
+            //收集同一货号的list
+            samePrdNoList.add(list0);
+            //此时list0里面装的都是同一货号的东西了,我们可以合并同一货号的某些字段了
+            synchronized (this){
+                double qty=0;
+                double amtn=0;
+                double tax=0;
+                double amt=0;
+                for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+                    try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty()); } catch (NumberFormatException e) {e.printStackTrace();}
+                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn());} catch (NumberFormatException e) {e.printStackTrace();}
+                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax());} catch (NumberFormatException e) {e.printStackTrace();}
+                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt());} catch (NumberFormatException e) {e.printStackTrace();}
+                }
+                if(list0.size()>0) {
+                    ShouDingDanFromExcel shouDingDanFromExcel = list0.get(0);
+                    shouDingDanFromExcel.setQty(String.valueOf(qty));
+                    shouDingDanFromExcel.setAmtn(String.valueOf(amtn));
+                    shouDingDanFromExcel.setTax(String.valueOf(tax));
+                    shouDingDanFromExcel.setAmt(String.valueOf(amt));
+                    list.add(shouDingDanFromExcel);
+                }
+            }
+        }
+        return  list;
+    }
+/////////////////////////////////////////////////////////////////////////////
+    public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
+        if(listmsg.size()>1){
+            for(Msg msg11:listmsg){
+                if(msg.equals(msg11.getMsg())){
+                    listmsg.remove(msg11);
+                }
             }
         }
     }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
     public String  f(){
@@ -123,6 +174,8 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         test.setStr("韩寒！！！");
         return test;
     }
+
+//////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
