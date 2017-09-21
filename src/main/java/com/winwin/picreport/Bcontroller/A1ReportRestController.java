@@ -40,45 +40,23 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         boolean c=shouDingDanFromExcels.get(0).getOsNo()==null;
         boolean b = "".equals(shouDingDanFromExcels.get(0).getOsNo());
         boolean d = "undefined".equals(shouDingDanFromExcels.get(0).getOsNo());
-
         Msg msg=new Msg();
         if(!a||!c||!b||!d){
             //guo lv suo you bu chong fu de osNo
             //分离出所有不相同的订单号
-            Set<String> set=new HashSet();
-
-            for(ShouDingDanFromExcel shouDingDanFromExcel:shouDingDanFromExcels){
-                set.add(shouDingDanFromExcel.getOsNo().trim());
-            }
+            Set<String> set = this.fenLeiQuChongFuDingDanHaoDaoSetJiHe(shouDingDanFromExcels);
 //            System.out.println(set);
-            List<List<ShouDingDanFromExcel>> list1=new ArrayList();
-
-            //把所有的记录根据单号分成2大类
-            for(String str:set){
-                List<ShouDingDanFromExcel> list2=new ArrayList();
-                for(ShouDingDanFromExcel ss:shouDingDanFromExcels){
-                    if(str.equals(ss.getOsNo().trim())){
-                        list2.add(ss);
-                    }
-                }
-                list1.add(list2);
-            }
-
+            List<List<ShouDingDanFromExcel>> list1=this.anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe(set, shouDingDanFromExcels);
+            //按批号分批插入数据库,一个批号下的不成功都不成功在service成实现，listmsg暗传输msg错误信息
 //            System.out.println(list1);
-            for(List<ShouDingDanFromExcel> list3:list1){
-                try {
-                    a1.saveYiPiDingDanHaoXiangTongDe(list3,listmsg);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            this.anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(list1,listmsg);
             msg.setMsg("数据插入成功");
         }else{
             msg.setMsg("第一条数据就没有OsNo(订单号),拒绝所有操作,检查您的数据信息再次插入");
         }
 
         listmsg.add(msg);
-
+        //如果msg列表中有2个及2个以上,说明数据没有完全插入成功,就把那个数据插入成功的message删掉
         if(listmsg.size()>1){
             for(Msg msg11:listmsg){
                 if("数据插入成功".equals(msg11.getMsg())){
@@ -97,19 +75,55 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+    public Set<String> fenLeiQuChongFuDingDanHaoDaoSetJiHe(List<ShouDingDanFromExcel> shouDingDanFromExcels){
+        Set<String> set=new HashSet();
+
+        for(ShouDingDanFromExcel shouDingDanFromExcel:shouDingDanFromExcels){
+            set.add(shouDingDanFromExcel.getOsNo().trim());
+        }
+        return set;
+    }
+ //////////////////////////////////////////////////////////////////////////////////////////////
+ public List<List<ShouDingDanFromExcel>> anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe(Set<String> set,List<ShouDingDanFromExcel> shouDingDanFromExcels){
+     List<List<ShouDingDanFromExcel>> list1=new ArrayList();
+     //把所有的记录根据单号分成2大类
+     for(String str:set){
+         List<ShouDingDanFromExcel> list2=new ArrayList();
+         for(ShouDingDanFromExcel ss:shouDingDanFromExcels){
+             if(str.equals(ss.getOsNo().trim())){
+                 list2.add(ss);
+             }
+         }
+         list1.add(list2);
+     }
+     return list1;
+ }
+ ////////////////////////////////////////////////////////////////////////////////////////
+    public void anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(List<List<ShouDingDanFromExcel>> list1,List<Msg> listmsg){
+        for(List<ShouDingDanFromExcel> list3:list1){
+            try {
+                a1.saveYiPiDingDanHaoXiangTongDe(list3,listmsg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
     public String  f(){
         return "你好！！！";
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value="h",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public @ResponseBody  Test  h(){
         Test test=new Test();
         test.setStr("韩寒！！！");
         return test;
     }
-/////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
 
