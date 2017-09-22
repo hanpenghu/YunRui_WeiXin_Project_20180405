@@ -1,20 +1,30 @@
-package cn.productai.api.example;
+package com.winwin.picreport.Futils;
+
 import cn.productai.api.core.DefaultProductAIClient;
 import cn.productai.api.core.DefaultProfile;
 import cn.productai.api.core.IProfile;
 import cn.productai.api.core.IWebClient;
 import cn.productai.api.core.enums.LanguageType;
+import cn.productai.api.core.enums.ServiceType;
 import cn.productai.api.core.exceptions.ClientException;
-import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
-import cn.productai.api.pai.entity.search.ImageSearchResponse;
-import cn.productai.api.pai.response.SearchResult;
-import java.util.Date;
-public class TestExample {
+import cn.productai.api.example.TestExample;
+import cn.productai.api.pai.entity.classify.ClassifyByImageFileRequest;
+import cn.productai.api.pai.entity.classify.ClassifyResponse;
+import cn.productai.api.pai.response.ClassifyResult;
 
+import java.io.File;
+import java.util.Date;
+
+/**
+ * Created by Zhong Wang on 2017/7/5.
+ * 场景分析与标注
+ * https://api-doc.productai.cn/doc/pai.html#场景分析与标注
+ */
+public class ClassifyByFileExample1{
     public static void main(String[]args){
         Date date1=new Date();
-       long time1= date1.getTime();
-        new TestExample().fullFlowExample("http://116.62.224.172/lzpic/1/WW-VSUP5950-858.jpeg","yppse9v1",10);
+        long time1= date1.getTime();
+        new ClassifyByFileExample1().run1(new File("E:/WW-NEMT-2884.jpg"));
         Date date2=new Date();
         long time2 = date2.getTime();
         long time3=time2-time1;
@@ -22,15 +32,9 @@ public class TestExample {
         System.out.println("-------------耗时间"+time4+"秒---------------");
     }
 
-
-    public  ImageSearchResponse fullFlowExample(String url,String serviceId,int count) {
-        /**
-         * step 1 - setup your account profile
-         * get your accessKeyId & secretKey at https://console.productai.cn/main#/21/service_category_id=1
-         */
-
+    public void run1(File file) {
+System.out.println("========草草草================");
         IProfile profile = new DefaultProfile();
-        //为了公司安全,写死
         profile.setAccessKeyId("b9c6156c60b5776b7547d46475f670b3");
         profile.setSecretKey("b2e44e5b6b1590c3a67526c4bfd16b72");
         profile.setVersion("1");
@@ -42,40 +46,23 @@ public class TestExample {
          */
 
         IWebClient client = new DefaultProductAIClient(profile);
-
-        /**
-         * step 3 - build your request
-         * take image search as example
-         */
-
-//        ImageSearchByImageUrlRequest request = new ImageSearchByImageUrlRequest("yppse9v1");
-        ImageSearchByImageUrlRequest request = new ImageSearchByImageUrlRequest(serviceId);
-//        request.setUrl("http://116.62.224.172/lzpic/1/WW-VSUP5950-858.jpeg");
-        request.setUrl(url);
-        //返回结果个数
-        request.setCount(count);
-
-        // this value will be override because you had set the IProfile.GlobalLanguage = LanguageType.Chinese
-        request.setLanguage(LanguageType.English);
+        ClassifyByImageFileRequest request = new ClassifyByImageFileRequest(ServiceType.Classify, "yppse9v1");
+        request.setImageFile(file);
+        request.setLanguage(LanguageType.Chinese);
 
         // you can pass the extra paras to the request
         request.getOptions().put("para1", "1");
         request.getOptions().put("para2", "中文");
         request.getOptions().put("para3", "value3");
 
-        /**
-         * step 4 - send out the request、receive the response、catch the exceptions
-         */
-        ImageSearchResponse response=null;
         try {
-             response = client.getResponse(request);
+            ClassifyResponse response = client.getResponse(request);
 
-            System.out.println("=============================Result==============================");
+            System.out.println("==============================Result==============================");
 
-            for (SearchResult r : response.getResults()) {
-//                System.out.println();
+            for (ClassifyResult r : response.getResults()) {
                 // access the response directly
-                System.out.println(String.format("%s - %s", r.getUrl(), r.getScore()));
+                System.out.println(String.format("%s - %s", r.getCategory(), r.getScore()));
             }
 
             System.out.println("==============================Result==============================");
@@ -96,10 +83,5 @@ public class TestExample {
             System.out.println(String.format("%s occurred. ErrorMessage: %s", e.getClass().getName(), e.getMessage()));
             e.printStackTrace();
         }
-
-        /**
-         *  Congrats! Now you can build your smart AI service using ProductAI.
-         */
-        return response;
     }
 }

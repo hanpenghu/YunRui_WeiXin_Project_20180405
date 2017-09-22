@@ -248,4 +248,5 @@
       qty = #{qty,jdbcType=NUMERIC}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

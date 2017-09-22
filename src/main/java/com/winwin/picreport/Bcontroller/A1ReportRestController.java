@@ -97,13 +97,13 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         for(List<ShouDingDanFromExcel> list3:list1){
             try {
                 //for一次就是处理同一批号osNo一次
-                List<ShouDingDanFromExcel> list001 = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
-                a1.saveYiPiDingDanHaoXiangTongDe(list001,listmsg);
+                Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
+                a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
             } catch (Exception e) { e.printStackTrace(); }
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////
-    public List<ShouDingDanFromExcel> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3){
+    public Map<String,List> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3){
         Map<String,List>map=new HashMap();
         //用list00来装入合并同一货号的几个东西后的ShouDingDanFromExcel
         List<ShouDingDanFromExcel> list=new ArrayList<>();
@@ -150,7 +150,10 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
                 }
             }
         }
-        return  list;
+
+        map.put("samePrdNoMeraged",list);
+        map.put("samePrdNoList",samePrdNoList);
+        return  map;
     }
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){

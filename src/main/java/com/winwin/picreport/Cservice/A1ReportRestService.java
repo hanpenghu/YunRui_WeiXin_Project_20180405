@@ -1,8 +1,5 @@
 package com.winwin.picreport.Cservice;
-import com.winwin.picreport.Ddao.reportxmlmapper.MfPosMapper;
-import com.winwin.picreport.Ddao.reportxmlmapper.PrdtMapper;
-import com.winwin.picreport.Ddao.reportxmlmapper.TfPosMapper;
-import com.winwin.picreport.Ddao.reportxmlmapper.TfPosZMapper;
+import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.Msg;
 import com.winwin.picreport.Futils.TimeStampToDate;
@@ -10,11 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 
 @Service("a1")
 public class A1ReportRestService {
+    @Autowired
+    BeforeSamePrdnoMergeMapper beforeSamePrdnoMergeMapper;
     @Autowired
     private TfPosMapper tfPosMapper;
     @Autowired
@@ -26,16 +29,32 @@ public class A1ReportRestService {
 ////////////////////////受订单号成功后是SO/////////////////////////////////////////////
 ///////////////////////注意事务要加在所有调用的方法上面,如果方法套方法,就必须都加事务///////////////////////////////////////////////////
     @Transactional
-    public void saveYiPiDingDanHaoXiangTongDe(List<ShouDingDanFromExcel> list3,List<Msg>listmsg){
+    public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg>listmsg){
 //        System.out.println(list3);
         //循环插入所有
-
-            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-
+        //用list3来装入合并同一货号的几个东西后的ShouDingDanFromExcel
+        List<ShouDingDanFromExcel> list3 =listMap.get("samePrdNoMeraged");
+        //收集同一货号的list       samePrdNoList
+        List<List<ShouDingDanFromExcel>>samePrdNoList = listMap.get("samePrdNoList");
+        //插入sunlike主表
+        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
                     saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
-
+        }
+        //插入自建表before_same_prdNo_merge//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
+        for(List<ShouDingDanFromExcel> listx:samePrdNoList){
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
+            String uuid = UUID.randomUUID().toString();
+            for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
+                BeforeSamePrdnoMerge b=new BeforeSamePrdnoMerge();
+                b.setOsno(shouDingDanFromExcel.getOsNo());
+                b.setPrdno(shouDingDanFromExcel.getPrdNo());
+                b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
+                b.setSaphh(shouDingDanFromExcel.getSaphh());
+                b.setTimesamebatch(dateStr);
+                b.setUuid(uuid);
+                beforeSamePrdnoMergeMapper.insert(b);
             }
-
+        }
     }
 
     @Transactional
