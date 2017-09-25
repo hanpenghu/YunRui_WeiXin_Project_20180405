@@ -17,14 +17,14 @@
            isnull(tf.bat_no,'')AS 'bat_no',-----批号
            isnull(tf.rem,'') AS 'remBody',	----表身摘要
             isnull(dx.name,'')AS 'indxName'----种类名称
-           , isnull(tfz.bc,'')AS 'bc',---------备次
-            isnull(tfz.mz,'') AS 'mz',-------毛重
-            isnull(tfz.pz,'')AS 'pz'----皮重
+          -- , isnull(tfz.bc,'')AS 'bc',---------备次
+           -- isnull(tfz.mz,'') AS 'mz',-------毛重
+           -- isnull(tfz.pz,'')AS 'pz'----皮重
           from mf_pss mf
           left join tf_pss tf on mf.ps_no=tf.ps_no
           left join prdt pd on tf.prd_no= pd.prd_no
           left join indx dx on pd.idx1=dx.idx_no
-          left join tf_pss_z tfz on tfz.ps_no=tf.ps_no
+          --left join tf_pss_z tfz on tfz.ps_no=tf.ps_no
           where
            mf.ps_id='SA'
           and
