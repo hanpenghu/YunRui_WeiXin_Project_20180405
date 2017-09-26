@@ -1,30 +1,30 @@
 package com.winwin.picreport.Edto;
 
 public class ShouDingDanFromExcel {
-/////////////////////////////////////////////////////////////////////////////////////////////////
-    private String    osDd	="";
-    private String    estDd		="";
-    private String    taxId	="";
-    private String    osNo	="";
-    private String    cusOsNo		="";
-    private String    saphh	="";
-    private String    remhead	="";
-    private String    sapph="";
-    private String    prdNo	="";
-    private String    sapwlm		="";
-    private String    cfdm	="";
-    private String    prdName	="";
-    private String    curId	="";
-    private String    excRto="";
-    private String    qty		="";
-    private String    unit	="";
-    private String    up="";
-    private String    amtn	="";
-    private String    tax	="";
-    private String    amt	="";
-    private String    taxRto="";
-    private String    remBody	="";
-    private String    cusNo="";
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    private String osDd = "";
+    private String estDd = "";
+    private String taxId = "";
+    private String osNo = "";
+    private String cusOsNo = "";
+    private String saphh = "";
+    private String remhead = "";
+    private String sapph = "";
+    private String prdNo = "";
+    private String sapwlm = "";
+    private String cfdm = "";
+    private String prdName = "";
+    private String curId = "";
+    private String excRto = "";
+    private String qty = "";
+    private String unit = "";
+    private String up = "";
+    private String amtn = "";
+    private String tax = "";
+    private String amt = "";
+    private String taxRto = "";
+    private String remBody = "";
+    private String cusNo = "";
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String getOsDd() {

@@ -30,6 +30,7 @@ public class ClassifyByFileExample1{
         long time3=time2-time1;
         long time4=time3/1000;
         System.out.println("-------------耗时间"+time4+"秒---------------");
+        System.out.println();
     }
 
     public void run1(File file) {

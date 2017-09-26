@@ -8,13 +8,16 @@ import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
+import com.winwin.picreport.Futils.ConstantOfMaLong;
+import com.winwin.picreport.Futils.GetIWebClientOfMaLong;
+
 import java.util.Date;
 public class TestExample {
 
     public static void main(String[]args){
         Date date1=new Date();
        long time1= date1.getTime();
-        new TestExample().fullFlowExample("http://116.62.224.172/lzpic/1/WW-VSUP5950-858.jpeg","yppse9v1",10);
+        new TestExample().fullFlowExample("http://116.62.224.172:8070/lzpic/1/WW-VSUP5950-858.jpeg","yppse9v1",10);
         Date date2=new Date();
         long time2 = date2.getTime();
         long time3=time2-time1;
@@ -29,19 +32,19 @@ public class TestExample {
          * get your accessKeyId & secretKey at https://console.productai.cn/main#/21/service_category_id=1
          */
 
-        IProfile profile = new DefaultProfile();
-        //为了公司安全,写死
-        profile.setAccessKeyId("b9c6156c60b5776b7547d46475f670b3");
-        profile.setSecretKey("b2e44e5b6b1590c3a67526c4bfd16b72");
-        profile.setVersion("1");
+     /*   IProfile profile = new DefaultProfile();
+        //为了公司安全,写死在枚举enum里面
+        profile.setAccessKeyId((String)ConstantOfMaLong.accessKeyId.getValue());
+        profile.setSecretKey((String)ConstantOfMaLong.secretKey.getValue());
+        profile.setVersion((String)ConstantOfMaLong.version.getValue());
         profile.setGlobalLanguage(LanguageType.Chinese);
-
+*/
         /**
          * step 2 - initialize your ProductAI client
          *
          */
 
-        IWebClient client = new DefaultProductAIClient(profile);
+        IWebClient client = GetIWebClientOfMaLong.getIWebClient();
 
         /**
          * step 3 - build your request

@@ -11,7 +11,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/c1")
-public class C1SalePrdtDetail {
+public class C1SalePrdtDetailToExcelController {
     @Autowired
     private ManyTabSerch manyTabSerch;
     @RequestMapping(value="salePrdDetailTab1",method = RequestMethod.POST,produces ={"application/json;charset=utf-8"})

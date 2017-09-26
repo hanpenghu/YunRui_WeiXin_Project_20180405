@@ -14,18 +14,18 @@ import cn.productai.api.pai.entity.dataset.DataSetSingleAddByImageUrlRequest;
 public class DataSetSingleModifyExample1 {
 
 
-    public void run(IWebClient client) {
+    public DataSetModifyResponse  run(IWebClient client,String image_set_id,String imageUrl) {
 
         System.out.println("==>  Demo - 向数据集增加单条数据  <==");
         System.out.println("See https://api-doc.productai.cn/doc/pai.html#向数据集增加单条数据 for details.\r\n");
         //参数1是image_set_id
-        DataSetSingleAddByImageUrlRequest request = new DataSetSingleAddByImageUrlRequest("lqn2jj6z",null,null);
-        request.setImageUrl("http://test.waltercrow.co.nz/wp/wp-content/uploads/2010/06/muji-clothes.jpg");
+        DataSetSingleAddByImageUrlRequest request = new DataSetSingleAddByImageUrlRequest(image_set_id,null,null);
+//        request.setImageUrl("http://test.waltercrow.co.nz/wp/wp-content/uploads/2010/06/muji-clothes.jpg");
+        request.setImageUrl(imageUrl);
         request.setLanguage(LanguageType.Chinese);
-
+        DataSetModifyResponse response =null;
         try {
-            DataSetModifyResponse response = client.getResponse(request);
-
+           response = client.getResponse(request);
             System.out.println("==============================Result==============================");
 
             // access the response directly
@@ -49,5 +49,6 @@ public class DataSetSingleModifyExample1 {
             System.out.println(String.format("%s occurred. ErrorMessage: %s", e.getClass().getName(), e.getMessage()));
             e.printStackTrace();
         }
+        return response;
     }
 }
