@@ -34,9 +34,8 @@ public class B3uploadPicUrlToMaLongController{
         //得到要写入本地的图片路径
         String filePath=tuPianShangChuanDaoMaLongDeBenJiMuLu+imageName;
         ImageAndBase64.GenerateImage(base64Image.getBase64str(),filePath);
-        File file =new File(filePath);
         //确定图片已经存在于本地,才给码隆传递url
-        if(file.exists()){
+        if(new File(filePath).exists()){
             //得到要传给码隆的url
             String fileUrl=tuPianShangChuanDaoMaLongDeURL+imageName;
             DataSetModifyResponse response = new DataSetSingleModifyExample1().run(GetIWebClientOfMaLong.getIWebClient(), image_set_idOfWinWin, fileUrl);
