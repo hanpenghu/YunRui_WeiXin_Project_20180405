@@ -29,8 +29,64 @@
            mf.ps_id='SA'
           and
           tf.ps_id='SA'
-     </select>
+          and
+              mf.cus_no=
+                  CASE
+                  WHEN #{cus_no}='' THEN mf.cus_no
+                  ELSE #{cus_no}
+                  END
+		  and
+              mf.ps_dd
+                  between
+                          CASE
+                          WHEN #{chaXunTiaoJian.startTime}='' THEN '1970-01-01'---传空的过来我们就把时间最小化
+                          ELSE #{chaXunTiaoJian.startTime}
+                          END  ----小的(远的)时间必须在前面
+                      and
+                          CASE
+                          WHEN #{chaXunTiaoJian.endTime}='' THEN '8888-12-31'---传空的过来我们就把时间尽量最大化,其实最大的是9999-12-31
+                          ELSE #{chaXunTiaoJian.endTime}
+                          END  ----大的(近的)时间必须在前面
 
+--           select
+--           isnull(mf.rem,'') AS 'remHead',	  ---表头备注
+--           isnull(mf.ps_no,'') AS 'psNo',---销货单号
+--           isnull(mf.cus_os_no,'') AS 'cusOsNo',----客户订单号
+--           isnull(tf.prd_name,'')AS 'prdName', ----货品名称
+--            ---tf.unit AS 'unit',---------单位
+--            '1' AS 'unit',
+--            convert(varchar(40),isnull(tf.qty,0)) AS 'qty',---数量
+--            convert(varchar(40),isnull(tf.up,0))AS 'up',----单价
+--            convert(varchar(40),isnull(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
+--            isnull(tf.os_no,'') AS 'os_no' ,----EB单号
+--            isnull(tf.bat_no,'')AS 'bat_no',-----批号
+--            isnull(tf.rem,'') AS 'remBody',	----表身摘要
+--             isnull(dx.name,'')AS 'indxName'----种类名称
+--           -- , isnull(tfz.bc,'')AS 'bc',---------备次
+--            -- isnull(tfz.mz,'') AS 'mz',-------毛重
+--            -- isnull(tfz.pz,'')AS 'pz'----皮重
+-- 		  ,cst.cus_no
+-- 		  ,mf.ps_dd
+--           from mf_pss mf
+--           left join tf_pss tf on mf.ps_no=tf.ps_no
+--           left join prdt pd on tf.prd_no= pd.prd_no
+--           left join indx dx on pd.idx1=dx.idx_no
+--           --left join tf_pss_z tfz on tfz.ps_no=tf.ps_no
+-- 		  left join CUST cst on cst.CUS_NO=	mf.CUS_NO
+--           where
+--            mf.ps_id='SA'
+--           and
+--           tf.ps_id='SA'
+-- 		  and
+-- 		  mf.cus_no='CYXX20044'
+-- 		  and
+-- 		  mf.ps_dd
+-- 		  between
+-- 		  '2017-09-05'  ----小的必须在前面
+-- 		  and
+-- 		  '2017-09-07'
+     </select>
+<!-- -->
     <select id="getAllCustOf_obj_id_1_that_KeHuNotChangShang" resultType="com.winwin.picreport.Edto.KeHu">
         SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1----OBJ_ID=1是客户,2代表厂商
     </select>
