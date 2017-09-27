@@ -18,8 +18,13 @@ public class C1SalePrdtDetailToExcelController {
     @RequestMapping(value="salePrdDetailTab1",method = RequestMethod.POST,produces ={"application/json;charset=utf-8"})
     public @ResponseBody List<SalePrdDetailTab1> salePrdDetailTab1(@RequestBody ChaXunTiaoJian chaXunTiaoJian){
         List<SalePrdDetailTab1> listAll=new ArrayList<>();
+        List<String> cus_nos = chaXunTiaoJian.getCus_no();
+        if(cus_nos==null||cus_nos.size()==0){
+            cus_nos=new ArrayList<>();
+            cus_nos.add("");
+        }
         //循环所有的cus_no
-        chaXunTiaoJian.getCus_no().forEach((cus_no)-> listAll.addAll(manyTabSerch.salePrdDetailTab1(chaXunTiaoJian,cus_no)));
+        cus_nos.forEach((cus_no)-> listAll.addAll(manyTabSerch.salePrdDetailTab1(chaXunTiaoJian,cus_no)));
         return listAll;
     }
 
