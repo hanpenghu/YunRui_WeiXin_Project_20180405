@@ -29,10 +29,10 @@ public class B3uploadPicUrlToMaLongController{
         PicUploadStatus p=new PicUploadStatus();
         List<PicUploadStatus> list =new ArrayList<>();
         String imageName = base64Image.getImageName();
-        String base64str = base64Image.getBase64str();
         //注意,这里的imageName必须是前端传过来带后缀名字的才行
         //得到要写入本地的图片路径
         String filePath=tuPianShangChuanDaoMaLongDeBenJiMuLu+imageName;
+        //在本地服务器由base64字符串生成一个image(图片)
         ImageAndBase64.GenerateImage(base64Image.getBase64str(),filePath);
         //确定图片已经存在于本地,才给码隆传递url
         if(new File(filePath).exists()){
@@ -47,11 +47,7 @@ public class B3uploadPicUrlToMaLongController{
             list.add(p);
             return list;
         }
-
-
         return list;
-
-
     }
 
 
