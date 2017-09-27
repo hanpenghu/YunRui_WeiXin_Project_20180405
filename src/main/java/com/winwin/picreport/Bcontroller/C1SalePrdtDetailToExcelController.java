@@ -20,4 +20,5 @@ public class C1SalePrdtDetailToExcelController {
         list = manyTabSerch.salePrdDetailTab1();
         return list;
     }
+
 }

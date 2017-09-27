@@ -31,4 +31,8 @@
           tf.ps_id='SA'
      </select>
 
+    <select id="getAllCustOf_obj_id_1_that_KeHuNotChangShang" resultType="com.winwin.picreport.Edto.KeHu">
+        SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1----OBJ_ID=1是客户,2代表厂商
+    </select>
+
 </mapper>
