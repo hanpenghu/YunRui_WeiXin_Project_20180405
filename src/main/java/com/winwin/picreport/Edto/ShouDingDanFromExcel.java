@@ -26,8 +26,17 @@ public class ShouDingDanFromExcel {
     private String remBody = "";
     private String cusNo = "";
     private String caiGouNo="";
-    private String xueTouNo="";
+    private String maiTouNo="";
+    private String ebNo="";
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getEbNo() {
+        return ebNo;
+    }
+
+    public void setEbNo(String ebNo) {
+        this.ebNo = ebNo;
+    }
 
     public String getCaiGouNo() {
         return caiGouNo;
@@ -37,12 +46,12 @@ public class ShouDingDanFromExcel {
         this.caiGouNo = caiGouNo;
     }
 
-    public String getXueTouNo() {
-        return xueTouNo;
+    public String getMaiTouNo() {
+        return maiTouNo;
     }
 
-    public void setXueTouNo(String xueTouNo) {
-        this.xueTouNo = xueTouNo;
+    public void setMaiTouNo(String maiTouNo) {
+        this.maiTouNo = maiTouNo;
     }
 
     public String getOsDd() {
@@ -258,7 +267,8 @@ public class ShouDingDanFromExcel {
         sb.append(", remBody='").append(remBody).append('\'');
         sb.append(", cusNo='").append(cusNo).append('\'');
         sb.append(", caiGouNo='").append(caiGouNo).append('\'');
-        sb.append(", xueTouNo='").append(xueTouNo).append('\'');
+        sb.append(", maiTouNo='").append(maiTouNo).append('\'');
+        sb.append(", ebNo='").append(ebNo).append('\'');
         sb.append('}');
         return sb.toString();
     }

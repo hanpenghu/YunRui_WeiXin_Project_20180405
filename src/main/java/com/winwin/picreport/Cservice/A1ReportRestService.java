@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service("a1")
 public class A1ReportRestService {
     @Autowired
-    BeforeSamePrdnoMergeMapper beforeSamePrdnoMergeMapper;
+    SapsoMapper sapsoMapper;
     @Autowired
     private TfPosMapper tfPosMapper;
     @Autowired
@@ -40,25 +40,32 @@ public class A1ReportRestService {
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
                     saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
         }
-        //插入自建表before_same_prdNo_merge//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
+        //插入自建表before_same_prdNo_merge(后来表名字改成sapsa)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
         for(List<ShouDingDanFromExcel> listx:samePrdNoList){
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();
             for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
-                BeforeSamePrdnoMerge b=new BeforeSamePrdnoMerge();
+                Sapso b=new Sapso();
                 b.setOsno(shouDingDanFromExcel.getOsNo());
                 b.setPrdno(shouDingDanFromExcel.getPrdNo());
                 b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
+                b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
+                b.setEbno(shouDingDanFromExcel.getEbNo());
+                b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
                 b.setSaphh(shouDingDanFromExcel.getSaphh());
+                b.setSapph(shouDingDanFromExcel.getSapph());
+                b.setSapwlm(shouDingDanFromExcel.getSapwlm());
+
                 b.setTimesamebatch(dateStr);
                 b.setUuid(uuid);
-                beforeSamePrdnoMergeMapper.insert(b);
+                sapsoMapper.insert(b);
             }
         }
     }
 
     @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg){
+        Msg msg=new Msg();
         MfPosWithBLOBs m=new MfPosWithBLOBs();
         TfPosWithBLOBs t=new TfPosWithBLOBs();
         TfPosZ tz=new TfPosZ();
@@ -82,10 +89,14 @@ public class A1ReportRestService {
         m.setRem(s.getRemhead());
         m.setCurId(s.getCurId());
         m.setExcRto(new BigDecimal(s.getExcRto()));
-        m.setCusNo(s.getCusNo());
+        //老郑说了,这个客户单号也用osNo填充
+        m.setCusNo(s.getOsNo());
         m.setTaxId(s.getTaxId());
         m.setCusOsNo(s.getCusOsNo());
         m.setOsId("SO");
+        //下面2条是老郑在20170929让我加上的
+        m.setUsr("ADMIN");
+        m.setChkMan("ADMIN");
         if(osDd==null) {
             m.setOsDd(null);
         }else{
@@ -95,7 +106,16 @@ public class A1ReportRestService {
 
 ///////////////////////
         t.setOsNo(s.getOsNo());
+        //之所以cusosno也传入osno,是因为老郑20170929让这么做的
+        t.setCusOsNo(s.getOsNo());
         t.setOsId("SO");
+        if(s.getPrdNo()==null||"".equals(s.getPrdNo())){
+            msg.setMsg("订单号osNo为:~~~~"+s.getOsNo()+"~~~~的这一批货品里面有货号为空,所以整个该批单号不能插入！");
+            msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
+            listmsg.add(msg);
+            //这个功能是迎合老郑说的:货品代号（品号） PRDT.PRD_NO里不存在提示整单不能导入
+            throw new RuntimeException("订单号为:~~~~"+s.getOsNo()+"~~~~的这一批货品里面有货号为空,所以整个该单号不能插入！");
+        }
         t.setPrdNo(s.getPrdNo());
         t.setPrdName(s.getPrdName());
         t.setQty(new BigDecimal(s.getQty()));
@@ -106,6 +126,13 @@ public class A1ReportRestService {
         t.setAmt(new BigDecimal(s.getAmt()));
         t.setTaxRto(new BigDecimal(s.getTaxRto()));
         t.setRem(s.getRemBody());
+        //如果单价有问题,就要抛出异常
+        if("".equals(s.getUp())||"0".equals(s.getUp())){
+            msg.setMsg("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
+            msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
+            listmsg.add(msg);
+            throw new RuntimeException("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
+        }
         t.setUp(new BigDecimal(s.getUp()));
         t.setWh("0000");
         if(estDd==null){
@@ -153,7 +180,7 @@ public class A1ReportRestService {
             }*/
 
         PrdtExample prdtExample=new PrdtExample();
-        prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo());
+        prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo()).andNameEqualTo(pdt.getName());
         long l2 = prdtMapper.countByExample(prdtExample);
         //此时数据库prdt表没有该条记录,我们下面不再插入其他记录,而是告诉客户,该记录在数据库prdt表不存在,请自行注册该商品到数据库,
         //这也是老郑的要求
@@ -161,7 +188,7 @@ public class A1ReportRestService {
         if(l2==0){
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
             msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
-            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面,导致无法插入数据,--------");
+            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面或者 商品名="+pdt.getName()+"不在商品表中,导致无法插入数据,--------");
             listmsg.add(msg);
            //不再进行下面步骤
             throw new RuntimeException(msg.getMsg());

@@ -130,15 +130,17 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
             samePrdNoList.add(list0);
             //此时list0里面装的都是同一货号的东西了,我们可以合并同一货号的某些字段了
             synchronized (this){
-                double qty=0;
-                double amtn=0;
-                double tax=0;
-                double amt=0;
+                double qty=0;//数量
+                double amtn=0;//未税金额
+                double tax=0;//税额
+                double amt=0;//金额合并
+                double danJia=0;//
                 for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
                     try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty()); } catch (NumberFormatException e) {e.printStackTrace();}
                     try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn());} catch (NumberFormatException e) {e.printStackTrace();}
                     try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax());} catch (NumberFormatException e) {e.printStackTrace();}
                     try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt());} catch (NumberFormatException e) {e.printStackTrace();}
+                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
                 if(list0.size()>0) {
                     ShouDingDanFromExcel shouDingDanFromExcel = list0.get(0);
@@ -146,6 +148,7 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
                     shouDingDanFromExcel.setAmtn(String.valueOf(amtn));
                     shouDingDanFromExcel.setTax(String.valueOf(tax));
                     shouDingDanFromExcel.setAmt(String.valueOf(amt));
+                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
                     list.add(shouDingDanFromExcel);
                 }
             }

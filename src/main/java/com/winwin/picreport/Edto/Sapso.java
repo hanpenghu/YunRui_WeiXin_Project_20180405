@@ -2,7 +2,7 @@ package com.winwin.picreport.Edto;
 
 import java.math.BigDecimal;
 
-public class BeforeSamePrdnoMerge {
+public class Sapso {
     private Integer id;
 
     private String timesamebatch;
@@ -11,11 +11,21 @@ public class BeforeSamePrdnoMerge {
 
     private String osno;
 
+    private String ebno;
+
+    private String caigouno;
+
     private String prdno;
 
     private String saphh;
 
+    private String sapph;
+
+    private String sapwlm;
+
     private BigDecimal qty;
+
+    private String maitouno;
 
     public Integer getId() {
         return id;
@@ -49,6 +59,22 @@ public class BeforeSamePrdnoMerge {
         this.osno = osno == null ? null : osno.trim();
     }
 
+    public String getEbno() {
+        return ebno;
+    }
+
+    public void setEbno(String ebno) {
+        this.ebno = ebno == null ? null : ebno.trim();
+    }
+
+    public String getCaigouno() {
+        return caigouno;
+    }
+
+    public void setCaigouno(String caigouno) {
+        this.caigouno = caigouno == null ? null : caigouno.trim();
+    }
+
     public String getPrdno() {
         return prdno;
     }
@@ -65,11 +91,35 @@ public class BeforeSamePrdnoMerge {
         this.saphh = saphh == null ? null : saphh.trim();
     }
 
+    public String getSapph() {
+        return sapph;
+    }
+
+    public void setSapph(String sapph) {
+        this.sapph = sapph == null ? null : sapph.trim();
+    }
+
+    public String getSapwlm() {
+        return sapwlm;
+    }
+
+    public void setSapwlm(String sapwlm) {
+        this.sapwlm = sapwlm == null ? null : sapwlm.trim();
+    }
+
     public BigDecimal getQty() {
         return qty;
     }
 
     public void setQty(BigDecimal qty) {
         this.qty = qty;
+    }
+
+    public String getMaitouno() {
+        return maitouno;
+    }
+
+    public void setMaitouno(String maitouno) {
+        this.maitouno = maitouno == null ? null : maitouno.trim();
     }
 }

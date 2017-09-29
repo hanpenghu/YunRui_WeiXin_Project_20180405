@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeforeSamePrdnoMergeExample {
+public class SapsoExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public BeforeSamePrdnoMergeExample() {
+    public SapsoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -375,6 +375,146 @@ public class BeforeSamePrdnoMergeExample {
             return (Criteria) this;
         }
 
+        public Criteria andEbnoIsNull() {
+            addCriterion("ebNo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoIsNotNull() {
+            addCriterion("ebNo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoEqualTo(String value) {
+            addCriterion("ebNo =", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoNotEqualTo(String value) {
+            addCriterion("ebNo <>", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoGreaterThan(String value) {
+            addCriterion("ebNo >", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoGreaterThanOrEqualTo(String value) {
+            addCriterion("ebNo >=", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoLessThan(String value) {
+            addCriterion("ebNo <", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoLessThanOrEqualTo(String value) {
+            addCriterion("ebNo <=", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoLike(String value) {
+            addCriterion("ebNo like", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoNotLike(String value) {
+            addCriterion("ebNo not like", value, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoIn(List<String> values) {
+            addCriterion("ebNo in", values, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoNotIn(List<String> values) {
+            addCriterion("ebNo not in", values, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoBetween(String value1, String value2) {
+            addCriterion("ebNo between", value1, value2, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andEbnoNotBetween(String value1, String value2) {
+            addCriterion("ebNo not between", value1, value2, "ebno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoIsNull() {
+            addCriterion("caiGouNo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoIsNotNull() {
+            addCriterion("caiGouNo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoEqualTo(String value) {
+            addCriterion("caiGouNo =", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoNotEqualTo(String value) {
+            addCriterion("caiGouNo <>", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoGreaterThan(String value) {
+            addCriterion("caiGouNo >", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoGreaterThanOrEqualTo(String value) {
+            addCriterion("caiGouNo >=", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoLessThan(String value) {
+            addCriterion("caiGouNo <", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoLessThanOrEqualTo(String value) {
+            addCriterion("caiGouNo <=", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoLike(String value) {
+            addCriterion("caiGouNo like", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoNotLike(String value) {
+            addCriterion("caiGouNo not like", value, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoIn(List<String> values) {
+            addCriterion("caiGouNo in", values, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoNotIn(List<String> values) {
+            addCriterion("caiGouNo not in", values, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoBetween(String value1, String value2) {
+            addCriterion("caiGouNo between", value1, value2, "caigouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaigounoNotBetween(String value1, String value2) {
+            addCriterion("caiGouNo not between", value1, value2, "caigouno");
+            return (Criteria) this;
+        }
+
         public Criteria andPrdnoIsNull() {
             addCriterion("prdNo is null");
             return (Criteria) this;
@@ -515,6 +655,146 @@ public class BeforeSamePrdnoMergeExample {
             return (Criteria) this;
         }
 
+        public Criteria andSapphIsNull() {
+            addCriterion("sapph is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphIsNotNull() {
+            addCriterion("sapph is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphEqualTo(String value) {
+            addCriterion("sapph =", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphNotEqualTo(String value) {
+            addCriterion("sapph <>", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphGreaterThan(String value) {
+            addCriterion("sapph >", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphGreaterThanOrEqualTo(String value) {
+            addCriterion("sapph >=", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphLessThan(String value) {
+            addCriterion("sapph <", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphLessThanOrEqualTo(String value) {
+            addCriterion("sapph <=", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphLike(String value) {
+            addCriterion("sapph like", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphNotLike(String value) {
+            addCriterion("sapph not like", value, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphIn(List<String> values) {
+            addCriterion("sapph in", values, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphNotIn(List<String> values) {
+            addCriterion("sapph not in", values, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphBetween(String value1, String value2) {
+            addCriterion("sapph between", value1, value2, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapphNotBetween(String value1, String value2) {
+            addCriterion("sapph not between", value1, value2, "sapph");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmIsNull() {
+            addCriterion("sapwlm is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmIsNotNull() {
+            addCriterion("sapwlm is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmEqualTo(String value) {
+            addCriterion("sapwlm =", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmNotEqualTo(String value) {
+            addCriterion("sapwlm <>", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmGreaterThan(String value) {
+            addCriterion("sapwlm >", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmGreaterThanOrEqualTo(String value) {
+            addCriterion("sapwlm >=", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmLessThan(String value) {
+            addCriterion("sapwlm <", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmLessThanOrEqualTo(String value) {
+            addCriterion("sapwlm <=", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmLike(String value) {
+            addCriterion("sapwlm like", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmNotLike(String value) {
+            addCriterion("sapwlm not like", value, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmIn(List<String> values) {
+            addCriterion("sapwlm in", values, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmNotIn(List<String> values) {
+            addCriterion("sapwlm not in", values, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmBetween(String value1, String value2) {
+            addCriterion("sapwlm between", value1, value2, "sapwlm");
+            return (Criteria) this;
+        }
+
+        public Criteria andSapwlmNotBetween(String value1, String value2) {
+            addCriterion("sapwlm not between", value1, value2, "sapwlm");
+            return (Criteria) this;
+        }
+
         public Criteria andQtyIsNull() {
             addCriterion("qty is null");
             return (Criteria) this;
@@ -572,6 +852,76 @@ public class BeforeSamePrdnoMergeExample {
 
         public Criteria andQtyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("qty not between", value1, value2, "qty");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoIsNull() {
+            addCriterion("maiTouNo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoIsNotNull() {
+            addCriterion("maiTouNo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoEqualTo(String value) {
+            addCriterion("maiTouNo =", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoNotEqualTo(String value) {
+            addCriterion("maiTouNo <>", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoGreaterThan(String value) {
+            addCriterion("maiTouNo >", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoGreaterThanOrEqualTo(String value) {
+            addCriterion("maiTouNo >=", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoLessThan(String value) {
+            addCriterion("maiTouNo <", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoLessThanOrEqualTo(String value) {
+            addCriterion("maiTouNo <=", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoLike(String value) {
+            addCriterion("maiTouNo like", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoNotLike(String value) {
+            addCriterion("maiTouNo not like", value, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoIn(List<String> values) {
+            addCriterion("maiTouNo in", values, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoNotIn(List<String> values) {
+            addCriterion("maiTouNo not in", values, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoBetween(String value1, String value2) {
+            addCriterion("maiTouNo between", value1, value2, "maitouno");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaitounoNotBetween(String value1, String value2) {
+            addCriterion("maiTouNo not between", value1, value2, "maitouno");
             return (Criteria) this;
         }
     }

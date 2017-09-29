@@ -72,7 +72,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <!--<table tableName="mf_pos"></table>-->
+        <!--<table tableName="sapso"></table>-->
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->
         <!--<table tableName="mf_ic"></table>
         <table tableName="tf_ic"></table>-->

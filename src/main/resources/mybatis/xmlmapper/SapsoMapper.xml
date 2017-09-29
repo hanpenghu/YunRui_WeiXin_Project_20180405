@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.BeforeSamePrdnoMergeMapper">
-  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.SapsoMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.Sapso">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="timeSameBatch" jdbcType="VARCHAR" property="timesamebatch" />
     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="osNo" jdbcType="VARCHAR" property="osno" />
+    <result column="ebNo" jdbcType="VARCHAR" property="ebno" />
+    <result column="caiGouNo" jdbcType="VARCHAR" property="caigouno" />
     <result column="prdNo" jdbcType="VARCHAR" property="prdno" />
     <result column="saphh" jdbcType="VARCHAR" property="saphh" />
+    <result column="sapph" jdbcType="VARCHAR" property="sapph" />
+    <result column="sapwlm" jdbcType="VARCHAR" property="sapwlm" />
     <result column="qty" jdbcType="NUMERIC" property="qty" />
+    <result column="maiTouNo" jdbcType="VARCHAR" property="maitouno" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +74,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, timeSameBatch, uuid, osNo, prdNo, saphh, qty
+    id, timeSameBatch, uuid, osNo, ebNo, caiGouNo, prdNo, saphh, sapph, sapwlm, qty, 
+    maiTouNo
   </sql>
-  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMergeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.SapsoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from before_same_prdNo_merge
+    from sapso
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,37 +94,33 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from before_same_prdNo_merge
+    from sapso
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from before_same_prdNo_merge
+    delete from sapso
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMergeExample">
-    delete from before_same_prdNo_merge
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.SapsoExample">
+    delete from sapso
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <!--<insert id="insert" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
-    insert into before_same_prdNo_merge (id, timeSameBatch, uuid, 
-      osNo, prdNo, saphh, 
-      qty)
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.Sapso">
+    insert into sapso (id, timeSameBatch, uuid, 
+      osNo, ebNo, caiGouNo, 
+      prdNo, saphh, sapph, 
+      sapwlm, qty, maiTouNo
+      )
     values (#{id,jdbcType=INTEGER}, #{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
-      #{osno,jdbcType=VARCHAR}, #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, 
-      #{qty,jdbcType=NUMERIC})
-  </insert>-->
-  <insert id="insert" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
-    insert into before_same_prdNo_merge (timeSameBatch, uuid,
-    osNo, prdNo, saphh,
-    qty)
-    values (#{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
-    #{osno,jdbcType=VARCHAR}, #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR},
-    #{qty,jdbcType=NUMERIC})
+      #{osno,jdbcType=VARCHAR}, #{ebno,jdbcType=VARCHAR}, #{caigouno,jdbcType=VARCHAR}, 
+      #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, 
+      #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
-    insert into before_same_prdNo_merge
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.Sapso">
+    insert into sapso
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -132,14 +134,29 @@
       <if test="osno != null">
         osNo,
       </if>
+      <if test="ebno != null">
+        ebNo,
+      </if>
+      <if test="caigouno != null">
+        caiGouNo,
+      </if>
       <if test="prdno != null">
         prdNo,
       </if>
       <if test="saphh != null">
         saphh,
       </if>
+      <if test="sapph != null">
+        sapph,
+      </if>
+      <if test="sapwlm != null">
+        sapwlm,
+      </if>
       <if test="qty != null">
         qty,
+      </if>
+      <if test="maitouno != null">
+        maiTouNo,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -155,25 +172,40 @@
       <if test="osno != null">
         #{osno,jdbcType=VARCHAR},
       </if>
+      <if test="ebno != null">
+        #{ebno,jdbcType=VARCHAR},
+      </if>
+      <if test="caigouno != null">
+        #{caigouno,jdbcType=VARCHAR},
+      </if>
       <if test="prdno != null">
         #{prdno,jdbcType=VARCHAR},
       </if>
       <if test="saphh != null">
         #{saphh,jdbcType=VARCHAR},
       </if>
+      <if test="sapph != null">
+        #{sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="sapwlm != null">
+        #{sapwlm,jdbcType=VARCHAR},
+      </if>
       <if test="qty != null">
         #{qty,jdbcType=NUMERIC},
       </if>
+      <if test="maitouno != null">
+        #{maitouno,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMergeExample" resultType="java.lang.Long">
-    select count(*) from before_same_prdNo_merge
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.SapsoExample" resultType="java.lang.Long">
+    select count(*) from sapso
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update before_same_prdNo_merge
+    update sapso
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -187,14 +219,29 @@
       <if test="record.osno != null">
         osNo = #{record.osno,jdbcType=VARCHAR},
       </if>
+      <if test="record.ebno != null">
+        ebNo = #{record.ebno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caigouno != null">
+        caiGouNo = #{record.caigouno,jdbcType=VARCHAR},
+      </if>
       <if test="record.prdno != null">
         prdNo = #{record.prdno,jdbcType=VARCHAR},
       </if>
       <if test="record.saphh != null">
         saphh = #{record.saphh,jdbcType=VARCHAR},
       </if>
+      <if test="record.sapph != null">
+        sapph = #{record.sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapwlm != null">
+        sapwlm = #{record.sapwlm,jdbcType=VARCHAR},
+      </if>
       <if test="record.qty != null">
         qty = #{record.qty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.maitouno != null">
+        maiTouNo = #{record.maitouno,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -202,20 +249,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update before_same_prdNo_merge
+    update sapso
     set id = #{record.id,jdbcType=INTEGER},
       timeSameBatch = #{record.timesamebatch,jdbcType=VARCHAR},
       uuid = #{record.uuid,jdbcType=VARCHAR},
       osNo = #{record.osno,jdbcType=VARCHAR},
+      ebNo = #{record.ebno,jdbcType=VARCHAR},
+      caiGouNo = #{record.caigouno,jdbcType=VARCHAR},
       prdNo = #{record.prdno,jdbcType=VARCHAR},
       saphh = #{record.saphh,jdbcType=VARCHAR},
-      qty = #{record.qty,jdbcType=NUMERIC}
+      sapph = #{record.sapph,jdbcType=VARCHAR},
+      sapwlm = #{record.sapwlm,jdbcType=VARCHAR},
+      qty = #{record.qty,jdbcType=NUMERIC},
+      maiTouNo = #{record.maitouno,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
-    update before_same_prdNo_merge
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.Sapso">
+    update sapso
     <set>
       <if test="timesamebatch != null">
         timeSameBatch = #{timesamebatch,jdbcType=VARCHAR},
@@ -226,27 +278,46 @@
       <if test="osno != null">
         osNo = #{osno,jdbcType=VARCHAR},
       </if>
+      <if test="ebno != null">
+        ebNo = #{ebno,jdbcType=VARCHAR},
+      </if>
+      <if test="caigouno != null">
+        caiGouNo = #{caigouno,jdbcType=VARCHAR},
+      </if>
       <if test="prdno != null">
         prdNo = #{prdno,jdbcType=VARCHAR},
       </if>
       <if test="saphh != null">
         saphh = #{saphh,jdbcType=VARCHAR},
       </if>
+      <if test="sapph != null">
+        sapph = #{sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="sapwlm != null">
+        sapwlm = #{sapwlm,jdbcType=VARCHAR},
+      </if>
       <if test="qty != null">
         qty = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="maitouno != null">
+        maiTouNo = #{maitouno,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.BeforeSamePrdnoMerge">
-    update before_same_prdNo_merge
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.Sapso">
+    update sapso
     set timeSameBatch = #{timesamebatch,jdbcType=VARCHAR},
       uuid = #{uuid,jdbcType=VARCHAR},
       osNo = #{osno,jdbcType=VARCHAR},
+      ebNo = #{ebno,jdbcType=VARCHAR},
+      caiGouNo = #{caigouno,jdbcType=VARCHAR},
       prdNo = #{prdno,jdbcType=VARCHAR},
       saphh = #{saphh,jdbcType=VARCHAR},
-      qty = #{qty,jdbcType=NUMERIC}
+      sapph = #{sapph,jdbcType=VARCHAR},
+      sapwlm = #{sapwlm,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=NUMERIC},
+      maiTouNo = #{maitouno,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
 </mapper>
