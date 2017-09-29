@@ -124,7 +124,7 @@ public class A1ReportRestService {
  ////////////////////////////////////////////////
         tz.setOsNo(s.getOsNo());
         tz.setSapwlm(s.getSapwlm());
-        tz.setSaphh(s.getSaphh());
+//        tz.setSaphh(s.getSaphh());//20170929老郑说这个不用写入值了
         tz.setSapph(s.getSapph());
         tz.setCfdm(s.getCfdm());
         tz.setOsId("SO");

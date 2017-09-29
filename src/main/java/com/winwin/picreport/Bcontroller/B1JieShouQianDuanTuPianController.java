@@ -28,12 +28,16 @@ public class B1JieShouQianDuanTuPianController {
     private String filePath;
     @Value("${dirUrl}")
     private String dirUrl;
+    //                             116.62.224.17253258:8070/b/jieShouQianduanChuanGuoLaiDeYiZhangTuPian
 ////////////////////////////////////////////////consumes是请求类型,/////produces是返回类型//////////////////////////
     @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //    @PostMapping(value = "/jieShouQianduanChuanGuoLaiDeYiZhangTuPian", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //@RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian(@RequestParam("file")MultipartFile file){//@RequestParam("file")
         List<SearchResult> list=new ArrayList<>();
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println(file.getOriginalFilename());
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         if (!file.isEmpty()) {
             if (file.getContentType().contains("image")) {
                 File dest=null;
