@@ -2,7 +2,7 @@ package com.winwin.picreport.Edto;
 
 import org.thymeleaf.util.StringUtils;
 
-public class SalePrdDetailTab1 {
+public class SalePrdDetailTab1 {//导出excel用
     private String remHead = "";//,	 // ---表头备注
     private String psNo = "";//,//---销货单号
     private String cusOsNo = "";//,//----客户订单号
@@ -18,6 +18,51 @@ public class SalePrdDetailTab1 {
     private String bc = "";//,---------备次
     private String mz = "";//,-------毛重
     private String pz = "";//----皮重
+    private String caiGouNo="";//采购单号
+    private String itm="";//供应商送货单行号
+    private String prdNo="";//供应商物料参考编号
+    private String sapph="";//物料编码  =原始数据表SAPSO.SAP 品号
+    private String saphh="";//采购订单行号  =原始数据表SAPSO.SAP行号
+
+    public String getSaphh() {
+        return saphh;
+    }
+
+    public void setSaphh(String saphh) {
+        this.saphh = saphh;
+    }
+
+    public String getSapph() {
+        return sapph;
+    }
+
+    public void setSapph(String sapph) {
+        this.sapph = sapph;
+    }
+
+    public String getPrdNo() {
+        return prdNo;
+    }
+
+    public void setPrdNo(String prdNo) {
+        this.prdNo = prdNo;
+    }
+
+    public String getItm() {
+        return itm;
+    }
+
+    public void setItm(String itm) {
+        this.itm = itm;
+    }
+
+    public String getCaiGouNo() {
+        return caiGouNo;
+    }
+
+    public void setCaiGouNo(String caiGouNo) {
+        this.caiGouNo = caiGouNo;
+    }
 
     public String getRemHead() {
         return remHead;
@@ -148,25 +193,4 @@ public class SalePrdDetailTab1 {
         this.pz = pz;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.SalePrdDetailTab1{");
-        sb.append("remHead='").append(remHead).append('\'');
-        sb.append(", psNo='").append(psNo).append('\'');
-        sb.append(", cusOsNo='").append(cusOsNo).append('\'');
-        sb.append(", prdName='").append(prdName).append('\'');
-        sb.append(", unit='").append(unit).append('\'');
-        sb.append(", qty='").append(qty).append('\'');
-        sb.append(", up='").append(up).append('\'');
-        sb.append(", amtnNet='").append(amtnNet).append('\'');
-        sb.append(", os_no='").append(os_no).append('\'');
-        sb.append(", bat_no='").append(bat_no).append('\'');
-        sb.append(", remBody='").append(remBody).append('\'');
-        sb.append(", indxName='").append(indxName).append('\'');
-        sb.append(", bc='").append(bc).append('\'');
-        sb.append(", mz='").append(mz).append('\'');
-        sb.append(", pz='").append(pz).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

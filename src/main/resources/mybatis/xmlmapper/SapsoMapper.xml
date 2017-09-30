@@ -108,12 +108,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.winwin.picreport.Edto.Sapso">
-    insert into sapso (id, timeSameBatch, uuid, 
+    insert into sapso (timeSameBatch, uuid,
       osNo, ebNo, caiGouNo, 
       prdNo, saphh, sapph, 
       sapwlm, qty, maiTouNo
       )
-    values (#{id,jdbcType=INTEGER}, #{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+    values (#{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
       #{osno,jdbcType=VARCHAR}, #{ebno,jdbcType=VARCHAR}, #{caigouno,jdbcType=VARCHAR}, 
       #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, 
       #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}

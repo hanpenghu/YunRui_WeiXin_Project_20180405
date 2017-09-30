@@ -1,6 +1,17 @@
 package com.winwin.picreport.Edto;
 
 public class ShouDingDanFromExcel {
+
+
+/*    public String getUnit() {
+//        return unit;
+        return  "1";//老郑让这么干的
+    }*/
+
+
+//    public void setUnit(String unit) {
+//        this.unit = "1";
+//    }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     private String osDd = "";
     private String estDd = "";
@@ -176,11 +187,12 @@ public class ShouDingDanFromExcel {
     }
 
     public String getUnit() {
-        return unit;
+//        return unit;
+        return  "1";//老郑让这么干的
     }
 
     public void setUnit(String unit) {
-        this.unit = unit;
+        this.unit = "1";
     }
 
     public String getUp() {

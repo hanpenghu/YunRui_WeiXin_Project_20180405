@@ -89,10 +89,11 @@ public class A1ReportRestService {
         m.setRem(s.getRemhead());
         m.setCurId(s.getCurId());
         m.setExcRto(new BigDecimal(s.getExcRto()));
-        //老郑说了,这个客户单号也用osNo填充
-        m.setCusNo(s.getOsNo());
+
+        m.setCusNo(s.getCusNo());
         m.setTaxId(s.getTaxId());
-        m.setCusOsNo(s.getCusOsNo());
+        //老郑说了,这个客户单号也用osNo填充
+        m.setCusOsNo(s.getOsNo());
         m.setOsId("SO");
         //下面2条是老郑在20170929让我加上的
         m.setUsr("ADMIN");

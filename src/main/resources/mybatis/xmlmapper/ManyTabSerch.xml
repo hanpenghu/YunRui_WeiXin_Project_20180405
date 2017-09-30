@@ -3,46 +3,52 @@
 <mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch">
 
      <select id="salePrdDetailTab1" resultType="com.winwin.picreport.Edto.SalePrdDetailTab1">
-          select
-          isnull(mf.rem,'') AS 'remHead',	  ---表头备注
-          isnull(mf.ps_no,'') AS 'psNo',---销货单号
-          isnull(mf.cus_os_no,'') AS 'cusOsNo',----客户订单号
-          isnull(tf.prd_name,'')AS 'prdName', ----货品名称
+          SELECT
+          ISNULL(mf.rem,'') AS 'remHead',	  ---表头备注
+          ISNULL(mf.ps_no,'') AS 'psNo',---销货单号(供应商销货单号)
+          ISNULL(mf.cus_os_no,'') AS 'cusOsNo',----客户订单号
+          ISNULL(tf.prd_name,'')AS 'prdName', ----货品名称
+          ISNULL(tf.prd_no,'')AS 'prdNo',---供应商物料参考编号
+          ISNULL(sapso.sapph,'')AS 'sapph',-------------//物料编码  =原始数据表SAPSO.SAP 品号
            ---tf.unit AS 'unit',---------单位
            '1' AS 'unit',
-           convert(varchar(40),isnull(tf.qty,0)) AS 'qty',---数量
-           convert(varchar(40),isnull(tf.up,0))AS 'up',----单价
-           convert(varchar(40),isnull(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
-           isnull(tf.os_no,'') AS 'os_no' ,----EB单号
-           isnull(tf.bat_no,'')AS 'bat_no',-----批号
-           isnull(tf.rem,'') AS 'remBody',	----表身摘要
-            isnull(dx.name,'')AS 'indxName'----种类名称
+           CONVERT(VARCHAR(40),ISNULL(tf.qty,0)) AS 'qty',---数量
+           CONVERT(VARCHAR(40),ISNULL(tf.up,0))AS 'up',----单价
+           CONVERT(VARCHAR(40),ISNULL(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
+           ISNULL(tf.os_no,'') AS 'os_no' ,----EB单号
+           ISNULL(tf.bat_no,'')AS 'bat_no',-----批号
+           ISNULL(tf.rem,'') AS 'remBody',	----表身摘要
+            ISNULL(dx.name,'')AS 'indxName'----种类名称
           -- , isnull(tfz.bc,'')AS 'bc',---------备次
            -- isnull(tfz.mz,'') AS 'mz',-------毛重
            -- isnull(tfz.pz,'')AS 'pz'----皮重
-          from mf_pss mf
-          left join tf_pss tf on mf.ps_no=tf.ps_no
-          left join prdt pd on tf.prd_no= pd.prd_no
-          left join indx dx on pd.idx1=dx.idx_no
+           ,ISNULL(sapso.caiGouNo,'')AS 'caiGouNo'----采购单号
+           ,ISNULL(tf.itm,'')AS 'itm'    -------供应商送货单行号---供应商送货单行号  =该销货单号导出行的TF_PSS.ITM
+           ,ISNULL(sapso.saphh,'') AS 'saphh'------------采购订单行号
+          FROM mf_pss mf
+          LEFT JOIN tf_pss tf ON mf.ps_no=tf.ps_no
+          LEFT JOIN prdt pd ON tf.prd_no= pd.prd_no
+          LEFT JOIN indx dx ON pd.idx1=dx.idx_no
           --left join tf_pss_z tfz on tfz.ps_no=tf.ps_no
-          where
+          LEFT JOIN sapso  sapso ON ( sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no)
+          WHERE
            mf.ps_id='SA'
-          and
+          AND
           tf.ps_id='SA'
-          and
+          AND
               mf.cus_no=
                   CASE
                   WHEN #{cus_no}='' THEN mf.cus_no
                   ELSE #{cus_no}
                   END
-		  and
+		  AND
               mf.ps_dd
-                  between
+                  BETWEEN
                           CASE
                           WHEN #{chaXunTiaoJian.startTime}='' THEN '1970-01-01'---传空的过来我们就把时间最小化
                           ELSE #{chaXunTiaoJian.startTime}
                           END  ----小的(远的)时间必须在前面
-                      and
+                      AND
                           CASE
                           WHEN #{chaXunTiaoJian.endTime}='' THEN '8888-12-31'---传空的过来我们就把时间尽量最大化,其实最大的是9999-12-31
                           ELSE #{chaXunTiaoJian.endTime}
