@@ -45,20 +45,29 @@ public class A1ReportRestService {
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();
             for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
-                Sapso b=new Sapso();
-                b.setOsno(shouDingDanFromExcel.getOsNo());
-                b.setPrdno(shouDingDanFromExcel.getPrdNo());
-                b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
-                b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
-                b.setEbno(shouDingDanFromExcel.getEbNo());
-                b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
-                b.setSaphh(shouDingDanFromExcel.getSaphh());
-                b.setSapph(shouDingDanFromExcel.getSapph());
-                b.setSapwlm(shouDingDanFromExcel.getSapwlm());
+                try {
+                    Sapso b=new Sapso();
+                    b.setOsno(shouDingDanFromExcel.getOsNo());
+                    b.setPrdno(shouDingDanFromExcel.getPrdNo());
+                    b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
+                    b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
+                    b.setEbno(shouDingDanFromExcel.getEbNo());
+                    b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
+                    b.setSaphh(shouDingDanFromExcel.getSaphh());
+                    b.setSapph(shouDingDanFromExcel.getSapph());
+                    b.setSapwlm(shouDingDanFromExcel.getSapwlm());
 
-                b.setTimesamebatch(dateStr);
-                b.setUuid(uuid);
-                sapsoMapper.insert(b);
+                    b.setTimesamebatch(dateStr);
+                    b.setUuid(uuid);
+                    sapsoMapper.insert(b);
+                } catch (Exception e) {
+                    Msg msg=new Msg();
+                    msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
+                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(os_no下面)数据一个都没插入！");
+                    listmsg.add(msg);
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
