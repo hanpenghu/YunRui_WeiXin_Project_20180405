@@ -137,13 +137,13 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 double amtn=0;//未税金额
                 double tax=0;//税额
                 double amt=0;//金额合并
-                double danJia=0;//
+//                double danJia=0;//当时想错了,单价不能合并
                 for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
                     try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty()); } catch (NumberFormatException e) {e.printStackTrace();}
                     try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn());} catch (NumberFormatException e) {e.printStackTrace();}
                     try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax());} catch (NumberFormatException e) {e.printStackTrace();}
                     try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt());} catch (NumberFormatException e) {e.printStackTrace();}
-                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
+//                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
                 if(list0.size()>0) {
                     ShouDingDanFromExcel shouDingDanFromExcel = list0.get(0);
@@ -151,7 +151,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                     shouDingDanFromExcel.setAmtn(String.valueOf(amtn));
                     shouDingDanFromExcel.setTax(String.valueOf(tax));
                     shouDingDanFromExcel.setAmt(String.valueOf(amt));
-                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
+//                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
                     list.add(shouDingDanFromExcel);
                 }
             }
