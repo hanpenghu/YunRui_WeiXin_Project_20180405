@@ -30,7 +30,9 @@ public class A1ReportRestController {
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value="shouDingDanExcelToTable",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
+   System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     System.out.println(shouDingDanFromExcels);
+System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
     long time01=new Date().getTime();
     try {
