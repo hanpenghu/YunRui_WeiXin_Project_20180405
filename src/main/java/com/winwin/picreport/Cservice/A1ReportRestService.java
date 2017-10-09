@@ -17,6 +17,8 @@ import java.util.UUID;
 @Service("a1")
 public class A1ReportRestService {
     @Autowired
+    ManyTabSerch manyTabSerch;
+    @Autowired
     SapsoMapper sapsoMapper;
     @Autowired
     private TfPosMapper tfPosMapper;
@@ -40,26 +42,31 @@ public class A1ReportRestService {
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
                     saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
         }
-        //插入自建表before_same_prdNo_merge(后来表名字改成sapsa)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
+        //插入自建表before_same_prdNo_merge(后来表名字改成sapso)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
         for(List<ShouDingDanFromExcel> listx:samePrdNoList){
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();
             for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
                 try {
-                    Sapso b=new Sapso();
-                    b.setOsno(shouDingDanFromExcel.getOsNo());
-                    b.setPrdno(shouDingDanFromExcel.getPrdNo());
-                    b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
-                    b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
-                    b.setEbno(shouDingDanFromExcel.getEbNo());
-                    b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
-                    b.setSaphh(shouDingDanFromExcel.getSaphh());
-                    b.setSapph(shouDingDanFromExcel.getSapph());
-                    b.setSapwlm(shouDingDanFromExcel.getSapwlm());
-
-                    b.setTimesamebatch(dateStr);
-                    b.setUuid(uuid);
-                    sapsoMapper.insert(b);
+                    //首先判断os_no在mf_pos里面有没有,有的话说明已经导入过了,就不需要再导入
+                   /* MfPosExample mfe=new MfPosExample();
+                    mfe.createCriteria().andOsNoEqualTo(shouDingDanFromExcel.getOsNo());
+                    long l101 = mfPosMapper.countByExample(mfe);
+                    if(l101==0){*/
+                        Sapso b=new Sapso();
+                        b.setOsno(shouDingDanFromExcel.getOsNo());
+                        b.setPrdno(shouDingDanFromExcel.getPrdNo());
+                        b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
+                        b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
+                        b.setEbno(shouDingDanFromExcel.getEbNo());
+                        b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
+                        b.setSaphh(shouDingDanFromExcel.getSaphh());
+                        b.setSapph(shouDingDanFromExcel.getSapph());
+                        b.setSapwlm(shouDingDanFromExcel.getSapwlm());
+                        b.setTimesamebatch(dateStr);
+                        b.setUuid(uuid);
+                        sapsoMapper.insert(b);
+//                    }
                 } catch (Exception e) {
                     Msg msg=new Msg();
                     msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
@@ -107,6 +114,11 @@ public class A1ReportRestService {
         //下面2条是老郑在20170929让我加上的
         m.setUsr("ADMIN");
         m.setChkMan("ADMIN");
+        //后来加的4个,为了避免是null
+            m.setClsId("F");
+            m.setPayMth("1");
+            m.setPayDays((short) 1);
+            m.setChkDays((short) 30);
         if(osDd==null) {
             m.setOsDd(null);
         }else{
@@ -136,6 +148,8 @@ public class A1ReportRestService {
         t.setAmt(new BigDecimal(s.getAmt()));
         t.setTaxRto(new BigDecimal(s.getTaxRto()));
         t.setRem(s.getRemBody());
+        t.setPrdMark("");
+
         //如果单价有问题,就要抛出异常
         if("".equals(s.getUp())||"0".equals(s.getUp())){
             msg.setMsg("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
@@ -158,6 +172,8 @@ public class A1ReportRestService {
         }
 
         //t.setItm();
+        //后来为了避免null加的一项
+//        t.setPreItm(t.getItm());
  ////////////////////////////////////////////////
         tz.setOsNo(s.getOsNo());
         tz.setSapwlm(s.getSapwlm());
@@ -220,6 +236,7 @@ public class A1ReportRestService {
         long l1 = mfPosMapper.countByExample(mfe);
         if(l1==0){
             mfPosMapper.insert(m);
+
         }
         //测试事务
 //            System.out.println(1/0);
@@ -236,6 +253,11 @@ public class A1ReportRestService {
         long ll = tfPosZMapper.countByExample(tfze);
         tz.setItm(new Long(ll).intValue()+1);
         tfPosZMapper.insert(tz);
+        //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
+        manyTabSerch.updateMfPosNullToNothing001(m);
+        manyTabSerch.updateTfPosNullToNothing001(m);
+
+
     } catch (Exception e) {
         Msg msg=new Msg();
         msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());

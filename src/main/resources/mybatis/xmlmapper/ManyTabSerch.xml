@@ -97,4 +97,13 @@
         SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1----OBJ_ID=1是客户,2代表厂商
     </select>
 
+
+    <update id="updateMfPosNullToNothing001">
+          UPDATE MF_POS SET CLS_ID='F',PAY_MTH=1,PAY_DAYS=1,CHK_DAYS=30 WHERE OS_NO=#{mfPosWithBLOBs.osNo}
+    </update>
+
+    <update id="updateTfPosNullToNothing001">
+          UPDATE TF_POS SET PRE_ITM=ITM  WHERE OS_NO=#{mfPosWithBLOBs.osNo}
+    </update>
+
 </mapper>
