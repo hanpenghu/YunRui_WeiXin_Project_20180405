@@ -176,10 +176,10 @@ public class A1ReportRestService {
 //        t.setPreItm(t.getItm());
  ////////////////////////////////////////////////
         tz.setOsNo(s.getOsNo());
-        tz.setSapwlm(s.getSapwlm());
+        tz.setSapwlm1(s.getSapwlm());
 //        tz.setSaphh(s.getSaphh());//20170929老郑说这个不用写入值了
         tz.setSapph(s.getSapph());
-        tz.setCfdm(s.getCfdm());
+        tz.setCfdm1(s.getCfdm());
         tz.setOsId("SO");
         //tz.setItm();
 ////////////////////////////////////////////////
@@ -261,7 +261,7 @@ public class A1ReportRestService {
     } catch (Exception e) {
         Msg msg=new Msg();
         msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
-        msg.setMsg("-----订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据一个也没有插入--因为在插入时发生了不可预料的异常----");
+        msg.setMsg("-----订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据一个也没有插入--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
         listmsg.add(msg);
         e.printStackTrace();
         throw new RuntimeException(e);

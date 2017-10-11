@@ -103,7 +103,7 @@
     </update>
 
     <update id="updateTfPosNullToNothing001">
-          UPDATE TF_POS SET PRE_ITM=ITM  WHERE OS_NO=#{mfPosWithBLOBs.osNo}
+          UPDATE TF_POS SET PRE_ITM=ITM,WH='00000000' WHERE OS_NO=#{mfPosWithBLOBs.osNo}
     </update>
 
 </mapper>

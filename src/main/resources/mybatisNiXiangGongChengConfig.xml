@@ -78,18 +78,7 @@
         <table tableName="tf_ic"></table>-->
         <!--<table tableName="salm"></table>
         <table tableName="my_wh"></table>-->
-        <!--<table tableName="Spider_regionList"></table>
-     <table tableName="Spider_cinemaList"></table>
-     <table tableName="Spider_hallList"></table>
-     <table tableName="Spider_seatList"></table>
-        <table tableName="Spider_regionList_org"></table>
-     <table tableName="Spider_cinemaList_org"></table>
-     <table tableName="Spider_hallList_org"></table>
-     <table tableName="Spider_seatList_org"></table>
-     <table tableName="Spider_filmList_org"></table>
-     <table tableName="Spider_filmList"></table>
-     <table tableName="Spider_showList_org"></table>
-     <table tableName="Spider_showList"></table> -->
-        <!--<table tableName="Spider_TransactionInfo"></table>-->
+
+       <!-- <table tableName="TF_POS_Z"></table>-->
     </context>
 </generatorConfiguration>

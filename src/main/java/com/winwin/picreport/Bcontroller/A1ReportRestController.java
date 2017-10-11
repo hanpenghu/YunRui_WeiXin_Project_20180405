@@ -1,5 +1,7 @@
 package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.Cservice.A1ReportRestService;
+import com.winwin.picreport.Ddao.reportxmlmapper.MfPosMapper;
+import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,15 @@ import java.util.*;
 public class A1ReportRestController {
     @Autowired
     private A1ReportRestService a1;
+    @Autowired
+    private MfPosMapper mfPosMapper;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value="shouDingDanExcelToTable",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
-   System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-    System.out.println(shouDingDanFromExcels);
-System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//   System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//    System.out.println(shouDingDanFromExcels);
+//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
     long time01=new Date().getTime();
     try {
@@ -99,9 +103,16 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     public void anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(List<List<ShouDingDanFromExcel>> list1,List<Msg> listmsg){
         for(List<ShouDingDanFromExcel> list3:list1){
             try {
-                //for一次就是处理同一批号osNo一次
-                Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
-                a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
+                MfPosExample mfPosExample=new MfPosExample();
+                mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
+                long l = mfPosMapper.countByExample(mfPosExample);
+                if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
+                    //for一次就是处理同一批号osNo一次
+                    Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
+                    a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                }
+
             } catch (Exception e) { e.printStackTrace(); }
         }
     }

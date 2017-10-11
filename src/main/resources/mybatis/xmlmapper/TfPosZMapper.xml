@@ -5,10 +5,21 @@
     <id column="OS_ID" jdbcType="VARCHAR" property="osId" />
     <id column="OS_NO" jdbcType="VARCHAR" property="osNo" />
     <id column="ITM" jdbcType="INTEGER" property="itm" />
+    <result column="CFDM1" jdbcType="VARCHAR" property="cfdm1" />
+    <result column="KHHH" jdbcType="VARCHAR" property="khhh" />
+    <result column="KHHPMC" jdbcType="VARCHAR" property="khhpmc" />
+    <result column="KHNBDH" jdbcType="VARCHAR" property="khnbdh" />
     <result column="SAPHH" jdbcType="VARCHAR" property="saphh" />
+    <result column="SAPPM" jdbcType="VARCHAR" property="sappm" />
+    <result column="XQSL" jdbcType="NUMERIC" property="xqsl" />
+    <result column="FHRQ" jdbcType="TIMESTAMP" property="fhrq" />
+    <result column="SAPWLM1" jdbcType="VARCHAR" property="sapwlm1" />
+    <result column="QDL" jdbcType="VARCHAR" property="qdl" />
     <result column="SAPPH" jdbcType="VARCHAR" property="sapph" />
-    <result column="SAPWLM" jdbcType="VARCHAR" property="sapwlm" />
-    <result column="CFDM" jdbcType="VARCHAR" property="cfdm" />
+    <result column="KHDDHM" jdbcType="VARCHAR" property="khddhm" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.winwin.picreport.Edto.TfPosZ">
+    <result column="BZ" jdbcType="LONGVARCHAR" property="bz" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,8 +80,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    OS_ID, OS_NO, ITM, SAPHH, SAPPH, SAPWLM, CFDM
+    OS_ID, OS_NO, ITM, CFDM1, KHHH, KHHPMC, KHNBDH, SAPHH, SAPPM, XQSL, FHRQ, SAPWLM1, 
+    QDL, SAPPH, KHDDHM
   </sql>
+  <sql id="Blob_Column_List">
+    BZ
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.winwin.picreport.Edto.TfPosZExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TF_POS_Z
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.TfPosZExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -85,9 +116,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZKey" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from TF_POS_Z
     where OS_ID = #{osId,jdbcType=VARCHAR}
       and OS_NO = #{osNo,jdbcType=VARCHAR}
@@ -107,11 +140,17 @@
   </delete>
   <insert id="insert" parameterType="com.winwin.picreport.Edto.TfPosZ">
     insert into TF_POS_Z (OS_ID, OS_NO, ITM, 
-      SAPHH, SAPPH, SAPWLM, 
-      CFDM)
+      CFDM1, KHHH, KHHPMC, 
+      KHNBDH, SAPHH, SAPPM, 
+      XQSL, FHRQ, SAPWLM1, 
+      QDL, SAPPH, KHDDHM, 
+      BZ)
     values (#{osId,jdbcType=VARCHAR}, #{osNo,jdbcType=VARCHAR}, #{itm,jdbcType=INTEGER}, 
-      #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, #{sapwlm,jdbcType=VARCHAR}, 
-      #{cfdm,jdbcType=VARCHAR})
+      #{cfdm1,jdbcType=VARCHAR}, #{khhh,jdbcType=VARCHAR}, #{khhpmc,jdbcType=VARCHAR}, 
+      #{khnbdh,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sappm,jdbcType=VARCHAR}, 
+      #{xqsl,jdbcType=NUMERIC}, #{fhrq,jdbcType=TIMESTAMP}, #{sapwlm1,jdbcType=VARCHAR}, 
+      #{qdl,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, #{khddhm,jdbcType=VARCHAR}, 
+      #{bz,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.TfPosZ">
     insert into TF_POS_Z
@@ -125,17 +164,44 @@
       <if test="itm != null">
         ITM,
       </if>
+      <if test="cfdm1 != null">
+        CFDM1,
+      </if>
+      <if test="khhh != null">
+        KHHH,
+      </if>
+      <if test="khhpmc != null">
+        KHHPMC,
+      </if>
+      <if test="khnbdh != null">
+        KHNBDH,
+      </if>
       <if test="saphh != null">
         SAPHH,
+      </if>
+      <if test="sappm != null">
+        SAPPM,
+      </if>
+      <if test="xqsl != null">
+        XQSL,
+      </if>
+      <if test="fhrq != null">
+        FHRQ,
+      </if>
+      <if test="sapwlm1 != null">
+        SAPWLM1,
+      </if>
+      <if test="qdl != null">
+        QDL,
       </if>
       <if test="sapph != null">
         SAPPH,
       </if>
-      <if test="sapwlm != null">
-        SAPWLM,
+      <if test="khddhm != null">
+        KHDDHM,
       </if>
-      <if test="cfdm != null">
-        CFDM,
+      <if test="bz != null">
+        BZ,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -148,17 +214,44 @@
       <if test="itm != null">
         #{itm,jdbcType=INTEGER},
       </if>
+      <if test="cfdm1 != null">
+        #{cfdm1,jdbcType=VARCHAR},
+      </if>
+      <if test="khhh != null">
+        #{khhh,jdbcType=VARCHAR},
+      </if>
+      <if test="khhpmc != null">
+        #{khhpmc,jdbcType=VARCHAR},
+      </if>
+      <if test="khnbdh != null">
+        #{khnbdh,jdbcType=VARCHAR},
+      </if>
       <if test="saphh != null">
         #{saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="sappm != null">
+        #{sappm,jdbcType=VARCHAR},
+      </if>
+      <if test="xqsl != null">
+        #{xqsl,jdbcType=NUMERIC},
+      </if>
+      <if test="fhrq != null">
+        #{fhrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sapwlm1 != null">
+        #{sapwlm1,jdbcType=VARCHAR},
+      </if>
+      <if test="qdl != null">
+        #{qdl,jdbcType=VARCHAR},
       </if>
       <if test="sapph != null">
         #{sapph,jdbcType=VARCHAR},
       </if>
-      <if test="sapwlm != null">
-        #{sapwlm,jdbcType=VARCHAR},
+      <if test="khddhm != null">
+        #{khddhm,jdbcType=VARCHAR},
       </if>
-      <if test="cfdm != null">
-        #{cfdm,jdbcType=VARCHAR},
+      <if test="bz != null">
+        #{bz,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -180,19 +273,68 @@
       <if test="record.itm != null">
         ITM = #{record.itm,jdbcType=INTEGER},
       </if>
+      <if test="record.cfdm1 != null">
+        CFDM1 = #{record.cfdm1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khhh != null">
+        KHHH = #{record.khhh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khhpmc != null">
+        KHHPMC = #{record.khhpmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khnbdh != null">
+        KHNBDH = #{record.khnbdh,jdbcType=VARCHAR},
+      </if>
       <if test="record.saphh != null">
         SAPHH = #{record.saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sappm != null">
+        SAPPM = #{record.sappm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xqsl != null">
+        XQSL = #{record.xqsl,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fhrq != null">
+        FHRQ = #{record.fhrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sapwlm1 != null">
+        SAPWLM1 = #{record.sapwlm1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qdl != null">
+        QDL = #{record.qdl,jdbcType=VARCHAR},
       </if>
       <if test="record.sapph != null">
         SAPPH = #{record.sapph,jdbcType=VARCHAR},
       </if>
-      <if test="record.sapwlm != null">
-        SAPWLM = #{record.sapwlm,jdbcType=VARCHAR},
+      <if test="record.khddhm != null">
+        KHDDHM = #{record.khddhm,jdbcType=VARCHAR},
       </if>
-      <if test="record.cfdm != null">
-        CFDM = #{record.cfdm,jdbcType=VARCHAR},
+      <if test="record.bz != null">
+        BZ = #{record.bz,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update TF_POS_Z
+    set OS_ID = #{record.osId,jdbcType=VARCHAR},
+      OS_NO = #{record.osNo,jdbcType=VARCHAR},
+      ITM = #{record.itm,jdbcType=INTEGER},
+      CFDM1 = #{record.cfdm1,jdbcType=VARCHAR},
+      KHHH = #{record.khhh,jdbcType=VARCHAR},
+      KHHPMC = #{record.khhpmc,jdbcType=VARCHAR},
+      KHNBDH = #{record.khnbdh,jdbcType=VARCHAR},
+      SAPHH = #{record.saphh,jdbcType=VARCHAR},
+      SAPPM = #{record.sappm,jdbcType=VARCHAR},
+      XQSL = #{record.xqsl,jdbcType=NUMERIC},
+      FHRQ = #{record.fhrq,jdbcType=TIMESTAMP},
+      SAPWLM1 = #{record.sapwlm1,jdbcType=VARCHAR},
+      QDL = #{record.qdl,jdbcType=VARCHAR},
+      SAPPH = #{record.sapph,jdbcType=VARCHAR},
+      KHDDHM = #{record.khddhm,jdbcType=VARCHAR},
+      BZ = #{record.bz,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -202,10 +344,18 @@
     set OS_ID = #{record.osId,jdbcType=VARCHAR},
       OS_NO = #{record.osNo,jdbcType=VARCHAR},
       ITM = #{record.itm,jdbcType=INTEGER},
+      CFDM1 = #{record.cfdm1,jdbcType=VARCHAR},
+      KHHH = #{record.khhh,jdbcType=VARCHAR},
+      KHHPMC = #{record.khhpmc,jdbcType=VARCHAR},
+      KHNBDH = #{record.khnbdh,jdbcType=VARCHAR},
       SAPHH = #{record.saphh,jdbcType=VARCHAR},
+      SAPPM = #{record.sappm,jdbcType=VARCHAR},
+      XQSL = #{record.xqsl,jdbcType=NUMERIC},
+      FHRQ = #{record.fhrq,jdbcType=TIMESTAMP},
+      SAPWLM1 = #{record.sapwlm1,jdbcType=VARCHAR},
+      QDL = #{record.qdl,jdbcType=VARCHAR},
       SAPPH = #{record.sapph,jdbcType=VARCHAR},
-      SAPWLM = #{record.sapwlm,jdbcType=VARCHAR},
-      CFDM = #{record.cfdm,jdbcType=VARCHAR}
+      KHDDHM = #{record.khddhm,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,29 +363,83 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.TfPosZ">
     update TF_POS_Z
     <set>
+      <if test="cfdm1 != null">
+        CFDM1 = #{cfdm1,jdbcType=VARCHAR},
+      </if>
+      <if test="khhh != null">
+        KHHH = #{khhh,jdbcType=VARCHAR},
+      </if>
+      <if test="khhpmc != null">
+        KHHPMC = #{khhpmc,jdbcType=VARCHAR},
+      </if>
+      <if test="khnbdh != null">
+        KHNBDH = #{khnbdh,jdbcType=VARCHAR},
+      </if>
       <if test="saphh != null">
         SAPHH = #{saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="sappm != null">
+        SAPPM = #{sappm,jdbcType=VARCHAR},
+      </if>
+      <if test="xqsl != null">
+        XQSL = #{xqsl,jdbcType=NUMERIC},
+      </if>
+      <if test="fhrq != null">
+        FHRQ = #{fhrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sapwlm1 != null">
+        SAPWLM1 = #{sapwlm1,jdbcType=VARCHAR},
+      </if>
+      <if test="qdl != null">
+        QDL = #{qdl,jdbcType=VARCHAR},
       </if>
       <if test="sapph != null">
         SAPPH = #{sapph,jdbcType=VARCHAR},
       </if>
-      <if test="sapwlm != null">
-        SAPWLM = #{sapwlm,jdbcType=VARCHAR},
+      <if test="khddhm != null">
+        KHDDHM = #{khddhm,jdbcType=VARCHAR},
       </if>
-      <if test="cfdm != null">
-        CFDM = #{cfdm,jdbcType=VARCHAR},
+      <if test="bz != null">
+        BZ = #{bz,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where OS_ID = #{osId,jdbcType=VARCHAR}
       and OS_NO = #{osNo,jdbcType=VARCHAR}
       and ITM = #{itm,jdbcType=INTEGER}
   </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.winwin.picreport.Edto.TfPosZ">
+    update TF_POS_Z
+    set CFDM1 = #{cfdm1,jdbcType=VARCHAR},
+      KHHH = #{khhh,jdbcType=VARCHAR},
+      KHHPMC = #{khhpmc,jdbcType=VARCHAR},
+      KHNBDH = #{khnbdh,jdbcType=VARCHAR},
+      SAPHH = #{saphh,jdbcType=VARCHAR},
+      SAPPM = #{sappm,jdbcType=VARCHAR},
+      XQSL = #{xqsl,jdbcType=NUMERIC},
+      FHRQ = #{fhrq,jdbcType=TIMESTAMP},
+      SAPWLM1 = #{sapwlm1,jdbcType=VARCHAR},
+      QDL = #{qdl,jdbcType=VARCHAR},
+      SAPPH = #{sapph,jdbcType=VARCHAR},
+      KHDDHM = #{khddhm,jdbcType=VARCHAR},
+      BZ = #{bz,jdbcType=LONGVARCHAR}
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+      and OS_NO = #{osNo,jdbcType=VARCHAR}
+      and ITM = #{itm,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZ">
     update TF_POS_Z
-    set SAPHH = #{saphh,jdbcType=VARCHAR},
+    set CFDM1 = #{cfdm1,jdbcType=VARCHAR},
+      KHHH = #{khhh,jdbcType=VARCHAR},
+      KHHPMC = #{khhpmc,jdbcType=VARCHAR},
+      KHNBDH = #{khnbdh,jdbcType=VARCHAR},
+      SAPHH = #{saphh,jdbcType=VARCHAR},
+      SAPPM = #{sappm,jdbcType=VARCHAR},
+      XQSL = #{xqsl,jdbcType=NUMERIC},
+      FHRQ = #{fhrq,jdbcType=TIMESTAMP},
+      SAPWLM1 = #{sapwlm1,jdbcType=VARCHAR},
+      QDL = #{qdl,jdbcType=VARCHAR},
       SAPPH = #{sapph,jdbcType=VARCHAR},
-      SAPWLM = #{sapwlm,jdbcType=VARCHAR},
-      CFDM = #{cfdm,jdbcType=VARCHAR}
+      KHDDHM = #{khddhm,jdbcType=VARCHAR}
     where OS_ID = #{osId,jdbcType=VARCHAR}
       and OS_NO = #{osNo,jdbcType=VARCHAR}
       and ITM = #{itm,jdbcType=INTEGER}
