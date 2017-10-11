@@ -3,7 +3,9 @@ import com.winwin.picreport.Cservice.A1ReportRestService;
 import com.winwin.picreport.Ddao.reportxmlmapper.MfPosMapper;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
+import com.winwin.picreport.Futils.MessageGenerate;
 import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +55,7 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         listmsg.add(msg);
         //如果msg列表中有2个及2个以上,说明数据没有完全插入成功,就把那个数据插入成功的message删掉
         this.quChuDuoYuDeSuccessMsg(listmsg,"数据插入成功");
+        this.quChuKongDeMsg(listmsg);//如果Msg中的字段msg是"",那么久去除这一条数据
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -65,7 +68,15 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 ////////////////////////////////
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+    private void quChuKongDeMsg(List<Msg> listmsg) {
+            for(Msg msg:listmsg){
+                if(!NotEmpty.notEmpty(msg.getMsg())){
+                    listmsg.remove(msg);
+                }
+            }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
     public boolean panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi(List<ShouDingDanFromExcel> shouDingDanFromExcels){
         boolean a=(shouDingDanFromExcels.get(0)==null);
         boolean c=shouDingDanFromExcels.get(0).getOsNo()==null;
@@ -111,9 +122,17 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
                     //for一次就是处理同一批号osNo一次
                     Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3);
                     a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                }else{
+//                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
+                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入"));
+                    return;//此时停止循环所有单号
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                //下面的return 是针对    if(l==0)抛出的异常的
+                return;//这个意思是:如果一个excel中有一个单号没有插入成功,那么,停止循环其他单号，所有单号都不会插入成功
 
-            } catch (Exception e) { e.printStackTrace(); }
+            }
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////
@@ -183,17 +202,17 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
-    public String  f(){
-        return "你好！！！";
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value="h",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
-    public @ResponseBody  Test  h(){
-        Test test=new Test();
-        test.setStr("韩寒！！！");
-        return test;
-    }
+//    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
+//    public String  f(){
+//        return "你好！！！";
+//    }
+//    /////////////////////////////////////////////////////////////////////////////////////////////////
+//    @RequestMapping(value="h",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+//    public @ResponseBody  Test  h(){
+//        Test test=new Test();
+//        test.setStr("韩寒！！！");
+//        return test;
+//    }
 
 //////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,22 +285,22 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 
 
 
-class Test{
-    private String str="";
-
-    public String getStr() {
-        return str;
-    }
-
-    public void setStr(String str) {
-        this.str = str;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Bcontroller.Test{");
-        sb.append("str='").append(str).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
-}
+//class Test{
+//    private String str="";
+//
+//    public String getStr() {
+//        return str;
+//    }
+//
+//    public void setStr(String str) {
+//        this.str = str;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Bcontroller.Test{");
+//        sb.append("str='").append(str).append('\'');
+//        sb.append('}');
+//        return sb.toString();
+//    }
+//}

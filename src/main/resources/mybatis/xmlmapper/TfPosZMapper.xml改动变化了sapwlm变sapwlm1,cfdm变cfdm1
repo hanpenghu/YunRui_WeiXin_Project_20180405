@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.TfPosZMapper_GaiDong_sapwlmBiansapwlm1_____cfdmBiancfdm1">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.TfPosZ">
+    <id column="OS_ID" jdbcType="VARCHAR" property="osId" />
+    <id column="OS_NO" jdbcType="VARCHAR" property="osNo" />
+    <id column="ITM" jdbcType="INTEGER" property="itm" />
+    <result column="SAPHH" jdbcType="VARCHAR" property="saphh" />
+    <result column="SAPPH" jdbcType="VARCHAR" property="sapph" />
+    <result column="SAPWLM" jdbcType="VARCHAR" property="sapwlm" />
+    <result column="CFDM" jdbcType="VARCHAR" property="cfdm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    OS_ID, OS_NO, ITM, SAPHH, SAPPH, SAPWLM, CFDM
+  </sql>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.TfPosZExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TF_POS_Z
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TF_POS_Z
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+      and OS_NO = #{osNo,jdbcType=VARCHAR}
+      and ITM = #{itm,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZKey">
+    delete from TF_POS_Z
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+      and OS_NO = #{osNo,jdbcType=VARCHAR}
+      and ITM = #{itm,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.TfPosZExample">
+    delete from TF_POS_Z
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.TfPosZ">
+    insert into TF_POS_Z (OS_ID, OS_NO, ITM, 
+      SAPHH, SAPPH, SAPWLM, 
+      CFDM)
+    values (#{osId,jdbcType=VARCHAR}, #{osNo,jdbcType=VARCHAR}, #{itm,jdbcType=INTEGER}, 
+      #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, #{sapwlm,jdbcType=VARCHAR}, 
+      #{cfdm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.TfPosZ">
+    insert into TF_POS_Z
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="osId != null">
+        OS_ID,
+      </if>
+      <if test="osNo != null">
+        OS_NO,
+      </if>
+      <if test="itm != null">
+        ITM,
+      </if>
+      <if test="saphh != null">
+        SAPHH,
+      </if>
+      <if test="sapph != null">
+        SAPPH,
+      </if>
+      <if test="sapwlm != null">
+        SAPWLM,
+      </if>
+      <if test="cfdm != null">
+        CFDM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="osId != null">
+        #{osId,jdbcType=VARCHAR},
+      </if>
+      <if test="osNo != null">
+        #{osNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itm != null">
+        #{itm,jdbcType=INTEGER},
+      </if>
+      <if test="saphh != null">
+        #{saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="sapph != null">
+        #{sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="sapwlm != null">
+        #{sapwlm,jdbcType=VARCHAR},
+      </if>
+      <if test="cfdm != null">
+        #{cfdm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.TfPosZExample" resultType="java.lang.Long">
+    select count(*) from TF_POS_Z
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TF_POS_Z
+    <set>
+      <if test="record.osId != null">
+        OS_ID = #{record.osId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osNo != null">
+        OS_NO = #{record.osNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itm != null">
+        ITM = #{record.itm,jdbcType=INTEGER},
+      </if>
+      <if test="record.saphh != null">
+        SAPHH = #{record.saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapph != null">
+        SAPPH = #{record.sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapwlm != null">
+        SAPWLM = #{record.sapwlm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cfdm != null">
+        CFDM = #{record.cfdm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TF_POS_Z
+    set OS_ID = #{record.osId,jdbcType=VARCHAR},
+      OS_NO = #{record.osNo,jdbcType=VARCHAR},
+      ITM = #{record.itm,jdbcType=INTEGER},
+      SAPHH = #{record.saphh,jdbcType=VARCHAR},
+      SAPPH = #{record.sapph,jdbcType=VARCHAR},
+      SAPWLM = #{record.sapwlm,jdbcType=VARCHAR},
+      CFDM = #{record.cfdm,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.TfPosZ">
+    update TF_POS_Z
+    <set>
+      <if test="saphh != null">
+        SAPHH = #{saphh,jdbcType=VARCHAR},
+      </if>
+      <if test="sapph != null">
+        SAPPH = #{sapph,jdbcType=VARCHAR},
+      </if>
+      <if test="sapwlm != null">
+        SAPWLM = #{sapwlm,jdbcType=VARCHAR},
+      </if>
+      <if test="cfdm != null">
+        CFDM = #{cfdm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+      and OS_NO = #{osNo,jdbcType=VARCHAR}
+      and ITM = #{itm,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.TfPosZ">
+    update TF_POS_Z
+    set SAPHH = #{saphh,jdbcType=VARCHAR},
+      SAPPH = #{sapph,jdbcType=VARCHAR},
+      SAPWLM = #{sapwlm,jdbcType=VARCHAR},
+      CFDM = #{cfdm,jdbcType=VARCHAR}
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+      and OS_NO = #{osNo,jdbcType=VARCHAR}
+      and ITM = #{itm,jdbcType=INTEGER}
+  </update>
+</mapper>

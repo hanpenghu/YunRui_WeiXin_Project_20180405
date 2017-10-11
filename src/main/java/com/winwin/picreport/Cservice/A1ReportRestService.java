@@ -70,7 +70,10 @@ public class A1ReportRestService {
                 } catch (Exception e) {
                     Msg msg=new Msg();
                     msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
-                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(os_no下面)数据一个都没插入！");
+
+//                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(os_no下面)数据一个都没插入！");
+                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(整个excel的)数据一个都没插入！");
+
                     listmsg.add(msg);
                     e.printStackTrace();
                     throw new RuntimeException(e);
@@ -196,7 +199,7 @@ public class A1ReportRestService {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,List<Msg>listmsg){
-    try {
+//    try {
         //注册商品到商品库//不能再自动注册了,老郑说了,自动注册的不行,因为客户可能手动输入输错了,所以,我们就不再自动插入prdt表来注册商品
            /* PrdtExample prdtExample=new PrdtExample();
             prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo());
@@ -214,7 +217,7 @@ public class A1ReportRestService {
         if(l2==0){
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
             msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
-            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面或者 商品名="+pdt.getName()+"不在商品表中,导致无法插入数据,--------");
+            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面或者 商品名="+pdt.getName()+"不在商品表中,导致无法插入数据,--------");
             listmsg.add(msg);
            //不再进行下面步骤
             throw new RuntimeException(msg.getMsg());
@@ -222,11 +225,11 @@ public class A1ReportRestService {
             //单独分出来是为了只在下面的几个插入使用事务
             saveChuLePrdtDe(m,t,tz,listmsg);
         }
-    } catch (RuntimeException e) {
-        e.printStackTrace();
-        throw new RuntimeException();
+//    } catch (RuntimeException e) {
+//        e.printStackTrace();
+//        throw new RuntimeException();
+//    }
     }
-}
 //////////////////////////////////////////////////////////////////////////////////
 @Transactional
     public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz,List<Msg>listmsg){
@@ -261,7 +264,7 @@ public class A1ReportRestService {
     } catch (Exception e) {
         Msg msg=new Msg();
         msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
-        msg.setMsg("-----订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据一个也没有插入--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
+        msg.setMsg("--订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据(整个EXcel的数据)一个也没有插入--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
         listmsg.add(msg);
         e.printStackTrace();
         throw new RuntimeException(e);
