@@ -15,6 +15,7 @@
            CONVERT(VARCHAR(40),ISNULL(tf.qty,0)) AS 'qty',---数量
            CONVERT(VARCHAR(40),ISNULL(tf.up,0))AS 'up',----单价
            CONVERT(VARCHAR(40),ISNULL(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
+           CONVERT(VARCHAR(40),ISNULL(tf.amt,0)) AS 'amt',---本位币
            ISNULL(tf.os_no,'') AS 'os_no' ,----EB单号
            ISNULL(tf.bat_no,'')AS 'bat_no',-----批号
            ISNULL(tf.rem,'') AS 'remBody',	----表身摘要
@@ -106,4 +107,35 @@
           UPDATE TF_POS SET PRE_ITM=ITM,WH='00000000' WHERE OS_NO=#{mfPosWithBLOBs.osNo}
     </update>
 
+
+
+
+    <update id="update001OfOnlineBug">
+        UPDATE A SET A.REM=B.REM FROM TF_POS A,TF_POS B,TF_SQ C
+        WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.REM IS NULL or A.rem='') AND
+        B.os_id='SO' AND (B.REM IS NOT NULL AND B.rem != '') AND A.SQ_NO=C.SQ_NO AND
+        A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update002OfOnlineBug">
+        UPDATE  A SET A.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS A,TF_POS B,TF_SQ C
+        WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.SUP_PRD_NO IS NULL or A.SUP_PRD_NO='') AND
+        B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO!='') AND A.SQ_NO=C.SQ_NO AND
+        A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update003OfOnlineBug">
+        UPDATE  C SET C.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS B,TF_SQ C
+        WHERE B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO!='') AND
+        C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update004OfOnlineBug">
+        update  tf_pos set wh='1000' where os_id='PO' AND wh='00000000'
+    </update>
+
+    <update id="update005OfOnlineBug">
+        update  tf_pos set wh='2000' where os_id='PO' and os_no in
+        (select os_no from mf_pos where cus_no='F031') and  wh != '2000'
+    </update>
 </mapper>

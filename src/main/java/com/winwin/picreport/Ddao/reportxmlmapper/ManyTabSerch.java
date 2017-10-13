@@ -17,4 +17,13 @@ public interface ManyTabSerch {
         Integer updateTfPosNullToNothing001(@Param("mfPosWithBLOBs") MfPosWithBLOBs mfPosWithBLOBs);
 
 
+        Integer update001OfOnlineBug();
+
+        Integer update002OfOnlineBug();
+
+        Integer update003OfOnlineBug();
+
+        Integer update004OfOnlineBug();
+
+        Integer update005OfOnlineBug();
 }

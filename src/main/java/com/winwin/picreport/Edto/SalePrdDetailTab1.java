@@ -1,6 +1,8 @@
 package com.winwin.picreport.Edto;
 
-import org.thymeleaf.util.StringUtils;
+import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.TongJiXiaoShuDianHouDeWeiShu;
+
 
 public class SalePrdDetailTab1 {//导出excel用
     private String remHead = "";//,	 // ---表头备注
@@ -10,6 +12,7 @@ public class SalePrdDetailTab1 {//导出excel用
     private String unit = "";//,//---------单位
     private String qty = "";//,---数量
     private String up = "";//,----单价
+    private String amt="";//---本位币
     private String amtnNet = "";//,---未税本位币
     private String os_no = "";// ,----EB单号
     private String bat_no = "";//,-----批号
@@ -23,6 +26,18 @@ public class SalePrdDetailTab1 {//导出excel用
     private String prdNo="";//供应商物料参考编号
     private String sapph="";//物料编码  =原始数据表SAPSO.SAP 品号
     private String saphh="";//采购订单行号  =原始数据表SAPSO.SAP行号
+
+
+    public String getAmt() {
+        if(NotEmpty.notEmpty(this.amt)&&this.amt.contains(".")&&TongJiXiaoShuDianHouDeWeiShu.f(this.amt)>5){
+            this.amt=this.amt.trim().substring(0,this.amt.indexOf(".")+5);
+        }
+        return amt;
+    }
+
+    public void setAmt(String amt) {
+        this.amt = amt;
+    }
 
     public String getSaphh() {
         return saphh;
@@ -105,7 +120,7 @@ public class SalePrdDetailTab1 {//导出excel用
     }
 
     public String getQty() {
-        if(!"".equals(this.qty)&&this.qty.contains(".")){
+        if(NotEmpty.notEmpty(this.qty)&&this.qty.contains(".")&&TongJiXiaoShuDianHouDeWeiShu.f(this.qty)>5){
             this.qty=this.qty.trim().substring(0,this.qty.indexOf(".")+5);
         }
         return qty;
@@ -116,7 +131,7 @@ public class SalePrdDetailTab1 {//导出excel用
     }
 
     public String getUp() {
-        if(!"".equals(this.up)&&this.up.contains(".")){
+        if(NotEmpty.notEmpty(this.up)&&this.up.contains(".")&& TongJiXiaoShuDianHouDeWeiShu.f(this.up)>5){
             this.up=this.up.trim().substring(0,this.up.indexOf(".")+5);
         }
         return up;
@@ -127,7 +142,7 @@ public class SalePrdDetailTab1 {//导出excel用
     }
 
     public String getAmtnNet() {
-        if(!"".equals(this.amtnNet)&&this.amtnNet.contains(".")){
+        if(NotEmpty.notEmpty(this.amtnNet)&&this.amtnNet.contains(".")&&TongJiXiaoShuDianHouDeWeiShu.f(this.amtnNet)>5){
             this.amtnNet=this.amtnNet.trim().substring(0,this.amtnNet.indexOf(".")+5);
         }
         return amtnNet;

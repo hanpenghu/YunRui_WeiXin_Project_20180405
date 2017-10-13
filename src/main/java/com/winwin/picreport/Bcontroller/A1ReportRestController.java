@@ -69,11 +69,11 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 }
 
     private void quChuKongDeMsg(List<Msg> listmsg) {
-            for(Msg msg:listmsg){
+            listmsg.forEach((msg)->{
                 if(!NotEmpty.notEmpty(msg.getMsg())){
                     listmsg.remove(msg);
                 }
-            }
+            });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,11 +194,11 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
         if(listmsg.size()>1){
-            for(Msg msg11:listmsg){
-                if(msg.equals(msg11.getMsg())){
-                    listmsg.remove(msg11);
+            listmsg.forEach((msg1)->{
+                if(msg.equals(msg1.getMsg())){
+                    listmsg.remove(msg1);
                 }
-            }
+            });
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////

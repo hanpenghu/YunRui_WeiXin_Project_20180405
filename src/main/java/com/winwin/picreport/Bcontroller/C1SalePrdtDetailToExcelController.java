@@ -12,6 +12,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/c1")
+/**
+ *导出excel
+ * */
 public class C1SalePrdtDetailToExcelController {
     @Autowired
     private ManyTabSerch manyTabSerch;

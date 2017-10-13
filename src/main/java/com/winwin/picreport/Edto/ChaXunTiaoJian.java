@@ -1,5 +1,7 @@
 package com.winwin.picreport.Edto;
 
+import com.winwin.picreport.Futils.NotEmpty;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +31,7 @@ public class ChaXunTiaoJian {
     }
 
     public String getStartTime() {
-        if(this.startTimeStamp==null||"".equals(this.startTimeStamp)||this.startTimeStamp=="undefined"||this.startTimeStamp=="Undefined"){
+        if(!NotEmpty.notEmpty(this.startTimeStamp)||"undefined".equals(this.startTimeStamp)||"Undefined".equals(this.startTimeStamp)){
             //此时客户什么也没弄过来,我们把起始时间最小化
             this.startTime="1970-01-01";
         }else{
@@ -46,7 +48,7 @@ public class ChaXunTiaoJian {
     }
     //yyyy-MM-dd是SQLServer直接能读的字符串日期类型
     public String getEndTime() {
-        if(this.endTimeStamp==null||"".equals(this.endTimeStamp)||this.endTimeStamp=="undefined"||this.endTimeStamp=="Undefined"){
+        if(!NotEmpty.notEmpty(this.endTimeStamp)||"undefined".equals(this.endTimeStamp)||"Undefined".equals(this.endTimeStamp)){
             //此时客户什么也没弄过来,我们把起始时间最大化
             this.endTime="8888-12-31";
         }else{
