@@ -26,4 +26,6 @@ public interface ManyTabSerch {
         Integer update004OfOnlineBug();
 
         Integer update005OfOnlineBug();
+
+        Integer update006OfOnlineBug();
 }

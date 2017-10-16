@@ -140,13 +140,13 @@
   </delete>
   <insert id="insert" parameterType="com.winwin.picreport.Edto.TfPosZ">
     insert into TF_POS_Z (OS_ID, OS_NO, ITM, 
-      CFDM1, KHHH, KHHPMC, 
+      CFDM1,  KHHPMC,
       KHNBDH, SAPHH, SAPPM, 
       XQSL, FHRQ, SAPWLM1, 
       QDL, SAPPH, KHDDHM, 
       BZ)
     values (#{osId,jdbcType=VARCHAR}, #{osNo,jdbcType=VARCHAR}, #{itm,jdbcType=INTEGER}, 
-      #{cfdm1,jdbcType=VARCHAR}, #{khhh,jdbcType=VARCHAR}, #{khhpmc,jdbcType=VARCHAR}, 
+      #{cfdm1,jdbcType=VARCHAR}, #{khhpmc,jdbcType=VARCHAR},
       #{khnbdh,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sappm,jdbcType=VARCHAR}, 
       #{xqsl,jdbcType=NUMERIC}, #{fhrq,jdbcType=TIMESTAMP}, #{sapwlm1,jdbcType=VARCHAR}, 
       #{qdl,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, #{khddhm,jdbcType=VARCHAR}, 
