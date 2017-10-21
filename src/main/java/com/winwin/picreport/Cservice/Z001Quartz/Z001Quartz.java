@@ -132,6 +132,101 @@ public class Z001Quartz {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务007一分钟一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("~~~~~~~~~~~~~~执行update sql开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            try {
+                System.out.println();
+                System.out.println();
+                String str007_1="UPDATE A SET A.CK_DD=B.FHRQ FROM MF_CK A,MF_CK_Z B\n" +
+                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.SA_CLS_ID='F'";
+
+                Integer  i007_1= manyTabSerch.update007_1_OfOnlineBug();
+                System.out.println(str007_1);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("执行条数="+i007_1+"条");
+                System.out.println();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                System.out.println();
+                System.out.println();
+                String str007_2="UPDATE A SET A.CK_DD=B.FHRQ FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
+                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
+
+                Integer  i007_2= manyTabSerch.update007_2_OfOnlineBug();
+                System.out.println(str007_2);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("执行条数="+i007_2+"条");
+                System.out.println();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            try {
+                System.out.println();
+                System.out.println();
+                String str007_3="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
+                        "FROM MF_CK A,MF_CK_Z B\n" +
+                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'";
+
+                Integer  i007_3= manyTabSerch.update007_3_OfOnlineBug();
+                System.out.println(str007_3);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("执行条数="+i007_3+"条");
+                System.out.println();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+            try {
+                System.out.println();
+                System.out.println();
+                String str007_4="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
+                        "FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
+                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
+
+                Integer  i007_4= manyTabSerch.update007_4_OfOnlineBug();
+                System.out.println(str007_4);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("执行条数="+i007_4+"条");
+                System.out.println();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务007一分钟一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
+
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008一分钟一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+            try {
+                System.out.println();
+                System.out.println();
+                String str008_1="UPDATE  mf_pos set pay_rem='结帐期:2017-11-01;票据到期日:2017-12-02' ,PAY_DD='2017-11-01 00:00:00.000',\n" +
+                        "CHK_DD='2017-11-01 00:00:00.000',INT_DAYs=30 where usr='ADMIN' and chk_man='ADMIN' AND os_dd>='2017-10-1' and (INT_DAYS='' or INT_DAYS IS NULL)";
+
+                Integer  i008_1= manyTabSerch.update008_1_OfOnlineBug();
+                System.out.println(str008_1);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("执行条数="+i008_1+"条");
+                System.out.println();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008一分钟一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
             System.out.println("==========================定时任务A一分钟一次结束======================");

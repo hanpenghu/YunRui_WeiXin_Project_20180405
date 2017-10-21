@@ -147,25 +147,29 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
         List<List<ShouDingDanFromExcel>>samePrdNoList=new ArrayList<>();
 
         //注意:传进来的list3已经是同一订单号下面了
-        //去重所有相同的货号放入set集合
-        Set<String>set =new HashSet<>();
+        //去重所有相同的(货号+成分代码)的组合放入set集合,因为同一订单下,货号+成分代码一起相同才能合并
+        Set<String>prdNoAndCfdmSet =new HashSet<>();
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-            set.add(shouDingDanFromExcel.getPrdNo().trim());
+            prdNoAndCfdmSet.add(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim());
         }
 
-        //循环所有去重后的货号
-        for(String prdNo:set){
-            //循环所有同一单号下的订单,对当前货号下的订单合并
+        //循环所有去重后的货号+成分代码的集合,因为去重后导入主表的就只有去重后这么多了
+        for(String prdNoAndCfdm:prdNoAndCfdmSet){
+            //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
             List<ShouDingDanFromExcel>list0=new ArrayList<>();
-            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-                if(prdNo.equals(shouDingDanFromExcel.getPrdNo().trim())){
-                    list0.add(shouDingDanFromExcel);
+            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
+                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim())){
+                    list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
                 }
             }
-            //收集同一货号的list
+                ///list0存的其实是当前 (货号+成分代码)相同 下的所有excel数据,需要合并,但是没有合并
+            //这个算法的精妙之处在于,循环(货号+成分代码),然后一边用samePrdNoList收集没有合并的excel,一边合并list0中的数据放入list,最后
+            //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
+
+            //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
             samePrdNoList.add(list0);
-            //此时list0里面装的都是同一货号的东西了,我们可以合并同一货号的某些字段了
-            synchronized (this){
+            //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
+            synchronized (this){//这个内部就是为了合并
                 double qty=0;//数量
                 double amtn=0;//未税金额
                 double tax=0;//税额
@@ -179,13 +183,14 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 //                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
                 if(list0.size()>0) {
+                    //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
                     ShouDingDanFromExcel shouDingDanFromExcel = list0.get(0);
                     shouDingDanFromExcel.setQty(String.valueOf(qty));
                     shouDingDanFromExcel.setAmtn(String.valueOf(amtn));
                     shouDingDanFromExcel.setTax(String.valueOf(tax));
                     shouDingDanFromExcel.setAmt(String.valueOf(amt));
 //                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
-                    list.add(shouDingDanFromExcel);
+                    list.add(shouDingDanFromExcel);//合并后放入list
                 }
             }
         }

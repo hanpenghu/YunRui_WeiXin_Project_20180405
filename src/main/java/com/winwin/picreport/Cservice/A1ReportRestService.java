@@ -179,10 +179,10 @@ public class A1ReportRestService {
 //        t.setPreItm(t.getItm());
  ////////////////////////////////////////////////
         tz.setOsNo(s.getOsNo());
-        tz.setSapwlm1(s.getSapwlm());
+        tz.setSapwlm(s.getSapwlm());
 //        tz.setSaphh(s.getSaphh());//20170929老郑说这个不用写入值了
         tz.setSapph(s.getSapph());
-        tz.setCfdm1(s.getCfdm());
+        tz.setCfdm(s.getCfdm());
         tz.setOsId("SO");
         //tz.setItm();
 ////////////////////////////////////////////////

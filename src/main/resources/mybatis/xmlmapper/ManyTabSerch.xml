@@ -147,4 +147,26 @@
         A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM AND
         D.OS_NO=A.OS_NO AND (D.SDDH IS NULL OR D.SDDH='')
     </update>
+
+    <update id="update007_1_OfOnlineBug">
+        UPDATE A SET A.CK_DD=B.FHRQ FROM MF_CK A,MF_CK_Z B
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_2_OfOnlineBug">
+        UPDATE A SET A.CK_DD=B.FHRQ FROM TF_CK A,MF_CK_Z B,MF_CK C
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_3_OfOnlineBug">
+        UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())
+FROM MF_CK A,MF_CK_Z B
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_4_OfOnlineBug">
+        UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())
+FROM TF_CK A,MF_CK_Z B,MF_CK C
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'
+    </update>
 </mapper>

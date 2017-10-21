@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TfPosZ extends TfPosZKey {
-    private String cfdm1;
-
-    private String khhh;
-
     private String khhpmc;
 
     private String khnbdh;
@@ -20,31 +16,21 @@ public class TfPosZ extends TfPosZKey {
 
     private Date fhrq;
 
-    private String sapwlm1;
-
     private String qdl;
 
     private String sapph;
 
     private String khddhm;
 
+    private String cfdm;
+
+    private String sapwlm;
+
+    private String xsddh;
+
+    private String sddh;
+
     private String bz;
-
-    public String getCfdm1() {
-        return cfdm1;
-    }
-
-    public void setCfdm1(String cfdm1) {
-        this.cfdm1 = cfdm1 == null ? null : cfdm1.trim();
-    }
-
-    public String getKhhh() {
-        return khhh;
-    }
-
-    public void setKhhh(String khhh) {
-        this.khhh = khhh == null ? null : khhh.trim();
-    }
 
     public String getKhhpmc() {
         return khhpmc;
@@ -94,14 +80,6 @@ public class TfPosZ extends TfPosZKey {
         this.fhrq = fhrq;
     }
 
-    public String getSapwlm1() {
-        return sapwlm1;
-    }
-
-    public void setSapwlm1(String sapwlm1) {
-        this.sapwlm1 = sapwlm1 == null ? null : sapwlm1.trim();
-    }
-
     public String getQdl() {
         return qdl;
     }
@@ -124,6 +102,38 @@ public class TfPosZ extends TfPosZKey {
 
     public void setKhddhm(String khddhm) {
         this.khddhm = khddhm == null ? null : khddhm.trim();
+    }
+
+    public String getCfdm() {
+        return cfdm;
+    }
+
+    public void setCfdm(String cfdm) {
+        this.cfdm = cfdm == null ? null : cfdm.trim();
+    }
+
+    public String getSapwlm() {
+        return sapwlm;
+    }
+
+    public void setSapwlm(String sapwlm) {
+        this.sapwlm = sapwlm == null ? null : sapwlm.trim();
+    }
+
+    public String getXsddh() {
+        return xsddh;
+    }
+
+    public void setXsddh(String xsddh) {
+        this.xsddh = xsddh == null ? null : xsddh.trim();
+    }
+
+    public String getSddh() {
+        return sddh;
+    }
+
+    public void setSddh(String sddh) {
+        this.sddh = sddh == null ? null : sddh.trim();
     }
 
     public String getBz() {
