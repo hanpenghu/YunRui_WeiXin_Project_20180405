@@ -924,6 +924,286 @@ public class SapsoExample {
             addCriterion("maiTouNo not between", value1, value2, "maitouno");
             return (Criteria) this;
         }
+
+        public Criteria andLuohaoIsNull() {
+            addCriterion("luoHao is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoIsNotNull() {
+            addCriterion("luoHao is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoEqualTo(String value) {
+            addCriterion("luoHao =", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoNotEqualTo(String value) {
+            addCriterion("luoHao <>", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoGreaterThan(String value) {
+            addCriterion("luoHao >", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoGreaterThanOrEqualTo(String value) {
+            addCriterion("luoHao >=", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoLessThan(String value) {
+            addCriterion("luoHao <", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoLessThanOrEqualTo(String value) {
+            addCriterion("luoHao <=", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoLike(String value) {
+            addCriterion("luoHao like", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoNotLike(String value) {
+            addCriterion("luoHao not like", value, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoIn(List<String> values) {
+            addCriterion("luoHao in", values, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoNotIn(List<String> values) {
+            addCriterion("luoHao not in", values, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoBetween(String value1, String value2) {
+            addCriterion("luoHao between", value1, value2, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andLuohaoNotBetween(String value1, String value2) {
+            addCriterion("luoHao not between", value1, value2, "luohao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoIsNull() {
+            addCriterion("gangHao is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoIsNotNull() {
+            addCriterion("gangHao is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoEqualTo(String value) {
+            addCriterion("gangHao =", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoNotEqualTo(String value) {
+            addCriterion("gangHao <>", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoGreaterThan(String value) {
+            addCriterion("gangHao >", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoGreaterThanOrEqualTo(String value) {
+            addCriterion("gangHao >=", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoLessThan(String value) {
+            addCriterion("gangHao <", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoLessThanOrEqualTo(String value) {
+            addCriterion("gangHao <=", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoLike(String value) {
+            addCriterion("gangHao like", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoNotLike(String value) {
+            addCriterion("gangHao not like", value, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoIn(List<String> values) {
+            addCriterion("gangHao in", values, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoNotIn(List<String> values) {
+            addCriterion("gangHao not in", values, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoBetween(String value1, String value2) {
+            addCriterion("gangHao between", value1, value2, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andGanghaoNotBetween(String value1, String value2) {
+            addCriterion("gangHao not between", value1, value2, "ganghao");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthIsNull() {
+            addCriterion("realWidth is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthIsNotNull() {
+            addCriterion("realWidth is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthEqualTo(String value) {
+            addCriterion("realWidth =", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthNotEqualTo(String value) {
+            addCriterion("realWidth <>", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthGreaterThan(String value) {
+            addCriterion("realWidth >", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthGreaterThanOrEqualTo(String value) {
+            addCriterion("realWidth >=", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthLessThan(String value) {
+            addCriterion("realWidth <", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthLessThanOrEqualTo(String value) {
+            addCriterion("realWidth <=", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthLike(String value) {
+            addCriterion("realWidth like", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthNotLike(String value) {
+            addCriterion("realWidth not like", value, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthIn(List<String> values) {
+            addCriterion("realWidth in", values, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthNotIn(List<String> values) {
+            addCriterion("realWidth not in", values, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthBetween(String value1, String value2) {
+            addCriterion("realWidth between", value1, value2, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealwidthNotBetween(String value1, String value2) {
+            addCriterion("realWidth not between", value1, value2, "realwidth");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthIsNull() {
+            addCriterion("realLength is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthIsNotNull() {
+            addCriterion("realLength is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthEqualTo(String value) {
+            addCriterion("realLength =", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthNotEqualTo(String value) {
+            addCriterion("realLength <>", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthGreaterThan(String value) {
+            addCriterion("realLength >", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthGreaterThanOrEqualTo(String value) {
+            addCriterion("realLength >=", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthLessThan(String value) {
+            addCriterion("realLength <", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthLessThanOrEqualTo(String value) {
+            addCriterion("realLength <=", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthLike(String value) {
+            addCriterion("realLength like", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthNotLike(String value) {
+            addCriterion("realLength not like", value, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthIn(List<String> values) {
+            addCriterion("realLength in", values, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthNotIn(List<String> values) {
+            addCriterion("realLength not in", values, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthBetween(String value1, String value2) {
+            addCriterion("realLength between", value1, value2, "reallength");
+            return (Criteria) this;
+        }
+
+        public Criteria andReallengthNotBetween(String value1, String value2) {
+            addCriterion("realLength not between", value1, value2, "reallength");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

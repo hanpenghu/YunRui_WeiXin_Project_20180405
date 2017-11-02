@@ -7,10 +7,11 @@ import com.winwin.picreport.Futils.TongJiXiaoShuDianHouDeWeiShu;
 public class SalePrdDetailTab1 {//导出excel用
     private String remHead = "";//,	 // ---表头备注
     private String psNo = "";//,//---销货单号
-    private String cusOsNo = "";//,//----客户订单号
+    private String cusOsNo = "";//,//----客户订单号-------对应sapso的osno
     private String prdName = "";//, //----货品名称
     private String unit = "";//,//---------单位
     private String qty = "";//,---数量
+    private Double qtyDouble=0D;
     private String up = "";//,----单价
     private String amt="";//---本位币
     private String amtnNet = "";//,---未税本位币
@@ -23,10 +24,72 @@ public class SalePrdDetailTab1 {//导出excel用
     private String pz = "";//----皮重
     private String caiGouNo="";//采购单号
     private String itm="";//供应商送货单行号
-    private String prdNo="";//供应商物料参考编号
+    private String prdNo="";//供应商物料参考编号-------------------------------------货号对应sapso的prdno
     private String sapph="";//物料编码  =原始数据表SAPSO.SAP 品号
     private String saphh="";//采购订单行号  =原始数据表SAPSO.SAP行号
+    private String luoHao="";//落号,来自sapso
+    private String gangHao="";//缸号,来自sapso
+    private String realWidth="";//实际幅宽  来自sapsoN
+    private String realLength="";//实际长度来自sapso
+    private String danHao_HuoHao="";
+    public String getDanHao_HuoHao() {
+        this.danHao_HuoHao= this.cusOsNo+this.prdNo;
+        return this.danHao_HuoHao;
+    }
 
+    public SalePrdDetailTab1 setDanHao_HuoHao(String danHao_HuoHao) {
+        this.danHao_HuoHao = danHao_HuoHao;
+        return this;
+    }
+    public Double getQtyDouble() {
+        try {
+            this.qtyDouble=Double.parseDouble(qty);
+        } catch (NumberFormatException e) {
+            this.qtyDouble=0D;
+        }
+        return this.qtyDouble;
+    }
+
+    public SalePrdDetailTab1 setQtyDouble(Double qtyDouble) {
+        this.qtyDouble = qtyDouble;
+        return this;
+    }
+
+    public String getLuoHao() {
+        return luoHao;
+    }
+
+    public SalePrdDetailTab1 setLuoHao(String luoHao) {
+        this.luoHao = luoHao;
+        return this;
+    }
+
+    public String getGangHao() {
+        return gangHao;
+    }
+
+    public SalePrdDetailTab1 setGangHao(String gangHao) {
+        this.gangHao = gangHao;
+        return this;
+    }
+
+    public String getRealWidth() {
+        return realWidth;
+    }
+
+    public SalePrdDetailTab1 setRealWidth(String realWidth) {
+        this.realWidth = realWidth;
+        return this;
+    }
+
+    public String getRealLength() {
+        return realLength;
+    }
+
+    public SalePrdDetailTab1 setRealLength(String realLength) {
+        this.realLength = realLength;
+        return this;
+    }
 
     public String getAmt() {
         if(NotEmpty.notEmpty(this.amt)&&this.amt.contains(".")&&TongJiXiaoShuDianHouDeWeiShu.f(this.amt)>5){

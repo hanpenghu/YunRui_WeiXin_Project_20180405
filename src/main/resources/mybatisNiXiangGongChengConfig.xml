@@ -13,10 +13,16 @@
             connectionURL="jdbc:sqlserver://58.211.48.54:9002;DatabaseName=DB_HHMM" userId="sa"
             password="Zhangtao0804527">
         </jdbcConnection>-->
-        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+       <!-- <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://116.62.224.172:7502;DatabaseName=DB_BARC" userId="sa"
                         password="x2g5u7h!8+gaohang@">
-        </jdbcConnection>
+        </jdbcConnection>-->
+
+         <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                       connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=DB_LZ17" userId="sa"
+                       password="root">
+       </jdbcConnection>
+
 <!--        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://120.26.73.200:7201;DatabaseName=DB_BARC" userId="sa"
                         password="x3g5k8h!9+guanglan@">
@@ -25,7 +31,7 @@
                         connectionURL="jdbc:sqlserver://114.55.143.240:1488;DatabaseName=DB_ZMT" userId="sa"
                         password="ZMT@@123">
         </jdbcConnection>-->
-        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+    <!--    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/test001?useUnicode=true&amp;characterEncoding=UTF-8" userId="root"
                         password="root">
         </jdbcConnection>-->
@@ -72,7 +78,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <!--<table tableName="sapso"></table>-->
+        <table tableName="sapso"></table>
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->
         <!--<table tableName="mf_ic"></table>
         <table tableName="tf_ic"></table>-->

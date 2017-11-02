@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -63,6 +64,10 @@ public class A1ReportRestService {
                         b.setSaphh(shouDingDanFromExcel.getSaphh());
                         b.setSapph(shouDingDanFromExcel.getSapph());
                         b.setSapwlm(shouDingDanFromExcel.getSapwlm());
+                        b.setLuohao(shouDingDanFromExcel.getLuoHao());
+                        b.setGanghao(shouDingDanFromExcel.getGangHao());
+                        b.setReallength(shouDingDanFromExcel.getRealLength());
+                        b.setRealwidth(shouDingDanFromExcel.getRealWidth());
                         b.setTimesamebatch(dateStr);
                         b.setUuid(uuid);
                         sapsoMapper.insert(b);
@@ -127,8 +132,12 @@ public class A1ReportRestService {
         }else{
             m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
         }
-
-
+        //下面2017-10-24老郑让我加的
+        m.setZhangId("3");
+        m.setPayRem("结帐期:2017-11-01;票据到期日:2017-12-02");
+        try { m.setPayDd(new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-01"));} catch (ParseException e){}
+        m.setChkDd(manyTabSerch.getDate());
+        m.setIntDays((short)30);
 ///////////////////////
         t.setOsNo(s.getOsNo());
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
@@ -155,7 +164,7 @@ public class A1ReportRestService {
 
         //如果单价有问题,就要抛出异常
         if("".equals(s.getUp())||"0".equals(s.getUp())){
-            msg.setMsg("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
+            msg.setMsg("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题(单价是0或者没有单价),导致该订单号的所有记录都未能成功录入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
             listmsg.add(msg);
             throw new RuntimeException("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");

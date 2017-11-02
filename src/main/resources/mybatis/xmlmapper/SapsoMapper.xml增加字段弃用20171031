@@ -14,10 +14,6 @@
     <result column="sapwlm" jdbcType="VARCHAR" property="sapwlm" />
     <result column="qty" jdbcType="NUMERIC" property="qty" />
     <result column="maiTouNo" jdbcType="VARCHAR" property="maitouno" />
-    <result column="luoHao" jdbcType="VARCHAR" property="luohao" />
-    <result column="gangHao" jdbcType="VARCHAR" property="ganghao" />
-    <result column="realWidth" jdbcType="VARCHAR" property="realwidth" />
-    <result column="realLength" jdbcType="VARCHAR" property="reallength" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, timeSameBatch, uuid, osNo, ebNo, caiGouNo, prdNo, saphh, sapph, sapwlm, qty, 
-    maiTouNo, luoHao, gangHao, realWidth, realLength
+    maiTouNo
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.SapsoExample" resultMap="BaseResultMap">
     select
@@ -115,15 +111,13 @@
     insert into sapso (timeSameBatch, uuid,
       osNo, ebNo, caiGouNo, 
       prdNo, saphh, sapph, 
-      sapwlm, qty, maiTouNo, 
-      luoHao, gangHao, realWidth, 
-      realLength)
-    values ( #{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
+      sapwlm, qty, maiTouNo
+      )
+    values (#{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
       #{osno,jdbcType=VARCHAR}, #{ebno,jdbcType=VARCHAR}, #{caigouno,jdbcType=VARCHAR}, 
       #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, 
-      #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}, 
-      #{luohao,jdbcType=VARCHAR}, #{ganghao,jdbcType=VARCHAR}, #{realwidth,jdbcType=VARCHAR}, 
-      #{reallength,jdbcType=VARCHAR})
+      #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.Sapso">
     insert into sapso
@@ -164,18 +158,6 @@
       <if test="maitouno != null">
         maiTouNo,
       </if>
-      <if test="luohao != null">
-        luoHao,
-      </if>
-      <if test="ganghao != null">
-        gangHao,
-      </if>
-      <if test="realwidth != null">
-        realWidth,
-      </if>
-      <if test="reallength != null">
-        realLength,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -213,18 +195,6 @@
       </if>
       <if test="maitouno != null">
         #{maitouno,jdbcType=VARCHAR},
-      </if>
-      <if test="luohao != null">
-        #{luohao,jdbcType=VARCHAR},
-      </if>
-      <if test="ganghao != null">
-        #{ganghao,jdbcType=VARCHAR},
-      </if>
-      <if test="realwidth != null">
-        #{realwidth,jdbcType=VARCHAR},
-      </if>
-      <if test="reallength != null">
-        #{reallength,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -273,18 +243,6 @@
       <if test="record.maitouno != null">
         maiTouNo = #{record.maitouno,jdbcType=VARCHAR},
       </if>
-      <if test="record.luohao != null">
-        luoHao = #{record.luohao,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ganghao != null">
-        gangHao = #{record.ganghao,jdbcType=VARCHAR},
-      </if>
-      <if test="record.realwidth != null">
-        realWidth = #{record.realwidth,jdbcType=VARCHAR},
-      </if>
-      <if test="record.reallength != null">
-        realLength = #{record.reallength,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -292,10 +250,9 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sapso
-    set
-    --- id = #{record.id,jdbcType=INTEGER},
-     --- timeSameBatch = #{record.timesamebatch,jdbcType=VARCHAR},
-     --- uuid = #{record.uuid,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      timeSameBatch = #{record.timesamebatch,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
       osNo = #{record.osno,jdbcType=VARCHAR},
       ebNo = #{record.ebno,jdbcType=VARCHAR},
       caiGouNo = #{record.caigouno,jdbcType=VARCHAR},
@@ -304,11 +261,7 @@
       sapph = #{record.sapph,jdbcType=VARCHAR},
       sapwlm = #{record.sapwlm,jdbcType=VARCHAR},
       qty = #{record.qty,jdbcType=NUMERIC},
-      maiTouNo = #{record.maitouno,jdbcType=VARCHAR},
-      luoHao = #{record.luohao,jdbcType=VARCHAR},
-      gangHao = #{record.ganghao,jdbcType=VARCHAR},
-      realWidth = #{record.realwidth,jdbcType=VARCHAR},
-      realLength = #{record.reallength,jdbcType=VARCHAR}
+      maiTouNo = #{record.maitouno,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -349,18 +302,6 @@
       <if test="maitouno != null">
         maiTouNo = #{maitouno,jdbcType=VARCHAR},
       </if>
-      <if test="luohao != null">
-        luoHao = #{luohao,jdbcType=VARCHAR},
-      </if>
-      <if test="ganghao != null">
-        gangHao = #{ganghao,jdbcType=VARCHAR},
-      </if>
-      <if test="realwidth != null">
-        realWidth = #{realwidth,jdbcType=VARCHAR},
-      </if>
-      <if test="reallength != null">
-        realLength = #{reallength,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -376,11 +317,7 @@
       sapph = #{sapph,jdbcType=VARCHAR},
       sapwlm = #{sapwlm,jdbcType=VARCHAR},
       qty = #{qty,jdbcType=NUMERIC},
-      maiTouNo = #{maitouno,jdbcType=VARCHAR},
-      luoHao = #{luohao,jdbcType=VARCHAR},
-      gangHao = #{ganghao,jdbcType=VARCHAR},
-      realWidth = #{realwidth,jdbcType=VARCHAR},
-      realLength = #{reallength,jdbcType=VARCHAR}
+      maiTouNo = #{maitouno,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.winwin.picreport.Edto;
 
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Futils.NotEmpty;
 
 import java.text.SimpleDateFormat;
@@ -81,7 +82,19 @@ public class ChaXunTiaoJian {
         sb.append('}');
         return sb.toString();
     }
-
+//    public static void main(String[]args){
+//        ChaXunTiaoJian chaXunTiaoJian=new ChaXunTiaoJian();
+//        chaXunTiaoJian.setStartTimeStamp("2131231231");
+//        chaXunTiaoJian.setEndTimeStamp("3123123123123");
+//        List<String> cus_no=new ArrayList<>();
+//        cus_no.add("1");
+//        cus_no.add("2");
+//        cus_no.add("3");
+//        cus_no.add("4");
+//        chaXunTiaoJian.setCus_no(cus_no);
+//        String s = JSON.toJSONString(chaXunTiaoJian);
+//        System.out.println(s);
+//    }
 
 
 }
