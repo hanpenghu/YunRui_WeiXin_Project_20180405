@@ -111,20 +111,24 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <!-- 20171108  insert设置了成分代码这一样东西,其他的都没有添加这个字段-->
   <insert id="insert" parameterType="com.winwin.picreport.Edto.Sapso">
     insert into sapso (timeSameBatch, uuid,
       osNo, ebNo, caiGouNo, 
       prdNo, saphh, sapph, 
       sapwlm, qty, maiTouNo, 
       luoHao, gangHao, realWidth, 
-      realLength)
+      realLength,chengFenDaiMa)
     values ( #{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
       #{osno,jdbcType=VARCHAR}, #{ebno,jdbcType=VARCHAR}, #{caigouno,jdbcType=VARCHAR}, 
       #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, 
       #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}, 
       #{luohao,jdbcType=VARCHAR}, #{ganghao,jdbcType=VARCHAR}, #{realwidth,jdbcType=VARCHAR}, 
-      #{reallength,jdbcType=VARCHAR})
+      #{reallength,jdbcType=VARCHAR},#{chengFenDaiMa,jdbcType=VARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.Sapso">
     insert into sapso
     <trim prefix="(" suffix=")" suffixOverrides=",">

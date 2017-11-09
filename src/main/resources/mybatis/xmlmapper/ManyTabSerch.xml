@@ -6,11 +6,11 @@
               SELECT
           ISNULL(mf.rem,'') AS 'remHead',	  ---表头备注
           ISNULL(mf.ps_no,'') AS 'psNo',---销货单号(供应商销货单号)
-          ISNULL(mf.cus_os_no,'') AS 'cusOsNo',----客户订单号
+          RTRIM(LTRIM(ISNULL(mf.cus_os_no,''))) AS 'cusOsNo',----客户订单号,
           ISNULL(tf.prd_name,'')AS 'prdName', ----货品名称
-          ISNULL(tf.prd_no,'')AS 'prdNo',---供应商物料参考编号
+          RTRIM(LTRIM(ISNULL(tf.prd_no,'')))AS 'prdNo',---供应商物料参考编号
          --- ISNULL(sapso.sapph,'')AS 'sapph',-------------//物料编码  =原始数据表SAPSO.SAP 品号
-           ---tf.unit AS 'unit',---------单位
+           ISNULL(pd.ut,'1') AS 'unit',---------单位
            '1' AS 'unit',
            CONVERT(VARCHAR(40),ISNULL(tf.qty,0)) AS 'qty',---数量
            CONVERT(VARCHAR(40),ISNULL(tf.up,0))AS 'up',----单价
@@ -30,11 +30,12 @@
 		   ---,isnull(sapso.ganghao,'')AS 'gangHao'---缸号
 			--,isnull(sapso.realWidth,'')AS 'realWidth'---缸号
 			---,isnull(sapso.realLength,'')AS 'realLength'---缸号
-          FROM mf_pss mf
-          LEFT JOIN tf_pss tf ON mf.ps_no=tf.ps_no
-          LEFT JOIN prdt pd ON tf.prd_no= pd.prd_no
-          LEFT JOIN indx dx ON pd.idx1=dx.idx_no
-          left JOIN tf_pss_z tfz on tfz.ps_no=tf.ps_no
+			,RTRIM(LTRIM(ISNULL(tfz.CFDM,''))) AS 'chengFenDaiMa'---成分代码
+          FROM MF_PSS mf
+          LEFT JOIN TF_PSS tf ON mf.ps_no=tf.ps_no
+          LEFT JOIN PRDT pd ON tf.prd_no= pd.prd_no
+          LEFT JOIN INDX dx ON pd.idx1=dx.idx_no
+          left JOIN TF_PSS_Z tfz on tfz.ps_no=tf.ps_no and tf.itm=tfz.itm
          ---- LEFT JOIN sapso  sapso ON ( sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no)
           WHERE
            mf.ps_id='SA'

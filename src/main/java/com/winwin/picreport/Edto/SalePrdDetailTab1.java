@@ -31,16 +31,37 @@ public class SalePrdDetailTab1 {//导出excel用
     private String gangHao="";//缸号,来自sapso
     private String realWidth="";//实际幅宽  来自sapsoN
     private String realLength="";//实际长度来自sapso
-    private String danHao_HuoHao="";
-    public String getDanHao_HuoHao() {
-        this.danHao_HuoHao= this.cusOsNo+this.prdNo;
-        return this.danHao_HuoHao;
+    private String danHao_HuoHao_ChengFenDaiMa="";
+    private String chengFenDaiMa="";
+
+    public String getChengFenDaiMa() {
+        return chengFenDaiMa.trim();
     }
 
-    public SalePrdDetailTab1 setDanHao_HuoHao(String danHao_HuoHao) {
-        this.danHao_HuoHao = danHao_HuoHao;
+    public SalePrdDetailTab1 setChengFenDaiMa(String chengFenDaiMa) {
+        this.chengFenDaiMa = chengFenDaiMa;
         return this;
     }
+
+    public String getDanHao_HuoHao_ChengFenDaiMa() {
+        this.danHao_HuoHao_ChengFenDaiMa=this.cusOsNo.trim()+this.prdNo.trim()+this.chengFenDaiMa.trim();
+        return danHao_HuoHao_ChengFenDaiMa;
+    }
+
+    public SalePrdDetailTab1 setDanHao_HuoHao_ChengFenDaiMa(String danHao_HuoHao_ChengFenDaiMa) {
+        this.danHao_HuoHao_ChengFenDaiMa = danHao_HuoHao_ChengFenDaiMa;
+        return this;
+    }
+
+    //    public String getDanHao_HuoHao() {
+//        this.danHao_HuoHao= this.cusOsNo+this.prdNo;
+//        return this.danHao_HuoHao;
+//    }
+//
+//    public SalePrdDetailTab1 setDanHao_HuoHao(String danHao_HuoHao) {
+//        this.danHao_HuoHao = danHao_HuoHao;
+//        return this;
+//    }
     public Double getQtyDouble() {
         try {
             this.qtyDouble=Double.parseDouble(qty);
@@ -98,88 +119,89 @@ public class SalePrdDetailTab1 {//导出excel用
         return amt;
     }
 
-    public void setAmt(String amt) {
-        this.amt = amt;
+    public SalePrdDetailTab1 setAmt(String amt) {
+        this.amt = amt;return this;
     }
 
     public String getSaphh() {
         return saphh;
     }
 
-    public void setSaphh(String saphh) {
+    public SalePrdDetailTab1 setSaphh(String saphh) {
         this.saphh = saphh;
+        return this;
     }
 
     public String getSapph() {
         return sapph;
     }
 
-    public void setSapph(String sapph) {
-        this.sapph = sapph;
+    public SalePrdDetailTab1 setSapph(String sapph) {
+        this.sapph = sapph;return this;
     }
 
     public String getPrdNo() {
-        return prdNo;
+        return prdNo.trim();
     }
 
-    public void setPrdNo(String prdNo) {
-        this.prdNo = prdNo;
+    public SalePrdDetailTab1 setPrdNo(String prdNo) {
+        this.prdNo = prdNo;return this;
     }
 
     public String getItm() {
         return itm;
     }
 
-    public void setItm(String itm) {
-        this.itm = itm;
+    public SalePrdDetailTab1 setItm(String itm) {
+        this.itm = itm;return this;
     }
 
     public String getCaiGouNo() {
         return caiGouNo;
     }
 
-    public void setCaiGouNo(String caiGouNo) {
-        this.caiGouNo = caiGouNo;
+    public SalePrdDetailTab1 setCaiGouNo(String caiGouNo) {
+        this.caiGouNo = caiGouNo;return this;
     }
 
     public String getRemHead() {
         return remHead;
     }
 
-    public void setRemHead(String remHead) {
-        this.remHead = remHead;
+    public SalePrdDetailTab1 setRemHead(String remHead) {
+        this.remHead = remHead;return this;
     }
 
     public String getPsNo() {
         return psNo;
     }
 
-    public void setPsNo(String psNo) {
-        this.psNo = psNo;
+    public SalePrdDetailTab1 setPsNo(String psNo) {
+        this.psNo = psNo;return this;
     }
 
     public String getCusOsNo() {
-        return cusOsNo;
+        return cusOsNo.trim();
     }
 
-    public void setCusOsNo(String cusOsNo) {
-        this.cusOsNo = cusOsNo;
+    public SalePrdDetailTab1 setCusOsNo(String cusOsNo) {
+        this.cusOsNo = cusOsNo;return this;
     }
 
     public String getPrdName() {
         return prdName;
     }
 
-    public void setPrdName(String prdName) {
-        this.prdName = prdName;
+    public SalePrdDetailTab1 setPrdName(String prdName) {
+        this.prdName = prdName;return this;
     }
 
     public String getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public SalePrdDetailTab1 setUnit(String unit) {
+        this.unit = unit;return this;
     }
 
     public String getQty() {
@@ -189,8 +211,8 @@ public class SalePrdDetailTab1 {//导出excel用
         return qty;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    public SalePrdDetailTab1 setQty(String qty) {
+        this.qty = qty;return this; 
     }
 
     public String getUp() {
@@ -200,8 +222,8 @@ public class SalePrdDetailTab1 {//导出excel用
         return up;
     }
 
-    public void setUp(String up) {
-        this.up = up;
+    public SalePrdDetailTab1 setUp(String up) {
+        this.up = up;return this;
     }
 
     public String getAmtnNet() {
@@ -211,64 +233,64 @@ public class SalePrdDetailTab1 {//导出excel用
         return amtnNet;
     }
 
-    public void setAmtnNet(String amtnNet) {
-        this.amtnNet = amtnNet;
+    public SalePrdDetailTab1 setAmtnNet(String amtnNet) {
+        this.amtnNet = amtnNet;return this;
     }
 
     public String getOs_no() {
-        return os_no;
+        return os_no.trim();
     }
 
-    public void setOs_no(String os_no) {
-        this.os_no = os_no;
+    public SalePrdDetailTab1 setOs_no(String os_no) {
+        this.os_no = os_no;return this;
     }
 
     public String getBat_no() {
         return bat_no;
     }
 
-    public void setBat_no(String bat_no) {
-        this.bat_no = bat_no;
+    public SalePrdDetailTab1 setBat_no(String bat_no) {
+        this.bat_no = bat_no;return this;
     }
 
     public String getRemBody() {
         return remBody;
     }
 
-    public void setRemBody(String remBody) {
-        this.remBody = remBody;
+    public SalePrdDetailTab1 setRemBody(String remBody) {
+        this.remBody = remBody;return this;
     }
 
     public String getIndxName() {
         return indxName;
     }
 
-    public void setIndxName(String indxName) {
-        this.indxName = indxName;
+    public SalePrdDetailTab1 setIndxName(String indxName) {
+        this.indxName = indxName;return this;
     }
 
     public String getBc() {
         return bc;
     }
 
-    public void setBc(String bc) {
-        this.bc = bc;
+    public SalePrdDetailTab1 setBc(String bc) {
+        this.bc = bc;return this;
     }
 
     public String getMz() {
         return mz;
     }
 
-    public void setMz(String mz) {
-        this.mz = mz;
+    public SalePrdDetailTab1 setMz(String mz) {
+        this.mz = mz;return this;
     }
 
     public String getPz() {
         return pz;
     }
 
-    public void setPz(String pz) {
-        this.pz = pz;
+    public SalePrdDetailTab1 setPz(String pz) {
+        this.pz = pz;return this;
     }
 
 }

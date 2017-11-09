@@ -43,10 +43,13 @@ public class A1ReportRestService {
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
                     saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
         }
+
+//        int i=0;
+//        i=5/i;
         //插入自建表before_same_prdNo_merge(后来表名字改成sapso)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
         for(List<ShouDingDanFromExcel> listx:samePrdNoList){
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
-            String uuid = UUID.randomUUID().toString();
+            String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
             for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
                 try {
                     //首先判断os_no在mf_pos里面有没有,有的话说明已经导入过了,就不需要再导入
@@ -68,8 +71,10 @@ public class A1ReportRestService {
                         b.setGanghao(shouDingDanFromExcel.getGangHao());
                         b.setReallength(shouDingDanFromExcel.getRealLength());
                         b.setRealwidth(shouDingDanFromExcel.getRealWidth());
+                        //20171108加了成分代码
+                        b.setChengFenDaiMa(shouDingDanFromExcel.getCfdm());
                         b.setTimesamebatch(dateStr);
-                        b.setUuid(uuid);
+                        b.setUuid(uuid);//uuid相同代表  单号+货号+成分代码  相同
                         sapsoMapper.insert(b);
 //                    }
                 } catch (Exception e) {
