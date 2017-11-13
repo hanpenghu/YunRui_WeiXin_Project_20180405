@@ -95,4 +95,7 @@ public interface ManyTabSerch {
 
         @Delete("delete  from mf_pos_z where os_no not in (select os_no from mf_pos)")
         Integer update010_2OfOnlineBug();
+
+        @Select("")
+        List<YeWuYuan> getAllYeWuYuan();
 }

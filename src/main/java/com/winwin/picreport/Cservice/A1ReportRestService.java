@@ -125,8 +125,14 @@ public class A1ReportRestService {
         m.setCusOsNo(s.getOsNo());
         m.setOsId("SO");
         //下面2条是老郑在20170929让我加上的
-        m.setUsr("ADMIN");
-        m.setChkMan("ADMIN");
+        //是把界面选的存的代号sal_no，同时写进 mf_pos.usr , mf_pos.chk_man两个字段
+        if("".equals(s.getSalNo())){
+            m.setUsr("ADMIN");
+            m.setChkMan("ADMIN");
+        }else{
+            m.setUsr(s.getSalNo());
+            m.setChkMan(s.getSalNo());
+        }
         //后来加的4个,为了避免是null
             m.setClsId("F");
             m.setPayMth("1");
@@ -143,6 +149,9 @@ public class A1ReportRestService {
         try { m.setPayDd(new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-01"));} catch (ParseException e){}
         m.setChkDd(manyTabSerch.getDate());
         m.setIntDays((short)30);
+        //2017-11-13老郑让加上
+        m.setUseDep("2000");
+        m.setSendMth("1");
 ///////////////////////
         t.setOsNo(s.getOsNo());
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
@@ -175,7 +184,9 @@ public class A1ReportRestService {
             throw new RuntimeException("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
         }
         t.setUp(new BigDecimal(s.getUp()));
-        t.setWh("0000");
+//        t.setWh("0000");
+        //20171113老郑让改
+        t.setWh("1000");
         if(estDd==null){
             t.setEstDd(null);
         }else{

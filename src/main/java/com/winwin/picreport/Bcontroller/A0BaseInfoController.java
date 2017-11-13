@@ -2,6 +2,7 @@ package com.winwin.picreport.Bcontroller;
 
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Edto.KeHu;
+import com.winwin.picreport.Edto.YeWuYuan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,12 @@ public class A0BaseInfoController {
          List<KeHu> keHus =manyTabSerch.getAllCustOf_obj_id_1_that_KeHuNotChangShang();
          return keHus;
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////
+@RequestMapping(value="allYeWuYuan",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
+    List<YeWuYuan> YeWuYuans =manyTabSerch.getAllYeWuYuan();
+    return YeWuYuans;
+}
 ////////////////////////////////////////////////////////////////////////////
 }
 ///////////////////////////////////////////////////////////////////////////

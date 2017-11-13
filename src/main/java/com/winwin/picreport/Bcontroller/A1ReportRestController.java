@@ -6,6 +6,7 @@ import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.MessageGenerate;
 import com.winwin.picreport.Futils.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -168,7 +169,15 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
             //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
 
             //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
+
             samePrdNoList.add(list0);
+          /*  System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
+                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    }
+                }
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
             //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
             synchronized (this){//这个内部就是为了合并
                 double qty=0;//数量
@@ -185,7 +194,12 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
                 }
                 if(list0.size()>0) {
                     //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
-                    ShouDingDanFromExcel shouDingDanFromExcel = list0.get(0);
+                    ShouDingDanFromExcel shouDingDanFromExcel=new ShouDingDanFromExcel();
+
+                    ShouDingDanFromExcel shouDingDanFromExcel1 = list0.get(0);
+
+                    BeanUtils.copyProperties(shouDingDanFromExcel1,shouDingDanFromExcel);
+
                     shouDingDanFromExcel.setQty(String.valueOf(qty));
                     shouDingDanFromExcel.setAmtn(String.valueOf(amtn));
                     shouDingDanFromExcel.setTax(String.valueOf(tax));
@@ -193,6 +207,13 @@ public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDin
 //                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
                     list.add(shouDingDanFromExcel);//合并后放入list
                 }
+               /* System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
+                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    }
+                }
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
             }
         }
 

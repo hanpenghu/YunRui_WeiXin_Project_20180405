@@ -43,7 +43,16 @@ public class ShouDingDanFromExcel {
     private String gangHao="";//--缸号
     private String realWidth="";//实际幅宽
     private String realLength="";//实际长度
+    private String salNo="";
 
+    public String getSalNo() {
+        return salNo;
+    }
+
+    public ShouDingDanFromExcel setSalNo(String salNo) {
+        this.salNo = salNo;
+        return this;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String getOsDd() {
@@ -316,42 +325,6 @@ public class ShouDingDanFromExcel {
         return this;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.ShouDingDanFromExcel{");
-        sb.append("osDd='").append(osDd).append('\'');
-        sb.append(", estDd='").append(estDd).append('\'');
-        sb.append(", taxId='").append(taxId).append('\'');
-        sb.append(", osNo='").append(osNo).append('\'');
-        sb.append(", cusOsNo='").append(cusOsNo).append('\'');
-        sb.append(", saphh='").append(saphh).append('\'');
-        sb.append(", remhead='").append(remhead).append('\'');
-        sb.append(", sapph='").append(sapph).append('\'');
-        sb.append(", prdNo='").append(prdNo).append('\'');
-        sb.append(", sapwlm='").append(sapwlm).append('\'');
-        sb.append(", cfdm='").append(cfdm).append('\'');
-        sb.append(", prdName='").append(prdName).append('\'');
-        sb.append(", curId='").append(curId).append('\'');
-        sb.append(", excRto='").append(excRto).append('\'');
-        sb.append(", qty='").append(qty).append('\'');
-        sb.append(", unit='").append(unit).append('\'');
-        sb.append(", up='").append(up).append('\'');
-        sb.append(", amtn='").append(amtn).append('\'');
-        sb.append(", tax='").append(tax).append('\'');
-        sb.append(", amt='").append(amt).append('\'');
-        sb.append(", taxRto='").append(taxRto).append('\'');
-        sb.append(", remBody='").append(remBody).append('\'');
-        sb.append(", cusNo='").append(cusNo).append('\'');
-        sb.append(", caiGouNo='").append(caiGouNo).append('\'');
-        sb.append(", maiTouNo='").append(maiTouNo).append('\'');
-        sb.append(", ebNo='").append(ebNo).append('\'');
-        sb.append(", luoHao='").append(luoHao).append('\'');
-        sb.append(", gangHao='").append(gangHao).append('\'');
-        sb.append(", realWidth='").append(realWidth).append('\'');
-        sb.append(", realLength='").append(realLength).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
