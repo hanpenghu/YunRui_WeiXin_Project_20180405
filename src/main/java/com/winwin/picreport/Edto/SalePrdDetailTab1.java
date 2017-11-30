@@ -33,6 +33,16 @@ public class SalePrdDetailTab1 {//导出excel用
     private String realLength="";//实际长度来自sapso
     private String danHao_HuoHao_ChengFenDaiMa="";
     private String chengFenDaiMa="";
+    private String ebNo="";
+
+    public String getEbNo() {
+        return ebNo;
+    }
+
+    public SalePrdDetailTab1 setEbNo(String ebNo) {
+        this.ebNo = ebNo;
+        return this;
+    }
 
     public String getChengFenDaiMa() {
         return chengFenDaiMa.trim();

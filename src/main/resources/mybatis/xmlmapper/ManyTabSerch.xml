@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch">
+<!-- 林展分页打样-->
+    <select id="selectDangQianYeSuoYouId" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+        id
+         from
+   		PRDT_SAMP where id not in
+   		(
+   			select top
+   			(
+   				(#{meiYeXianShiShu})*((#{dangQianYe})-1)
+   			)
+   			id from PRDT_SAMP ORDER BY samp_make DESC
+   		)ORDER BY samp_make DESC
+
+    </select>
 
      <select id="salePrdDetailTab1" resultType="com.winwin.picreport.Edto.SalePrdDetailTab1">
               SELECT

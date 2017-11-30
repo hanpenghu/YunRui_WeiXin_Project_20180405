@@ -31,6 +31,64 @@ public class Z001Quartz {
     }
 
     private void onlineBugXiuFuSql001() {
+
+    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务011 2秒一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
+        try {
+            System.out.println();
+            System.out.println();
+            String str011_1="---011处理主副单位换算 以下按次序2秒执行一次\n" +
+                    "update prdt set formula='1;-1;-1;0;0;主单位数量/0.9144;副单位数量*0.9144' where ut='meters' and ut1='yards' and (formula IS NULL or formula='')\n" +
+                    "update prdt set formula='1;-1;-1;4;4;主单位数量*0.9144;副单位数量/0.9144' where ut='yards' and ut1='meters' and (formula IS NULL or formula='')\n" +
+                    "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')\n";
+
+            Integer  i011_1= manyTabSerch.update011_1_OfOnlineBug();
+            System.out.println(str011_1);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("执行条数="+i011_1+"条");
+            System.out.println();
+            System.out.println();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务011 2秒一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+
+
+
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008 2秒一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+
+
+
+
+
+
+       /* try {
+            System.out.println();
+            System.out.println();
+            String str008_1="update mf_pos set cus_os_no=os_no where os_id='SO' and (cus_os_no IS NULL or cus_os_no='') and os_dd>='2017-10-1'\n" +
+                    "update tf_pos set cus_os_no=os_no where os_id='SO' and (cus_os_no IS NULL or cus_os_no='') and os_dd>='2017-10-1'";
+
+            Integer  i008_1= manyTabSerch.update008_1_OfOnlineBug();
+            System.out.println(str008_1);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("执行条数="+i008_1+"条");
+            System.out.println();
+            System.out.println();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008 2秒一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+
+
+
+
         System.out.println("===========009===============定时任务B 2秒一次开始======================");
 
         try {
@@ -62,6 +120,16 @@ public class Z001Quartz {
 
         }
 
+        try {
+            System.out.println("~~~~~~~~~~~009-4~~~~~~~~~~~" +
+                    "~~定时任务B004 2秒一次执行完毕~~更新"+manyTabSerch.update009_4OfOnlineBug()+"条~~~~~~" +
+                    "~~~~~~~~~~update  a set a.sup_prd_no=b.sup_prd_no from  tf_sq a,tf_pos b,mf_bom c,tf_bom d\n" +
+                    " where \n" +
+                    "a.so_no=b.os_no and b.prd_no=c.prd_no and c.bom_no=d.bom_no and a.prd_no=d.prd_no \n" +
+                    " and (a.sup_prd_no IS NULL) and b.os_dd>='2017-10-1' and (b.sup_prd_no IS NOT NULL)~~~~~~~~~~~~~");
+        } catch (Exception e) {
+                System.out.println("定时任务009-4出现异常！");
+        }
 
         System.out.println("=============009=============定时任务B 2秒一次结束======================");
     }
@@ -248,26 +316,6 @@ public class Z001Quartz {
 
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务007 30秒一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
 
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008 30秒一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
-
-
-            try {
-                System.out.println();
-                System.out.println();
-                String str008_1="update a set a.wh=b.chkw from tf_ck a,mf_ck_z b\n" +
-                        "where a.ck_no=b.ck_no and (b.CHKW is not NULL AND b.CHKW<>'')";
-
-                Integer  i008_1= manyTabSerch.update008_1_OfOnlineBug();
-                System.out.println(str008_1);
-                System.out.println("~~~~~~~~~~~~~~~~~~~~执行update sql结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                System.out.println("执行条数="+i008_1+"条");
-                System.out.println();
-                System.out.println();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务008 30秒一次结束~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 

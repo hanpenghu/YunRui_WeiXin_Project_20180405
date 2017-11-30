@@ -1,8 +1,7 @@
 package com.winwin.picreport.Cservice;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Edto.*;
-import com.winwin.picreport.Futils.Msg;
-import com.winwin.picreport.Futils.TimeStampToDate;
+import com.winwin.picreport.Futils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +40,8 @@ public class A1ReportRestService {
         List<List<ShouDingDanFromExcel>>samePrdNoList = listMap.get("samePrdNoList");
         //插入sunlike主表
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-                    saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
+            AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel,listmsg);//在类内部进行判断计算各种金额
+            saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
         }
 
 //        int i=0;
@@ -52,6 +52,12 @@ public class A1ReportRestService {
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
             for(ShouDingDanFromExcel shouDingDanFromExcel:listx){
+                if(!NotEmpty.notEmpty(shouDingDanFromExcel.getEbNo())){
+                    Msg msg=new Msg();
+                    msg.setMsg("单号为"+shouDingDanFromExcel.getOsNo()+",货号为"+shouDingDanFromExcel.getPrdNo()+",成分代码为【"+shouDingDanFromExcel.getCfdm()+"】,的EB单号为空,该批数据没有插入一条");
+                    listmsg.add(msg);
+                    throw new RuntimeException("单号为"+shouDingDanFromExcel.getOsNo()+"的EB单号为空,该批数据没有插入一条");
+                }
                 try {
                     //首先判断os_no在mf_pos里面有没有,有的话说明已经导入过了,就不需要再导入
                    /* MfPosExample mfe=new MfPosExample();
@@ -153,6 +159,7 @@ public class A1ReportRestService {
         //2017-11-13老郑让加上
         m.setUseDep("2000");
         m.setSendMth("1");
+        m.setPoDep("2000");
 ///////////////////////
         t.setOsNo(s.getOsNo());
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的

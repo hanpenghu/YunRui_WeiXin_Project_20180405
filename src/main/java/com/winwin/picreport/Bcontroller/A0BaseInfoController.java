@@ -21,6 +21,11 @@ public class A0BaseInfoController {
          List<KeHu> keHus =manyTabSerch.getAllCustOf_obj_id_1_that_KeHuNotChangShang();
          return keHus;
     }
+    @RequestMapping(value="allKeHutest",method= RequestMethod.GET,produces = {"application/json;charset=utf-8"})
+    public @ResponseBody List<KeHu> getAllCustOf_obj_id_1_that_KeHuNotChangShangtest(){
+        List<KeHu> keHus =manyTabSerch.getAllCustOf_obj_id_1_that_KeHuNotChangShang();
+        return keHus;
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////
 @RequestMapping(value="allYeWuYuan",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
@@ -28,5 +33,7 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
     return YeWuYuans;
 }
 ////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////
 }
 ///////////////////////////////////////////////////////////////////////////

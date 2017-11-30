@@ -1,10 +1,7 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 
 import com.winwin.picreport.Edto.*;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -40,8 +37,15 @@ public interface ManyTabSerch {
         Integer update007_3_OfOnlineBug();
         Integer update007_4_OfOnlineBug();
 
-        @Update("update a set a.wh=b.chkw from tf_ck a,mf_ck_z b\n" +
-                "where a.ck_no=b.ck_no and (b.CHKW is not NULL AND b.CHKW<>'')")
+//        @Update("update a set a.wh=b.chkw from tf_ck a,mf_ck_z b\n" +
+//                "where a.ck_no=b.ck_no and (b.CHKW is not NULL AND b.CHKW<>'')")
+//        Integer update008_1_OfOnlineBug();//这是原来的,后来变成下的了20171122变得
+
+
+
+
+        @Update({"update mf_pos set cus_os_no=os_no where os_id='SO' and (cus_os_no IS NULL or cus_os_no='') and os_dd>='2017-10-1'",
+                "update tf_pos set cus_os_no=os_no where os_id='SO' and (cus_os_no IS NULL or cus_os_no='') and os_dd>='2017-10-1'"})
         Integer update008_1_OfOnlineBug();
 
 
@@ -98,4 +102,40 @@ public interface ManyTabSerch {
 
         @Select("")
         List<YeWuYuan> getAllYeWuYuan();
+
+
+
+        @Update("update  a set a.sup_prd_no=b.sup_prd_no from  tf_sq a,tf_pos b,mf_bom c,tf_bom d\n" +
+                " where \n" +
+                "a.so_no=b.os_no and b.prd_no=c.prd_no and c.bom_no=d.bom_no and a.prd_no=d.prd_no \n" +
+                " and (a.sup_prd_no IS NULL) and b.os_dd>='2017-10-1' and (b.sup_prd_no IS NOT NULL)")
+        Integer update009_4OfOnlineBug();
+
+        @Select("SELECT ebNo FROM SAPSO WHERE RTRIM(LTRIM(ISNULL(osno,'')))+RTRIM(LTRIM(ISNULL(prdno,'')))+RTRIM(LTRIM(ISNULL(chengFenDaiMa,'')))=#{danHao_huoHao_chengFenDaiMa}")
+        List<String> selectEbNoFromSapso(@Param("danHao_huoHao_chengFenDaiMa") String danHao_huoHao_chengFenDaiMa);
+
+        @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx")
+        List<CategoryName> fenlei();
+
+        @Select("select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=#{idxNo})")
+        List<String> getCodeList(@Param("idxNo") String idxNo);
+
+        @Select("select isnull(sal_no,'') as 'salNo',isnull(name,'') as 'salName' from salm")
+         List<FuZeRen> fuZeRen();
+
+        @Select("select isnull(mark_no,'')as 'markNo',isnull(name,'')as 'name' from mark")
+        List<PinPai> pinPai();
+
+
+        List<String>selectDangQianYeSuoYouId(@Param("dangQianYe") Integer dangQianYe,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
+
+        @Select("select count(id) from PRDT_SAMP")
+        Integer dangYangZongJiLuShu();
+
+
+
+        @Update({"update prdt set formula='1;-1;-1;0;0;主单位数量/0.9144;副单位数量*0.9144' where ut='meters' and ut1='yards' and (formula IS NULL or formula='')",
+                "update prdt set formula='1;-1;-1;4;4;主单位数量*0.9144;副单位数量/0.9144' where ut='yards' and ut1='meters' and (formula IS NULL or formula='')",
+                "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')"})
+        Integer update011_1_OfOnlineBug();
 }
