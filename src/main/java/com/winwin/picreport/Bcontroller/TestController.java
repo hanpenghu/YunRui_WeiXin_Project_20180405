@@ -21,4 +21,8 @@ public class TestController {
     public String test2(){
         return "~~~~~~~~~~TongLe~~~2~~~~~~~~~";
     }
+    @RequestMapping("/test3")
+    public String 测试3(){
+        return "~~~~~~~~~~通过了~~~3~~~~~~~~~";
+    }
 }

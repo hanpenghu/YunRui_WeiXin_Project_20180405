@@ -29,7 +29,7 @@ import java.util.*;
 /**
  *导入excel
  * */
-public class A1ReportRestController {
+public class A1ReportRestControllerEXCEL上传 {
     @Autowired
     private A1ReportRestService a1;
     @Autowired

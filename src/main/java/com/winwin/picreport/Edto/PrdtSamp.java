@@ -1,54 +1,122 @@
 package com.winwin.picreport.Edto;
 
-import com.winwin.picreport.Futils.TimeStampAndString;
+import com.winwin.picreport.Futils.ConstantInit;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-
+import java.util.List;
+import com.winwin.picreport.Futils.ConstantInit;
 public class PrdtSamp {
-    private String id;
 
-    private String prdCode;
+    private String id="";
+
+    private String prdCode="";
 
 
-    private String idxName;
+    private String idxName="";
 
-    private String idxNo;
+    private String idxNo="";
 
-    private String markName;
+    private String markName="";
 
-    private String markNo;
+    private String markNo="";
 
-    private String colour;
+    private String colour="";
 
-    private String size;
+    private String size="";
 
-    private String salName;
+    private String salName="";
 
-    private String salNo;
+    private String salNo="";
 
-    private String cusNo;
+    private String cusNo="";
 
-    private String cusName;
+    private String cusName="";
 
-    private String isfenjie;
+    private String isfenjie="";
 
-    private Date sampMake;
+    private Date sampMake=null;//new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
 
-    private Date sampSend;
-    private String sampMakeStamp;//打样时间戳//传给我这个
-    private String sampSendStamp;//样品寄出时间戳//传给我这个
+    private Date sampSend=null;//new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
+    private String sampMakeStamp="";//打样时间戳//传给我这个
+    private String sampSendStamp="";//样品寄出时间戳//传给我这个
 
     private String sampMakeStr="";//给徐勇用
     private String sampSendStr="";//给徐勇用
-    private String sampRequ;
+    private String sampRequ="";//样品要求
 
-    private String sampDesc;
+    private String sampDesc="";//详情
 
-    private String thum;
+    private String thum="";//缩略图
 
-    private String attach;
-///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private String attach="";//附件
+    //缩略图和附件的地址
+//private String dirUrl="http://116.62.224.172:8070/";//网址
+    private String dirUrl="http://10.0.3.101:8070/";
+/////////////////////////////////////////////////////////////////////////////////////
+    private List<String> thumUrlList=new ArrayList<>();
+    private List<String> attachUrlList=new ArrayList<>();
+
+//构造函数初始化网址
+public PrdtSamp() throws ParseException {
+    this.dirUrl=ConstantInit.getDirUrl001();
+}
+
+
+    public List<String> getThumUrlList() {
+
+        String thum1=this.getThum();
+        //把得到的缩略图的一堆路径拆成数组
+        if(thum1!=null&&!"".equals(thum1)){
+            List<String> strings = Arrays.asList(thum1.split(";"));
+            List<String>strList=new ArrayList<>();
+            //给每个图片加上地址
+            for(String  str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.thumUrlList=strList;
+        }
+        return thumUrlList;
+    }
+//    public static void main(String[]args){
+//        String[] split = "1;2;".split(";");
+//        System.out.println(Arrays.asList(split));
+//    }
+    public PrdtSamp setThumUrlList(List<String> thumUrlList) {
+        this.thumUrlList = thumUrlList;
+        return this;
+    }
+
+
+
+
+
+    public List<String> getAttachUrlList() {
+        String attach1=this.getAttach();
+        //把得到的缩略图的一堆路径拆成数组
+        if(attach1!=null&&!"".equals(attach1)){
+            List<String> strings = Arrays.asList(attach1.split(";"));
+            List<String>strList=new ArrayList<>();
+            for(String str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.attachUrlList=strList;
+        }
+        return attachUrlList;
+//        return attachUrlList;
+    }
+
+    public PrdtSamp setAttachUrlList(List<String> attachUrlList) {
+        this.attachUrlList = attachUrlList;
+        return this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public String getSampMakeStr() {
@@ -295,5 +363,35 @@ System.out.println(this.getSampMake());
 
     public void setAttach(String attach) {
         this.attach = attach == null ? null : attach.trim();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", prdCode='").append(prdCode).append('\'');
+        sb.append(", idxName='").append(idxName).append('\'');
+        sb.append(", idxNo='").append(idxNo).append('\'');
+        sb.append(", markName='").append(markName).append('\'');
+        sb.append(", markNo='").append(markNo).append('\'');
+        sb.append(", colour='").append(colour).append('\'');
+        sb.append(", size='").append(size).append('\'');
+        sb.append(", salName='").append(salName).append('\'');
+        sb.append(", salNo='").append(salNo).append('\'');
+        sb.append(", cusNo='").append(cusNo).append('\'');
+        sb.append(", cusName='").append(cusName).append('\'');
+        sb.append(", isfenjie='").append(isfenjie).append('\'');
+        sb.append(", sampMake=").append(sampMake);
+        sb.append(", sampSend=").append(sampSend);
+        sb.append(", sampMakeStamp='").append(sampMakeStamp).append('\'');
+        sb.append(", sampSendStamp='").append(sampSendStamp).append('\'');
+        sb.append(", sampMakeStr='").append(sampMakeStr).append('\'');
+        sb.append(", sampSendStr='").append(sampSendStr).append('\'');
+        sb.append(", sampRequ='").append(sampRequ).append('\'');
+        sb.append(", sampDesc='").append(sampDesc).append('\'');
+        sb.append(", thum='").append(thum).append('\'');
+        sb.append(", attach='").append(attach).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

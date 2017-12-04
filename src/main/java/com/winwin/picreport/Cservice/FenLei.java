@@ -46,13 +46,12 @@ public class FenLei {
         Integer ii= null;
         List<Msg> list;
         try {
-            prdtSamp.setId(UUID.randomUUID().toString());
             ii = prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
-            ii=0;
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样插入插入一条数据失败~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样插入一条数据失败~~~~~~~~~~~~~~~~~~~~~~~~");
+            return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
         }
-        list = new MessageGenerate().generateMessage(""+ii+"");
+        list = new MessageGenerate().generateMessage(""+ii+"","产品打样新增"+ii+"条数据","产品打样新增"+ii+"条数据","","37");
         return list;
     }
 
