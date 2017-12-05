@@ -4,6 +4,7 @@ import java.util.List;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface PrdtSampMapper {
     long countByExample(PrdtSampExample example);
@@ -27,4 +28,10 @@ public interface PrdtSampMapper {
     int updateByPrimaryKeySelective(PrdtSamp record);
 
     int updateByPrimaryKey(PrdtSamp record);
+
+    @Update("update prdt_samp set thum=#{newthums} where thum like %#{thumInDataBase}%")
+    int updateThumColumn(@Param("thumInDataBase") String thumInDataBase, @Param("newthums")String newthums);
+
+    @Update("update prdt_samp set attach=#{newattachs} where attach like %#{attachInDataBase}%")
+    int updateAttachColumn(@Param("attachInDataBase")String attachInDataBase, @Param("newattachs")String newattachs);
 }

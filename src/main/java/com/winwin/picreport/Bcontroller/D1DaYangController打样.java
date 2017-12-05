@@ -2,14 +2,13 @@ package com.winwin.picreport.Bcontroller;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Cservice.D1DaYangService;
+import com.winwin.picreport.Cservice.D1DaYangServiceOfDeleteOneImg;
+import com.winwin.picreport.Cservice.D1DaYangServiceOfDeleteSome;
 import com.winwin.picreport.Cservice.FenLei;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.*;
-import com.winwin.picreport.Futils.FenYe;
-import com.winwin.picreport.Futils.MessageGenerate;
-import com.winwin.picreport.Futils.Msg;
-import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -49,7 +48,46 @@ public class D1DaYangController打样 {
     private ManyTabSerch manyTabSerch;
     @Autowired
     private PrdtSampMapper prdtSampMapper;
+    @Autowired
+    private D1DaYangServiceOfDeleteSome deleteSome;
 
+    @Autowired
+    private D1DaYangServiceOfDeleteOneImg deleteOneImg;
+    /**
+     ****************************************************************************************
+     * 删除单个附件
+     * */
+    @RequestMapping(value = "deleteOneAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
+        return deleteOneImg.deleteOneAttach(attachUrl);
+    }
+
+    /**
+     ****************************************************************************************
+     * */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *删除单张图片接口,要求前端传过来图片全路径
+     * */
+
+    @RequestMapping(value = "deleteOneImage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = "imgUrl", required = false) String imgUrl) {
+        return deleteOneImg.deleteOneImage(imgUrl);
+    }
+
+    /**
+ *delete 一条数据库信息并delete对应的图片和附件资源
+ * 支持一次多删除
+ * */
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {
+    return deleteSome.deleteSomeRecode(uuidList);
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
      */
@@ -61,85 +99,87 @@ public class D1DaYangController打样 {
 //    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
 
         try {
-            if (thum != null && (thum.getOriginalFilename().contains("!") || thum.getOriginalFilename().contains(";"))) {
-                return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号", "您的图片不能包含有!符号或者;符号", "", "34");
-            }
-            if (attach != null && (attach.getOriginalFilename().contains("!") || attach.getOriginalFilename().contains(";"))) {
-                return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
-            }
-            String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
-            PrdtSamp prdtSampOb = JSON.parseObject(request.getParameter("prdtSamp"), PrdtSamp.class);
-            if (NotEmpty.notEmpty(prdtSampOb)) {
-                if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
+            synchronized (this) {
+                if (thum != null && (thum.getOriginalFilename().contains("!") || thum.getOriginalFilename().contains(";"))) {
+                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号", "您的图片不能包含有!符号或者;符号", "", "34");
                 }
-            } else {
-                return MessageGenerate.generateMessage("保存失败", "保存失败", "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
-            }
-
-            String projectPath = this.JarLuJingGet();
-
-
-            //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-            PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
-
-            /**
-             *下面是将图片路径和其它信息更新到数据库
-             * */
-            //通过主键得到当前的缩略图路径字段thum
-            String imageThumUrl = prdtSamp.getThum();
-            String attachmentUrl = prdtSamp.getAttach();
-
-            /**
-             *当thum不是空的时候,我们更新缩略图的存储(数据库更新地址,图库添加新图)
-             * */
-            if (thum != null) {
-                //将缩略图保存在指定的目录
-                thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
-                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存", "", "35");
+                if (attach != null && (attach.getOriginalFilename().contains("!") || attach.getOriginalFilename().contains(";"))) {
+                    return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
+                }
+                String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
+                PrdtSamp prdtSampOb = JSON.parseObject(request.getParameter("prdtSamp"), PrdtSamp.class);
+                if (NotEmpty.notEmpty(prdtSampOb)) {
+                    if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
+                        return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
+                    }
+                } else {
+                    return MessageGenerate.generateMessage("保存失败", "保存失败", "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
                 }
 
-                if (imageThumUrl == null) {
-                    imageThumUrl = "";
-                }//第一次没上传任何东西可能是空
-                //给缩略图添加一个新的路径进去,用;号隔开路径
-//            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
-                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                imageThumUrl = imageThumUrl + suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
-            }
-            if ("".equals(imageThumUrl)) {
-                imageThumUrl = null;//为了是null的时候不更新这个字段
-            }
+                String projectPath = SpringbootJarPath.JarLuJingGet();
 
-            if (attach != null) {
-                //将附件保存在指定的目录
-                attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()));
-                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()).exists()) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存", "", "36");
+
+                //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
+                PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+
+                /**
+                 *下面是将图片路径和其它信息更新到数据库
+                 * */
+                //通过主键得到当前的缩略图路径字段thum
+                String imageThumUrl = prdtSamp.getThum();
+                String attachmentUrl = prdtSamp.getAttach();
+
+                /**
+                 *当thum不是空的时候,我们更新缩略图的存储(数据库更新地址,图库添加新图)
+                 * */
+                if (thum != null) {
+                    //将缩略图保存在指定的目录
+                    thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
+                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
+                        return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存", "", "35");
+                    }
+
+                    if (imageThumUrl == null) {
+                        imageThumUrl = "";
+                    }//第一次没上传任何东西可能是空
+                    //给缩略图添加一个新的路径进去,用;号隔开路径
+    //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
+                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+                    imageThumUrl = imageThumUrl + suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
                 }
-                if (attachmentUrl == null) {
-                    attachmentUrl = "";
-                }//第一次没上传任何东西可能是空
+                if ("".equals(imageThumUrl)) {
+                    imageThumUrl = null;//为了是null的时候不更新这个字段
+                }
 
-                //给缩略图添加一个新的路径进去,用;号隔开路径
-//            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
-//            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
-                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                attachmentUrl = attachmentUrl + fuJianWenJianJia + uuid + "!" + attach.getOriginalFilename() + ";";
-            }
-            if ("".equals(attachmentUrl)) {
-                attachmentUrl = null;//为了是null的时候不更新这个字段
-            }
+                if (attach != null) {
+                    //将附件保存在指定的目录
+                    attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()));
+                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()).exists()) {
+                        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存", "", "36");
+                    }
+                    if (attachmentUrl == null) {
+                        attachmentUrl = "";
+                    }//第一次没上传任何东西可能是空
 
-            prdtSampOb.setThum(imageThumUrl);
-            prdtSampOb.setAttach(attachmentUrl);
-            prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
-            //Selective是不更新null
-            if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
-                return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
-            } else {
-                return new MessageGenerate().generateMessage("1", "产品打样更新1条数据", "产品打样新增1条数据", "", "37");
+                    //给缩略图添加一个新的路径进去,用;号隔开路径
+    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
+    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
+                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+                    attachmentUrl = attachmentUrl + fuJianWenJianJia + uuid + "!" + attach.getOriginalFilename() + ";";
+                }
+                if ("".equals(attachmentUrl)) {
+                    attachmentUrl = null;//为了是null的时候不更新这个字段
+                }
+
+                prdtSampOb.setThum(imageThumUrl);
+                prdtSampOb.setAttach(attachmentUrl);
+                prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
+                //Selective是不更新null
+                if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
+                    return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+                } else {
+                    return new MessageGenerate().generateMessage("1", "产品打样更新1条数据", "产品打样新增1条数据", "", "37");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,14 +190,16 @@ public class D1DaYangController打样 {
     }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * 该接口测试失败,不能一次传过个form-data文件
-     * 这个一次只能穿好多个附件
+     *
+     * 这个一次能穿好多个附件
      * 用于同时上传缩略图(到springboot所在项目目录下某目录)和附件(到springboot所在项目目录下某目录)
      * 和打样信息(到数据库表prdt_samp)
      * (value = "attach",required = false)
+     * 下面弄了那么多attach,意思是一次上传多个,最多上传10个
+     *
      */
     @RequestMapping(value = "imageUpLoadAndDataSaveOfManyAttach", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
@@ -177,10 +219,14 @@ public class D1DaYangController打样 {
         List<MultipartFile> attachList = new ArrayList();
         attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);
         attachList.add(attach6);attachList.add(attach7);attachList.add(attach8);attachList.add(attach9);attachList.add(attach10);
-
+        for(MultipartFile file:attachList){
+            if(file.getSize()>(20*1024*1024)){
+                return MessageGenerate.generateMessage("保存失败", "保存失败", "上传的单个文件已经超过20M", "", "41");
+            }
+        }
         //上传到指定目录
         try {
-            String projectPath=this.JarLuJingGet();
+            String projectPath=SpringbootJarPath.JarLuJingGet();
             System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
             //将来用作数据库一条数据的唯一标识
             synchronized (this){
@@ -203,7 +249,7 @@ public class D1DaYangController打样 {
     List<Msg> ImageUpLoadAndDataSave001(@RequestParam(value = "thum", required = false) MultipartFile thum, @RequestParam(value = "attach", required = false) MultipartFile attach, HttpServletRequest request) {
         //上传到指定目录
         try {
-            String projectPath = this.JarLuJingGet();
+            String projectPath = SpringbootJarPath.JarLuJingGet();
             System.out.println();
             System.out.println();
             System.out.println(projectPath);
@@ -219,25 +265,25 @@ public class D1DaYangController打样 {
         return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
     }
 
-    /////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    file:/E:/1/000/LinZhan/pic-report-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/
-    public String JarLuJingGet() {
-        /**
-         *得到类似路径
-         * E:/1/000/LinZhan
-         * 我们打包后的springboot 的jar包就在LinZhan文件夹里面
-         * */
-        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        synchronized (this) {
-            path = path.replace("file:/", "");
-            int i = path.lastIndexOf("!");
-            i = i - 18;
-            path = path.substring(0, i);
-            path = path.substring(0, path.lastIndexOf("/"));
-        }
-
-        return path;
-    }
+//    public String JarLuJingGet() {
+//        /**
+//         *得到类似路径
+//         * E:/1/000/LinZhan
+//         * 我们打包后的springboot 的jar包就在LinZhan文件夹里面
+//         * */
+//        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+//        synchronized (this) {
+//            path = path.replace("file:/", "");
+//            int i = path.lastIndexOf("!");
+//            i = i - 18;
+//            path = path.substring(0, i);
+//            path = path.substring(0, path.lastIndexOf("/"));
+//        }
+//
+//        return path;
+//    }
 
 //    public static void main(String[]args){
 //        System.out.println(new D1DaYangController打样().JarLuJingGet());
