@@ -68,6 +68,9 @@ public class D1DaYangController打样 {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *删除单张图片接口,要求前端传过来图片全路径
+     *
+     * ajax请求头设置为:
+     * x-www-form-urlencoded
      * */
 
     @RequestMapping(value = "deleteOneImage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
@@ -219,11 +222,17 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
         List<MultipartFile> attachList = new ArrayList();
         attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);
         attachList.add(attach6);attachList.add(attach7);attachList.add(attach8);attachList.add(attach9);attachList.add(attach10);
-        for(MultipartFile file:attachList){
-            if(file.getSize()>(20*1024*1024)){
-                return MessageGenerate.generateMessage("保存失败", "保存失败", "上传的单个文件已经超过20M", "", "41");
+        if(attachList!=null&&attachList.size()>0){
+            for(MultipartFile file:attachList){
+                if(file!=null){
+                    if(file.getSize()>(20*1024*1024)){
+                        return MessageGenerate.generateMessage("文件大小超过限制", "文件大小超过限制",
+                                "上传的单个文件已经超过20M", "", "41");
+                    }
+                }
             }
         }
+
         //上传到指定目录
         try {
             String projectPath=SpringbootJarPath.JarLuJingGet();

@@ -54,27 +54,35 @@ public class D1DaYangServiceOfDeleteOneImg {
         }
 //下面更新数据库中字段
         String thumInDataBase = this.getThumInDataBase(imgUrl);
+        System.out.println("thumInDataBase：：："+thumInDataBase);
         PrdtSampExample prdtSampExample=new PrdtSampExample();
         prdtSampExample.createCriteria().andThumLike("%"+thumInDataBase+"%");
         List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
-        PrdtSamp prdtSamp;
-        String newthums=null;
+//        System.out.println(prdtSampList);
+//        PrdtSamp prdtSamp;
+//        String newthums=null;
         if(prdtSampList.size()>0){
-            prdtSamp=prdtSampList.get(0);
+            PrdtSamp  prdtSamp=prdtSampList.get(0);
             //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
-            newthums=prdtSamp.getThum().replace(thumInDataBase+";","");
-            if(newthums!=null&&!"".equals(newthums)){
-                int i=  prdtSampMapper.updateThumColumn(thumInDataBase,newthums);
+            String newthums=prdtSamp.getThum().replace(thumInDataBase+";","");
+            System.out.println("~~~~~~~~~~~~thumInDataBase~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(thumInDataBase);
+            System.out.println(newthums);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            if(newthums!=null){
+                int i=  prdtSampMapper.updateThumColumn("%"+thumInDataBase+"%",newthums);
                 if(i==1){
                     return MessageGenerate.generateMessage("缩略图已经删除", "缩略图已经删除", "缩略图已经删除","", "44");
                 }
             }
 
+        }else{
+            System.out.println("List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample)得到的0size()");
         }
 
 
 
-        return MessageGenerate.generateMessage("您要删除的图片不存在", "您要删除的图片不存在", "您要删除的图片是null","", "43");
+        return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了图片或者数据库记录之中的一个","", "45");
     }
 
     /**
@@ -116,8 +124,8 @@ public class D1DaYangServiceOfDeleteOneImg {
             prdtSamp=prdtSampList.get(0);
             //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
             newAttachs=prdtSamp.getAttach().replace(attachInDataBase+";","");
-            if(newAttachs!=null&&!"".equals(newAttachs)){
-                int i=  prdtSampMapper.updateAttachColumn(attachInDataBase,newAttachs);
+            if(newAttachs!=null){
+                int i=  prdtSampMapper.updateAttachColumn("%"+attachInDataBase+"%",newAttachs);
                 if(i==1){
                     return MessageGenerate.generateMessage("附件已经删除", "附件已经删除", "附件已经删除","", "44");
                 }
@@ -127,7 +135,7 @@ public class D1DaYangServiceOfDeleteOneImg {
 
 
 
-        return MessageGenerate.generateMessage("您要删除的附件不存在", "您要删除的附件不存在", "您要删除的附件是null","", "43");
+        return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了附件或者数据库记录之中的一个","", "45");
     }
     /**
      ****************************************************************************************
