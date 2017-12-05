@@ -54,6 +54,7 @@ public class D1DaYangController打样 {
     @Autowired
     private D1DaYangServiceOfDeleteOneImg deleteOneImg;
     /**
+     * Content-Type:application/x-www-form-urlencoded
      ****************************************************************************************
      * 删除单个附件
      * */
@@ -68,7 +69,7 @@ public class D1DaYangController打样 {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *删除单张图片接口,要求前端传过来图片全路径
-     *
+     *Content-Type:application/x-www-form-urlencoded
      * ajax请求头设置为:
      * x-www-form-urlencoded
      * */
@@ -98,8 +99,17 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     @Transactional
     @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum, @RequestParam(value = "attach", required = false) MultipartFile attach, HttpServletRequest request) {
+    List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
+                                                 @RequestParam(value = "attach", required = false) MultipartFile attach,
+                                                 HttpServletRequest request) {
 //    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+       System.out.println(thum);
+        System.out.println(attach);
+        String prdtSamp1 = request.getParameter("prdtSamp");
+        System.out.println(prdtSamp1);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+
 
         try {
             synchronized (this) {
@@ -110,13 +120,19 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
                     return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
                 }
                 String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
-                PrdtSamp prdtSampOb = JSON.parseObject(request.getParameter("prdtSamp"), PrdtSamp.class);
+
+                PrdtSamp prdtSampOb=null;
+                if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
+                    prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp.class);
+                }
+
                 if (NotEmpty.notEmpty(prdtSampOb)) {
                     if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
                         return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
                     }
                 } else {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
+                    return MessageGenerate.generateMessage("保存失败", "保存失败",
+                            "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
                 }
 
                 String projectPath = SpringbootJarPath.JarLuJingGet();
@@ -124,6 +140,11 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 
                 //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
                 PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+
+                if(prdtSamp==null){
+                    return MessageGenerate.generateMessage("保存失败", "保存失败",
+                            "您穿过来的主键id在数据库冇存在", "", "46");
+                }
 
                 /**
                  *下面是将图片路径和其它信息更新到数据库

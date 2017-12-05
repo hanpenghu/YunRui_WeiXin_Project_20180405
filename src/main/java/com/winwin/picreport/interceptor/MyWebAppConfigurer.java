@@ -16,7 +16,7 @@ public class MyWebAppConfigurer
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new Interceptor001())
-                .addPathPatterns("/daYangSuoLueTuAndFuJianZongPath");
+                .addPathPatterns("/suoLueTuWenJianJia/**");
         super.addInterceptors(registry);
     }
 
