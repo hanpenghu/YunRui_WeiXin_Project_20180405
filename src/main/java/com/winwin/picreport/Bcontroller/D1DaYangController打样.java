@@ -1,10 +1,7 @@
 package com.winwin.picreport.Bcontroller;
 
 import com.alibaba.fastjson.JSON;
-import com.winwin.picreport.Cservice.D1DaYangService;
-import com.winwin.picreport.Cservice.D1DaYangServiceOfDeleteOneImg;
-import com.winwin.picreport.Cservice.D1DaYangServiceOfDeleteSome;
-import com.winwin.picreport.Cservice.FenLei;
+import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.*;
@@ -27,6 +24,10 @@ import java.util.*;
 @RestController
 @RequestMapping("/d")
 public class D1DaYangController打样 {
+
+    @Autowired
+    private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
+
     @Autowired
     private D1DaYangService d1DaYangService;
     @Value("${dirUrl}")
@@ -46,8 +47,8 @@ public class D1DaYangController打样 {
     private FenLei fenLei;
     @Autowired
     private ManyTabSerch manyTabSerch;
-    @Autowired
-    private PrdtSampMapper prdtSampMapper;
+//    @Autowired
+//    private PrdtSampMapper prdtSampMapper;
     @Autowired
     private D1DaYangServiceOfDeleteSome deleteSome;
 
@@ -60,6 +61,7 @@ public class D1DaYangController打样 {
      * */
     @RequestMapping(value = "deleteOneAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
+
         return deleteOneImg.deleteOneAttach(attachUrl);
     }
 
@@ -86,6 +88,7 @@ public class D1DaYangController打样 {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {
+    System.out.println(uuidList);
     return deleteSome.deleteSomeRecode(uuidList);
 }
 
@@ -96,120 +99,27 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
      */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Transactional
-    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
-                                                 @RequestParam(value = "attach", required = false) MultipartFile attach,
-                                                 HttpServletRequest request) {
+//    @Transactional
+    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST,
+                                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+                                            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Msg>
+    ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
+                                       @RequestParam(value = "attach", required = false) MultipartFile attach,
+                                       HttpServletRequest request) {
 //    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
-System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-       System.out.println(thum);
-        System.out.println(attach);
+//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//       System.out.println(thum);
+//        System.out.println(attach);
         String prdtSamp1 = request.getParameter("prdtSamp");
-        System.out.println(prdtSamp1);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-
-
+//        System.out.println(prdtSamp1);
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
-            synchronized (this) {
-                if (thum != null && (thum.getOriginalFilename().contains("!") || thum.getOriginalFilename().contains(";"))) {
-                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号", "您的图片不能包含有!符号或者;符号", "", "34");
-                }
-                if (attach != null && (attach.getOriginalFilename().contains("!") || attach.getOriginalFilename().contains(";"))) {
-                    return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
-                }
-                String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
-
-                PrdtSamp prdtSampOb=null;
-                if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
-                    prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp.class);
-                }
-
-                if (NotEmpty.notEmpty(prdtSampOb)) {
-                    if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
-                        return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
-                    }
-                } else {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败",
-                            "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
-                }
-
-                String projectPath = SpringbootJarPath.JarLuJingGet();
-
-
-                //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-                PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
-
-                if(prdtSamp==null){
-                    return MessageGenerate.generateMessage("保存失败", "保存失败",
-                            "您穿过来的主键id在数据库冇存在", "", "46");
-                }
-
-                /**
-                 *下面是将图片路径和其它信息更新到数据库
-                 * */
-                //通过主键得到当前的缩略图路径字段thum
-                String imageThumUrl = prdtSamp.getThum();
-                String attachmentUrl = prdtSamp.getAttach();
-
-                /**
-                 *当thum不是空的时候,我们更新缩略图的存储(数据库更新地址,图库添加新图)
-                 * */
-                if (thum != null) {
-                    //将缩略图保存在指定的目录
-                    thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
-                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
-                        return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存", "", "35");
-                    }
-
-                    if (imageThumUrl == null) {
-                        imageThumUrl = "";
-                    }//第一次没上传任何东西可能是空
-                    //给缩略图添加一个新的路径进去,用;号隔开路径
-    //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
-                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                    imageThumUrl = imageThumUrl + suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
-                }
-                if ("".equals(imageThumUrl)) {
-                    imageThumUrl = null;//为了是null的时候不更新这个字段
-                }
-
-                if (attach != null) {
-                    //将附件保存在指定的目录
-                    attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()));
-                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()).exists()) {
-                        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存", "", "36");
-                    }
-                    if (attachmentUrl == null) {
-                        attachmentUrl = "";
-                    }//第一次没上传任何东西可能是空
-
-                    //给缩略图添加一个新的路径进去,用;号隔开路径
-    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
-    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
-                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                    attachmentUrl = attachmentUrl + fuJianWenJianJia + uuid + "!" + attach.getOriginalFilename() + ";";
-                }
-                if ("".equals(attachmentUrl)) {
-                    attachmentUrl = null;//为了是null的时候不更新这个字段
-                }
-
-                prdtSampOb.setThum(imageThumUrl);
-                prdtSampOb.setAttach(attachmentUrl);
-                prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
-                //Selective是不更新null
-                if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
-                } else {
-                    return new MessageGenerate().generateMessage("1", "产品打样更新1条数据", "产品打样新增1条数据", "", "37");
-                }
-            }
-        } catch (IOException e) {
+           return infoEdit.infoEdit(thum,attach,prdtSamp1);
+        } catch (Exception e) {
+            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
             e.printStackTrace();
         }
-
-
         return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
     }
 
@@ -432,9 +342,125 @@ public @ResponseBody List<KeHu> keHutest(){
         return new SimpleDateFormat("yyyy-MM-dd HH mm ss SS").format(new Date());
     }
 /////////////////////////////////////////////////////////////////////////
+/*@Transactional
+@RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+public @ResponseBody
+List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
+                                             @RequestParam(value = "attach", required = false) MultipartFile attach,
+                                             HttpServletRequest request) {
+//    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+    System.out.println(thum);
+    System.out.println(attach);
+    String prdtSamp1 = request.getParameter("prdtSamp");
+    System.out.println(prdtSamp1);
+    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
-    @Transactional
+    try {
+        synchronized (this) {
+            if (thum != null && (thum.getOriginalFilename().contains("!") || thum.getOriginalFilename().contains(";"))) {
+                return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号", "您的图片不能包含有!符号或者;符号", "", "34");
+            }
+            if (attach != null && (attach.getOriginalFilename().contains("!") || attach.getOriginalFilename().contains(";"))) {
+                return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
+            }
+            String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
+
+            PrdtSamp prdtSampOb=null;
+            if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
+                prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp.class);
+            }
+
+            if (NotEmpty.notEmpty(prdtSampOb)) {
+                if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
+                    return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
+                }
+            } else {
+                return MessageGenerate.generateMessage("保存失败", "保存失败",
+                        "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
+            }
+
+            String projectPath = SpringbootJarPath.JarLuJingGet();
+
+
+            //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
+            PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+
+            if(prdtSamp==null){
+                return MessageGenerate.generateMessage("保存失败", "保存失败",
+                        "您穿过来的主键id在数据库冇存在", "", "46");
+            }
+
+            *//**
+             *下面是将图片路径和其它信息更新到数据库
+             * *//*
+            //通过主键得到当前的缩略图路径字段thum
+            String imageThumUrl = prdtSamp.getThum();
+            String attachmentUrl = prdtSamp.getAttach();
+
+            *//**
+             *当thum不是空的时候,我们更新缩略图的存储(数据库更新地址,图库添加新图)
+             * *//*
+            if (thum != null) {
+                //将缩略图保存在指定的目录
+                thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
+                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
+                    return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存", "", "35");
+                }
+
+                if (imageThumUrl == null) {
+                    imageThumUrl = "";
+                }//第一次没上传任何东西可能是空
+                //给缩略图添加一个新的路径进去,用;号隔开路径
+                //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
+                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+                imageThumUrl = imageThumUrl + suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
+            }
+            if ("".equals(imageThumUrl)) {
+                imageThumUrl = null;//为了是null的时候不更新这个字段
+            }
+
+            if (attach != null) {
+                //将附件保存在指定的目录
+                attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()));
+                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uuid + "!" + attach.getOriginalFilename()).exists()) {
+                    return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存", "", "36");
+                }
+                if (attachmentUrl == null) {
+                    attachmentUrl = "";
+                }//第一次没上传任何东西可能是空
+
+                //给缩略图添加一个新的路径进去,用;号隔开路径
+                //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
+                //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
+                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+                attachmentUrl = attachmentUrl + fuJianWenJianJia + uuid + "!" + attach.getOriginalFilename() + ";";
+            }
+            if ("".equals(attachmentUrl)) {
+                attachmentUrl = null;//为了是null的时候不更新这个字段
+            }
+
+            prdtSampOb.setThum(imageThumUrl);
+            prdtSampOb.setAttach(attachmentUrl);
+            prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
+            //Selective是不更新null
+            if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
+                return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+            } else {
+                return new MessageGenerate().generateMessage("1", "产品打样更新1条数据", "产品打样新增1条数据", "", "37");
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+
+    return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+}*/
+
+
+   /* @Transactional
     public PrdtSamp prdtSampWhereSpaceToNull(PrdtSamp prdtSamp) {
         if ("".equals(prdtSamp.getPrdCode())) {
             prdtSamp.setPrdCode(null);
@@ -501,7 +527,7 @@ public @ResponseBody List<KeHu> keHutest(){
         return prdtSamp;
 
     }
-
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
