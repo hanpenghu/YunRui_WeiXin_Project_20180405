@@ -28,6 +28,11 @@ public class D1DaYangController打样 {
     @Autowired
     private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
 
+
+    @Autowired
+    private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach infoEditOfManyAttach;
+
+
     @Autowired
     private D1DaYangService d1DaYangService;
     @Value("${dirUrl}")
@@ -120,12 +125,44 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
             e.printStackTrace();
         }
-        return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+        return MessageGenerate.generateMessage("保存失败", "保存失败",
+                "数据库系统级别错误", "", "38");
     }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //    @Transactional
+    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttach", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Msg>
+    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(
+            @RequestParam(value = "thum", required = false) MultipartFile thum,
+                                       HttpServletRequest request) {
+//    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//       System.out.println(thum);
+//        System.out.println(attach);
+        String prdtSamp1 = request.getParameter("prdtSamp");
+        List<MultipartFile> fileList =
+                ((MultipartHttpServletRequest) request).getFiles("file");
+//        System.out.println(prdtSamp1);
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        try {
+            return infoEditOfManyAttach.infoEditOfManyAttach(thum,fileList,prdtSamp1);
+        } catch (Exception e) {
+            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
+                    "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
+            e.printStackTrace();
+        }
+        return MessageGenerate.generateMessage("保存失败", "保存失败",
+                "数据库系统级别错误", "", "38");
+    }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *
      * 这个一次能穿好多个附件

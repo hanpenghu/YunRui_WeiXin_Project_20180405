@@ -36,6 +36,7 @@ public class TestController {
 
     /**
      **************测试多文件上传**************************************************************************
+     http://blog.csdn.net/coding13/article/details/54577076
      * */
 
     @RequestMapping(value = "/batch/upload", method = RequestMethod.POST)
