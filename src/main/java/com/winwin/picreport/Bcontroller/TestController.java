@@ -1,5 +1,7 @@
 package com.winwin.picreport.Bcontroller;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -83,6 +85,20 @@ public class TestController {
 
     }
 
+
+    /**
+     ****************************************************************************************
+     * import org.springframework.util.MultiValueMap;
+     * import org.springframework.util.LinkedMultiValueMap;
+     * */
+
+    public static void main(String[]args){
+        MultiValueMap mmp= new LinkedMultiValueMap();
+        mmp.add("1","2");
+        mmp.add("1","3");
+        List list = (List)mmp.get("1");
+        System.out.println(list);
+    }
 
     /**
      ****************************************************************************************
