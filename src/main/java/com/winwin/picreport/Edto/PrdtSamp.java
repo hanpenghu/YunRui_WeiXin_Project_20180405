@@ -62,7 +62,28 @@ public class PrdtSamp {
     private List<String> thumUrlList=new ArrayList<>();
     private List<String> attachUrlList=new ArrayList<>();
 
-//构造函数初始化网址
+    private Date insertdate;
+    private String insertdateStr;
+
+    public String getInsertdateStr() {
+        return insertdateStr;
+    }
+
+    public PrdtSamp setInsertdateStr(String insertdateStr) {
+        this.insertdateStr = insertdateStr;
+        return this;
+    }
+
+    public Date getInsertdate() {
+        return insertdate;
+    }
+
+    public PrdtSamp setInsertdate(Date insertdate) {
+        this.insertdate = insertdate;
+        return this;
+    }
+
+    //构造函数初始化网址
 public PrdtSamp() throws ParseException {
     this.dirUrl=ConstantInit.getDirUrl001();
 }

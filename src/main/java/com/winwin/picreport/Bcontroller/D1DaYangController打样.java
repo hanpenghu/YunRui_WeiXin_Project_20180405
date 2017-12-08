@@ -133,24 +133,30 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //    @Transactional
-    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttach", method = RequestMethod.POST,
+    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttach",
+            method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<Msg>
-    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(
-            @RequestParam(value = "thum", required = false) MultipartFile thum,
-                                       HttpServletRequest request) {
-//    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
-//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//       System.out.println(thum);
-//        System.out.println(attach);
-        String prdtSamp1 = request.getParameter("prdtSamp");
-        List<MultipartFile> fileList =
-                ((MultipartHttpServletRequest) request).getFiles("file");
+    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(HttpServletRequest request) {
+        String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
+        List<MultipartFile> attachList =
+                ((MultipartHttpServletRequest) request).getFiles("attach");
+        System.out.println(attachList);//附件
+        List<MultipartFile> thumList =
+                ((MultipartHttpServletRequest) request).getFiles("thum");
+        System.out.println(thumList);//缩略图
+
+
+
+        MultipartFile thum=null;
+        if(NotEmpty.notEmpty(thumList)){
+            thum=thumList.get(0);
+        }
 //        System.out.println(prdtSamp1);
 //        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
-            return infoEditOfManyAttach.infoEditOfManyAttach(thum,fileList,prdtSamp1);
+            return infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
         } catch (Exception e) {
             System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
                     "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");

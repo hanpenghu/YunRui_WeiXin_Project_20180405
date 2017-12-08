@@ -21,6 +21,7 @@
     <result column="samp_desc" jdbcType="VARCHAR" property="sampDesc" />
     <result column="thum" jdbcType="VARCHAR" property="thum" />
     <result column="attach" jdbcType="VARCHAR" property="attach" />
+    <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, 
-    cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach
+    cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,insertdate
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select

@@ -12,7 +12,9 @@ import com.winwin.picreport.Futils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,7 +61,15 @@ public class FenLei {
         List<PrdtSamp> prdtSampList=new ArrayList<>();
         List<String> idList = manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
-            prdtSampList.add(prdtSampMapper.selectByPrimaryKey(id));
+            PrdtSamp prdtSampX = prdtSampMapper.selectByPrimaryKey(id);
+            Date insertdate = prdtSampX.getInsertdate();
+            try {
+                String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
+                prdtSampX.setInsertdateStr(insertdateStr);
+            } catch (Exception e) {
+                System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
+            }
+            prdtSampList.add(prdtSampX);
         }
         return prdtSampList;
     }
