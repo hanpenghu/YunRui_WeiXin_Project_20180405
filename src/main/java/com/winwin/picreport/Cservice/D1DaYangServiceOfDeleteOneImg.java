@@ -32,57 +32,58 @@ public class D1DaYangServiceOfDeleteOneImg {
 //"http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg"
 
     public List<Msg> deleteOneImage(String imgUrl) {
-        if(imgUrl==null){
-            return MessageGenerate.generateMessage("您要删除的图片不存在",
-                    "您要删除的图片不存在",
-                    "您要删除的图片是null","", "43");
-        }
-        if(!imgUrl.contains("http://")){
-            return MessageGenerate.generateMessage("您要删除的图片不存在",
-                    "您要删除的图片不存在", "前端传过来的图片路径不合法"
-                    ,"", "43");
-        }
-        if(!imgUrl.contains("!")){
-            return MessageGenerate.generateMessage("您要删除的图片不存在",
-                    "您要删除的图片不存在", "前端传过来的图片路径不合法",
-                    "", "43");
-        }
+        synchronized (this) {
+            if(imgUrl==null){
+                return MessageGenerate.generateMessage("您要删除的图片不存在",
+                        "您要删除的图片不存在",
+                        "您要删除的图片是null","", "43");
+            }
+            if(!imgUrl.contains("http://")){
+                return MessageGenerate.generateMessage("您要删除的图片不存在",
+                        "您要删除的图片不存在", "前端传过来的图片路径不合法"
+                        ,"", "43");
+            }
+            if(!imgUrl.contains("!")){
+                return MessageGenerate.generateMessage("您要删除的图片不存在",
+                        "您要删除的图片不存在", "前端传过来的图片路径不合法",
+                        "", "43");
+            }
 
-        File file = new File(getThumPath(imgUrl));
-        if(file.exists()){
-            file.delete();
-        }
+            File file = new File(getThumPath(imgUrl));
+            if(file.exists()){
+                file.delete();
+            }
 //下面更新数据库中字段
-        String thumInDataBase = this.getThumInDataBase(imgUrl);
-        System.out.println("thumInDataBase：：："+thumInDataBase);
-        PrdtSampExample prdtSampExample=new PrdtSampExample();
-        prdtSampExample.createCriteria().andThumLike("%"+thumInDataBase+"%");
-        List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
+            String thumInDataBase = this.getThumInDataBase(imgUrl);
+            System.out.println("thumInDataBase：：："+thumInDataBase);
+            PrdtSampExample prdtSampExample=new PrdtSampExample();
+            prdtSampExample.createCriteria().andThumLike("%"+thumInDataBase+"%");
+            List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
 //        System.out.println(prdtSampList);
 //        PrdtSamp prdtSamp;
 //        String newthums=null;
-        if(prdtSampList.size()>0){
-            PrdtSamp  prdtSamp=prdtSampList.get(0);
-            //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
-            String newthums=prdtSamp.getThum().replace(thumInDataBase+";","");
-            System.out.println("~~~~~~~~~~~~thumInDataBase~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println(thumInDataBase);
-            System.out.println(newthums);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            if(newthums!=null){
-                int i=  prdtSampMapper.updateThumColumn("%"+thumInDataBase+"%",newthums);
-                if(i==1){
-                    return MessageGenerate.generateMessage("缩略图已经删除", "缩略图已经删除", "缩略图已经删除","", "44");
+            if(prdtSampList.size()>0){
+                PrdtSamp  prdtSamp=prdtSampList.get(0);
+                //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
+                String newthums=prdtSamp.getThum().replace(thumInDataBase+";","");
+                System.out.println("~~~~~~~~~~~~thumInDataBase~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println(thumInDataBase);
+                System.out.println(newthums);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                if(newthums!=null){
+                    int i=  prdtSampMapper.updateThumColumn("%"+thumInDataBase+"%",newthums);
+                    if(i==1){
+                        return MessageGenerate.generateMessage("缩略图已经删除", "缩略图已经删除", "缩略图已经删除","", "44");
+                    }
                 }
+
+            }else{
+                System.out.println("List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample)得到的0size()");
             }
 
-        }else{
-            System.out.println("List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample)得到的0size()");
+
+            return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了图片或者数据库记录之中的一个","", "45");
         }
-
-
-
-        return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了图片或者数据库记录之中的一个","", "45");
     }
 
     /**
@@ -90,52 +91,53 @@ public class D1DaYangServiceOfDeleteOneImg {
      * */
 
     public List<Msg> deleteOneAttach(String attachUrl) {
-        if(attachUrl==null){
-            return MessageGenerate.generateMessage("您要删除的附件不存在",
-                    "您要删除的附件不存在",
-                    "您要删除的附件是null","", "43");
-        }
-        if(!attachUrl.contains("http://")){
-            return MessageGenerate.generateMessage("您要删除的附件不存在",
-                    "您要删除的附件不存在", "前端传过来的附件路径不合法"
-                    ,"", "43");
-        }
-        if(!attachUrl.contains("!")){
-            return MessageGenerate.generateMessage("您要删除的附件不存在",
-                    "您要删除的附件不存在", "前端传过来的附件路径不合法",
-                    "", "43");
-        }
-
-        File file = new File(getAttachPath(attachUrl));
-        if(file.exists()){
-            file.delete();
-        }
-//下面更新数据库中字段
-        /**
-         *上面删除的是文件夹中的文件,下面删除的是数据库的中文件记录
-         * */
-        String attachInDataBase = this.getAttachInDataBase(attachUrl);
-        PrdtSampExample prdtSampExample=new PrdtSampExample();
-        prdtSampExample.createCriteria().andAttachLike("%"+attachInDataBase+"%");
-        List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
-        PrdtSamp prdtSamp;
-        String newAttachs=null;
-        if(prdtSampList.size()>0){
-            prdtSamp=prdtSampList.get(0);
-            //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
-            newAttachs=prdtSamp.getAttach().replace(attachInDataBase+";","");
-            if(newAttachs!=null){
-                int i=  prdtSampMapper.updateAttachColumn("%"+attachInDataBase+"%",newAttachs);
-                if(i==1){
-                    return MessageGenerate.generateMessage("附件已经删除", "附件已经删除", "附件已经删除","", "44");
-                }
+        synchronized (this) {
+            if(attachUrl==null){
+                return MessageGenerate.generateMessage("您要删除的附件不存在",
+                        "您要删除的附件不存在",
+                        "您要删除的附件是null","", "43");
+            }
+            if(!attachUrl.contains("http://")){
+                return MessageGenerate.generateMessage("您要删除的附件不存在",
+                        "您要删除的附件不存在", "前端传过来的附件路径不合法"
+                        ,"", "43");
+            }
+            if(!attachUrl.contains("!")){
+                return MessageGenerate.generateMessage("您要删除的附件不存在",
+                        "您要删除的附件不存在", "前端传过来的附件路径不合法",
+                        "", "43");
             }
 
+            File file = new File(getAttachPath(attachUrl));
+            if(file.exists()){
+                file.delete();
+            }
+//下面更新数据库中字段
+            /**
+             *上面删除的是文件夹中的文件,下面删除的是数据库的中文件记录
+             * */
+            String attachInDataBase = this.getAttachInDataBase(attachUrl);
+            PrdtSampExample prdtSampExample=new PrdtSampExample();
+            prdtSampExample.createCriteria().andAttachLike("%"+attachInDataBase+"%");
+            List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
+            PrdtSamp prdtSamp;
+            String newAttachs=null;
+            if(prdtSampList.size()>0){
+                prdtSamp=prdtSampList.get(0);
+                //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
+                newAttachs=prdtSamp.getAttach().replace(attachInDataBase+";","");
+                if(newAttachs!=null){
+                    int i=  prdtSampMapper.updateAttachColumn("%"+attachInDataBase+"%",newAttachs);
+                    if(i==1){
+                        return MessageGenerate.generateMessage("附件已经删除", "附件已经删除", "附件已经删除","", "44");
+                    }
+                }
+
+            }
+
+
+            return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了附件或者数据库记录之中的一个","", "45");
         }
-
-
-
-        return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了附件或者数据库记录之中的一个","", "45");
     }
     /**
      ****************************************************************************************

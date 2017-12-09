@@ -112,7 +112,8 @@ public class Msg {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.Msg{");
-        sb.append("xiaoHaoShiJian='").append(xiaoHaoShiJian).append('\'');
+        sb.append("status='").append(status).append('\'');
+        sb.append(", xiaoHaoShiJian='").append(xiaoHaoShiJian).append('\'');
         sb.append(", Msg='").append(Msg).append('\'');
         sb.append(", chMsg='").append(chMsg).append('\'');
         sb.append(", otherMsg='").append(otherMsg).append('\'');

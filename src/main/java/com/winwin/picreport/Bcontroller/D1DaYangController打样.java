@@ -102,6 +102,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
+     * 这个暂时不用,用下下面那个
      */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    @Transactional
@@ -112,13 +113,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
                                        @RequestParam(value = "attach", required = false) MultipartFile attach,
                                        HttpServletRequest request) {
-//    String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
-//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//       System.out.println(thum);
-//        System.out.println(attach);
         String prdtSamp1 = request.getParameter("prdtSamp");
-//        System.out.println(prdtSamp1);
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
            return infoEdit.infoEdit(thum,attach,prdtSamp1);
         } catch (Exception e) {
@@ -128,33 +123,79 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
         return MessageGenerate.generateMessage("保存失败", "保存失败",
                 "数据库系统级别错误", "", "38");
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *这个暂时不用,用下面那个接口
+     * */
 
+    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2",
+        method = RequestMethod.POST,
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+public @ResponseBody List<Msg>
+imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
+    String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
+    List<MultipartFile> thumList =
+            ((MultipartHttpServletRequest) request).getFiles("thum");
+
+    List<MultipartFile> attachList =
+            ((MultipartHttpServletRequest) request).getFiles("attach");
+
+
+    MultipartFile thum=null;
+    if(NotEmpty.notEmpty(thumList)){
+        thum=thumList.get(0);
+    }
+    try {
+        return infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
+    } catch (Exception e) {
+        System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
+                "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
+        e.printStackTrace();
+    }
+    return MessageGenerate.generateMessage("保存失败", "保存失败",
+            "数据库系统级别错误", "", "38");
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     *用这个进行  信息编辑
+     * */
     //    @Transactional
     @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttach",
             method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<Msg>
-    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(HttpServletRequest request) {
+    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
+                                                  @RequestParam(value = "attach1", required = false) MultipartFile attach1,
+                                                  @RequestParam(value = "attach2", required = false) MultipartFile attach2,
+                                                  @RequestParam(value = "attach3", required = false) MultipartFile attach3,
+                                                  @RequestParam(value = "attach4", required = false) MultipartFile attach4,
+                                                  @RequestParam(value = "attach5", required = false) MultipartFile attach5,
+                                                  @RequestParam(value = "attach6", required = false) MultipartFile attach6,
+                                                  @RequestParam(value = "attach7", required = false) MultipartFile attach7,
+                                                  @RequestParam(value = "attach8", required = false) MultipartFile attach8,
+                                                  @RequestParam(value = "attach9", required = false) MultipartFile attach9,
+                                                  @RequestParam(value = "attach10", required = false) MultipartFile attach10,
+                                                  HttpServletRequest request) {
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-        List<MultipartFile> attachList =
-                ((MultipartHttpServletRequest) request).getFiles("attach");
-        System.out.println(attachList);//附件
-        List<MultipartFile> thumList =
-                ((MultipartHttpServletRequest) request).getFiles("thum");
-        System.out.println(thumList);//缩略图
+        List<MultipartFile> attachList =new LinkedList<>();
+         new ListUtils<MultipartFile>()
+                 .add(attach1,attachList)
+                 .add(attach2,attachList)
+                 .add(attach3,attachList)
+                 .add(attach4,attachList)
+                 .add(attach5,attachList)
+                 .add(attach6,attachList)
+                 .add(attach7,attachList)
+                 .add(attach8,attachList)
+                 .add(attach9,attachList)
+                 .add(attach10,attachList);
+System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+         System.out.println(attachList);
+         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
-
-
-        MultipartFile thum=null;
-        if(NotEmpty.notEmpty(thumList)){
-            thum=thumList.get(0);
-        }
-//        System.out.println(prdtSamp1);
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
             return infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
         } catch (Exception e) {
@@ -574,7 +615,8 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public class Attachs {
+    public class AttachsAndThum {
+        private MultipartFile thum;
         private MultipartFile attach1;
         private MultipartFile attach2;
         private MultipartFile attach3;
@@ -586,11 +628,20 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
         private MultipartFile attach9;
         private MultipartFile attach10;
 
+        public MultipartFile getThum() {
+            return thum;
+        }
+
+        public AttachsAndThum setThum(MultipartFile thum) {
+            this.thum = thum;
+            return this;
+        }
+
         public MultipartFile getAttach1() {
             return attach1;
         }
 
-        public Attachs setAttach1(MultipartFile attach1) {
+        public AttachsAndThum setAttach1(MultipartFile attach1) {
             this.attach1 = attach1;
             return this;
         }
@@ -599,7 +650,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach2;
         }
 
-        public Attachs setAttach2(MultipartFile attach2) {
+        public AttachsAndThum setAttach2(MultipartFile attach2) {
             this.attach2 = attach2;
             return this;
         }
@@ -608,7 +659,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach3;
         }
 
-        public Attachs setAttach3(MultipartFile attach3) {
+        public AttachsAndThum setAttach3(MultipartFile attach3) {
             this.attach3 = attach3;
             return this;
         }
@@ -617,7 +668,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach4;
         }
 
-        public Attachs setAttach4(MultipartFile attach4) {
+        public AttachsAndThum setAttach4(MultipartFile attach4) {
             this.attach4 = attach4;
             return this;
         }
@@ -626,7 +677,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach5;
         }
 
-        public Attachs setAttach5(MultipartFile attach5) {
+        public AttachsAndThum setAttach5(MultipartFile attach5) {
             this.attach5 = attach5;
             return this;
         }
@@ -635,7 +686,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach6;
         }
 
-        public Attachs setAttach6(MultipartFile attach6) {
+        public AttachsAndThum setAttach6(MultipartFile attach6) {
             this.attach6 = attach6;
             return this;
         }
@@ -644,7 +695,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach7;
         }
 
-        public Attachs setAttach7(MultipartFile attach7) {
+        public AttachsAndThum setAttach7(MultipartFile attach7) {
             this.attach7 = attach7;
             return this;
         }
@@ -653,7 +704,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach8;
         }
 
-        public Attachs setAttach8(MultipartFile attach8) {
+        public AttachsAndThum setAttach8(MultipartFile attach8) {
             this.attach8 = attach8;
             return this;
         }
@@ -662,7 +713,7 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach9;
         }
 
-        public Attachs setAttach9(MultipartFile attach9) {
+        public AttachsAndThum setAttach9(MultipartFile attach9) {
             this.attach9 = attach9;
             return this;
         }
@@ -671,13 +722,30 @@ List<Msg> ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", requi
             return attach10;
         }
 
-        public Attachs setAttach10(MultipartFile attach10) {
+        public AttachsAndThum setAttach10(MultipartFile attach10) {
             this.attach10 = attach10;
             return this;
         }
 
-
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("com.winwin.picreport.Bcontroller.D1DaYangController打样.AttachsAndThum{");
+            sb.append("thum=").append(thum);
+            sb.append(", attach1=").append(attach1);
+            sb.append(", attach2=").append(attach2);
+            sb.append(", attach3=").append(attach3);
+            sb.append(", attach4=").append(attach4);
+            sb.append(", attach5=").append(attach5);
+            sb.append(", attach6=").append(attach6);
+            sb.append(", attach7=").append(attach7);
+            sb.append(", attach8=").append(attach8);
+            sb.append(", attach9=").append(attach9);
+            sb.append(", attach10=").append(attach10);
+            sb.append('}');
+            return sb.toString();
+        }
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
