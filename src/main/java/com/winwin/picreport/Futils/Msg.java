@@ -3,7 +3,7 @@ package com.winwin.picreport.Futils;
 public class Msg {
     private String status="0";
     private String xiaoHaoShiJian="";
-    private String Msg="";
+    private String msg="";
     private String chMsg="";
     private String otherMsg="";
     private String token="";
@@ -102,28 +102,12 @@ public class Msg {
     }
 
     public Msg setMsg(String msg) {
-        Msg = msg;return this;
+        this.msg = msg;return this;
     }
 
     public String getMsg() {
-        return Msg;
+        return this.msg;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.Msg{");
-        sb.append("status='").append(status).append('\'');
-        sb.append(", xiaoHaoShiJian='").append(xiaoHaoShiJian).append('\'');
-        sb.append(", Msg='").append(Msg).append('\'');
-        sb.append(", chMsg='").append(chMsg).append('\'');
-        sb.append(", otherMsg='").append(otherMsg).append('\'');
-        sb.append(", token='").append(token).append('\'');
-        sb.append(", tenantId='").append(tenantId).append('\'');
-        sb.append(", tenantName='").append(tenantName).append('\'');
-        sb.append(", userEmail='").append(userEmail).append('\'');
-        sb.append(", notExsitThisPrdtNoInPrdtTab='").append(notExsitThisPrdtNoInPrdtTab).append('\'');
-        sb.append(", weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao='").append(weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+
 }

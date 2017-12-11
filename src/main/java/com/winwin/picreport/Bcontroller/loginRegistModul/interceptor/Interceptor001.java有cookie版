@@ -1,0 +1,72 @@
+//package com.ipacedev.tcode.controller.loginRegistModul.interceptor;
+//
+//import com.alibaba.fastjson.JSONObject;
+//import com.ipacedev.tcode.dao.mapperJava01ChanPinKu.A001TongYongMapper;
+//import com.ipacedev.tcode.utils.NotEmpty;
+//import com.ipacedev.tcode.utils.TipMsg;
+//import org.springframework.web.servlet.HandlerInterceptor;
+//import org.springframework.web.servlet.ModelAndView;
+//import javax.servlet.http.Cookie;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import java.io.PrintWriter;
+//import java.util.*;
+//
+//public class Interceptor001 implements HandlerInterceptor {
+//    private A001TongYongMapper a001TongYongMapper;
+//
+//    public Interceptor001() {
+//
+//    }
+//    public Interceptor001(A001TongYongMapper a001TongYongMapper) {
+//          this.a001TongYongMapper=a001TongYongMapper;
+//    }
+//    @Override
+//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+//        System.out.println(">>>MyInterceptor1>>>>>>>在请求处理之前进行调用（Controller方法调用之前）");
+//        Cookie[] cookies = request.getCookies();
+//        System.out.println(cookies);
+//        Map<String,String> map=new HashMap();
+//        if(NotEmpty.notEmpty(cookies)){
+//            for(Cookie cookie:cookies){
+//                if("tenantId".equals(cookie.getName())){
+//                    map.put("tenantId",cookie.getValue());
+//                }else if("userEmail".equals(cookie.getName())){
+//                    map.put("userEmail",cookie.getValue());
+//                }else if("timeStamp".equals(cookie.getName())){
+//                    map.put("timeStamp",cookie.getValue());
+//                }
+//            }
+//        }else{
+//            TipMsg.falseOfNoLogin(response);//返回提示信息给前端
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验,浏览器cookie是空的~~~~~~~~~~~~~~~~~~~~~~~~");
+//            return false;
+//        }
+//        Integer ii = a001TongYongMapper.conutTenantId(map.get("tenantId"));
+//        String timeStamp = map.get("timeStamp");
+//        long time00=Long.valueOf(timeStamp);
+//        Integer jj = a001TongYongMapper.countuserEmailAndTimeStamp(map.get("userEmail"), timeStamp);
+//        long time = new Date().getTime();
+//        long kk = time - time00;
+////        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~打发大厦~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println(kk);
+////        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~打法是否~~~~~~~~~~~~~~~~~");
+//        if(ii==1&&jj==1&&kk<=1800000l){//保证在30分钟以内   30分钟*60秒*1000毫秒=1800000毫秒秒 但是kk毫秒
+//            return true;
+//        }
+//        TipMsg.falseOfNoLogin(response);
+//        return false;
+//    }
+//
+//    @Override
+//    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+//        System.out.println(">>>MyInterceptor1>>>>>>>请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）");
+//    }
+//
+//    @Override
+//    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+//        System.out.println(">>>MyInterceptor1>>>>>>>在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）");
+//
+//
+//    }
+//}

@@ -405,6 +405,7 @@
       <if test="attach != null">
         attach = #{attach,jdbcType=VARCHAR},
       </if>
+      insertdate=insertdate
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>

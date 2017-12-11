@@ -207,6 +207,16 @@ System.out.println(this.getSampMake());
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampMakeStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
         }
         //        res = simpleDateFormat.format(date);
+
+        if(date!=null){
+            String format1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+                date=null;
+            }
+        }
+
+
         this.sampMake=date;
         return date;
     }
@@ -224,6 +234,15 @@ System.out.println(this.getSampMake());
         } catch (NumberFormatException e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampSendStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
         }
+
+        if(date!=null){
+            String format1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
+            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+                date=null;
+            }
+        }
+
+
         this.sampSend=date;
         return date;
     }

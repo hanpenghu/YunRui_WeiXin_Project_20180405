@@ -2,10 +2,8 @@ package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Futils.MessageGenerate;
-import com.winwin.picreport.Futils.Msg;
-import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.SpringbootJarPath;
+import com.winwin.picreport.Futils.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -118,10 +117,11 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 }
 
 
+                String s1 = projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia;
                 if (attach != null) {
                     //将附件保存在指定的目录
-                    attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uid + "!" + attach.getOriginalFilename()));
-                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uid + "!" + attach.getOriginalFilename()).exists()) {
+                    attach.transferTo(new File(s1, uid + "!" + attach.getOriginalFilename()));
+                    if (!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
                         return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
                     }
                     if (attachmentUr == null) {
@@ -150,7 +150,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 }else{
 
                 }
-                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia, uid + "!" + attach.getOriginalFilename()).exists()) {
+                if (attach!=null&&!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
                     throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36").toString());
                 }
                 ////////////////////////////////////////////////for结束/////////////////////////////////////////////////////
@@ -221,14 +221,36 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             prdtSamp.setAttach(null);
         }//
 
+        if(prdtSamp.getSampSend() != null){
+            String format1 = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampSend());
 
-        if (prdtSamp.getSampSend() != null && "1900-01-01".equals(new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampSend()))) {
-            prdtSamp.setSampSend(null);
+            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+                prdtSamp.setSampSend(null);
+            }
         }
-        if (prdtSamp.getSampMake() != null && "1900-01-01".equals(new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampMake()))) {
-            prdtSamp.setSampMake(null);
+
+
+        if(prdtSamp.getSampMake() != null){
+            String format = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampMake());
+
+            if ( "1900-01-01".equals(format)||"1970-01-01".equals(format)) {
+                prdtSamp.setSampMake(null);
+            }
+
+
         }
+
+
         return prdtSamp;
+
+    }
+
+    @Test
+    public void  f(){
+        String format1 = new SimpleDateFormat("yyyy-MM-dd").
+                format(new Date());
+
+        p.p(format1);
 
     }
 

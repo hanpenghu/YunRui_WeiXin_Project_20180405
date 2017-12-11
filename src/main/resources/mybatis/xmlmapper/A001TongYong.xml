@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper">
+    <!--<resultMap id="BaseResultMap" type=""></resultMap>-->
+
+
+    <!--登录验证用的  得到修改跟人信息接口 -->
+    <select id="selectUserEditInfo" resultType="com.winwin.picreport.Edto.LoginInfo">
+          Select
+            u.tenantid AS 'tenantId'
+            ,u.userEmail AS 'userEmail'
+            ,u.userPswd AS 'userPswd'
+            ,u.phone_no AS 'phoneNo'
+            ,u.user_name AS 'userName'
+            ,t.tenantName AS 'tenantName'
+            from   users u,tenant t where t.tenantid=u.tenantid
+            ---下一句话的意思是: 至少有一个不是space或者null
+            and (isnull(u.userEmail,'')!='' or   isnull(u.phone_no,'')!='' or  isnull(u.user_name,'')!='')
+            and isnull(u.tenantid,'')=#{info.tenantId}
+            and isnull(t.tenantid,'')=#{info.tenantId}
+            and
+            (
+                isnull(u.userEmail,'')=#{info.userEmail}
+                or isnull(u.phone_no,'')=#{info.phoneNo}
+                or isnull(u.user_name,'')=#{info.userName}
+            )
+
+    </select>
+
+
+    <!-- 修改个人信息用的sql -->
+    <update id="updateUserInfo" parameterType="com.winwin.picreport.Edto.LoginInfo">
+        UPDATE USERS
+            SET
+                <if test="newUserEamil != null and newUserEamil !='' and newUserEamil != 'undefined' " >
+                   userEmail=#{newUserEamil},
+                </if>
+                <if test="newUserPswd != null and newUserPswd !='' and newUserPswd != 'undefined' " >
+                  userPswd=#{newUserPswd},
+                </if>
+                <if test="newPhoneNo != null and newPhoneNo !='' and newPhoneNo != 'undefined' " >
+                    phone_no=#{newPhoneNo},
+                </if>
+                <if test="newUserName != 'undefined' and newUserName != null and newUserName !='' ">
+                    user_name=#{newUserName},  ---注意,这里有undifined的时候,会正题插不进去,因为这一行不要了,上面一行多了个逗号跟where搞在一起了
+                </if>
+                timetoken=timetoken   ---这个主要是解决最后一个if是null的时候报错的问题
+            where
+            ---下一句话的意思是: 至少有一个不是space或者null
+            (isnull(userEmail,'')!='' or   isnull(phone_no,'')!='' or  isnull(user_name,'')!='')
+            and isnull(tenantid,'')=#{tenantId}
+            and
+            (
+                isnull(userEmail,'')=#{userEmail}
+                or isnull(phone_no,'')=#{phoneNo}
+                or isnull(user_name,'')=#{userName}
+            )
+    </update>
+
+</mapper>
