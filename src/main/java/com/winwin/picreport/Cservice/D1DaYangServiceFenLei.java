@@ -9,6 +9,7 @@ import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MessageGenerate;
 import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class FenLei {
+@Service("fenLei")
+public class D1DaYangServiceFenLei {
     @Autowired
     private PrdtSampMapper prdtSampMapper;
     @Autowired
@@ -38,6 +39,8 @@ public class FenLei {
         return  categoryNameCodeList;
 
     }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public List<FuZeRen> fuZeRen() {
         List<FuZeRen> fuZeRenList= manyTabSerch.fuZeRen();
@@ -80,6 +83,80 @@ public class FenLei {
         fenYe.setZongYeShu();
         return fenYe;
     }
+
+    /**
+     ****************************************************************************************
+     * 下面是按层级得到的分类
+     * */
+
+    /**
+     *先得到最上级
+     * */
+
+    public CategoryNameCode getCommonder(){
+     //其实只有一个元素
+        List<CategoryNameCode> commonders = manyTabSerch.getCommonder();
+        if(NotEmpty.notEmpty(commonders)){
+            CategoryNameCode categoryNameCode = commonders.get(0);
+            List<String> codeList=manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
+            categoryNameCode.setPrdCodeList(codeList);
+            return categoryNameCode;
+        }
+        return null;
+    }
+
+
+    /**
+     *找到某个CategoryNameCode的下级的下级,并封装进来
+     * */
+
+    public CategoryNameCode getChildAndSet(CategoryNameCode cnc){
+        //找到所有的下级
+        List<CategoryNameCode> ccnc = manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
+        //用一个新的list替换所有下级集合 来 搜集   装好 code的  所有下级
+        List<CategoryNameCode> ccncListChild=new ArrayList<>();
+        if(NotEmpty.notEmpty(ccnc)){
+            //给所有的下级添加货品名字
+            for(CategoryNameCode c :ccnc){
+                List<String> codeList=manyTabSerch.getCodeList(c.getIdxNo());
+                c.setPrdCodeList(codeList);
+                ccncListChild.add(c);
+            }
+        }else{
+            //如果size()==0,就设置为null,要不然就会产生一堆json垃圾
+            ccncListChild=null;
+        }
+        return cnc.setChilds(ccncListChild);
+    }
+
+    /**
+     *得到所有层级
+     * */
+
+    public CategoryNameCode getAllLayerUtil(CategoryNameCode top){
+        //设置该top的child
+        top = this.getChildAndSet(top);
+        List<CategoryNameCode> childs = top.getChilds();
+        if(NotEmpty.notEmpty(childs)){
+            //寻找该childs里面的所有child的childs
+            for(CategoryNameCode c:childs){
+                this.getAllLayerUtil(c);
+            }
+        }
+        return top;
+    }
+
+    /**
+     *实现所有层级
+     * */
+
+    public CategoryNameCode getAllLayer(){
+        return this.getAllLayerUtil(this.getCommonder());
+    }
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

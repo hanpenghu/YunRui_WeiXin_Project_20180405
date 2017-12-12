@@ -49,7 +49,7 @@ public class D1DaYangController打样 {
     @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
     private String daYangSuoLueTuAndFuJianZongPath;
     @Autowired
-    private FenLei fenLei;
+    private D1DaYangServiceFenLei  fenLei;
     @Autowired
     private ManyTabSerch manyTabSerch;
 //    @Autowired
@@ -317,8 +317,23 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 /////////////////////////////////////////////////////////////////////////
+    /**
+     *分类实行层级制,这个已经被拦截器放行了     /d/allfenleitest
+     * */
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody CategoryNameCode allfenleitest() {
+        return fenLei.getAllLayer();
+    }
+
+    @RequestMapping(value = "allfenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody CategoryNameCode allfenlei() {
+        return fenLei.getAllLayer();
+    }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<CategoryNameCode> fenlei() {

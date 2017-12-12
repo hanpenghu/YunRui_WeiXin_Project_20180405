@@ -100,7 +100,7 @@ public interface ManyTabSerch {
         @Delete("delete  from mf_pos_z where os_no not in (select os_no from mf_pos)")
         Integer update010_2OfOnlineBug();
 
-        @Select("")
+        @Select("Select sal_no AS salNo,name AS name from salm")
         List<YeWuYuan> getAllYeWuYuan();
 
 
@@ -113,10 +113,23 @@ public interface ManyTabSerch {
 
         @Select("SELECT ebNo FROM SAPSO WHERE RTRIM(LTRIM(ISNULL(osno,'')))+RTRIM(LTRIM(ISNULL(prdno,'')))+RTRIM(LTRIM(ISNULL(chengFenDaiMa,'')))=#{danHao_huoHao_chengFenDaiMa}")
         List<String> selectEbNoFromSapso(@Param("danHao_huoHao_chengFenDaiMa") String danHao_huoHao_chengFenDaiMa);
-
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx")
         List<CategoryName> fenlei();
 
+
+        /**
+         *得到最高层级的分类,其实只有一个
+         * */
+        @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up is null")
+        List<CategoryNameCode>getCommonder();
+
+        /**
+         *得到下一级的分类,有多个
+         * */
+        @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=#{indxNo}")
+        List<CategoryNameCode>getChildCategoryNameCode(@Param("indxNo") String indxNo);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         @Select("select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=#{idxNo})")
         List<String> getCodeList(@Param("idxNo") String idxNo);
 

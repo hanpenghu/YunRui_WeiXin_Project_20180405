@@ -27,7 +27,10 @@ public class MyWebAppConfigurer
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/regist")
                 .excludePathPatterns("/logOut")
-                 .excludePathPatterns("/test");
+                 .excludePathPatterns("/test")
+        .excludePathPatterns("/d/allfenleitest")
+//                .excludePathPatterns("/base/*")
+        ;
         super.addInterceptors(registry);
     }
 

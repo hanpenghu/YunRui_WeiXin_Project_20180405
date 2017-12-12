@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryNameCode {
+
+    private List<CategoryNameCode> childs;
+
     private List<String> prdCodeList=new ArrayList<>();//就是prdt中的name
 
     private String idxName="";//分类名称
@@ -34,6 +37,16 @@ public class CategoryNameCode {
 
     public CategoryNameCode setIdxNo(String idxNo) {
         this.idxNo = idxNo;
+        return this;
+    }
+
+
+    public List<CategoryNameCode> getChilds() {
+        return childs;
+    }
+
+    public CategoryNameCode setChilds(List<CategoryNameCode> childs) {
+        this.childs = childs;
         return this;
     }
 
