@@ -82,7 +82,46 @@ public class PrdtSamp {
         this.insertdate = insertdate;
         return this;
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     *增加字段,用于打样是否确认
+     * */
+    private String confirmMan="";//确认人
+
+
+    private String confirmTimeStr="";//确认时间
+
+    private int isConfirm=-1;//0代表没有确认,1代表确认了,-1代表数据没有得到
+
+    public String getConfirmMan() {
+        return confirmMan;
+    }
+
+    public PrdtSamp setConfirmMan(String confirmMan) {
+        this.confirmMan = confirmMan;
+        return this;
+    }
+
+    public String getConfirmTimeStr() {
+        return confirmTimeStr;
+    }
+
+    public PrdtSamp setConfirmTimeStr(String confirmTimeStr) {
+        this.confirmTimeStr = confirmTimeStr;
+        return this;
+    }
+
+    public int getIsConfirm() {
+        return isConfirm;
+    }
+
+    public PrdtSamp setIsConfirm(int isConfirm) {
+        this.isConfirm = isConfirm;
+        return this;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //构造函数初始化网址
 public PrdtSamp() throws ParseException {
     this.dirUrl=ConstantInit.getDirUrl001();
@@ -405,33 +444,5 @@ System.out.println(this.getSampMake());
         this.attach = attach == null ? null : attach.trim();
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", prdCode='").append(prdCode).append('\'');
-        sb.append(", idxName='").append(idxName).append('\'');
-        sb.append(", idxNo='").append(idxNo).append('\'');
-        sb.append(", markName='").append(markName).append('\'');
-        sb.append(", markNo='").append(markNo).append('\'');
-        sb.append(", colour='").append(colour).append('\'');
-        sb.append(", size='").append(size).append('\'');
-        sb.append(", salName='").append(salName).append('\'');
-        sb.append(", salNo='").append(salNo).append('\'');
-        sb.append(", cusNo='").append(cusNo).append('\'');
-        sb.append(", cusName='").append(cusName).append('\'');
-        sb.append(", isfenjie='").append(isfenjie).append('\'');
-        sb.append(", sampMake=").append(sampMake);
-        sb.append(", sampSend=").append(sampSend);
-        sb.append(", sampMakeStamp='").append(sampMakeStamp).append('\'');
-        sb.append(", sampSendStamp='").append(sampSendStamp).append('\'');
-        sb.append(", sampMakeStr='").append(sampMakeStr).append('\'');
-        sb.append(", sampSendStr='").append(sampSendStr).append('\'');
-        sb.append(", sampRequ='").append(sampRequ).append('\'');
-        sb.append(", sampDesc='").append(sampDesc).append('\'');
-        sb.append(", thum='").append(thum).append('\'');
-        sb.append(", attach='").append(attach).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+
 }

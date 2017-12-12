@@ -22,6 +22,10 @@
     <result column="thum" jdbcType="VARCHAR" property="thum" />
     <result column="attach" jdbcType="VARCHAR" property="attach" />
     <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate" />
+    <!--下面是后增加的3个字段2017年12月12日23:40:42 -->
+    <result column="confirmMan" jdbcType="VARCHAR" property="confirmMan" />
+    <result column="confirmTimeStr" jdbcType="VARCHAR" property="confirmTimeStr" />
+    <result column="isConfirm" jdbcType="INTEGER" property="isConfirm" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,8 +86,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, 
-    cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,insertdate
+    id, prd_code, idx_name, idx_no, mark_name, mark_no,
+    colour, size, sal_name, sal_no,
+    cus_no, cus_name, isFenJie, samp_make, samp_send,
+     samp_requ, samp_desc, thum, attach,insertdate
+    ,confirmMan,confirmTimeStr,isConfirm--后来加的三个字段
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
