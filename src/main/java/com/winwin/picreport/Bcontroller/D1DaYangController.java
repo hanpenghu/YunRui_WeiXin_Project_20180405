@@ -24,11 +24,14 @@ import java.util.*;
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
-public class D1DaYangController打样 {
-
+public class D1DaYangController {
+    @Autowired
+    private PrdtSampMapper prdtSampMapper;
     @Autowired
     private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
 
+    @Autowired
+    private D1DaYangService_ConfirmOrder dco;
 
     @Autowired
     private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach infoEditOfManyAttach;
@@ -359,13 +362,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         return fuZeRenList;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//客户以前写过了,在A0BaseInfoController
 
-    /*@RequestMapping(value="keHutest",method = RequestMethod.GET,produces ={"application/json;charset=utf-8"})
-public @ResponseBody List<KeHu> keHutest(){
-    List<PinPai> fuZeRenList=manyTabSerch.keHu();
-    return fuZeRenList;
-}*/
 
 
     /////////////////////////////////////////////list///////////////////////////////////////////////////////
@@ -394,9 +391,45 @@ public @ResponseBody List<KeHu> keHutest(){
         FenYe fenYe = this.daYangZongYeShuHeMeiYeXianShiShu();
         return fenYe;
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *得到所有打样已确认的单子的所有页,参数只要传过来当前页就行了
+     * 作废
+     * */
+
+    @RequestMapping(value = "alReadyConfirmOrderPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody FenYe alReadyConfirmOrderPage(@RequestBody FenYe fenYe) {
+        return dco.alReadyConfirmOrderPage(fenYe);
+    }
 
 
-    //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口/////////////////////////////////////////
+    /**
+     *得到所有打样未确认的单子第某页,这个不只是能得到第一页,还能得到很多页
+     *
+     * */
+    @RequestMapping(value = "notConfirmOrderFirstPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {
+        return dco.notConfirmOrderFirstPage(fenYe);
+    }
+
+    /**
+     *确认单子  isconfirm变为1
+     *
+     * 47 打样确认成功 isconfirm=1
+
+     48 打样确认 没成功 isconfirm=0
+     * */
+    @RequestMapping(value = "confirmTheOrder", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    public @ResponseBody List<Msg> confirmTheOrder(@RequestBody PrdtSamp prdtSamp) {
+        return dco.confirmTheOrder(prdtSamp);
+    }
+
+
+
+
+
+
+ //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口/////////////////////////////////////////
     @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<PrdtSamp> dangqianyeData(@RequestBody FenYe fenYe) {

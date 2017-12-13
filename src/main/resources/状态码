@@ -75,3 +75,7 @@ com.ipacedev.tcode.TcodeApplication
 45您可能只删除了附件或者数据库之中的一个
 
 46 prdt_samp表数据库没有这个id
+
+47 打样确认成功 isconfirm=1
+
+48 打样确认 没成功 isconfirm=0

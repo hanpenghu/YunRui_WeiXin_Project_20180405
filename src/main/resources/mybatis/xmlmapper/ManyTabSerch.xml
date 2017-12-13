@@ -16,10 +16,42 @@
    			(
    				(#{meiYeXianShiShu})*((#{dangQianYe})-1)
    			)
-   			id from PRDT_SAMP ORDER BY samp_make DESC
-   		)ORDER BY samp_make DESC
+   			id from PRDT_SAMP ORDER BY insertDate DESC
+   		)ORDER BY insertDate DESC
 
     </select>
+
+    <!-- 林展分页打样未确认-->
+    <select id="selectDangQianYeSuoYouIdNotConfirm" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+          id
+        from
+        PRDT_SAMP where id not in
+        (
+            select top
+                (
+                    (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+                )
+            id from PRDT_SAMP WHERE isConfirm=0 OR isConfirm is null ORDER BY insertDate DESC
+        )and isConfirm=0 OR isConfirm is null ORDER BY insertDate DESC
+    </select>
+
+
+    <!-- 林展分页打样已经确认-->
+    <select id="selectDangQianYeSuoYouIdAlReadyConfirm" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+        id
+        from
+        PRDT_SAMP where id not in
+        (
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )
+        id from PRDT_SAMP WHERE isConfirm=1 ORDER BY insertDate DESC
+        )and isConfirm=1 ORDER BY insertDate DESC
+    </select>
+
 
      <select id="salePrdDetailTab1" resultType="com.winwin.picreport.Edto.SalePrdDetailTab1">
               SELECT

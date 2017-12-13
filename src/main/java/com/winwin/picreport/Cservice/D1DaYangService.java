@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -201,6 +202,7 @@ public class D1DaYangService {
         Integer ii= null;
         List<Msg> list;
         try {
+            prdtSamp.setInsertdate(new Date());
             ii = prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");

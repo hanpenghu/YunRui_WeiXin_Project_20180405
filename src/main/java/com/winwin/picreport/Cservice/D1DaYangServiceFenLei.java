@@ -79,6 +79,7 @@ public class D1DaYangServiceFenLei {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public FenYe daYangZongYeShuHeMeiYeXianShiShu() {
         FenYe fenYe=new FenYe();
+
         fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         return fenYe;

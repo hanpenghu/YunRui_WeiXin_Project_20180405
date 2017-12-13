@@ -2,235 +2,45 @@ package com.winwin.picreport.Edto;
 
 import com.winwin.picreport.Futils.ConstantInit;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-public class PrdtSamp {
 
+public class PrdtSamp {
     private String id="";
 
     private String prdCode="";
 
+    private String idxName;
 
-    private String idxName="";
+    private String idxNo;
 
-    private String idxNo="";
+    private String markName;
 
-    private String markName="";
+    private String markNo;
 
-    private String markNo="";
+    private String colour;
 
-    private String colour="";
+    private String size;
 
-    private String size="";
+    private String salName;
 
-    private String salName="";
+    private String salNo;
 
-    private String salNo="";
+    private String cusNo;
 
-    private String cusNo="";
+    private String cusName;
 
-    private String cusName="";
-
-    private String isfenjie="";
-
-    private Date sampMake=null;//new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
-
-    private Date sampSend=null;//new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
-    private String sampMakeStamp="";//打样时间戳//传给我这个
-    private String sampSendStamp="";//样品寄出时间戳//传给我这个
-
-    private String sampMakeStr="";//给徐勇用
-    private String sampSendStr="";//给徐勇用
-    private String sampRequ="";//样品要求
-
-    private String sampDesc="";//详情
-
-    private String thum="";//缩略图
-
-
-
-    private String attach="";//附件
-    //缩略图和附件的地址
-//private String dirUrl="http://116.62.224.172:8070/";//网址
-    private String dirUrl="http://10.0.3.101:8070/";
-/////////////////////////////////////////////////////////////////////////////////////
-    private List<String> thumUrlList=new ArrayList<>();
-    private List<String> attachUrlList=new ArrayList<>();
-
-    private Date insertdate;
-    private String insertdateStr;
-
-    public String getInsertdateStr() {
-        return insertdateStr;
-    }
-
-    public PrdtSamp setInsertdateStr(String insertdateStr) {
-        this.insertdateStr = insertdateStr;
-        return this;
-    }
-
-    public Date getInsertdate() {
-        return insertdate;
-    }
-
-    public PrdtSamp setInsertdate(Date insertdate) {
-        this.insertdate = insertdate;
-        return this;
-    }
+    private String isfenjie;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private Date sampMake;
 
-    /**
-     *增加字段,用于打样是否确认
-     * */
-    private String confirmMan="";//确认人
+    private Date sampSend;
 
-
-    private String confirmTimeStr="";//确认时间
-
-    private int isConfirm=-1;//0代表没有确认,1代表确认了,-1代表数据没有得到
-
-    public String getConfirmMan() {
-        return confirmMan;
-    }
-
-    public PrdtSamp setConfirmMan(String confirmMan) {
-        this.confirmMan = confirmMan;
-        return this;
-    }
-
-    public String getConfirmTimeStr() {
-        return confirmTimeStr;
-    }
-
-    public PrdtSamp setConfirmTimeStr(String confirmTimeStr) {
-        this.confirmTimeStr = confirmTimeStr;
-        return this;
-    }
-
-    public int getIsConfirm() {
-        return isConfirm;
-    }
-
-    public PrdtSamp setIsConfirm(int isConfirm) {
-        this.isConfirm = isConfirm;
-        return this;
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //构造函数初始化网址
-public PrdtSamp() throws ParseException {
-    this.dirUrl=ConstantInit.getDirUrl001();
-}
-
-
-    public List<String> getThumUrlList() {
-
-        String thum1=this.getThum();
-        //把得到的缩略图的一堆路径拆成数组
-        if(thum1!=null&&!"".equals(thum1)){
-            List<String> strings = Arrays.asList(thum1.split(";"));
-            List<String>strList=new ArrayList<>();
-            //给每个图片加上地址
-            for(String  str:strings){
-                strList.add(dirUrl+str);
-            }
-            this.thumUrlList=strList;
-        }
-        return thumUrlList;
-    }
-//    public static void main(String[]args){
-//        String[] split = "1;2;".split(";");
-//        System.out.println(Arrays.asList(split));
-//    }
-    public PrdtSamp setThumUrlList(List<String> thumUrlList) {
-        this.thumUrlList = thumUrlList;
-        return this;
-    }
-
-
-
-
-
-    public List<String> getAttachUrlList() {
-        String attach1=this.getAttach();
-        //把得到的缩略图的一堆路径拆成数组
-        if(attach1!=null&&!"".equals(attach1)){
-            List<String> strings = Arrays.asList(attach1.split(";"));
-            List<String>strList=new ArrayList<>();
-            for(String str:strings){
-                strList.add(dirUrl+str);
-            }
-            this.attachUrlList=strList;
-        }
-        return attachUrlList;
-//        return attachUrlList;
-    }
-
-    public PrdtSamp setAttachUrlList(List<String> attachUrlList) {
-        this.attachUrlList = attachUrlList;
-        return this;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    public String getSampMakeStr() {
-System.out.println(this.getSampMake());
-        String s = null;
-        try {
-            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampMake());
-//        sampMakeStr=s;
-        } catch (Exception e) {
-
-        }
-        return s;
-    }
-
-    public PrdtSamp setSampMakeStr(String sampMakeStr) {
-        this.sampMakeStr = sampMakeStr;
-        return this;
-    }
-
-    public String getSampSendStr() {
-        String s = null;
-        try {
-            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampSend());
-//        sampSendStr=s;
-        } catch (Exception e) {
-
-        }
-        return s;
-    }
-
-    public PrdtSamp setSampSendStr(String sampSendStr) {
-        this.sampSendStr = sampSendStr;
-        return this;
-    }
-
-    /////////////////////////////用于跟前端沟通增加的时间戳转换字段//////////////////////////////////////////////////////////
-    public String getSampMakeStamp() {
-        return sampMakeStamp;
-    }
-
-    public PrdtSamp setSampMakeStamp(String sampMakeStamp) {
-        this.sampMakeStamp = sampMakeStamp;
-        return this;
-    }
-
-    public String getSampSendStamp() {
-        return sampSendStamp;
-    }
-
-    public PrdtSamp setSampSendStamp(String sampSendStamp) {
-        this.sampSendStamp = sampSendStamp;
-        return this;
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////使用转换字段转换过来的时间/////////////////////////////////////////////////////////////
     public Date getSampMake() {
         //        String res;
         //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -289,6 +99,170 @@ System.out.println(this.getSampMake());
 
 
 
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private String sampMakeStamp="";//打样时间戳//传给我这个
+    private String sampSendStamp="";//样品寄出时间戳//传给我这个
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private String sampMakeStr="";//给徐勇用
+    private String sampSendStr="";//给徐勇用
+
+    public String getSampMakeStr() {
+        System.out.println(this.getSampMake());
+        String s = null;
+        try {
+            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampMake());
+//        sampMakeStr=s;
+        } catch (Exception e) {
+
+        }
+        return s;
+    }
+
+    public PrdtSamp setSampMakeStr(String sampMakeStr) {
+        this.sampMakeStr = sampMakeStr;
+        return this;
+    }
+
+    public String getSampSendStr() {
+        String s = null;
+        try {
+            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampSend());
+//        sampSendStr=s;
+        } catch (Exception e) {
+
+        }
+        return s;
+    }
+
+    public PrdtSamp setSampSendStr(String sampSendStr) {
+        this.sampSendStr = sampSendStr;
+        return this;
+    }
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private String sampRequ="";
+
+    private String sampDesc="";
+
+    private String thum="";
+
+    private String attach="";
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private String dirUrl="http://10.0.3.101:8070/";
+    //构造函数初始化网址
+    public PrdtSamp() throws ParseException {
+        this.dirUrl= ConstantInit.getDirUrl001();
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private Date insertdate;
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private String insertdateStr;
+
+    public String getInsertdateStr() {
+        return insertdateStr;
+    }
+
+    public PrdtSamp setInsertdateStr(String insertdateStr) {
+        this.insertdateStr = insertdateStr;
+        return this;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private String confirmman="";//确认人
+
+    private String confirmtimestr="";//确认时间   直接带-的字符串
+
+    private Integer isconfirm=0;//是否确认，1代表已经确认  0代表未确认
+
+    private String category;//未知
+
+    private String teamname;//未知
+
+    private String confirmrem;//确认备注
+
+    private String unit;//单位
+
+    private String businessdesc;//业务描述
+
+    private String financedesc;//财务描述
+
+    private BigDecimal startsellcount;//起订数量
+
+    private BigDecimal modelcost;//财务模具费
+
+    private BigDecimal estimateprice;//预估价
+
+    private BigDecimal littleorderprice;//财务小单费
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private List<String> thumUrlList=new ArrayList<>();
+    private List<String> attachUrlList=new ArrayList<>();
+
+    public List<String> getThumUrlList() {
+
+        String thum1=this.getThum();
+        //把得到的缩略图的一堆路径拆成数组
+        if(thum1!=null&&!"".equals(thum1)){
+            List<String> strings = Arrays.asList(thum1.split(";"));
+            List<String>strList=new ArrayList<>();
+            //给每个图片加上地址、
+            for(String  str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.thumUrlList=strList;
+        }
+        return thumUrlList;
+    }
+
+
+    public PrdtSamp setThumUrlList(List<String> thumUrlList) {
+        this.thumUrlList = thumUrlList;
+        return this;
+    }
+
+
+    public List<String> getAttachUrlList() {
+        String attach1=this.getAttach();
+        //把得到的缩略图的一堆路径拆成数组
+        if(attach1!=null&&!"".equals(attach1)){
+            List<String> strings = Arrays.asList(attach1.split(";"));
+            List<String>strList=new ArrayList<>();
+            for(String str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.attachUrlList=strList;
+        }
+        return attachUrlList;
+    }
+
+    public PrdtSamp setAttachUrlList(List<String> attachUrlList) {
+        this.attachUrlList = attachUrlList;
+        return this;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public String getId() {
@@ -395,17 +369,13 @@ System.out.println(this.getSampMake());
         this.isfenjie = isfenjie == null ? null : isfenjie.trim();
     }
 
-//    public Date getSampMake() {
-//        return sampMake;
-//    }
+
 
     public void setSampMake(Date sampMake) {
         this.sampMake = sampMake;
     }
 
-//    public Date getSampSend() {
-//        return sampSend;
-//    }
+
 
     public void setSampSend(Date sampSend) {
         this.sampSend = sampSend;
@@ -443,5 +413,134 @@ System.out.println(this.getSampMake());
         this.attach = attach == null ? null : attach.trim();
     }
 
+    public Date getInsertdate() {
+        return insertdate;
+    }
+
+    public void setInsertdate(Date insertdate) {
+        this.insertdate = insertdate;
+    }
+
+    public String getConfirmman() {
+        return confirmman;
+    }
+
+    public void setConfirmman(String confirmman) {
+        this.confirmman = confirmman == null ? null : confirmman.trim();
+    }
+
+    public String getConfirmtimestr() {
+        return confirmtimestr;
+    }
+
+    public void setConfirmtimestr(String confirmtimestr) {
+        this.confirmtimestr = confirmtimestr == null ? null : confirmtimestr.trim();
+    }
+
+    public Integer getIsconfirm() {
+        return isconfirm;
+    }
+
+    public void setIsconfirm(Integer isconfirm) {
+        this.isconfirm = isconfirm;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category == null ? null : category.trim();
+    }
+
+    public String getTeamname() {
+        return teamname;
+    }
+
+    public void setTeamname(String teamname) {
+        this.teamname = teamname == null ? null : teamname.trim();
+    }
+
+    public String getConfirmrem() {
+        return confirmrem;
+    }
+
+    public void setConfirmrem(String confirmrem) {
+        this.confirmrem = confirmrem == null ? null : confirmrem.trim();
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit == null ? null : unit.trim();
+    }
+
+    public String getBusinessdesc() {
+        return businessdesc;
+    }
+
+    public void setBusinessdesc(String businessdesc) {
+        this.businessdesc = businessdesc == null ? null : businessdesc.trim();
+    }
+
+    public String getFinancedesc() {
+        return financedesc;
+    }
+
+    public void setFinancedesc(String financedesc) {
+        this.financedesc = financedesc == null ? null : financedesc.trim();
+    }
+
+    public BigDecimal getStartsellcount() {
+        return startsellcount;
+    }
+
+    public void setStartsellcount(BigDecimal startsellcount) {
+        this.startsellcount = startsellcount;
+    }
+
+    public BigDecimal getModelcost() {
+        return modelcost;
+    }
+
+    public void setModelcost(BigDecimal modelcost) {
+        this.modelcost = modelcost;
+    }
+
+    public BigDecimal getEstimateprice() {
+        return estimateprice;
+    }
+
+    public void setEstimateprice(BigDecimal estimateprice) {
+        this.estimateprice = estimateprice;
+    }
+
+    public BigDecimal getLittleorderprice() {
+        return littleorderprice;
+    }
+
+    public void setLittleorderprice(BigDecimal littleorderprice) {
+        this.littleorderprice = littleorderprice;
+    }
+
+    public String getSampMakeStamp() {
+        return sampMakeStamp;
+    }
+
+    public PrdtSamp setSampMakeStamp(String sampMakeStamp) {
+        this.sampMakeStamp = sampMakeStamp;
+        return this;
+    }
+
+    public String getSampSendStamp() {
+        return sampSendStamp;
+    }
+
+    public PrdtSamp setSampSendStamp(String sampSendStamp) {
+        this.sampSendStamp = sampSendStamp;
+        return this;
+    }
 
 }

@@ -142,6 +142,17 @@ public interface ManyTabSerch {
 
         List<String>selectDangQianYeSuoYouId(@Param("dangQianYe") Integer dangQianYe,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
 
+        /**
+         *得到某页分页id,打样未确认的
+         * */
+        List<String>selectDangQianYeSuoYouIdNotConfirm(@Param("dangQianYe") Integer dangQianYe,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
+
+        /**
+         *得到某页分页id,打样已经确认的
+         * */
+        List<String>selectDangQianYeSuoYouIdAlReadyConfirm(@Param("dangQianYe") Integer dangQianYe,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
+
+
         @Select("select count(id) from PRDT_SAMP")
         Integer dangYangZongJiLuShu();
 
@@ -151,4 +162,7 @@ public interface ManyTabSerch {
                 "update prdt set formula='1;-1;-1;4;4;主单位数量*0.9144;副单位数量/0.9144' where ut='yards' and ut1='meters' and (formula IS NULL or formula='')",
                 "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')"})
         Integer update011_1_OfOnlineBug();
+
+
+
 }

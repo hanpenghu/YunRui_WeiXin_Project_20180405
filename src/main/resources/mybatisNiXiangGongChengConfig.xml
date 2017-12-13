@@ -13,15 +13,15 @@
             connectionURL="jdbc:sqlserver://58.211.48.54:9002;DatabaseName=DB_HHMM" userId="sa"
             password="Zhangtao0804527">
         </jdbcConnection>-->
-       <!-- <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-                        connectionURL="jdbc:sqlserver://116.62.224.172:7502;DatabaseName=DB_BARC" userId="sa"
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://116.62.224.172:7502;DatabaseName=dblinzhan002" userId="sa"
                         password="x2g5u7h!8+gaohang@">
-        </jdbcConnection>-->
+        </jdbcConnection>
 
-         <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+         <!--<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                        connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=DB_LZ17" userId="sa"
                        password="root">
-       </jdbcConnection>
+       </jdbcConnection>-->
 
 <!--        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://120.26.73.200:7201;DatabaseName=DB_BARC" userId="sa"
@@ -47,8 +47,8 @@
         </javaTypeResolver>
 
         <!-- targetProject:生成PO类的位置，重要！！ -->
-        <javaModelGenerator targetPackage="main.java.com.winwin.picreport.Edto"
-            targetProject=".\src">
+        <javaModelGenerator targetPackage="com.winwin.picreport.Edto"
+            targetProject=".\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
             <!-- 从数据库返回的值被清理前后的空格 -->
@@ -58,16 +58,16 @@
         
         
         <!-- targetProject:mapper映射文件生成的位置，重要！！ -->
-        <sqlMapGenerator targetPackage="main.resources.mybatis.xmlmapper"
-            targetProject=".\src">
+        <sqlMapGenerator targetPackage="resources.mybatis.xmlmapper"
+            targetProject=".\src\main">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
         
         
         <!-- targetPackage：mapper接口生成的位置，重要！！ -->
         <javaClientGenerator type="XMLMAPPER"
-            targetPackage="main.java.com.winwin.picreport.Ddao.reportxmlmapper"
-            targetProject=".\src">
+            targetPackage="com.winwin.picreport.Ddao.reportxmlmapper"
+            targetProject=".\src\main\java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         
@@ -78,7 +78,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <!--<table tableName="PRDT_SAMP"></table>-->
+        <table tableName="PRDT_SAMP"></table>
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->
         <!--<table tableName="mf_ic"></table>
         <table tableName="tf_ic"></table>-->
