@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import com.winwin.picreport.Futils.ConstantInit;
 public class PrdtSamp {
 
     private String id="";
