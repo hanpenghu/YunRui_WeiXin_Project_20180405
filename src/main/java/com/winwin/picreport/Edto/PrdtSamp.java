@@ -193,7 +193,7 @@ public class PrdtSamp {
 
     private String confirmtimestr="";//确认时间   直接带-的字符串
 
-    private Integer isconfirm=0;//是否确认，1代表已经确认  0代表未确认
+    private Integer isconfirm;//是否确认，1代表已经确认  0代表未确认
 
     private String category;//未知
 

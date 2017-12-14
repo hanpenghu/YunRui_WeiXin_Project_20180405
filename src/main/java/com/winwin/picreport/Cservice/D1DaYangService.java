@@ -202,7 +202,8 @@ public class D1DaYangService {
         Integer ii= null;
         List<Msg> list;
         try {
-            prdtSamp.setInsertdate(new Date());
+            prdtSamp.setInsertdate(new Date());//该条记录创建时间
+            prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
             ii = prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");

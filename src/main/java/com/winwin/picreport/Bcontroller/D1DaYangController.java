@@ -295,10 +295,32 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * 上传一个包含信息的excel到数据库
+     * 这个一次只能穿一个附件
+     * 用于同时上传缩略图(到springboot所在项目目录下某目录)和附件(到springboot所在项目目录下某目录)
+     * 和打样信息(到数据库表prdt_samp)
+     * 49保存成功,
+     * 50保存失败
+     */
+    @RequestMapping(value = "dataSaveByExcel", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false) MultipartFile excel) {
+        //上传到指定目录
+        try {
+           return d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return MessageGenerate.generateMessage("保存失败", "保存失败",
+                "数据库系统级别错误", "", "50");
+    }
+
+
 
 //////////////////////////////////////////////////////////////
-
-
+@Autowired
+private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
 /////////////////////////////////////////////////////////////////////////
     /**
      *分类实行层级制,这个已经被拦截器放行了     /d/allfenleitest

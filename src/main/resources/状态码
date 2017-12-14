@@ -79,3 +79,7 @@ com.ipacedev.tcode.TcodeApplication
 47 打样确认成功 isconfirm=1
 
 48 打样确认 没成功 isconfirm=0
+
+49 excel保存成功
+
+50 excel保存失败

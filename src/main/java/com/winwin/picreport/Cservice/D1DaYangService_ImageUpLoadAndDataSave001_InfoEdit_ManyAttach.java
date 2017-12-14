@@ -97,6 +97,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             prdtSampOb.setThum(imageThumUrl);
 //        prdtSampOb.setAttach(attachmentUrl);//在这里不再更新附件,因为附件有多个,放在最后单独更新
             prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
+            prdtSampOb.setIsconfirm(null);
             //Selective是不更新null
             if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
                 return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
@@ -143,6 +144,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 //只更新附件
                 prdtSampO.setAttach(attachmentUr);//在这里不再更新附件,因为附件有多个,放在最后单独更新
                 prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
+                prdtSampO.setIsconfirm(null);//不更新这个
                 //Selective是不更新null
                 if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampO) == 0) {
                     return MessageGenerate.generateMessage("保存失败", "保存失败",
