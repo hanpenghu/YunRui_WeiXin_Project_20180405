@@ -39,6 +39,8 @@ public class D1DaYangService_ConfirmOrder {
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
+        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAllNotConfirm());
+        fenYe.setZongYeShu();
         return fenYe;
     }
 
@@ -72,6 +74,8 @@ public class D1DaYangService_ConfirmOrder {
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
+        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAllReadyConfirm());
+        fenYe.setZongYeShu();
         return fenYe;
     }
 

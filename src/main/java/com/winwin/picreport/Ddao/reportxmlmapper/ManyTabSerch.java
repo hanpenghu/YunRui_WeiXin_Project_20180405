@@ -163,6 +163,10 @@ public interface ManyTabSerch {
                 "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')"})
         Integer update011_1_OfOnlineBug();
 
+   @Select("Select count(id) from prdt_samp where isconfirm=1")
+    Integer getCountOfAllReadyConfirm();
 
 
+        @Select("Select count(id) from prdt_samp where isconfirm=0")
+        Integer getCountOfAllNotConfirm();
 }
