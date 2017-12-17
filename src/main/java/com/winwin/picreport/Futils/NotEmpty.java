@@ -7,7 +7,21 @@ import java.util.Collection;
 import java.util.Map;
 
 public class NotEmpty {
-	
+
+
+	public static boolean empty(Object ob){
+
+		if(notEmpty(ob)){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+
+
+
 	public static boolean notEmpty(Object ob){
 		if(ob==null){
 			return false;
@@ -36,4 +50,35 @@ public class NotEmpty {
 		}
 		return true;
 	}
+
+	public static boolean allEmpty(Object[ ]obs){
+		for(int i=1;i<=obs.length;i++){
+			/**
+			 *循环所有,如果有一个不是空的,就代表有不是空的,不是所有是空的,返回false
+			 * */
+			if(notEmpty(obs[i])){
+				return false;
+			}
+			/**
+			 *如果到了最后一个,也是空的,就返回true,代表所有的都空了
+			 * */
+			if(empty(obs[i])&&i==obs.length){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public static boolean haveSomeEmpty(Object[ ]obs){
+		for(Object ob:obs){
+			if(empty(ob)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
 }

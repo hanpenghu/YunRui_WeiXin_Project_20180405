@@ -2,6 +2,7 @@ package com.winwin.picreport.Cservice;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

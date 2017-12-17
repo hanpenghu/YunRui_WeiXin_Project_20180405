@@ -7,8 +7,8 @@ import com.winwin.picreport.Edto.CategoryNameCode;
 import com.winwin.picreport.Edto.FuZeRen;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.FenYe;
-import com.winwin.picreport.Futils.MessageGenerate;
-import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service("fenLei")
 public class D1DaYangServiceFenLei {

@@ -2,8 +2,8 @@ package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Futils.MessageGenerate;
-import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;

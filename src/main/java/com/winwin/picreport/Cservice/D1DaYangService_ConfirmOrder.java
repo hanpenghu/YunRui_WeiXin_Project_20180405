@@ -4,11 +4,11 @@ import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import com.winwin.picreport.Futils.*;
-import org.springframework.beans.BeanUtils;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

@@ -3,7 +3,7 @@ import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.LoginInfo;
 import com.winwin.picreport.Futils.IsEmail;
 import com.winwin.picreport.Futils.IsPhoneNo;
-import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;

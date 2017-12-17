@@ -2,8 +2,8 @@ package com.winwin.picreport.Bcontroller.loginRegistModul.loginUtil;
 
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.LoginInfo;
-import com.winwin.picreport.Futils.MessageGenerate;
-import com.winwin.picreport.Futils.Msg;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;

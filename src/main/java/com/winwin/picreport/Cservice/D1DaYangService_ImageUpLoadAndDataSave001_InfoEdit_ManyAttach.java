@@ -3,6 +3,8 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.*;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +32,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
     @Value("${fuJianWenJianJia}")
     private String fuJianWenJianJia;
     @Transactional
-    public List<Msg> infoEditOfManyAttach(MultipartFile thum ,List<MultipartFile> attachList, String prdtSamp1) throws Exception {
+    public List<Msg> infoEditOfManyAttach(MultipartFile thum , List<MultipartFile> attachList, String prdtSamp1) throws Exception {
         synchronized (this) {
             String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
             String projectPath = SpringbootJarPath.JarLuJingGet();

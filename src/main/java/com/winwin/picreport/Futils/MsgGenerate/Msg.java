@@ -1,4 +1,4 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Futils.MsgGenerate;
 
 public class Msg {
     private String status="0";
@@ -14,9 +14,14 @@ public class Msg {
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
 
+    public static Msg gmg(){
+        return new Msg();
+    }
+
     public String getStatus() {
         return status;
     }
+
 
     public Msg setStatus(String status) {
         this.status = status;

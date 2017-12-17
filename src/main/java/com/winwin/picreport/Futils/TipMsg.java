@@ -1,6 +1,8 @@
 package com.winwin.picreport.Futils;
 
 import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

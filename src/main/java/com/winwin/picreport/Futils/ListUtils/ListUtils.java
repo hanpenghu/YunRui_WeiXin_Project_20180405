@@ -1,7 +1,11 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Futils.ListUtils;
 import java.util.List;
 
 public class ListUtils<T> {
+
+    public static ListUtils g(){
+        return new ListUtils();
+    }
 
     public  ListUtils<T> add(T t,List<T> list){
         list.add(t);

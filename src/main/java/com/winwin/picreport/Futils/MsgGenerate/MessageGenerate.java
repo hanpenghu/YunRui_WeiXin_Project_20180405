@@ -1,9 +1,10 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Futils.MsgGenerate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageGenerate {
-    public static List<Msg> generateMessage(String message,String chMessage){
+    public static List<Msg> generateMessage(String message, String chMessage){
         Msg msg=new Msg();
         msg.setMsg(message);
         msg.setChMsg(chMessage);

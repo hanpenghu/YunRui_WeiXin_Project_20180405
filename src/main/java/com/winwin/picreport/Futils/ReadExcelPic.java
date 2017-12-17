@@ -23,6 +23,9 @@ public class ReadExcelPic {
            XSSFPicture xsp = (XSSFPicture)xShapeList.get(i);
            list.add(xsp.getPictureData().getData());
        }
+       if(input!=null){
+           input.close();
+       }
        return list;
     }
 
