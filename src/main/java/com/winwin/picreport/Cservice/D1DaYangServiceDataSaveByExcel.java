@@ -1,6 +1,7 @@
 package com.winwin.picreport.Cservice;
 
-import com.winwin.picreport.Cnst.msgCnst;
+import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.*;
 
@@ -8,18 +9,24 @@ import com.winwin.picreport.Futils.ListUtils.LstAd;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.MsgGenerate.mg;
+import com.winwin.picreport.Futils.excel.ReadExcelPic;
+import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.GetImgFromExcel;
+import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.ReadExcelCotent;
+import org.apache.poi.ss.usermodel.PictureData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 @Service
+@Transactional
 public class D1DaYangServiceDataSaveByExcel {
-
-@Value("${excelDaoRuDaYangPicLinShiMulu}")
-private String excelDaoRuDaYangPicLinShiMulu;
+    @Autowired
+    private Cnst cnst;
 
 
 
@@ -35,17 +42,17 @@ private String excelDaoRuDaYangPicLinShiMulu;
         /**
          *得到所有图片
          * */
-        List<byte[]> list0=new LinkedList<>();
-        List<Msg> l0 = this.getPicData(list0, excel);
-        if(l0!=null){
-            return l0;
+        List<Map<String, PictureData>> list1=new LinkedList<>();
+        List<Msg> ll = getPic(list1, excel);
+        if(ll!=null){
+            return ll;
         }
 
         /**
          *以上list的一行数据正好对应 list0的那一行数据的图片数据
          * */
 
-        if(NotEmpty.haveSomeEmpty(LstAd.g().ad(list).ad(list0).gt().toArray())){
+        if(NotEmpty.haveSomeEmpty(LstAd.g().ad(list).ad(list1).gt().toArray())){
             return mg.gm(Msg.gmg()
                     .setMsg(msgCnst.failSave.getValue())
                     .setChMsg(msgCnst.failGetExcelData.getValue())
@@ -54,11 +61,53 @@ private String excelDaoRuDaYangPicLinShiMulu;
         }
 
 
-        
+        /**
+         *提取数据到db,对应的图片到缩略图文件夹
+         * */
+
+        for(int i=0;i<list.size();i++){
+            //得到要入数据库的第i条数据
+            PrdtSamp ps = list.get(i);
+            //比如  0_1_5,第0个Sheet  第1个行,  第5个列
+            String s = Cnst.sheetNo + Cnst.picFgf + String.valueOf(i + 1) + Cnst.picFgf + Cnst.picColumn;
+            //得到要保存的第i个图片
+            PictureData pictureData=null;
+            for(Map<String, PictureData> map:list1){
+                if(map.keySet().contains(s)){
+                    pictureData=map.get(s);
+                }else{
+                    pictureData=null;
+                }
+            }
+
+            if(pictureData==null){
+                //不用再存这个图片
+                p.p(msgCnst.excelHaveNoPicInThisRow.getValue());
+            }else{
+                //需要存这个图片
+                p.p(msgCnst.excelHaveOnePicInThisRow.getValue());
 
 
-        return MessageGenerate.generateMessage("保存失败", "保存失败",
-                "数据库系统级别错误", "", "50");
+
+            }
+            //把数据存入数据库
+
+
+
+
+        }//for结束
+
+
+
+
+
+
+        return mg.gm(Msg.gmg()
+                .setMsg(msgCnst.failSave.getValue())
+                .setChMsg(msgCnst.failGetExcelData.getValue())
+                .setStatus(msgCnst.failSaveStatus.getValue())
+                .setOtherMsg(msgCnst.failOfDbMistake.getValue())
+        );
 
     }
 
@@ -66,35 +115,42 @@ private String excelDaoRuDaYangPicLinShiMulu;
 /**
  *得到excel中的图片放入linkedlist
  * */
+public List<Msg>  getPic(List<Map<String, PictureData>> list, MultipartFile excel){
 
+    String uuid = UUID.randomUUID().toString();
+    String path=cnst.excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
+    File file=new File(path);
 
-    public List<Msg> getPicData(List<byte[]> list,MultipartFile excel){
-        String uuid = UUID.randomUUID().toString();
-        String path=excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
-        File file=new File(path);
-        try {
-            excel.transferTo(file);
-            list = new ReadExcelPic().ExceByteData(file);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return MessageGenerate.generateMessage("保存失败", "保存失败",
-                    "读取excel得到图片的时候失败！", "", "50");
+    try {
+        excel.transferTo(file);
+        list = GetImgFromExcel.g().gPicZb(file);
+    } catch (Exception e) {
+        if(NotEmpty.notEmpty(file)&&file.exists()){
+            file.delete();
         }
-        return null;
+        return MessageGenerate.generateMessage("保存失败", "保存失败",
+                "读取excel出错002！", "", "50");
+    }finally {
+        if(NotEmpty.notEmpty(file)&&file.exists()){
+            file.delete();
+        }
     }
+
+    return null;
+
+}
 
     /**
      *得到excel中除了图片以为的数据放入list
      * */
     public List<Msg>  getPrdtSamp(List<PrdtSamp> list,MultipartFile excel){
         String uuid = UUID.randomUUID().toString();
-        String path=excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
+        String path=cnst.excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
         File file=new File(path);
         try {
             Map<Integer, Map<Integer, Object>> map;
             excel.transferTo(file);
-            map= new ReadExcelUtils(file).readExcelContent();
+            map= new ReadExcelCotent(file).readExcelContent();
             if(!NotEmpty.notEmpty(map)){
                 return MessageGenerate.generateMessage("保存失败", "保存失败",
                         "读取excel出错001！", "", "50");

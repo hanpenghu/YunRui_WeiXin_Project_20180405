@@ -1,5 +1,6 @@
 package com.winwin.picreport.Bcontroller;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
@@ -25,43 +26,7 @@ import java.util.*;
 @RequestMapping("/d")
 public class D1DaYangController {
     @Autowired
-    private PrdtSampMapper prdtSampMapper;
-    @Autowired
-    private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
-
-    @Autowired
-    private D1DaYangService_ConfirmOrder dco;
-
-    @Autowired
-    private D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach infoEditOfManyAttach;
-
-
-    @Autowired
-    private D1DaYangService d1DaYangService;
-    @Value("${dirUrl}")
-    private String dirUrl;
-
-    @Value("${suoLueTuWenJianJia}")
-    private String suoLueTuWenJianJia;
-
-    @Value("${fuJianWenJianJia}")
-    private String fuJianWenJianJia;
-
-
-    //daYangSuoLueTuAndFuJianZongPath=./daYangSuoLueTuAndFuJianZongPath/
-    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
-    private String daYangSuoLueTuAndFuJianZongPath;
-    @Autowired
-    private D1DaYangServiceFenLei  fenLei;
-    @Autowired
-    private ManyTabSerch manyTabSerch;
-//    @Autowired
-//    private PrdtSampMapper prdtSampMapper;
-    @Autowired
-    private D1DaYangServiceOfDeleteSome deleteSome;
-
-    @Autowired
-    private D1DaYangServiceOfDeleteOneImg deleteOneImg;
+    private Cnst cnst;
     /**
      * Content-Type:application/x-www-form-urlencoded
      ****************************************************************************************
@@ -70,7 +35,7 @@ public class D1DaYangController {
     @RequestMapping(value = "deleteOneAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
 
-        return deleteOneImg.deleteOneAttach(attachUrl);
+        return cnst.deleteOneImg.deleteOneAttach(attachUrl);
     }
 
     /**
@@ -86,7 +51,7 @@ public class D1DaYangController {
 
     @RequestMapping(value = "deleteOneImage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = "imgUrl", required = false) String imgUrl) {
-        return deleteOneImg.deleteOneImage(imgUrl);
+        return cnst.deleteOneImg.deleteOneImage(imgUrl);
     }
 
     /**
@@ -97,7 +62,7 @@ public class D1DaYangController {
 @RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
 public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {
     System.out.println(uuidList);
-    return deleteSome.deleteSomeRecode(uuidList);
+    return cnst.deleteSome.deleteSomeRecode(uuidList);
 }
 
 
@@ -118,7 +83,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
                                        HttpServletRequest request) {
         String prdtSamp1 = request.getParameter("prdtSamp");
         try {
-           return infoEdit.infoEdit(thum,attach,prdtSamp1);
+           return cnst.infoEdit.infoEdit(thum,attach,prdtSamp1);
         } catch (Exception e) {
             System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
             e.printStackTrace();
@@ -150,7 +115,7 @@ imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
         thum=thumList.get(0);
     }
     try {
-        return infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
+        return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
     } catch (Exception e) {
         System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
                 "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
@@ -200,7 +165,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
         try {
-            return infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
+            return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
         } catch (Exception e) {
             System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
                     "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
@@ -257,7 +222,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
             //将来用作数据库一条数据的唯一标识
             synchronized (this){
-                return d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach(projectPath, thum, attachList,request,daYangSuoLueTuAndFuJianZongPath,dirUrl,suoLueTuWenJianJia,fuJianWenJianJia);
+                return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach(projectPath, thum, attachList,request,cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,7 +249,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println();
             //将来用作数据库一条数据的唯一标识
             synchronized (this) {
-                return d1DaYangService.ImageUpLoadAndDataSave001(projectPath, thum, attach, request, daYangSuoLueTuAndFuJianZongPath, dirUrl, suoLueTuWenJianJia, fuJianWenJianJia);
+                return cnst.d1DaYangService.ImageUpLoadAndDataSave001(projectPath, thum, attach, request, cnst.daYangSuoLueTuAndFuJianZongPath, cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,7 +272,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false) MultipartFile excel) {
         //上传到指定目录
         try {
-           return d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
+           return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -318,8 +283,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 //////////////////////////////////////////////////////////////
-@Autowired
-private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
+
 /////////////////////////////////////////////////////////////////////////
     /**
      *分类实行层级制,这个已经被拦截器放行了     /d/allfenleitest
@@ -327,12 +291,12 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
 
     @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public @ResponseBody CategoryNameCode allfenleitest() {
-        return fenLei.getAllLayer();
+        return cnst.fenLei.getAllLayer();
     }
 
     @RequestMapping(value = "allfenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody CategoryNameCode allfenlei() {
-        return fenLei.getAllLayer();
+        return cnst.fenLei.getAllLayer();
     }
 
 
@@ -341,14 +305,14 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<CategoryNameCode> fenlei() {
-        List<CategoryNameCode> categoryNameCodeList = fenLei.fenlei();
+        List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
         return categoryNameCodeList;
     }
 
     @RequestMapping(value = "fenleitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<CategoryNameCode> fenleitest() {
-        List<CategoryNameCode> categoryNameCodeList = fenLei.fenlei();
+        List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
         return categoryNameCodeList;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -356,14 +320,14 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "fuZeRen", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<FuZeRen> fuZeRen() {
-        List<FuZeRen> fuZeRenList = fenLei.fuZeRen();
+        List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
         return fuZeRenList;
     }
 
     @RequestMapping(value = "fuZeRentest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<FuZeRen> fuZeRentest() {
-        List<FuZeRen> fuZeRenList = fenLei.fuZeRen();
+        List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
         return fuZeRenList;
     }
 
@@ -371,7 +335,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "pinPai", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<PinPai> pinPai() {
-        List<PinPai> fuZeRenList = manyTabSerch.pinPai();
+        List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
         return fuZeRenList;
     }
 
@@ -379,7 +343,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "pinPaitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<PinPai> pinPaitest() {
-        List<PinPai> fuZeRenList = manyTabSerch.pinPai();
+        List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
         return fuZeRenList;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,9 +363,9 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     FenYe daYangZongYeShuHeMeiYeXianShiShu() {
-        FenYe fenYe = fenLei.daYangZongYeShuHeMeiYeXianShiShu();//主要传过来当前页和每页显示数量
+        FenYe fenYe = cnst.fenLei.daYangZongYeShuHeMeiYeXianShiShu();//主要传过来当前页和每页显示数量
         fenYe.setDangQianYe(1);
-        List<PrdtSamp> prdtSampList = fenLei.dangqianyeData(fenYe);
+        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);
         fenYe.setPrdtSampList(prdtSampList);
         return fenYe;
     }
@@ -420,7 +384,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
 
     @RequestMapping(value = "alReadyConfirmOrderPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody FenYe alReadyConfirmOrderPage(@RequestBody FenYe fenYe) {
-        return dco.alReadyConfirmOrderPage(fenYe);
+        return cnst.dco.alReadyConfirmOrderPage(fenYe);
     }
 
 
@@ -430,7 +394,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
      * */
     @RequestMapping(value = "notConfirmOrderFirstPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {
-        return dco.notConfirmOrderFirstPage(fenYe);
+        return cnst.dco.notConfirmOrderFirstPage(fenYe);
     }
 
     /**
@@ -442,7 +406,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
      * */
     @RequestMapping(value = "confirmTheOrder", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody List<Msg> confirmTheOrder(@RequestBody PrdtSamp prdtSamp) {
-        return dco.confirmTheOrder(prdtSamp);
+        return cnst.dco.confirmTheOrder(prdtSamp);
     }
 
 
@@ -454,7 +418,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<PrdtSamp> dangqianyeData(@RequestBody FenYe fenYe) {
-        List<PrdtSamp> prdtSampList = fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
         return prdtSampList;
     }
 
@@ -462,7 +426,7 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @RequestMapping(value = "dangqianyeDatatest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
     List<PrdtSamp> dangqianyeDatatest(FenYe fenYe) {
-        List<PrdtSamp> prdtSampList = fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
         return prdtSampList;
     }
 
@@ -480,136 +444,6 @@ private D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public class AttachsAndThum {
-        private MultipartFile thum;
-        private MultipartFile attach1;
-        private MultipartFile attach2;
-        private MultipartFile attach3;
-        private MultipartFile attach4;
-        private MultipartFile attach5;
-        private MultipartFile attach6;
-        private MultipartFile attach7;
-        private MultipartFile attach8;
-        private MultipartFile attach9;
-        private MultipartFile attach10;
-
-        public MultipartFile getThum() {
-            return thum;
-        }
-
-        public AttachsAndThum setThum(MultipartFile thum) {
-            this.thum = thum;
-            return this;
-        }
-
-        public MultipartFile getAttach1() {
-            return attach1;
-        }
-
-        public AttachsAndThum setAttach1(MultipartFile attach1) {
-            this.attach1 = attach1;
-            return this;
-        }
-
-        public MultipartFile getAttach2() {
-            return attach2;
-        }
-
-        public AttachsAndThum setAttach2(MultipartFile attach2) {
-            this.attach2 = attach2;
-            return this;
-        }
-
-        public MultipartFile getAttach3() {
-            return attach3;
-        }
-
-        public AttachsAndThum setAttach3(MultipartFile attach3) {
-            this.attach3 = attach3;
-            return this;
-        }
-
-        public MultipartFile getAttach4() {
-            return attach4;
-        }
-
-        public AttachsAndThum setAttach4(MultipartFile attach4) {
-            this.attach4 = attach4;
-            return this;
-        }
-
-        public MultipartFile getAttach5() {
-            return attach5;
-        }
-
-        public AttachsAndThum setAttach5(MultipartFile attach5) {
-            this.attach5 = attach5;
-            return this;
-        }
-
-        public MultipartFile getAttach6() {
-            return attach6;
-        }
-
-        public AttachsAndThum setAttach6(MultipartFile attach6) {
-            this.attach6 = attach6;
-            return this;
-        }
-
-        public MultipartFile getAttach7() {
-            return attach7;
-        }
-
-        public AttachsAndThum setAttach7(MultipartFile attach7) {
-            this.attach7 = attach7;
-            return this;
-        }
-
-        public MultipartFile getAttach8() {
-            return attach8;
-        }
-
-        public AttachsAndThum setAttach8(MultipartFile attach8) {
-            this.attach8 = attach8;
-            return this;
-        }
-
-        public MultipartFile getAttach9() {
-            return attach9;
-        }
-
-        public AttachsAndThum setAttach9(MultipartFile attach9) {
-            this.attach9 = attach9;
-            return this;
-        }
-
-        public MultipartFile getAttach10() {
-            return attach10;
-        }
-
-        public AttachsAndThum setAttach10(MultipartFile attach10) {
-            this.attach10 = attach10;
-            return this;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuffer sb = new StringBuffer("com.winwin.picreport.Bcontroller.D1DaYangController打样.AttachsAndThum{");
-            sb.append("thum=").append(thum);
-            sb.append(", attach1=").append(attach1);
-            sb.append(", attach2=").append(attach2);
-            sb.append(", attach3=").append(attach3);
-            sb.append(", attach4=").append(attach4);
-            sb.append(", attach5=").append(attach5);
-            sb.append(", attach6=").append(attach6);
-            sb.append(", attach7=").append(attach7);
-            sb.append(", attach8=").append(attach8);
-            sb.append(", attach9=").append(attach9);
-            sb.append(", attach10=").append(attach10);
-            sb.append('}');
-            return sb.toString();
-        }
-    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

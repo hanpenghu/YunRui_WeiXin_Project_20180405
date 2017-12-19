@@ -7,7 +7,8 @@ public enum ConstantOfMaLong {
     //当前的sdk版本
     version("1",3);
 
-    private Object value ;
+    public Object value ;
+
     private int index ;
 
     ConstantOfMaLong(Object value, int index) {

@@ -1,4 +1,4 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe;
 
 import java.io.*;
 import java.util.Date;
@@ -20,13 +20,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author zengwendong
  */
-public class ReadExcelUtils {
-    private Logger logger = LoggerFactory.getLogger(ReadExcelUtils.class);
+public class ReadExcelCotent {
+    private Logger logger = LoggerFactory.getLogger(ReadExcelCotent.class);
     private Workbook wb;
     private Sheet sheet;
     private Row row;
+    /**
+     *建造者
+     * */
 
-    public ReadExcelUtils(String filepath) {
+    public static ReadExcelCotent g(File file){
+
+        return new ReadExcelCotent(file);
+    }
+
+    public ReadExcelCotent(String filepath) {
         if(filepath==null){
             return;
         }
@@ -51,7 +59,7 @@ public class ReadExcelUtils {
 
 
 
-    public ReadExcelUtils(File file) {
+    public ReadExcelCotent(File file) {
         if(file==null){
             return;
         }
@@ -177,7 +185,7 @@ public class ReadExcelUtils {
         try {
             String filepath = "E:\\1\\000\\云平台问题\\A片标批量上传模板.xlsx";
             File file=new File(filepath);
-            ReadExcelUtils excelReader = new ReadExcelUtils(file);
+            ReadExcelCotent excelReader = new ReadExcelCotent(file);
             // 对读取Excel表格标题测试
 //          String[] title = excelReader.readExcelTitle();
 //          System.out.println("获得Excel表格的标题:");

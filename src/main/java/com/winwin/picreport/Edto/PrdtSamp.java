@@ -1,6 +1,6 @@
 package com.winwin.picreport.Edto;
 
-import com.winwin.picreport.Futils.ConstantInit;
+import com.winwin.picreport.AllConstant.Constant.ConstantInit;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
