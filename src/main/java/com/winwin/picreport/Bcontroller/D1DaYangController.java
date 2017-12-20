@@ -1,17 +1,17 @@
 package com.winwin.picreport.Bcontroller;
 
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Cservice.*;
-import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
-import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
+import com.winwin.picreport.AllConstant.Constant.msgCnst;
+
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.ListUtils.ListUtils;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.MsgGenerate.mg;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -275,9 +275,15 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
            return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                return mg.gm(JSON.parseObject(e.getMessage(),Msg.class));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return mg.gm(Msg.gmg()
+                        .setStatus(msgCnst.failSaveStatus.getValue())
+                        .setMsg(msgCnst.failSave.getValue()));
+            }
         }
-        return MessageGenerate.generateMessage("保存失败", "保存失败",
-                "数据库系统级别错误", "", "50");
     }
 
 

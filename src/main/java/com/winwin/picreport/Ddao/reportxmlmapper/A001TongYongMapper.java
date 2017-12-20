@@ -7,12 +7,17 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 public interface A001TongYongMapper {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////
+
+   @Select("SELECT GETDATE()")
+   Date selectDbDate();
+
 
    @Select("SELECT COUNT(TENANTID) FROM TENANT WHERE TENANTID=#{tenantId}")
    Integer conutTenantId(@Param("tenantId") String tenantId);

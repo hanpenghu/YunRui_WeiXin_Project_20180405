@@ -5,11 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.p;
 import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
@@ -55,12 +53,12 @@ public class GetImgFromExcel {
      * ,第二位是行号(从0))
      * 第三位是列号(从0)
      * */
-    public  List<Map<String, PictureData>> gPicZb(File file) throws IOException, InvalidFormatException {
+    public  List<Map<String, PictureData>> gPicZb(File file,List<Map<String, PictureData>> sheetList) throws IOException, InvalidFormatException {
         // 创建流
         InputStream input = new FileInputStream(file);
 
         // 获取文件后缀名
-        String fileExt =  file.getName().substring(file.getName().lastIndexOf(".") + 1);
+        String fileExt =  file.getName().substring(file.getName().lastIndexOf(Cnst.dian) + 1);
 
         // 创建Workbook
         Workbook wb = null;
@@ -69,34 +67,39 @@ public class GetImgFromExcel {
         Sheet sheet = null;
 
         //根据后缀判断excel 2003 or 2007+
-        if (fileExt.equals("xls")) {
+        if (fileExt.equals(Cnst.xlsHouZhuiWuDian)) {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~xls~~~~~~~~~~~~~~~~~~~~~~~~");
             wb = (HSSFWorkbook) WorkbookFactory.create(input);
         } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~xlsx~~~~~~~~~~~~~~~~~~~~~~~~");
             wb = new XSSFWorkbook(input);
         }
 
         //获取excel sheet总数
         int sheetNumbers = wb.getNumberOfSheets();
-
+System.out.println("~~~~~~~~~~sheetNumbers="+sheetNumbers+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         // sheet list
-        List<Map<String, PictureData>> sheetList = new ArrayList<Map<String, PictureData>>();
+
 
         // 循环sheet
         for (int i = 0; i < sheetNumbers; i++) {
-
+System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~");
             sheet = wb.getSheetAt(i);
             // map等待存储excel图片
             Map<String, PictureData> sheetIndexPicMap;
 
             // 判断用07还是03的方法获取图片
-            if (fileExt.equals("xls")) {
+            if (fileExt.equals(Cnst.xlsHouZhuiWuDian)) {
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验xls~~~~~~~~~~~~~~~~~~~~~~~~");
                 sheetIndexPicMap = getSheetPictrues03(i, (HSSFSheet) sheet, (HSSFWorkbook) wb);
             } else {
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验xlsx~~~~~~~~~~~~~~~~~~~~~~~~");
                 sheetIndexPicMap = getSheetPictrues07(i, (XSSFSheet) sheet, (XSSFWorkbook) wb);
             }
             // 将当前sheet图片map存入list
             sheetList.add(sheetIndexPicMap);
         }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheetList.size="+sheetList.size()+"~~~~~~~~~~~~~~~~~~~~~~~~");
         return sheetList;
     }
 
@@ -117,7 +120,10 @@ public class GetImgFromExcel {
         // 创建文件
         File file = new File("E:\\1\\000\\云平台问题\\A片标批量上传模板.xlsx");
 
-        List<Map<String, PictureData>> sheetList=gPicZb(file);
+        List<Map<String, PictureData>> list=new LinkedList<>();
+
+
+        List<Map<String, PictureData>> sheetList=gPicZb(file,list);
 
         /**
          *0_1_5

@@ -68,11 +68,6 @@ public class MakeColumnNull0False<T> {
 //                }
             }else if("boolean".equals(type.getName())){
                 break;
-//                try {
-//                    field.setBoolean(o,false);
-//                } catch (IllegalAccessException e) {
-//                    System.out.println("该类的该字段类型为"+type.getName()+"无法转换为null或者0");
-//                }
             }else{
                 try {
                     field.set(o,null);

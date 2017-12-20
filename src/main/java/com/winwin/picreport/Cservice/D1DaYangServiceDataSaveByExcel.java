@@ -1,27 +1,23 @@
 package com.winwin.picreport.Cservice;
-
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.*;
-
 import com.winwin.picreport.Futils.ListUtils.LstAd;
-import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.MsgGenerate.mg;
-import com.winwin.picreport.Futils.excel.ReadExcelPic;
 import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.GetImgFromExcel;
 import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.ReadExcelCotent;
+import com.winwin.picreport.Futils.fileUtil.hanhanFileUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.PictureData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.text.ParseException;
 import java.util.*;
-
 @Service
 @Transactional
 public class D1DaYangServiceDataSaveByExcel {
@@ -29,21 +25,34 @@ public class D1DaYangServiceDataSaveByExcel {
     private Cnst cnst;
 
 
+//状态码只有50(失败)跟37(成功)
+    public List<Msg> dataSaveByExcel(MultipartFile excel) throws IOException, ParseException {
 
-    public List<Msg> dataSaveByExcel(MultipartFile excel){
+        //判断是否有！或者 ;  ,有的话不通过,因为这2个是我的分隔符
+        if(shangChuanTongYiReturn.isHavaIgll(excel.getOriginalFilename())){
+            return shangChuanTongYiReturn.yourPicNameCanNotHaveIgll();
+        }
+        String path=p.gp().sad(Cnst.getProjectPath())
+                .sad(Cnst.xieGang).sad(UUID.randomUUID().toString())
+                .sad(excel.getOriginalFilename()).gad();
+//        p.p(msgCnst.fgf.getValue());
+//        p.p(path);
+//        p.p(msgCnst.fgf.getValue());
+        File file=new File(path);
+        excel.transferTo(file);
         /**
          *得到除了图片以外的所有数据
          * */
         List<PrdtSamp> list=new LinkedList<>();
-        List<Msg> l = this.getPrdtSamp(list, excel);
+        List<Msg> l = this.getPrdtSamp(list, file);
         if(l!=null){//null代表继续走下去,
             return l;
         }
         /**
          *得到所有图片
          * */
-        List<Map<String, PictureData>> list1=new LinkedList<>();
-        List<Msg> ll = getPic(list1, excel);
+        List<Map<String, PictureData>> list1=new LinkedList();
+        List<Msg> ll = getPic(list1,file);
         if(ll!=null){
             return ll;
         }
@@ -51,8 +60,12 @@ public class D1DaYangServiceDataSaveByExcel {
         /**
          *以上list的一行数据正好对应 list0的那一行数据的图片数据
          * */
-
+         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+         p.p(list.size());
+         p.p(list1.size());
+         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         if(NotEmpty.haveSomeEmpty(LstAd.g().ad(list).ad(list1).gt().toArray())){
+            hanhanFileUtil.Del(file);
             return mg.gm(Msg.gmg()
                     .setMsg(msgCnst.failSave.getValue())
                     .setChMsg(msgCnst.failGetExcelData.getValue())
@@ -66,10 +79,15 @@ public class D1DaYangServiceDataSaveByExcel {
          * */
 
         for(int i=0;i<list.size();i++){
+            String uuid= UUID.randomUUID().toString();
             //得到要入数据库的第i条数据
             PrdtSamp ps = list.get(i);
-            //比如  0_1_5,第0个Sheet  第1个行,  第5个列
-            String s = Cnst.sheetNo + Cnst.picFgf + String.valueOf(i + 1) + Cnst.picFgf + Cnst.picColumn;
+            //定义imageurl,准备放入数据库
+            String imageurl="";
+            //比如  0_1_5,第0个Sheet  第i+1个行,  第5个列
+            String s=p.gp().sad(Cnst.sheetNo).sad(Cnst.picFgf)
+                    .sad(String.valueOf(i + 1)).sad(Cnst.picFgf)
+                    .sad(Cnst.picColumn).gad();
             //得到要保存的第i个图片
             PictureData pictureData=null;
             for(Map<String, PictureData> map:list1){
@@ -87,26 +105,44 @@ public class D1DaYangServiceDataSaveByExcel {
                 //需要存这个图片
                 p.p(msgCnst.excelHaveOnePicInThisRow.getValue());
 
+                String fp = p.gp()
+                        .sad(cnst.getSpringbootJarSuoLueTuFilePath())
+                        .sad(uuid).sad(Cnst.ganTanHao)
+                        .sad(excel.getOriginalFilename().replace(Cnst.xlsxHouZhuiWuDian,Cnst.space))
+                        .sad(Cnst.pngWuDian).gad();
+                IOUtils.write(pictureData.getData(),new FileOutputStream(fp));
+                if(hanhanFileUtil.exists(fp)){
+                    //此时保存成功,不用管,顺便把缩略图的url半成品生成,将来放入数据库
+                    imageurl=p.gp().sad(cnst.suoLueTuWenJianJia)
+                            .sad(uuid).sad(Cnst.ganTanHao)
+                            .sad(excel.getOriginalFilename().replace(Cnst.xlsxHouZhuiWuDian,Cnst.space))
+                            .sad(Cnst.pngWuDian).sad(Cnst.fenHao).gad();
+                    ps.setThum(imageurl);
+                }else{
+                    //此时保存不成功,要return
+                    throw new RuntimeException(msgCnst.picFailSaveJson.getValue());
+                }
+            }
 
+            //设置插入时间
+            ps.setInsertdate(cnst.getDbDate());
+            //把数据存入数据库
+            int i1 = cnst.prdtSampMapper.insertSelective(ps);
+            if(i1==0){
+                p.p(msgCnst.fgf.getValue());
+                p.p(msgCnst.excelSaveFail.getValue());
+                p.p(msgCnst.failOfDbMistake.getValue());
+                p.p(msgCnst.fgf.getValue());
+                throw new RuntimeException(msgCnst.excelSaveFailOfDbMistakeJson.getValue());//excel保存失败码,数据库级别错误
 
             }
-            //把数据存入数据库
-
-
-
-
         }//for结束
-
-
-
-
-
-
+        hanhanFileUtil.Del(file);
+        //返回成功信息
         return mg.gm(Msg.gmg()
-                .setMsg(msgCnst.failSave.getValue())
-                .setChMsg(msgCnst.failGetExcelData.getValue())
-                .setStatus(msgCnst.failSaveStatus.getValue())
-                .setOtherMsg(msgCnst.failOfDbMistake.getValue())
+                .setMsg(msgCnst.chanPinDaYangInsertOneDataSuccMsg.getValue())
+                .setChMsg(msgCnst.chanPinDaYangInsertOneDataSuccChMsg.getValue())
+                .setStatus(msgCnst.chanPinDaYangInsertOneDataSuccStatus.getValue())
         );
 
     }
@@ -115,25 +151,18 @@ public class D1DaYangServiceDataSaveByExcel {
 /**
  *得到excel中的图片放入linkedlist
  * */
-public List<Msg>  getPic(List<Map<String, PictureData>> list, MultipartFile excel){
-
-    String uuid = UUID.randomUUID().toString();
-    String path=cnst.excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
-    File file=new File(path);
+public List<Msg>  getPic(List<Map<String, PictureData>> list1,File file) throws IOException {
 
     try {
-        excel.transferTo(file);
-        list = GetImgFromExcel.g().gPicZb(file);
+
+         GetImgFromExcel.g().gPicZb(file,list1);
+//        System.out.println("~~~~GetImgFromExcel.g().gPicZb(file).size="+list1.size()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     } catch (Exception e) {
-        if(NotEmpty.notEmpty(file)&&file.exists()){
-            file.delete();
-        }
-        return MessageGenerate.generateMessage("保存失败", "保存失败",
-                "读取excel出错002！", "", "50");
-    }finally {
-        if(NotEmpty.notEmpty(file)&&file.exists()){
-            file.delete();
-        }
+        e.printStackTrace();
+        hanhanFileUtil.Del(file);
+        return mg.gm(Msg.gmg().setMsg(msgCnst.excelSaveFail.getValue())
+                .setChMsg(msgCnst.excelSaveFail.getValue())
+                .setStatus( msgCnst.failSaveStatus.getValue()));
     }
 
     return null;
@@ -143,17 +172,16 @@ public List<Msg>  getPic(List<Map<String, PictureData>> list, MultipartFile exce
     /**
      *得到excel中除了图片以为的数据放入list
      * */
-    public List<Msg>  getPrdtSamp(List<PrdtSamp> list,MultipartFile excel){
-        String uuid = UUID.randomUUID().toString();
-        String path=cnst.excelDaoRuDaYangPicLinShiMulu+ uuid+".xlsx";
-        File file=new File(path);
+    public List<Msg>  getPrdtSamp(List<PrdtSamp> list,File file){
+
         try {
             Map<Integer, Map<Integer, Object>> map;
-            excel.transferTo(file);
+
             map= new ReadExcelCotent(file).readExcelContent();
-            if(!NotEmpty.notEmpty(map)){
-                return MessageGenerate.generateMessage("保存失败", "保存失败",
-                        "读取excel出错001！", "", "50");
+            if(NotEmpty.empty(map)){
+                return mg.gm(Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue())
+                        .setMsg(msgCnst.excelSaveFail.getValue())
+                        .setChMsg(msgCnst.failGetExcelData.getValue()));
             }
             for (int i = 1; i <= map.size(); i++) {
                 PrdtSamp prdtSamp=new PrdtSamp();
@@ -161,8 +189,12 @@ public List<Msg>  getPic(List<Map<String, PictureData>> list, MultipartFile exce
                 prdtSamp.setMarkName((String)map.get(i).get(0));
                 prdtSamp.setId(UUID.randomUUID().toString());
                 prdtSamp.setCusName((String)map.get(i).get(1));
+
+                //产品分类
                 prdtSamp.setIdxNo((String)map.get(i).get(2));
+                //产品名称
                 prdtSamp.setIdxName((String)map.get(i).get(3));
+
                 prdtSamp.setSalName((String)map.get(i).get(4));
                 //第五个是图片
                 prdtSamp.setPrdCode((String)map.get(i).get(6));
@@ -175,15 +207,11 @@ public List<Msg>  getPic(List<Map<String, PictureData>> list, MultipartFile exce
             }
 
         } catch (Exception e) {
-            if(NotEmpty.notEmpty(file)&&file.exists()){
-                file.delete();
-            }
-            return MessageGenerate.generateMessage("保存失败", "保存失败",
-                    "读取excel出错002！", "", "50");
-        }finally {
-            if(NotEmpty.notEmpty(file)&&file.exists()){
-                file.delete();
-            }
+            e.printStackTrace();
+            hanhanFileUtil.Del(file);
+            return mg.gm(Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue())
+                    .setMsg(msgCnst.excelSaveFail.getValue())
+                    .setChMsg(msgCnst.failGetExcelData.getValue()));
         }
 
         return null;

@@ -13,11 +13,11 @@ import java.util.List;
 public class PrdtSamp {
     private String id="";
 
-    private String prdCode="";
+    private String prdCode="";//产品编码
 
-    private String idxName;
+    private String idxName;//产品名称
 
-    private String idxNo;
+    private String idxNo;//产品分类
 
     private String markName;
 
