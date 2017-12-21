@@ -2,6 +2,7 @@ package com.winwin.picreport.Cservice;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSampExample;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.ListUtils.LstAd;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -23,8 +24,10 @@ import java.util.*;
 public class D1DaYangServiceDataSaveByExcel {
     @Autowired
     private Cnst cnst;
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     ****************************************************************************************
+     * */
 //状态码只有50(失败)跟37(成功)
     public List<Msg> dataSaveByExcel(MultipartFile excel) throws IOException, ParseException {
 
@@ -48,6 +51,8 @@ public class D1DaYangServiceDataSaveByExcel {
         if(l!=null){//null代表继续走下去,
             return l;
         }
+
+
         /**
          *得到所有图片
          * */
@@ -83,10 +88,10 @@ public class D1DaYangServiceDataSaveByExcel {
             //得到要入数据库的第i条数据
             PrdtSamp ps = list.get(i);
             //定义imageurl,准备放入数据库
-            String imageurl="";
+            String imageurl=Cnst.space;
             //比如  0_1_5,第0个Sheet  第i+1个行,  第5个列
             String s=p.gp().sad(Cnst.sheetNo).sad(Cnst.picFgf)
-                    .sad(String.valueOf(i + 1)).sad(Cnst.picFgf)
+                    .sad(String.valueOf(i+1)).sad(Cnst.picFgf)
                     .sad(Cnst.picColumn).gad();
             //得到要保存的第i个图片
             PictureData pictureData=null;
@@ -108,14 +113,16 @@ public class D1DaYangServiceDataSaveByExcel {
                 String fp = p.gp()
                         .sad(cnst.getSpringbootJarSuoLueTuFilePath())
                         .sad(uuid).sad(Cnst.ganTanHao)
-                        .sad(excel.getOriginalFilename().replace(Cnst.xlsxHouZhuiWuDian,Cnst.space))
+                        .sad(ps.getPrdCode())
+                        .sad(Cnst.dian)
                         .sad(Cnst.pngWuDian).gad();
                 IOUtils.write(pictureData.getData(),new FileOutputStream(fp));
                 if(hanhanFileUtil.exists(fp)){
                     //此时保存成功,不用管,顺便把缩略图的url半成品生成,将来放入数据库
                     imageurl=p.gp().sad(cnst.suoLueTuWenJianJia)
                             .sad(uuid).sad(Cnst.ganTanHao)
-                            .sad(excel.getOriginalFilename().replace(Cnst.xlsxHouZhuiWuDian,Cnst.space))
+                            .sad(ps.getPrdCode())
+                            .sad(Cnst.dian)
                             .sad(Cnst.pngWuDian).sad(Cnst.fenHao).gad();
                     ps.setThum(imageurl);
                 }else{
@@ -146,29 +153,31 @@ public class D1DaYangServiceDataSaveByExcel {
         );
 
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     ****************************************************************************************
+     * */
+    /**
+     *得到excel中的图片放入linkedlist
+     * */
+    public List<Msg>  getPic(List<Map<String, PictureData>> list1,File file) throws IOException {
 
+        try {
 
-/**
- *得到excel中的图片放入linkedlist
- * */
-public List<Msg>  getPic(List<Map<String, PictureData>> list1,File file) throws IOException {
+             GetImgFromExcel.g().gPicZb(file,list1);
+    //        System.out.println("~~~~GetImgFromExcel.g().gPicZb(file).size="+list1.size()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        } catch (Exception e) {
+            e.printStackTrace();
+            hanhanFileUtil.Del(file);
+            return mg.gm(Msg.gmg().setMsg(msgCnst.excelSaveFail.getValue())
+                    .setChMsg(msgCnst.excelSaveFail.getValue())
+                    .setStatus( msgCnst.failSaveStatus.getValue()));
+        }
 
-    try {
+        return null;
 
-         GetImgFromExcel.g().gPicZb(file,list1);
-//        System.out.println("~~~~GetImgFromExcel.g().gPicZb(file).size="+list1.size()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    } catch (Exception e) {
-        e.printStackTrace();
-        hanhanFileUtil.Del(file);
-        return mg.gm(Msg.gmg().setMsg(msgCnst.excelSaveFail.getValue())
-                .setChMsg(msgCnst.excelSaveFail.getValue())
-                .setStatus( msgCnst.failSaveStatus.getValue()));
     }
-
-    return null;
-
-}
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *得到excel中除了图片以为的数据放入list
      * */
@@ -203,6 +212,32 @@ public List<Msg>  getPic(List<Map<String, PictureData>> list1,File file) throws 
                 try {prdtSamp.setSampMake((Date)map.get(i).get(9)); } catch (Exception e) { p.p("导入的EXcel打样时间不是日期格式！！");}
                 prdtSamp.setSampRequ((String)map.get(i).get(10));
                 prdtSamp.setSampDesc((String)map.get(i).get(11));
+
+                /**
+                 *下面判断是否有重复数据在数据库,有的话就停止导入excel
+                 * */
+                PrdtSampExample pse=new PrdtSampExample();
+                pse.createCriteria()
+                        .andMarkNameEqualTo(prdtSamp.getMarkName())
+                .andCusNameEqualTo(prdtSamp.getCusName())
+                .andIdxNoEqualTo(prdtSamp.getIdxNo())
+                .andIdxNameEqualTo(prdtSamp.getIdxName())
+                .andSalNameEqualTo(prdtSamp.getSalName())
+                .andPrdCodeEqualTo(prdtSamp.getPrdCode())
+                .andColourEqualTo(prdtSamp.getColour())
+                .andSizeEqualTo(prdtSamp.getSize())
+                .andSampMakeEqualTo(prdtSamp.getSampMake())
+                .andSampRequEqualTo(prdtSamp.getSampRequ())
+                .andSampDescEqualTo(prdtSamp.getSampDesc());
+                if(cnst.prdtSampMapper.countByExample(pse)>0){
+                    hanhanFileUtil.Del(file);
+                    return mg.gm(Msg.gmg().setMsg(msgCnst.failSave.getValue())
+                            .setChMsg(msgCnst.excelYouChongFuShuJuZaiDB.getValue())
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+                /**
+                 *没有重复数据在数据库的话才能继续搜集excel中的数据
+                 * */
                 list.add(prdtSamp);
             }
 
@@ -236,5 +271,6 @@ public List<Msg>  getPic(List<Map<String, PictureData>> list1,File file) throws 
 
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

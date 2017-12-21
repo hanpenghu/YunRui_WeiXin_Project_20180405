@@ -36,7 +36,7 @@ public enum msgCnst {
     ,picFailSaveJson("{\"status\":\"50\",\"msg\":\"缩略图没有保存成功导致所有数据没保存\"}",11-1)
     //用于excel导入打样异常返回后再解析成对象//打样成功 37  失败50   只有2种状态
     ,excelSaveFailOfDbMistakeJson("{\"status\":\"50\",\"msg\":\"插入数据库数据的时候失败\",\"chMsg\":\"插入数据库数据的时候失败\"}",17-1)
-
+    ,excelYouChongFuShuJuZaiDB("打样导入excel的时候,excel跟数据库中的数据有重复的,导致一个也没有插入",18)
     ;
 
     public Object value ;
