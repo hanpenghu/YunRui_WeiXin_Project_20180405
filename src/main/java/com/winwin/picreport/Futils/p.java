@@ -2,12 +2,10 @@ package com.winwin.picreport.Futils;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public strictfp class p {
 
@@ -363,6 +361,54 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
      ****************************************************************************************
      * */
 
+    /**
+     *时间戳转换成Date
+     * */
+    public static Date sjc2Date(String shiJianChuoStr){
+        if(null==shiJianChuoStr||"".equals(shiJianChuoStr)){
+            return null;
+        }else{
+            long lt = new Long(shiJianChuoStr);
+            Date date= new Date(lt);
+            return  date;
+        }
+
+    }
+
+    public static Date sjc2Date(Long shiJianChuo){
+        if(null==shiJianChuo){
+            return null;
+        }else{
+            Date date= new Date(shiJianChuo);
+            return  date;
+        }
+
+    }
+
+    /**
+     *把所有是类中所有是null的字段,如果是String类型,变成""
+     * */
+    public static Object columnIsStringTypeNull2Space(Object o) throws IllegalAccessException {
+        List<Field> fieldList = new ArrayList<>();
+        Class<?> aClass = o.getClass();
+        while (aClass != null) {//用while得到所有超类的字段属性
+            fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+            aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+        for (Field field : fieldList) {
+            field.setAccessible(true);
+            Class<?> type = field.getType();
+            if ("java.lang.String".equals(type.getName())) {
+                if(null==field.get(o)){//把o穿进去,得到o的属性值
+                    //设置o的属性值
+                    field.set(o,"");
+                }
+
+            }
+        }
+        return o;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 /**
  ****************************************************************************************

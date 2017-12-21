@@ -2,6 +2,8 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 
 
 import com.winwin.picreport.Edto.LoginInfo;
+import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp1;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -137,4 +139,8 @@ public interface A001TongYongMapper {
 
    @Select("SELECT tenantID AS tenantId,userEmail AS userEmail,phone_no AS phoneNo,user_Name AS userName from users where tenantId=#{tenantId} and (userEmail=#{userEmail} or phone_no=#{userEmail})")
     List<LoginInfo> selectUsers(@Param("tenantId") String tenantId, @Param("userEmail") String userEmail);
+
+
+
+   List<PrdtSamp> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
 }

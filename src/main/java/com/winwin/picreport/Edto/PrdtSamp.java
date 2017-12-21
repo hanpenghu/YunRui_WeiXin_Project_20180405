@@ -26,9 +26,9 @@ public class PrdtSamp {
     private String colour;
 
     private String size;
-
+    //产品负责人
     private String salName;
-
+    //产品负责人编码
     private String salNo;
 
     private String cusNo;
