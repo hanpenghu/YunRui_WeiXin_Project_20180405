@@ -108,6 +108,19 @@ public class Cnst {
 
     @Autowired
     public D1DaYangServiceOfDeleteOneImg deleteOneImg;
-    
+
+
+    /**
+     *下面是mybatis分页插件要用的东西
+     * */
+
+    public static final String offsetAsPageNum= "offsetAsPageNum";
+    public static final String trueStr= "true";
+    public static final String falseStr= "false";
+    public static final String rowBoundsWithCount= "rowBoundsWithCount";
+    public static final String reasonable= "reasonable";
+    public static final String dialect= "dialect";
+    public static final String mysql= "mysql";
+    public static final String sqlServer= "sqlServer";
     
 }

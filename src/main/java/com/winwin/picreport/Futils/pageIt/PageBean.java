@@ -21,7 +21,7 @@ public class PageBean<T> {
     // 是否有下一页
     private Integer isMore;
     // 开始索引的地方//指的是当前页开始索引的数据库ORDER by以后的地方
-    private Integer startIndex;
+    private Integer startIndex;//从0开始
     // 分页结果
     private List<T> items=new ArrayList<>();
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
