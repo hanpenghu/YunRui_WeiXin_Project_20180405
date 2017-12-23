@@ -1,5 +1,6 @@
 package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import com.winwin.picreport.Futils.FenYe;
@@ -20,8 +21,10 @@ public class D1DaYang2Controller {
      * sql
      * chanPinBianMaJianDangTiaoJianChaXun
      * 此接口时间默认传时间戳(str格式)
+     * //此接口已经用了动态sql,当不传入isConfirm 参数的时候,相当于查询所有符合条件的信息
+     * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
      * */
-    @RequestMapping(value="chanPinBianMaJianDangTiaoJianChaXun",method = RequestMethod.POST)
+    @RequestMapping(value= InterFaceCnst.chanPinBianMaJianDangTiaoJianChaXun,method = RequestMethod.POST)
     public @ResponseBody
     FenYe f(@RequestBody FenYe fenYe){
         if(fenYe==null){
@@ -82,7 +85,7 @@ public class D1DaYang2Controller {
         p1.setInsertdateStrEnd(p.dtoStr(date1,p.d2));
         p1.setConfirmtimestr(p.dtoStr(date2,p.d2));
         p1.setConfirmtimestrEnd(p.dtoStr(date3,p.d2));
-        p1 = (PrdtSamp1) p.columnIsStringTypeNull2Space(p1);
+        p1 = (PrdtSamp1) p.StringTypeNull2Space(p1);
         //把每页显示数和当前页设置进去
         p1.setMeiYeXianShiShu(f.getMeiYeXianShiShu());
         p1.setDangQianYe(f.getDangQianYe());

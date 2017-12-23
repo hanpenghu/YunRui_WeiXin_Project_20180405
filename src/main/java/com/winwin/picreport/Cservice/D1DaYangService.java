@@ -102,7 +102,12 @@ public class D1DaYangService {
 
 
 
-    public List<Msg> ImageUpLoadAndDataSave002OfManyAttach(String projectPath, MultipartFile thum,  List<MultipartFile> attachList, HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
+    public List<Msg> ImageUpLoadAndDataSave002OfManyAttach
+            (String projectPath, MultipartFile thum,  List<MultipartFile> attachList,
+             HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,
+             String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
+
+
         try {
 
             String uuidstr = UUID.randomUUID().toString();

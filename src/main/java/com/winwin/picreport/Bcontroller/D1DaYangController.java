@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 
+import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.ListUtils.ListUtils;
@@ -32,7 +33,7 @@ public class D1DaYangController {
      ****************************************************************************************
      * 删除单个附件
      * */
-    @RequestMapping(value = "deleteOneAttach", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.deleteOneAttach, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
 
         return cnst.deleteOneImg.deleteOneAttach(attachUrl);
@@ -49,7 +50,7 @@ public class D1DaYangController {
      * x-www-form-urlencoded
      * */
 
-    @RequestMapping(value = "deleteOneImage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.deleteOneImage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = "imgUrl", required = false) String imgUrl) {
         return cnst.deleteOneImg.deleteOneImage(imgUrl);
     }
@@ -59,7 +60,7 @@ public class D1DaYangController {
  * 支持一次多删除
  * */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+@RequestMapping(value = InterFaceCnst.deleteSomeRecode, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {
     System.out.println(uuidList);
     return cnst.deleteSome.deleteSomeRecode(uuidList);
@@ -130,7 +131,7 @@ imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
      *用这个进行  信息编辑
      * */
     //    @Transactional
-    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttach",
+    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSave_InfoEdit_ManyAttach,
             method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -186,8 +187,10 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * (value = "attach",required = false)
      * 下面弄了那么多attach,意思是一次上传多个,最多上传10个
      *
+     *
+     * 信息保存用,不能用于编辑
      */
-    @RequestMapping(value = "imageUpLoadAndDataSaveOfManyAttach", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach, method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<Msg> ImageUpLoadAndDataSave002(@RequestParam(value = "thum", required = false) MultipartFile thum,
                                         @RequestParam(value = "attach1", required = false) MultipartFile attach1,
@@ -218,11 +221,14 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
         //上传到指定目录
         try {
-            String projectPath=SpringbootJarPath.JarLuJingGet();
+            String projectPath=Cnst.getProjectPath();
             System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
             //将来用作数据库一条数据的唯一标识
             synchronized (this){
-                return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach(projectPath, thum, attachList,request,cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
+                return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach
+                        (projectPath, thum, attachList,request,
+                                cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,
+                                cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,7 +273,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * 49保存成功,
      * 50保存失败
      */
-    @RequestMapping(value = "dataSaveByExcel", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = InterFaceCnst.dataSaveByExcel, method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false) MultipartFile excel) {
         //上传到指定目录
@@ -295,12 +301,13 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      *分类实行层级制,这个已经被拦截器放行了     /d/allfenleitest
      * */
 
-    @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody CategoryNameCode allfenleitest() {
         return cnst.fenLei.getAllLayer();
     }
 
-    @RequestMapping(value = "allfenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+
+    @RequestMapping(value = InterFaceCnst.allfenlei, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody CategoryNameCode allfenlei() {
         return cnst.fenLei.getAllLayer();
     }
@@ -308,14 +315,14 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<CategoryNameCode> fenlei() {
         List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
         return categoryNameCodeList;
     }
 
-    @RequestMapping(value = "fenleitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "fenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<CategoryNameCode> fenleitest() {
         List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
@@ -323,14 +330,14 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @RequestMapping(value = "fuZeRen", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.fuZeRen, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<FuZeRen> fuZeRen() {
         List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
         return fuZeRenList;
     }
 
-    @RequestMapping(value = "fuZeRentest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "fuZeRentest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<FuZeRen> fuZeRentest() {
         List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
@@ -338,7 +345,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "pinPai", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.pinPai, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<PinPai> pinPai() {
         List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
@@ -346,7 +353,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
 
-    @RequestMapping(value = "pinPaitest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "pinPaitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<PinPai> pinPaitest() {
         List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
@@ -357,7 +364,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
     /////////////////////////////////////////////list///////////////////////////////////////////////////////
-    @RequestMapping(value = "insertDaYang", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "insertDaYang", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<Msg> insertDaYang(@RequestBody PrdtSamp prdtSamp) {
 //        List<Msg> list=fenLei.insertDaYang(prdtSamp);
@@ -370,10 +377,10 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *得到所有打样已确认的单子的所有页,参数只要传过来当前页就行了
-     * 作废
+     * //默认每页显示数10
      * */
 
-    @RequestMapping(value = "alReadyConfirmOrderPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value =InterFaceCnst.alReadyConfirmOrderPage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody FenYe alReadyConfirmOrderPage(@RequestBody FenYe fenYe) {
         return cnst.dco.alReadyConfirmOrderPage(fenYe);
     }
@@ -383,7 +390,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      *得到所有打样未确认的单子第某页,这个不只是能得到第一页,还能得到很多页
      *
      * */
-    @RequestMapping(value = "notConfirmOrderFirstPage", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.notConfirmOrderFirstPage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {
         return cnst.dco.notConfirmOrderFirstPage(fenYe);
     }
@@ -394,8 +401,11 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * 47 打样确认成功 isconfirm=1
 
      48 打样确认 没成功 isconfirm=0
+      确认订单的时候如果要穿  附件,请调用编辑信息的那个接口
+     imageUpLoadAndDataSave_InfoEdit_ManyAttach
+     注意调这个编辑接口的时候必须把原来的信息再传一遍,否则会更改信息
      * */
-    @RequestMapping(value = "confirmTheOrder", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.confirmTheOrder, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> confirmTheOrder(@RequestBody PrdtSamp prdtSamp) {
         return cnst.dco.confirmTheOrder(prdtSamp);
     }
@@ -404,7 +414,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 //
 //    /////////////////////////徐勇页面展示第一次调的接口,注意顺带返回了第一页的信息////////////////////////////////////////////////////////////////////
-//    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody
 //    FenYe daYangZongYeShuHeMeiYeXianShiShu() {
 //        FenYe fenYe = cnst.fenLei.daYangZongYeShuHeMeiYeXianShiShu();//主要传过来当前页和每页显示数量
@@ -415,7 +425,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //    }
 
  //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口(该成所有页都调用一个接口,上面那个接口作废)/////////////////////////////////////////
-    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = InterFaceCnst.dangqianyeData, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     FenYe dangqianyeData(@RequestBody FenYe fenYe) {
         return cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
@@ -423,7 +433,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
 
-//    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody FenYe dangqianyeData(@RequestBody FenYe fenYe) {
 //        FenYe fenYe = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
 //        return fenYe;

@@ -66,6 +66,8 @@ public class PrdtSamp1 {
     //由于在查询条件中需要使用  每页显示数和当前页,所以这里添加一下
     private Integer meiYeXianShiShu;
     private Integer dangQianYe;
+    //0代表没有确认//1代表确认//用来生成动态sql加条件是否打样的
+    private Integer isconfirm;
 
 
 

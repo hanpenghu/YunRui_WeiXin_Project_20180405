@@ -1,13 +1,13 @@
 package com.winwin.picreport.Futils;
-
 import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public strictfp class p {
+
+    public final static String space="";
 
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
     public final static String d2="yyyy-MM-dd HH:mm:ss";
@@ -28,6 +28,10 @@ public strictfp class p {
     public final static String d13="yyyy.MM.dd HH.mm.ss.SS";
     public final static String d14="yyyy.MM.dd.HH.mm.ss.SS";
     public final static String d15="yyyy.MM.dd.HH.mm.ss";
+    public final static String hanhanBirthday_="1986-12-26";
+    public final static String hanhanBirthday="1986/12/26";
+    public final static String DateType="java.util.Date";
+    public final static String StringType="java.util.String";
     private String ads="";
     private StringBuffer sb=new StringBuffer();
     private List lin=new LinkedList();
@@ -350,8 +354,10 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
 
 
     public static boolean isFirstDateBig(String firstStr,Date  second){
-        Date first= tod(firstStr,"yyyy/MM/dd");
-        return isFirstDateBig(first,second);
+        synchronized (ThreadLocal.class) {
+            Date first= tod(firstStr,"yyyy/MM/dd");
+            return isFirstDateBig(first,second);
+        }
     }
     @Test
     public void f4() {
@@ -388,7 +394,7 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
     /**
      *把所有是类中所有是null的字段,如果是String类型,变成""
      * */
-    public static Object columnIsStringTypeNull2Space(Object o) throws IllegalAccessException {
+    public static Object StringTypeNull2Space(Object o) throws IllegalAccessException {
         List<Field> fieldList = new ArrayList<>();
         Class<?> aClass = o.getClass();
         while (aClass != null) {//用while得到所有超类的字段属性
@@ -398,16 +404,99 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
         for (Field field : fieldList) {
             field.setAccessible(true);
             Class<?> type = field.getType();
-            if ("java.lang.String".equals(type.getName())) {
+            if (StringType.equals(type.getName())) {
                 if(null==field.get(o)){//把o穿进去,得到o的属性值
                     //设置o的属性值
-                    field.set(o,"");
+                    field.set(o,space);
                 }
 
             }
         }
         return o;
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public static Object StringTypeSpace2Null(Object o) throws IllegalAccessException {
+    List<Field> fieldList = new ArrayList<>();
+    Class<?> aClass = o.getClass();
+    while (aClass != null) {//用while得到所有超类的字段属性
+        fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+        aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+    }
+    for (Field field : fieldList) {
+        field.setAccessible(true);
+        Class<?> type = field.getType();
+        if (StringType.equals(type.getName())) {
+            if(space.equals(field.get(o))){//把o穿进去,得到o的属性值
+                //设置o的属性值
+                field.set(o,null);
+            }
+
+        }
+    }
+    return o;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *当日期小于我的生日的时候,证明这个日期不太正确,设置为null
+     * 这个是针对某些框架内部会把Date设置为1970或者1899的情况
+     * */
+    public static Object dateTypeSamll2Null(Object o) throws IllegalAccessException {
+        List<Field> fieldList = new ArrayList<>();
+        Class<?> aClass = o.getClass();
+        while (aClass != null) {//用while得到所有超类的字段属性
+            fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+            aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+        for (Field field : fieldList) {
+            field.setAccessible(true);
+            Class<?> type = field.getType();
+            if (DateType.equals(type.getName())) {
+                if(isFirstDateBig(hanhanBirthday,(Date)field.get(o))){//把o穿进去,得到o的属性值
+                    //设置o的属性值
+                    field.set(o,null);
+                }
+
+            }
+        }
+        return o;
+    }
+
+
+    /**
+     *把字段是Date的小于1986的都设置为null
+     * 把字段是String的是""的都设置为null
+     * */
+    public static Object dateTypeSamllAndStringTypeSpace2Null(Object o) throws IllegalAccessException {
+        List<Field> fieldList = new ArrayList<>();
+        Class<?> aClass = o.getClass();
+        while (aClass != null) {//用while得到所有超类的字段属性
+            fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+            aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+        for (Field field : fieldList) {
+            field.setAccessible(true);
+            Class<?> type = field.getType();
+            if (DateType.equals(type.getName())) {
+                if(isFirstDateBig(hanhanBirthday,(Date)field.get(o))){//把o穿进去,得到o的属性值
+                    //设置o的属性值
+                    field.set(o,null);
+                }
+
+            }else if(StringType.equals(type.getName())){
+                if(space.equals(field.get(o))){
+                    field.set(o,null);
+                }
+            }
+        }
+        return o;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Test
+    public void f5(){
+        p(Date.class.getName());
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 /**

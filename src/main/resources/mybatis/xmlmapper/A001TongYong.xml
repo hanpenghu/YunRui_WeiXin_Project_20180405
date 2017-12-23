@@ -136,6 +136,17 @@
                             #{salNo}
                         </otherwise>
                     </choose>
+        AND
+        --是否已经打样确认
+        isConfirm=
+        <choose>
+            <when test="isconfirm = null">
+                isConfirm
+            </when>
+            <otherwise>
+                #{isconfirm}
+            </otherwise>
+        </choose>
     </sql>
 
     <!--登录验证用的  得到修改跟人信息接口 -->

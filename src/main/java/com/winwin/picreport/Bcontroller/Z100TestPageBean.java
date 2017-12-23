@@ -1,6 +1,7 @@
 package com.winwin.picreport.Bcontroller;
 
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +24,7 @@ public class Z100TestPageBean {
      * @param pageSize        :每页显示的总记录数
      * @return
      */
-    @RequestMapping("itemsPage")
+    @RequestMapping(InterFaceCnst.itemsPage)
     @ResponseBody
     public List<PrdtSamp> itemsPage(int currentPage, int pageSize){
         return cnst.zt.findItemByPage(currentPage, pageSize);

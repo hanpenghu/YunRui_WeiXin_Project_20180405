@@ -55,17 +55,23 @@ public class D1DaYangService_ConfirmOrder {
 
 
     /**
-     *只要传过来当前页就行了
+     *只要传过来当前页就行了//默认每页显示数10
      * */
     public FenYe alReadyConfirmOrderPage(FenYe fenYe) {
         fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp> prdtSampList=new ArrayList<>();
-        List<String> idList = manyTabSerch.selectDangQianYeSuoYouIdAlReadyConfirm(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+
+
+        List<String> idList = manyTabSerch.selectDangQianYeSuoYouIdAlReadyConfirm
+                (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+
+
         for(String id:idList){
             PrdtSamp prdtSampX = prdtSampMapper.selectByPrimaryKey(id);
             Date insertdate = prdtSampX.getInsertdate();
             try {
+
                 String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
                 prdtSampX.setInsertdateStr(insertdateStr);
             } catch (Exception e) {
@@ -74,8 +80,8 @@ public class D1DaYangService_ConfirmOrder {
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
+        //总页数在总记录数方法中调用,以后只用调用总记录数就行了
         fenYe.setZongJiLuShu(manyTabSerch.getCountOfAllReadyConfirm());
-        fenYe.setZongYeShu();
         return fenYe;
     }
 

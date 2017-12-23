@@ -228,20 +228,18 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
         if(prdtSamp.getSampSend() != null){
             String format1 = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampSend());
 
-            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+            if(p.isFirstDateBig_(p.hanhanBirthday_,format1)){
                 prdtSamp.setSampSend(null);
             }
+
         }
 
 
         if(prdtSamp.getSampMake() != null){
             String format = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampMake());
-
-            if ( "1900-01-01".equals(format)||"1970-01-01".equals(format)) {
+            if(p.isFirstDateBig_(p.hanhanBirthday_,format)){
                 prdtSamp.setSampMake(null);
             }
-
-
         }
 
 
