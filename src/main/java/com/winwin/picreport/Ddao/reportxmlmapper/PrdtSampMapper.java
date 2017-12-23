@@ -4,10 +4,17 @@ import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface PrdtSampMapper {
+    //testPageBean
+    @Select("Select * from prdt_Samp order by id DESC")
+    List<PrdtSamp> findAll();
     long countByExample(PrdtSampExample example);
+    //test PageBean
+    @Select("Select count(id) from prdt_Samp")
+    int countItem();
 
     int deleteByExample(PrdtSampExample example);
 

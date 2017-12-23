@@ -59,7 +59,9 @@ public class D1DaYangServiceFenLei {
         return list;
     }
 
-    public List<PrdtSamp> dangqianyeData(FenYe fenYe) {
+    public FenYe dangqianyeData(FenYe fenYe) {
+        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongYeShu();
         List<PrdtSamp> prdtSampList=new ArrayList<>();
         List<String> idList = manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
@@ -73,7 +75,10 @@ public class D1DaYangServiceFenLei {
             }
             prdtSampList.add(prdtSampX);
         }
-        return prdtSampList;
+        fenYe.setPrdtSampList(prdtSampList);
+        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAll());
+        fenYe.setZongYeShu();
+        return fenYe;
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public FenYe daYangZongYeShuHeMeiYeXianShiShu() {

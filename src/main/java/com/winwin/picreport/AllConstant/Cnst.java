@@ -53,7 +53,8 @@ public class Cnst {
         return a001TongYongMapper.selectDbDate();
     }
 
-
+    @Autowired
+    public Z100TestPageBeanService zt;
     @Autowired
     public  D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @Autowired

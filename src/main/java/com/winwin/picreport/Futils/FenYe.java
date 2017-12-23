@@ -1,6 +1,7 @@
 package com.winwin.picreport.Futils;
 
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,17 @@ public class FenYe {
 	private Integer meiYeXianShiShu=10;
 	private Integer zongYeShu=null;
 	private Integer zongJiLuShu=null;
+	private PrdtSamp1 prdtSamp1;
+
+
+	public PrdtSamp1 getPrdtSamp1() {
+		return prdtSamp1;
+	}
+
+	public FenYe setPrdtSamp1(PrdtSamp1 prdtSamp1) {
+		this.prdtSamp1 = prdtSamp1;
+		return this;
+	}
 
 	public List<PrdtSamp> getPrdtSampList() {
 		return prdtSampList;
@@ -57,7 +69,13 @@ public class FenYe {
 	}
 	public void setZongJiLuShu(Integer zongJiLuShu) {
 		this.zongJiLuShu = zongJiLuShu;
+		//顺便把总页数也设置一下
+		this.setZongYeShu();
 	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "FenYe [dangQianYe=" + dangQianYe + ", meiYeXianShiShu=" + meiYeXianShiShu + ", zongYeShu=" + zongYeShu

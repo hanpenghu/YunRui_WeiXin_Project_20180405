@@ -365,23 +365,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////徐勇页面展示第一次调的接口,注意顺带返回了第一页的信息////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    public @ResponseBody
-    FenYe daYangZongYeShuHeMeiYeXianShiShu() {
-        FenYe fenYe = cnst.fenLei.daYangZongYeShuHeMeiYeXianShiShu();//主要传过来当前页和每页显示数量
-        fenYe.setDangQianYe(1);
-        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);
-        fenYe.setPrdtSampList(prdtSampList);
-        return fenYe;
-    }
 
-    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShutest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public @ResponseBody
-    FenYe daYangZongYeShuHeMeiYeXianShiShutest() {
-        FenYe fenYe = this.daYangZongYeShuHeMeiYeXianShiShu();
-        return fenYe;
-    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *得到所有打样已确认的单子的所有页,参数只要传过来当前页就行了
@@ -417,24 +402,33 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 
+//
+//    /////////////////////////徐勇页面展示第一次调的接口,注意顺带返回了第一页的信息////////////////////////////////////////////////////////////////////
+//    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    public @ResponseBody
+//    FenYe daYangZongYeShuHeMeiYeXianShiShu() {
+//        FenYe fenYe = cnst.fenLei.daYangZongYeShuHeMeiYeXianShiShu();//主要传过来当前页和每页显示数量
+//        fenYe.setDangQianYe(1);
+//        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);
+//        fenYe.setPrdtSampList(prdtSampList);
+//        return fenYe;
+//    }
 
-
-
- //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口/////////////////////////////////////////
+ //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口(该成所有页都调用一个接口,上面那个接口作废)/////////////////////////////////////////
     @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     public @ResponseBody
-    List<PrdtSamp> dangqianyeData(@RequestBody FenYe fenYe) {
-        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
-        return prdtSampList;
+    FenYe dangqianyeData(@RequestBody FenYe fenYe) {
+        return cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+
     }
 
 
-    @RequestMapping(value = "dangqianyeDatatest", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-    public @ResponseBody
-    List<PrdtSamp> dangqianyeDatatest(FenYe fenYe) {
-        List<PrdtSamp> prdtSampList = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
-        return prdtSampList;
-    }
+//    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
+//    public @ResponseBody FenYe dangqianyeData(@RequestBody FenYe fenYe) {
+//        FenYe fenYe = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+//        return fenYe;
+//    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

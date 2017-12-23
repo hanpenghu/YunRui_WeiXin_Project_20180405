@@ -2,10 +2,10 @@ package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp1;
+import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,17 +22,21 @@ public class D1DaYang2Controller {
      * 此接口时间默认传时间戳(str格式)
      * */
     @RequestMapping(value="chanPinBianMaJianDangTiaoJianChaXun",method = RequestMethod.POST)
-    public @ResponseBody List<PrdtSamp> f(@RequestBody PrdtSamp1 p1){
-        if(p1==null){
-
-            return new ArrayList<>();
+    public @ResponseBody
+    FenYe f(@RequestBody FenYe fenYe){
+        if(fenYe==null){
+            FenYe f=new FenYe();
+            ArrayList<PrdtSamp> prdtSamps = new ArrayList<>();
+            f.setPrdtSampList(prdtSamps);
+            return f;
         }else{
-
             try {
-                return  a多条件查询产品打样列表(p1);
+                return  a多条件查询产品打样列表(fenYe);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                return new ArrayList<>();
+                FenYe f1=new FenYe();
+                ArrayList<PrdtSamp> prdtSamps1 = new ArrayList<>();
+                f1.setPrdtSampList(prdtSamps1);
+                return f1;
             }
         }
     }
@@ -49,7 +53,8 @@ public class D1DaYang2Controller {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public List<PrdtSamp> a多条件查询产品打样列表(PrdtSamp1 p1) throws IllegalAccessException {
+    public FenYe a多条件查询产品打样列表(FenYe f) throws IllegalAccessException {
+        PrdtSamp1 p1 = f.getPrdtSamp1();
         //注意,Select,不用写在service里面也可以
         //得到创建开始时间时间戳
         String insertdateStr = p1.getInsertdateStr();
@@ -78,11 +83,14 @@ public class D1DaYang2Controller {
         p1.setConfirmtimestr(p.dtoStr(date2,p.d2));
         p1.setConfirmtimestrEnd(p.dtoStr(date3,p.d2));
         p1 = (PrdtSamp1) p.columnIsStringTypeNull2Space(p1);
-        p.p(p1.getInsertdateStr());
-        p.p(p1.getInsertdateStrEnd());
-        p.p(p1.getConfirmtimestr());
-        p.p(p1.getConfirmtimestrEnd());
-        return cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+        //把每页显示数和当前页设置进去
+        p1.setMeiYeXianShiShu(f.getMeiYeXianShiShu());
+        p1.setDangQianYe(f.getDangQianYe());
+        List<PrdtSamp> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+        f.setPrdtSampList(prdtSampList);
+        //我在这个方法中顺便调了setZongYeShu()方法
+        f.setZongJiLuShu(cnst.manyTabSerch.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
+        return f;
 
 
     }

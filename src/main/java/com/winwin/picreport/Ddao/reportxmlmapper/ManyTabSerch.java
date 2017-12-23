@@ -166,7 +166,12 @@ public interface ManyTabSerch {
    @Select("Select count(id) from prdt_samp where isconfirm=1")
     Integer getCountOfAllReadyConfirm();
 
+        @Select("Select count(id) from prdt_samp")
+        Integer getCountOfAll();
 
         @Select("Select count(id) from prdt_samp where isconfirm=0")
         Integer getCountOfAllNotConfirm();
+
+
+        Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 }

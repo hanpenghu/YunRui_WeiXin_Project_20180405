@@ -2,7 +2,93 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch">
 
+    <!--林展多条件查询接口 -->
 
+    <select id="getCountOfDuoTiaoJianChaXunZongJiLuShu" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM  PRDT_SAMP
+        WHERE
+                        (
+                            insertDate
+                            BETWEEN
+                            (
+                            CASE
+                            WHEN #{insertdateStr}=NULL THEN '1970-01-01'---注意,这个null其实喘不过来,需要将null变成''才能穿过来
+                            WHEN #{insertdateStr}='' THEN '1970-01-01'
+                            ELSE #{insertdateStr}
+                            END
+                            )
+                            AND
+                            (
+                            CASE
+                            WHEN #{insertdateStrEnd}=NULL THEN '9999-01-01'
+                            WHEN #{insertdateStrEnd}='' THEN '9999-01-01'
+                            ELSE #{insertdateStrEnd}
+                            END
+                            )
+                        )
+                        AND
+                        (
+                            confirmTimeStr
+
+                            BETWEEN
+                            (
+                            CASE
+                            WHEN #{confirmtimestr}=NULL THEN '1970-01-01'
+                            WHEN #{confirmtimestr}='' THEN '1970-01-01'
+                            ELSE #{confirmtimestr}
+                            END
+                            )
+                            AND
+                            (
+                            CASE
+                            WHEN #{confirmtimestrEnd}=NULL THEN '2099-01-01'
+                            WHEN #{confirmtimestrEnd}='' THEN '2099-01-01'
+                            ELSE #{confirmtimestrEnd}
+                            END
+                            )
+                        )
+                        AND
+                        --产品名称
+                        idx_Name=
+                        (
+                        CASE
+                        WHEN #{idxName}=NULL THEN idx_Name
+                        WHEN #{idxName}='' THEN idx_Name
+                        ELSE #{idxName}
+                        END
+                        )
+                        AND
+                        ---产品分类
+                        idx_No=
+                        (
+                        CASE
+                        WHEN #{idxNo}=NULL THEN idx_No
+                        WHEN #{idxNo}='' THEN idx_No
+                        ELSE #{idxNo}
+                        END
+                        )
+                        AND
+                        --产品编码
+                        prd_Code=
+                        (
+                        CASE
+                        WHEN #{prdCode}=NULL THEN prd_Code
+                        WHEN #{prdCode}='' THEN prd_Code
+                        ELSE #{prdCode}
+                        END
+                        )
+                        AND
+                        --产品负责人
+                        sal_No=
+                        (
+                        CASE
+                        WHEN #{salNo}=NULL THEN sal_No
+                        WHEN #{salNo}='' THEN sal_No
+                        ELSE #{salNo}
+                        END
+                        )
+    </select>
 
 
 <!-- 林展分页打样-->
@@ -274,4 +360,7 @@ WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'
 FROM TF_CK A,MF_CK_Z B,MF_CK C
 WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'
     </update>
+
+
+
 </mapper>
