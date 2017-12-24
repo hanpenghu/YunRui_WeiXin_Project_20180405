@@ -19,7 +19,7 @@ import java.util.List;
 /**
  *导出excel
  * */
-public class C1SalePrdtDetailToExcelController导出EXCEL {
+public class C1SalePrdtDetailToExcelControllerDownLoadEXCEL {
     @Autowired
     private ManyTabSerch manyTabSerch;
 

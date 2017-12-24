@@ -34,7 +34,7 @@ public class D1DaYang2Controller {
             return f;
         }else{
             try {
-                return  a多条件查询产品打样列表(fenYe);
+                return  this.manyConditionSearchOfPrdtFiltList(fenYe);
             } catch (IllegalAccessException e) {
                 FenYe f1=new FenYe();
                 ArrayList<PrdtSamp> prdtSamps1 = new ArrayList<>();
@@ -56,7 +56,11 @@ public class D1DaYang2Controller {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public FenYe a多条件查询产品打样列表(FenYe f) throws IllegalAccessException {
+
+    /**
+     *多条件产品打样列表
+     * */
+    private FenYe manyConditionSearchOfPrdtFiltList(FenYe f) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
         //注意,Select,不用写在service里面也可以
         //得到创建开始时间时间戳
