@@ -2,48 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper">
     <!--<resultMap id="BaseResultMap" type=""></resultMap>-->
-    <resultMap id="PrdtSampBaseResultMap" type="com.winwin.picreport.Edto.PrdtSamp">
-        <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="prd_code" jdbcType="VARCHAR" property="prdCode" />
-        <result column="idx_name" jdbcType="VARCHAR" property="idxName" />
-        <result column="idx_no" jdbcType="VARCHAR" property="idxNo" />
-        <result column="mark_name" jdbcType="VARCHAR" property="markName" />
-        <result column="mark_no" jdbcType="VARCHAR" property="markNo" />
-        <result column="colour" jdbcType="VARCHAR" property="colour" />
-        <result column="size" jdbcType="VARCHAR" property="size" />
-        <result column="sal_name" jdbcType="VARCHAR" property="salName" />
-        <result column="sal_no" jdbcType="VARCHAR" property="salNo" />
-        <result column="cus_no" jdbcType="VARCHAR" property="cusNo" />
-        <result column="cus_name" jdbcType="VARCHAR" property="cusName" />
-        <result column="isFenJie" jdbcType="VARCHAR" property="isfenjie" />
-        <result column="samp_make" jdbcType="TIMESTAMP" property="sampMake" />
-        <result column="samp_send" jdbcType="TIMESTAMP" property="sampSend" />
-        <result column="samp_requ" jdbcType="VARCHAR" property="sampRequ" />
-        <result column="samp_desc" jdbcType="VARCHAR" property="sampDesc" />
-        <result column="thum" jdbcType="VARCHAR" property="thum" />
-        <result column="attach" jdbcType="VARCHAR" property="attach" />
-        <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate" />
-        <result column="confirmMan" jdbcType="VARCHAR" property="confirmman" />
-        <result column="confirmTimeStr" jdbcType="VARCHAR" property="confirmtimestr" />
-        <result column="isConfirm" jdbcType="INTEGER" property="isconfirm" />
-        <result column="Category" jdbcType="VARCHAR" property="category" />
-        <result column="TeamName" jdbcType="VARCHAR" property="teamname" />
-        <result column="confirmRem" jdbcType="VARCHAR" property="confirmrem" />
-        <result column="unit" jdbcType="VARCHAR" property="unit" />
-        <result column="businessDesc" jdbcType="VARCHAR" property="businessdesc" />
-        <result column="financeDesc" jdbcType="VARCHAR" property="financedesc" />
-        <result column="startSellCount" jdbcType="NUMERIC" property="startsellcount" />
-        <result column="modelCost" jdbcType="NUMERIC" property="modelcost" />
-        <result column="estimatePrice" jdbcType="NUMERIC" property="estimateprice" />
-        <result column="littleOrderPrice" jdbcType="NUMERIC" property="littleorderprice" />
+    <!-- 可以继承另一个名称空间的东西-->
+    <resultMap id="PrdtSampBaseResultMap"
+               extends="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.BaseResultMap"
+               type="com.winwin.picreport.Edto.PrdtSamp">
     </resultMap>
-
-    <sql id="PrdtSampBase_Column_List">
-        id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
-        cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
-        insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem,
-        unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
+<!-- sql中的lang是继承的意思,这里明显继承了另一个名称空间的东西-->
+    <sql id="PrdtSampBase_Column_List"
+         lang="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List" >
     </sql>
+
     <!-- 产品打样列表多条件查询的条件-->
     <sql id="productProofWithManyCondition">
         (

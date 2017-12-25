@@ -31,6 +31,7 @@ public class MyWebAppConfigurer
         .excludePathPatterns("/d/allfenleitest")
 //                .excludePathPatterns("/base/*")
         ;
+//        registry.addWebRequestInterceptor()
         super.addInterceptors(registry);
     }
 
