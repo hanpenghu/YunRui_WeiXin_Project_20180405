@@ -78,7 +78,7 @@ public class PrdtSamp0 {
 
      protected String financedesc;//财务描述
 
-     protected BigDecimal startsellcount;//起订数量//json可以直接转换
+     protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部
 
      protected BigDecimal modelcost;//财务模具费
 

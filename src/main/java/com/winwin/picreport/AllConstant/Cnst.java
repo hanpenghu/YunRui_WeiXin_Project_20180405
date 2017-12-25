@@ -68,7 +68,8 @@ public class Cnst {
     @Autowired
     public D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach infoEditOfManyAttach;
 
-
+    @Value("${tokenShiXiaoShiJian_haoMiao}")
+    public String tokenShiXiaoShiJian_haoMiao;
 
     @Value("${excelDaoRuDaYangPicLinShiMulu}")
     public String excelDaoRuDaYangPicLinShiMulu;
