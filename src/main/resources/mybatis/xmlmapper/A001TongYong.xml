@@ -7,11 +7,12 @@
                extends="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.BaseResultMap"
                type="com.winwin.picreport.Edto.PrdtSamp">
     </resultMap>
-<!-- sql中的lang是继承的意思,这里明显继承了另一个名称空间的东西-->
-    <sql id="PrdtSampBase_Column_List"
-         lang="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List" >
-    </sql>
-
+   <!-- <sql id="PrdtSampBase_Column_List">
+        id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
+        cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
+        insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem,
+        unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
+    </sql>-->
     <!-- 产品打样列表多条件查询的条件-->
     <sql id="productProofWithManyCondition">
         (
@@ -57,35 +58,36 @@
                         </otherwise>
                     </choose>
         )
-        AND
-                    --产品名称
-                    idx_Name=
-                    <choose>
-                        <when test="idxName = null or idxName = ''">
-                            idx_Name
-                        </when>
-                        <otherwise>
-                            #{idxName}
-                        </otherwise>
-                    </choose>
+        AND(
+                        --产品名称
+                        idx_Name=
+                        <choose>
+                            <when test="idxName == null or idxName == ''">
+                                idx_Name
+                            </when>
+                            <otherwise>
+                                #{idxName}
+                            </otherwise>
+                        </choose>
 
 
-        AND
-        ---产品分类
-                    idx_No=
-                    <choose>
-                        <when test="idxNo = null or idxNo = ''">
-                            idx_No
-                        </when>
-                        <otherwise>
-                            #{idxNo}
-                        </otherwise>
-                    </choose>
+        OR
+            ---产品分类
+                        idx_No=
+                        <choose>
+                            <when test="idxNo == null or idxNo == ''">
+                                idx_No
+                            </when>
+                            <otherwise>
+                                #{idxNo}
+                            </otherwise>
+                        </choose>
+        )
         AND
         --产品编码
                     prd_Code=
                     <choose>
-                        <when test="prdCode = null or prdCode = ''">
+                        <when test="prdCode == null or prdCode == ''">
                             prd_Code
                         </when>
                         <otherwise>
@@ -97,7 +99,7 @@
                     --产品负责人
                     sal_No=
                     <choose>
-                        <when test="salNo = null or salNo = ''">
+                        <when test="salNo == null or salNo == ''">
                             sal_No
                         </when>
                         <otherwise>
@@ -108,7 +110,7 @@
         --是否已经打样确认
         isConfirm=
         <choose>
-            <when test="isconfirm = null">
+            <when test="isconfirm == null">
                 isConfirm
             </when>
             <otherwise>
@@ -181,7 +183,7 @@
         SELECT
         TOP
         (#{meiYeXianShiShu})
-        <include refid="PrdtSampBase_Column_List" />
+        <include refid="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List" />
         FROM
         PRDT_SAMP
         WHERE
@@ -194,12 +196,23 @@
             WHERE
              <!-- 产品打样列表多条件查询的条件-->
               <include refid="productProofWithManyCondition"/>
-              ORDER BY samp_make DESC
+              ORDER BY insertdate DESC
         )
         AND
         <!-- 产品打样列表多条件查询的条件-->
         <include refid="productProofWithManyCondition"/>
-        ORDER BY samp_make DESC
+        ORDER BY insertdate DESC
+    </select>
+
+
+    <!--林展多条件查询接口 -->
+
+    <select id="getCountOfDuoTiaoJianChaXunZongJiLuShu" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM  PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
     </select>
 
 
@@ -241,196 +254,5 @@
 
 
 
-
-
-
-    <!--&lt;!&ndash; 产品打样列表多条件查询&ndash;&gt;-->
-    <!--<select id="chanPinBianMaJianDangTiaoJianChaXun" resultMap="PrdtSampBaseResultMap">-->
-    <!--SELECT-->
-    <!--TOP-->
-    <!--(#{meiYeXianShiShu})-->
-    <!--<include refid="PrdtSampBase_Column_List" />-->
-    <!--FROM-->
-    <!--PRDT_SAMP-->
-    <!--WHERE-->
-    <!--id NOT IN-->
-    <!--(-->
-    <!--select top-->
-    <!--(-->
-    <!--(#{meiYeXianShiShu})*((#{dangQianYe})-1)-->
-    <!--)-->
-    <!--id from PRDT_SAMP-->
-    <!--WHERE-->
-    <!--(-->
-    <!--insertDate-->
-    <!--BETWEEN-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{insertdateStr}=NULL THEN '1970-01-01'-&#45;&#45;注意,这个null其实喘不过来,需要将null变成''才能穿过来-->
-    <!--WHEN #{insertdateStr}='' THEN '1970-01-01'-->
-    <!--ELSE #{insertdateStr}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{insertdateStrEnd}=NULL THEN '9999-01-01'-->
-    <!--WHEN #{insertdateStrEnd}='' THEN '9999-01-01'-->
-    <!--ELSE #{insertdateStrEnd}-->
-    <!--END-->
-    <!--)-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--confirmTimeStr-->
-
-    <!--BETWEEN-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{confirmtimestr}=NULL THEN '1970-01-01'-->
-    <!--WHEN #{confirmtimestr}='' THEN '1970-01-01'-->
-    <!--ELSE #{confirmtimestr}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{confirmtimestrEnd}=NULL THEN '2099-01-01'-->
-    <!--WHEN #{confirmtimestrEnd}='' THEN '2099-01-01'-->
-    <!--ELSE #{confirmtimestrEnd}-->
-    <!--END-->
-    <!--)-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品名称-->
-    <!--idx_Name=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{idxName}=NULL THEN idx_Name-->
-    <!--WHEN #{idxName}='' THEN idx_Name-->
-    <!--ELSE #{idxName}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!-- -&#45;&#45;产品分类-->
-    <!--idx_No=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{idxNo}=NULL THEN idx_No-->
-    <!--WHEN #{idxNo}='' THEN idx_No-->
-    <!--ELSE #{idxNo}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品编码-->
-    <!--prd_Code=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{prdCode}=NULL THEN prd_Code-->
-    <!--WHEN #{prdCode}='' THEN prd_Code-->
-    <!--ELSE #{prdCode}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品负责人-->
-    <!--sal_No=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{salNo}=NULL THEN sal_No-->
-    <!--WHEN #{salNo}='' THEN sal_No-->
-    <!--ELSE #{salNo}-->
-    <!--END-->
-    <!--)-->
-
-
-
-    <!--ORDER BY samp_make DESC-->
-    <!--)-->
-
-
-    <!--AND (-->
-    <!--insertDate-->
-    <!--BETWEEN-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{insertdateStr}=NULL THEN '1970-01-01'-&#45;&#45;注意,这个null其实喘不过来,需要将null变成''才能穿过来-->
-    <!--WHEN #{insertdateStr}='' THEN '1970-01-01'-->
-    <!--ELSE #{insertdateStr}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{insertdateStrEnd}=NULL THEN '9999-01-01'-->
-    <!--WHEN #{insertdateStrEnd}='' THEN '9999-01-01'-->
-    <!--ELSE #{insertdateStrEnd}-->
-    <!--END-->
-    <!--)-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--confirmTimeStr-->
-
-    <!--BETWEEN-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{confirmtimestr}=NULL THEN '1970-01-01'-->
-    <!--WHEN #{confirmtimestr}='' THEN '1970-01-01'-->
-    <!--ELSE #{confirmtimestr}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{confirmtimestrEnd}=NULL THEN '2099-01-01'-->
-    <!--WHEN #{confirmtimestrEnd}='' THEN '2099-01-01'-->
-    <!--ELSE #{confirmtimestrEnd}-->
-    <!--END-->
-    <!--)-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品名称-->
-    <!--idx_Name=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{idxName}=NULL THEN idx_Name-->
-    <!--WHEN #{idxName}='' THEN idx_Name-->
-    <!--ELSE #{idxName}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!-- -&#45;&#45;产品分类-->
-    <!--idx_No=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{idxNo}=NULL THEN idx_No-->
-    <!--WHEN #{idxNo}='' THEN idx_No-->
-    <!--ELSE #{idxNo}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品编码-->
-    <!--prd_Code=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{prdCode}=NULL THEN prd_Code-->
-    <!--WHEN #{prdCode}='' THEN prd_Code-->
-    <!--ELSE #{prdCode}-->
-    <!--END-->
-    <!--)-->
-    <!--AND-->
-    <!--&#45;&#45;产品负责人-->
-    <!--sal_No=-->
-    <!--(-->
-    <!--CASE-->
-    <!--WHEN #{salNo}=NULL THEN sal_No-->
-    <!--WHEN #{salNo}='' THEN sal_No-->
-    <!--ELSE #{salNo}-->
-    <!--END-->
-    <!--)-->
-
-
-    <!--ORDER BY samp_make DESC-->
-    <!--</select>-->
 
 </mapper>

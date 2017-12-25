@@ -8,10 +8,10 @@ import java.util.List;
 
 public class FenYe {
 	private List<PrdtSamp> prdtSampList=new ArrayList<>();//第一次需要传入的数据
-	private Integer dangQianYe=null;//当前页的页面传过来
+	private Integer dangQianYe;//当前页的页面传过来
 	private Integer meiYeXianShiShu=10;
-	private Integer zongYeShu=null;
-	private Integer zongJiLuShu=null;
+	private Integer zongYeShu;
+	private Integer zongJiLuShu;
 	private PrdtSamp1 prdtSamp1;
 
 

@@ -36,7 +36,7 @@ public class D1DaYangServiceDataSaveByExcel {
             return shangChuanTongYiReturn.yourPicNameCanNotHaveIgll();
         }
         String path=p.gp().sad(Cnst.getProjectPath())
-                .sad(Cnst.xieGang).sad(UUID.randomUUID().toString())
+                .sad(Cnst.javaXieGang).sad(UUID.randomUUID().toString())
                 .sad(excel.getOriginalFilename()).gad();
 //        p.p(msgCnst.fgf.getValue());
 //        p.p(path);

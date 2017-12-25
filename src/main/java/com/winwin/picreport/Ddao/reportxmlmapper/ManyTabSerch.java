@@ -173,5 +173,5 @@ public interface ManyTabSerch {
         Integer getCountOfAllNotConfirm();
 
 
-        Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
+
 }

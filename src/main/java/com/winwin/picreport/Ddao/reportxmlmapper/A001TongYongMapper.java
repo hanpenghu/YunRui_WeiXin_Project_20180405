@@ -143,4 +143,5 @@ public interface A001TongYongMapper {
 
 
    List<PrdtSamp> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
+   Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 }

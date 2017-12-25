@@ -96,7 +96,7 @@ public class D1DaYang2Controller {
         List<PrdtSamp> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
-        f.setZongJiLuShu(cnst.manyTabSerch.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
+        f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
         return f;
 
 

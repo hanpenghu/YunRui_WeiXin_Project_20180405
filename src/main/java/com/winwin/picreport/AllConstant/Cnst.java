@@ -16,8 +16,10 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
+    public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";
     public static final String  xlsHouZhuiWuDian="xls";
-    public static final String  xieGang="/";
+    public static final String  javaXieGang="/";
+    public static final String  shuangMsXieGang="\\";
     public static final String  xlsxHouZhuiWuDian="xlsx";
     public static final String  pngWuDian="png";
     public static final String  xlsxHouZhui=".xlsx";
