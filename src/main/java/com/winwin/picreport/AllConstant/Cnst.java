@@ -76,6 +76,7 @@ public class Cnst {
 
     @Autowired
     public D1DaYangService d1DaYangService;
+    
     @Value("${dirUrl}")
     public String dirUrl;
 
