@@ -83,8 +83,8 @@
        <!-- <table tableName="up_def"></table>--><!-- 单价表-->
        <!-- <table tableName="cur_id"></table>--><!--币别表 -->
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->
-        <!--<table tableName="mf_ic"></table>
-        <table tableName="tf_ic"></table>-->
+        <!--<table tableName="indx"></table>--><!--中类表 -->
+       <!-- <table tableName="tf_ic"></table>-->
         <!--<table tableName="salm"></table>
         <table tableName="my_wh"></table>-->
 

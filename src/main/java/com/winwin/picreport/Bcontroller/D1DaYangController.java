@@ -190,20 +190,23 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      *
      * 信息保存用,不能用于编辑
      */
-    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach, method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,
+            method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg> ImageUpLoadAndDataSave002(@RequestParam(value = "thum", required = false) MultipartFile thum,
-                                        @RequestParam(value = "attach1", required = false) MultipartFile attach1,
-                                        @RequestParam(value = "attach2", required = false) MultipartFile attach2,
-                                        @RequestParam(value = "attach3", required = false) MultipartFile attach3,
-                                        @RequestParam(value = "attach4", required = false) MultipartFile attach4,
-                                        @RequestParam(value = "attach5", required = false) MultipartFile attach5,
-                                        @RequestParam(value = "attach6", required = false) MultipartFile attach6,
-                                        @RequestParam(value = "attach7", required = false) MultipartFile attach7,
-                                        @RequestParam(value = "attach8", required = false) MultipartFile attach8,
-                                        @RequestParam(value = "attach9", required = false) MultipartFile attach9,
-                                        @RequestParam(value = "attach10", required = false) MultipartFile attach10,
-                                        HttpServletRequest request) {
+    List<Msg> ImageUpLoadAndDataSave002
+    (@RequestParam(value = "thum", required = false) MultipartFile thum,
+                @RequestParam(value = "attach1", required = false) MultipartFile attach1,
+                @RequestParam(value = "attach2", required = false) MultipartFile attach2,
+                @RequestParam(value = "attach3", required = false) MultipartFile attach3,
+                @RequestParam(value = "attach4", required = false) MultipartFile attach4,
+                @RequestParam(value = "attach5", required = false) MultipartFile attach5,
+                @RequestParam(value = "attach6", required = false) MultipartFile attach6,
+                @RequestParam(value = "attach7", required = false) MultipartFile attach7,
+                @RequestParam(value = "attach8", required = false) MultipartFile attach8,
+                @RequestParam(value = "attach9", required = false) MultipartFile attach9,
+                @RequestParam(value = "attach10", required = false) MultipartFile attach10,
+                HttpServletRequest request) {
 
         List<MultipartFile> attachList = new ArrayList();
         attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);

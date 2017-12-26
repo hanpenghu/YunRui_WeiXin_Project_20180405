@@ -241,7 +241,7 @@ public class D1DaYangService {
         }else{
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
-//            cnst.a001TongYongMapper.
+
         }
 
         return prdtSamp;
