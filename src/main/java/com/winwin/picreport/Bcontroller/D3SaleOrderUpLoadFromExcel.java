@@ -37,7 +37,8 @@ public class D3SaleOrderUpLoadFromExcel {
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value= InterFaceCnst.upLoadExcelDontMerageOfSaleOrder,
-        method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+        method= RequestMethod.POST,
+        produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
