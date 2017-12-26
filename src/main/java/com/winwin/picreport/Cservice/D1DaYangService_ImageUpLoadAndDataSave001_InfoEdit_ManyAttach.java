@@ -32,7 +32,9 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
     @Value("${fuJianWenJianJia}")
     private String fuJianWenJianJia;
     @Transactional
-    public List<Msg> infoEditOfManyAttach(MultipartFile thum , List<MultipartFile> attachList, String prdtSamp1) throws Exception {
+    public List<Msg> infoEditOfManyAttach(MultipartFile thum ,
+                                          List<MultipartFile> attachList,
+                                          String prdtSamp1) throws Exception {
         synchronized (this) {
             String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
             String projectPath = SpringbootJarPath.JarLuJingGet();
@@ -44,6 +46,11 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
 
 
             PrdtSamp prdtSampOb=null;
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
+//            p.p(prdtSamp1);
+//            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
                 prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp.class);
             }
