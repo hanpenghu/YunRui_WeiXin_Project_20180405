@@ -7,6 +7,21 @@
                extends="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.BaseResultMap"
                type="com.winwin.picreport.Edto.PrdtSamp">
     </resultMap>
+
+    <!--添加查询模块给所有返回信息
+    //    //销售价格列表
+//    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+//    //采购价格列表
+//    List<UpDefMy>upDefMyListByer=new ArrayList<>();
+    -->
+    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy">
+        <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
+        <id column="QTY" jdbcType="NUMERIC" property="qty" />
+        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
+        <result column="UP" jdbcType="NUMERIC" property="up" />
+        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+        <result column="name" jdbcType="VARCHAR" property="curName" />
+    </resultMap>
    <!-- <sql id="PrdtSampBase_Column_List">
         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
         cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
@@ -216,6 +231,25 @@
     </select>
 
 
+
+    <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
+       Select
+       a.s_dd --as sDd,---价格创建日期
+       ,a.up --as up ,--价格
+       ,a.qty --as qty ,--数量
+       ,a.unit ---as unit,---单位
+       ,a.cur_id ---as curId,----币别代号
+       ,b.name ----as curName ----币别名字
+       from
+       up_def a,
+       cur_id b
+       where
+       a.cur_id=b.cur_id
+       and
+       a.prd_no=#{prdNo,jdbcType=VARCHAR}
+       and
+        a.price_id=#{priceId,jdbcType=VARCHAR}
+    </select>
 
 
 

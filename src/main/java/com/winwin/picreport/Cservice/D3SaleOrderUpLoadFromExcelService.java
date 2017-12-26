@@ -149,7 +149,7 @@ public class D3SaleOrderUpLoadFromExcelService {
 //        tz.setSaphh(s.getSaphh());//20170929老郑说这个不用写入值了
         tz.setSapph(s.getSapph());
         tz.setCfdm(s.getCfdm());
-        tz.setOsId("SO");
+        tz.setOsId(OrderPreCnst.SO);
         //tz.setItm();
 ////////////////////////////////////////////////
         pdt.setPrdNo(s.getPrdNo());

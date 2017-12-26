@@ -1,10 +1,7 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 
 
-import com.winwin.picreport.Edto.LoginInfo;
-import com.winwin.picreport.Edto.Prdt;
-import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Edto.PrdtSamp1;
+import com.winwin.picreport.Edto.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -155,4 +152,15 @@ public interface A001TongYongMapper {
    //prdCode对应name
    @Select("insert into prdt(prd_no,idx1,name)values(#{prdNo},#{indx1},#{prdCode})")
    Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo, @Param("indx1")String indx1,@Param("prdCode") String prdCode);
+
+
+
+
+    List<UpDefMy> getUpDefMy(@Param("prdNo") String prdNo,@Param("priceId") String priceId);
+
+
+
+
+
+
 }

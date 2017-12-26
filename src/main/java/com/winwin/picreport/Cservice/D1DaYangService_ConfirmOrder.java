@@ -1,4 +1,5 @@
 package com.winwin.picreport.Cservice;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
@@ -17,29 +18,29 @@ import java.util.List;
 @Service("dco")
 public class D1DaYangService_ConfirmOrder {
     @Autowired
-    private ManyTabSerch manyTabSerch;
-
-    @Autowired
-    private PrdtSampMapper prdtSampMapper;
+    private Cnst cnst;
     public FenYe notConfirmOrderFirstPage(FenYe fenYe) {//对方传过来当前页
 
-        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp> prdtSampList=new ArrayList<>();
-        List<String> idList = manyTabSerch.selectDangQianYeSuoYouIdNotConfirm(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdNotConfirm(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
-            PrdtSamp prdtSampX = prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
             Date insertdate = prdtSampX.getInsertdate();
             try {
-                String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
+                String insertdateStr= new SimpleDateFormat(p.d2).format(insertdate);
                 prdtSampX.setInsertdateStr(insertdateStr);
+
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,，对应的id是："+id);
             }
+            //添加价格模块//经过下一个方法,就会自动赋予一个模块
+            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
-        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAllNotConfirm());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllNotConfirm());
         fenYe.setZongYeShu();
         return fenYe;
     }
@@ -58,30 +59,33 @@ public class D1DaYangService_ConfirmOrder {
      *只要传过来当前页就行了//默认每页显示数10
      * */
     public FenYe alReadyConfirmOrderPage(FenYe fenYe) {
-        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp> prdtSampList=new ArrayList<>();
 
 
-        List<String> idList = manyTabSerch.selectDangQianYeSuoYouIdAlReadyConfirm
+        List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdAlReadyConfirm
                 (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
 
 
         for(String id:idList){
-            PrdtSamp prdtSampX = prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
             Date insertdate = prdtSampX.getInsertdate();
             try {
 
                 String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
                 prdtSampX.setInsertdateStr(insertdateStr);
+
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,，对应的id是："+id);
             }
+            //添加价格模块//经过下一个方法,就会自动赋予一个模块
+            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
         //总页数在总记录数方法中调用,以后只用调用总记录数就行了
-        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAllReadyConfirm());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllReadyConfirm());
         return fenYe;
     }
 
@@ -126,7 +130,7 @@ public class D1DaYangService_ConfirmOrder {
             f.setConfirmrem(confirmrem);
             PrdtSampExample prdtSampExample=new PrdtSampExample();
             prdtSampExample.createCriteria().andIdEqualTo(id);
-            int i = prdtSampMapper.updateByPrimaryKeySelective(f);
+            int i = cnst.prdtSampMapper.updateByPrimaryKeySelective(f);
             if(i==1){
                 return MessageGenerate.generateMessage(
                         "确认成功","确认成功",
@@ -178,7 +182,7 @@ public class D1DaYangService_ConfirmOrder {
 
     public FenYe daYangZongYeShuHeMeiYeXianShiShu() {
         FenYe fenYe=new FenYe();
-        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         return fenYe;
     }

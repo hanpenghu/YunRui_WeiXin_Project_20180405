@@ -245,46 +245,8 @@ public class PrdtSamp extends PrdtSamp0{
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", prdCode='").append(prdCode).append('\'');
-        sb.append(", idxName='").append(idxName).append('\'');
-        sb.append(", idxNo='").append(idxNo).append('\'');
-        sb.append(", markName='").append(markName).append('\'');
-        sb.append(", markNo='").append(markNo).append('\'');
-        sb.append(", colour='").append(colour).append('\'');
-        sb.append(", size='").append(size).append('\'');
-        sb.append(", salName='").append(salName).append('\'');
-        sb.append(", salNo='").append(salNo).append('\'');
-        sb.append(", cusNo='").append(cusNo).append('\'');
-        sb.append(", cusName='").append(cusName).append('\'');
-        sb.append(", isfenjie='").append(isfenjie).append('\'');
-        sb.append(", sampMake=").append(sampMake);
-        sb.append(", sampSend=").append(sampSend);
-        sb.append(", sampRequ='").append(sampRequ).append('\'');
-        sb.append(", sampDesc='").append(sampDesc).append('\'');
-        sb.append(", thum='").append(thum).append('\'');
-        sb.append(", attach='").append(attach).append('\'');
-        sb.append(", insertdate=").append(insertdate);
-        sb.append(", confirmman='").append(confirmman).append('\'');
-        sb.append(", confirmtimestr='").append(confirmtimestr).append('\'');
-        sb.append(", isconfirm=").append(isconfirm);
-        sb.append(", category='").append(category).append('\'');
-        sb.append(", teamname='").append(teamname).append('\'');
-        sb.append(", confirmrem='").append(confirmrem).append('\'');
-        sb.append(", unit='").append(unit).append('\'');
-        sb.append(", businessdesc='").append(businessdesc).append('\'');
-        sb.append(", financedesc='").append(financedesc).append('\'');
-        sb.append(", startsellcount=").append(startsellcount);
-        sb.append(", modelcost=").append(modelcost);
-        sb.append(", estimateprice=").append(estimateprice);
-        sb.append(", littleorderprice=").append(littleorderprice);
-        sb.append(", modelcostinvoiceno='").append(modelcostinvoiceno).append('\'');
-        sb.append(", financestartsellcount=").append(financestartsellcount);
-        sb.append(", financemodelcost=").append(financemodelcost);
-        sb.append(", financelittleorderprice=").append(financelittleorderprice);
-        sb.append(", buyerdesc='").append(buyerdesc).append('\'');
-        sb.append(", prdNo='").append(prdNo).append('\'');
-        sb.append(", salemandesc='").append(salemandesc).append('\'');
+        sb.append("upDefMyListSale=").append(upDefMyListSale);
+        sb.append(", upDefMyListByer=").append(upDefMyListByer);
         sb.append('}');
         return sb.toString();
     }

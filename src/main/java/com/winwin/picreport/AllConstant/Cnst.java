@@ -1,7 +1,10 @@
 package com.winwin.picreport.AllConstant;
 
+import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
+import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.UpDefMy;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +13,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Order(2)
 @Component("cnst")
 public class Cnst {
 
+    public static final String salPriceId="1";//销售的定价表中的priceId是1
+    public static final String buyPriceId="2";//采购的是2
     public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";
     public static final String  xlsHouZhuiWuDian="xls";
     public static final String  javaXieGang="/";
@@ -47,6 +53,9 @@ public class Cnst {
 
     @Autowired
     public SapsoMapper sapsoMapper;
+
+    @Autowired
+    public GetPriceModelUpdef getPriceModelUpdef;
 
     @Autowired
     public D3SaleOrderUpLoadFromExcelService d3SaleOrderUpLoadFromExcelService;
@@ -143,5 +152,11 @@ public class Cnst {
     public static final String dialect= "dialect";
     public static final String mysql= "mysql";
     public static final String sqlServer= "sqlServer";
+
+
+
+
+
+
     
 }

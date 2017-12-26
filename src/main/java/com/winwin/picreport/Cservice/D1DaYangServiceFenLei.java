@@ -1,5 +1,6 @@
 package com.winwin.picreport.Cservice;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.*;
@@ -19,17 +20,15 @@ import java.util.List;
 @Service("fenLei")
 public class D1DaYangServiceFenLei {
     @Autowired
-    private PrdtSampMapper prdtSampMapper;
-    @Autowired
-    private ManyTabSerch manyTabSerch;
-//////////////////////////////////////////////////////////////////////////////////////////
+    private Cnst cnst;
+    //////////////////////////////////////////////////////////////////////////////////////////
     public List<CategoryNameCode> fenlei() {
         List<CategoryNameCode>categoryNameCodeList=new ArrayList<>();
-        List<CategoryName>categoryNameList = manyTabSerch.fenlei();
+        List<CategoryName>categoryNameList = cnst.manyTabSerch.fenlei();
         for(CategoryName categoryName:categoryNameList){
             CategoryNameCode categoryNameCode=new CategoryNameCode();
             categoryNameCode.setIdxName(categoryName.getIdxName()).setIdxNo(categoryName.getIdxNo());
-            List<String> codeList=manyTabSerch.getCodeList(categoryName.getIdxNo());
+            List<String> codeList=cnst.manyTabSerch.getCodeList(categoryName.getIdxNo());
             categoryNameCode.setPrdCodeList(codeList);
             categoryNameCodeList.add(categoryNameCode);
         }
@@ -40,7 +39,7 @@ public class D1DaYangServiceFenLei {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public List<FuZeRen> fuZeRen() {
-        List<FuZeRen> fuZeRenList= manyTabSerch.fuZeRen();
+        List<FuZeRen> fuZeRenList= cnst.manyTabSerch.fuZeRen();
         return fuZeRenList;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +47,7 @@ public class D1DaYangServiceFenLei {
         Integer ii= null;
         List<Msg> list;
         try {
-            ii = prdtSampMapper.insert(prdtSamp);
+            ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样插入一条数据失败~~~~~~~~~~~~~~~~~~~~~~~~");
             return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
@@ -58,25 +57,29 @@ public class D1DaYangServiceFenLei {
     }
 
     public FenYe dangqianyeData(FenYe fenYe) {
-        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp> prdtSampList=new ArrayList<>();
-        List<String> idList = manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        List<String> idList =cnst. manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
-            PrdtSamp prdtSampX = prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
             Date insertdate = prdtSampX.getInsertdate();
             try {
-                String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
-                prdtSampX.setInsertdateStr(insertdateStr);
-                //添加
-               this.GetPriceModel(prdtSampX);
+                prdtSampX.setInsertdateStr(p.dtoStr(insertdate,p.d2));
+                //添加价格模块//经过下一个方法,就会自动赋予一个模块
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
             }
+            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("");p.p("");p.p("");p.p("");p.p("");
+            p.p(prdtSampX);
+            p.p("");p.p("");p.p("");p.p("");p.p("");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         fenYe.setPrdtSampList(prdtSampList);
-        fenYe.setZongJiLuShu(manyTabSerch.getCountOfAll());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
         fenYe.setZongYeShu();
         return fenYe;
     }
@@ -85,16 +88,14 @@ public class D1DaYangServiceFenLei {
 //    List<UpDefMy>upDefMyListSale=new ArrayList<>();
 //    //采购价格列表
 //    List<UpDefMy>upDefMyListByer=new ArrayList<>();
-    private void GetPriceModel(PrdtSamp prdtSampX) {
 
-    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public FenYe daYangZongYeShuHeMeiYeXianShiShu() {
         FenYe fenYe=new FenYe();
 
-        fenYe.setZongJiLuShu(manyTabSerch.dangYangZongJiLuShu());
+        fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         return fenYe;
     }
@@ -110,10 +111,10 @@ public class D1DaYangServiceFenLei {
 
     public CategoryNameCode getCommonder(){
      //其实只有一个元素
-        List<CategoryNameCode> commonders = manyTabSerch.getCommonder();
+        List<CategoryNameCode> commonders = cnst.manyTabSerch.getCommonder();
         if(NotEmpty.notEmpty(commonders)){
             CategoryNameCode categoryNameCode = commonders.get(0);
-            List<String> codeList=manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
+            List<String> codeList=cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
             categoryNameCode.setPrdCodeList(codeList);
             return categoryNameCode;
         }
@@ -127,13 +128,13 @@ public class D1DaYangServiceFenLei {
 
     public CategoryNameCode getChildAndSet(CategoryNameCode cnc){
         //找到所有的下级
-        List<CategoryNameCode> ccnc = manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
+        List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
         //用一个新的list替换所有下级集合 来 搜集   装好 code的  所有下级
         List<CategoryNameCode> ccncListChild=new ArrayList<>();
         if(NotEmpty.notEmpty(ccnc)){
             //给所有的下级添加货品名字
             for(CategoryNameCode c :ccnc){
-                List<String> codeList=manyTabSerch.getCodeList(c.getIdxNo());
+                List<String> codeList=cnst.manyTabSerch.getCodeList(c.getIdxNo());
                 c.setPrdCodeList(codeList);
                 ccncListChild.add(c);
             }
