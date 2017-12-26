@@ -2655,6 +2655,146 @@ public class PrdtSampExample {
             addCriterion("buyerDesc not between", value1, value2, "buyerdesc");
             return (Criteria) this;
         }
+
+        public Criteria andPrdNoIsNull() {
+            addCriterion("prd_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoIsNotNull() {
+            addCriterion("prd_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoEqualTo(String value) {
+            addCriterion("prd_no =", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoNotEqualTo(String value) {
+            addCriterion("prd_no <>", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoGreaterThan(String value) {
+            addCriterion("prd_no >", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoGreaterThanOrEqualTo(String value) {
+            addCriterion("prd_no >=", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoLessThan(String value) {
+            addCriterion("prd_no <", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoLessThanOrEqualTo(String value) {
+            addCriterion("prd_no <=", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoLike(String value) {
+            addCriterion("prd_no like", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoNotLike(String value) {
+            addCriterion("prd_no not like", value, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoIn(List<String> values) {
+            addCriterion("prd_no in", values, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoNotIn(List<String> values) {
+            addCriterion("prd_no not in", values, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoBetween(String value1, String value2) {
+            addCriterion("prd_no between", value1, value2, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrdNoNotBetween(String value1, String value2) {
+            addCriterion("prd_no not between", value1, value2, "prdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescIsNull() {
+            addCriterion("saleManDesc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescIsNotNull() {
+            addCriterion("saleManDesc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescEqualTo(String value) {
+            addCriterion("saleManDesc =", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescNotEqualTo(String value) {
+            addCriterion("saleManDesc <>", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescGreaterThan(String value) {
+            addCriterion("saleManDesc >", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescGreaterThanOrEqualTo(String value) {
+            addCriterion("saleManDesc >=", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescLessThan(String value) {
+            addCriterion("saleManDesc <", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescLessThanOrEqualTo(String value) {
+            addCriterion("saleManDesc <=", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescLike(String value) {
+            addCriterion("saleManDesc like", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescNotLike(String value) {
+            addCriterion("saleManDesc not like", value, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescIn(List<String> values) {
+            addCriterion("saleManDesc in", values, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescNotIn(List<String> values) {
+            addCriterion("saleManDesc not in", values, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescBetween(String value1, String value2) {
+            addCriterion("saleManDesc between", value1, value2, "salemandesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalemandescNotBetween(String value1, String value2) {
+            addCriterion("saleManDesc not between", value1, value2, "salemandesc");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -95,5 +95,10 @@ public class PrdtSamp0 {
     protected BigDecimal financelittleorderprice;
 //采购描述
     protected String buyerdesc;
+    //货号
+    protected String prdNo;
+
+    //销售描述
+    protected String salemandesc;
 
 }

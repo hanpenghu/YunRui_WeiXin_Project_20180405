@@ -40,6 +40,8 @@
     <result column="financeModelCost" jdbcType="NUMERIC" property="financemodelcost" />
     <result column="financeLittleOrderPrice" jdbcType="NUMERIC" property="financelittleorderprice" />
     <result column="buyerDesc" jdbcType="VARCHAR" property="buyerdesc" />
+    <result column="prd_no" jdbcType="VARCHAR" property="prdNo" />
+    <result column="saleManDesc" jdbcType="VARCHAR" property="salemandesc" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -105,7 +107,7 @@
     insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, 
     unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice, 
     modelCostInvoiceNo, financeStartSellCount, financeModelCost, financeLittleOrderPrice, 
-    buyerDesc
+    buyerDesc, prd_no, saleManDesc
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -151,7 +153,8 @@
       modelCost, estimatePrice, littleOrderPrice, 
       modelCostInvoiceNo, financeStartSellCount, 
       financeModelCost, financeLittleOrderPrice, 
-      buyerDesc)
+      buyerDesc, prd_no, saleManDesc
+      )
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -165,7 +168,8 @@
       #{modelcost,jdbcType=NUMERIC}, #{estimateprice,jdbcType=NUMERIC}, #{littleorderprice,jdbcType=NUMERIC}, 
       #{modelcostinvoiceno,jdbcType=VARCHAR}, #{financestartsellcount,jdbcType=NUMERIC}, 
       #{financemodelcost,jdbcType=NUMERIC}, #{financelittleorderprice,jdbcType=NUMERIC}, 
-      #{buyerdesc,jdbcType=VARCHAR})
+      #{buyerdesc,jdbcType=VARCHAR}, #{prdNo,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -284,6 +288,12 @@
       <if test="buyerdesc != null">
         buyerDesc,
       </if>
+      <if test="prdNo != null">
+        prd_no,
+      </if>
+      <if test="salemandesc != null">
+        saleManDesc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -399,6 +409,12 @@
       </if>
       <if test="buyerdesc != null">
         #{buyerdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="prdNo != null">
+        #{prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salemandesc != null">
+        #{salemandesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -525,6 +541,12 @@
       <if test="record.buyerdesc != null">
         buyerDesc = #{record.buyerdesc,jdbcType=VARCHAR},
       </if>
+      <if test="record.prdNo != null">
+        prd_no = #{record.prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salemandesc != null">
+        saleManDesc = #{record.salemandesc,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -569,7 +591,9 @@
       financeStartSellCount = #{record.financestartsellcount,jdbcType=NUMERIC},
       financeModelCost = #{record.financemodelcost,jdbcType=NUMERIC},
       financeLittleOrderPrice = #{record.financelittleorderprice,jdbcType=NUMERIC},
-      buyerDesc = #{record.buyerdesc,jdbcType=VARCHAR}
+      buyerDesc = #{record.buyerdesc,jdbcType=VARCHAR},
+      prd_no = #{record.prdNo,jdbcType=VARCHAR},
+      saleManDesc = #{record.salemandesc,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -688,6 +712,12 @@
       <if test="buyerdesc != null">
         buyerDesc = #{buyerdesc,jdbcType=VARCHAR},
       </if>
+      <if test="prdNo != null">
+        prd_no = #{prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salemandesc != null">
+        saleManDesc = #{salemandesc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -729,7 +759,9 @@
       financeStartSellCount = #{financestartsellcount,jdbcType=NUMERIC},
       financeModelCost = #{financemodelcost,jdbcType=NUMERIC},
       financeLittleOrderPrice = #{financelittleorderprice,jdbcType=NUMERIC},
-      buyerDesc = #{buyerdesc,jdbcType=VARCHAR}
+      buyerDesc = #{buyerdesc,jdbcType=VARCHAR},
+      prd_no = #{prdNo,jdbcType=VARCHAR},
+      saleManDesc = #{salemandesc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
