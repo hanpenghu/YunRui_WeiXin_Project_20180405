@@ -211,9 +211,9 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         if(attachList!=null&&attachList.size()>0){
             for(MultipartFile file:attachList){
                 if(file!=null){
-                    if(file.getSize()>(20*1024*1024)){
+                    if(file.getSize()>(100*1024*1024)){
                         return MessageGenerate.generateMessage("文件大小超过限制", "文件大小超过限制",
-                                "上传的单个文件已经超过20M", "", "41");
+                                "上传的单个文件已经超过100M", "", "41");
                     }
                 }
             }

@@ -84,7 +84,7 @@ public class PrdtSamp0 {
 
      protected BigDecimal estimateprice;//预估价
 
-     protected BigDecimal littleorderprice;//财务小单费
+     protected BigDecimal littleorderprice;//小单费
 
     protected String modelcostinvoiceno;//模具费用发票号
     //财务起订量
@@ -100,5 +100,7 @@ public class PrdtSamp0 {
 
     //销售描述
     protected String salemandesc;
+    //停用时间
+    private Date stopusedate;
 
 }

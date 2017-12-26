@@ -42,6 +42,7 @@
     <result column="buyerDesc" jdbcType="VARCHAR" property="buyerdesc" />
     <result column="prd_no" jdbcType="VARCHAR" property="prdNo" />
     <result column="saleManDesc" jdbcType="VARCHAR" property="salemandesc" />
+    <result column="stopUseDate" jdbcType="TIMESTAMP" property="stopusedate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -107,7 +108,7 @@
     insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, 
     unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice, 
     modelCostInvoiceNo, financeStartSellCount, financeModelCost, financeLittleOrderPrice, 
-    buyerDesc, prd_no, saleManDesc
+    buyerDesc, prd_no, saleManDesc, stopUseDate
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -153,8 +154,8 @@
       modelCost, estimatePrice, littleOrderPrice, 
       modelCostInvoiceNo, financeStartSellCount, 
       financeModelCost, financeLittleOrderPrice, 
-      buyerDesc, prd_no, saleManDesc
-      )
+      buyerDesc, prd_no, saleManDesc, 
+      stopUseDate)
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -168,8 +169,8 @@
       #{modelcost,jdbcType=NUMERIC}, #{estimateprice,jdbcType=NUMERIC}, #{littleorderprice,jdbcType=NUMERIC}, 
       #{modelcostinvoiceno,jdbcType=VARCHAR}, #{financestartsellcount,jdbcType=NUMERIC}, 
       #{financemodelcost,jdbcType=NUMERIC}, #{financelittleorderprice,jdbcType=NUMERIC}, 
-      #{buyerdesc,jdbcType=VARCHAR}, #{prdNo,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}
-      )
+      #{buyerdesc,jdbcType=VARCHAR}, #{prdNo,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}, 
+      #{stopusedate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -294,6 +295,9 @@
       <if test="salemandesc != null">
         saleManDesc,
       </if>
+      <if test="stopusedate != null">
+        stopUseDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -415,6 +419,9 @@
       </if>
       <if test="salemandesc != null">
         #{salemandesc,jdbcType=VARCHAR},
+      </if>
+      <if test="stopusedate != null">
+        #{stopusedate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -547,6 +554,9 @@
       <if test="record.salemandesc != null">
         saleManDesc = #{record.salemandesc,jdbcType=VARCHAR},
       </if>
+      <if test="record.stopusedate != null">
+        stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -593,7 +603,8 @@
       financeLittleOrderPrice = #{record.financelittleorderprice,jdbcType=NUMERIC},
       buyerDesc = #{record.buyerdesc,jdbcType=VARCHAR},
       prd_no = #{record.prdNo,jdbcType=VARCHAR},
-      saleManDesc = #{record.salemandesc,jdbcType=VARCHAR}
+      saleManDesc = #{record.salemandesc,jdbcType=VARCHAR},
+      stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -718,6 +729,9 @@
       <if test="salemandesc != null">
         saleManDesc = #{salemandesc,jdbcType=VARCHAR},
       </if>
+      <if test="stopusedate != null">
+        stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -761,7 +775,8 @@
       financeLittleOrderPrice = #{financelittleorderprice,jdbcType=NUMERIC},
       buyerDesc = #{buyerdesc,jdbcType=VARCHAR},
       prd_no = #{prdNo,jdbcType=VARCHAR},
-      saleManDesc = #{salemandesc,jdbcType=VARCHAR}
+      saleManDesc = #{salemandesc,jdbcType=VARCHAR},
+      stopUseDate = #{stopusedate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

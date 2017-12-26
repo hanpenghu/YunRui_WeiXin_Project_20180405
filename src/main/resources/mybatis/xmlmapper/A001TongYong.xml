@@ -71,7 +71,7 @@
                         </choose>
 
 
-        OR
+        AND
             ---产品分类
                         idx_No=
                         <choose>

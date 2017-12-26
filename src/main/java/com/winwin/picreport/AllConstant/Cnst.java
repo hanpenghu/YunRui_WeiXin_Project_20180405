@@ -3,6 +3,7 @@ package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
+import com.winwin.picreport.Ddao.reportxmlmapper.PrdtMapper;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
@@ -61,6 +62,8 @@ public class Cnst {
     public  D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
     @Autowired
     public PrdtSampMapper prdtSampMapper;
+    @Autowired
+    public PrdtMapper prdtMapper;
     @Autowired
     public D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
 

@@ -29,6 +29,7 @@ public interface PrdtSampMapper {
     int updateByPrimaryKeySelective(PrdtSamp record);
 
     int updateByPrimaryKey(PrdtSamp record);
+
     @Update("update prdt_samp set thum=#{newthums} where thum like #{thumInDataBase}")
     int updateThumColumn(@Param("thumInDataBase") String thumInDataBase, @Param("newthums") String newthums);
 

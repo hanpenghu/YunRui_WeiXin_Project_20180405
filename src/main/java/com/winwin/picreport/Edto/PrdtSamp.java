@@ -9,26 +9,30 @@ import java.util.List;
 
 //PrdtSamp0是原汁原味的自动生成的,  PrdtSamp是添加的功能
 public class PrdtSamp extends PrdtSamp0{
+    //销售价格列表
+    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+    //采购价格列表
+    List<UpDefMy>upDefMyListByer=new ArrayList<>();
 
-    private String sampMakeStamp;//打样时间戳//传给我这个
-    private String sampSendStamp;//样品寄出时间戳//传给我这个
+    protected String sampMakeStamp;//打样时间戳//传给我这个
+    protected String sampSendStamp;//样品寄出时间戳//传给我这个
 
     //这个是转后的时间String格式,专门给徐勇用的在前端显示的
-    private String sampMakeStr;//给徐勇用
-    private String sampSendStr;//给徐勇用
+    protected String sampMakeStr;//给徐勇用
+    protected String sampSendStr;//给徐勇用
 
 
     //给徐勇显示在前端用的该条记录插入时间
-    private String insertdateStr;
+    protected String insertdateStr;
 
 
     //该条记录的所有缩略图路径的集合,用上面的dirUrl来拼接
-    private List<String> thumUrlList=new ArrayList<>();
+    protected List<String> thumUrlList=new ArrayList<>();
     //该条记录的所有附件路径的集合,用上面的dirUrl来拼接
-    private List<String> attachUrlList=new ArrayList<>();
+    protected List<String> attachUrlList=new ArrayList<>();
 
     //服务器的和图片所在的ip和域名,用于拼接附件和图片的地址
-    private String dirUrl="http://10.0.3.101:8070/";
+    protected String dirUrl="http://10.0.3.101:8070/";
     //构造函数初始化网址
     public PrdtSamp() throws ParseException {
         this.dirUrl= ConstantInit.getDirUrl001();
@@ -220,9 +224,21 @@ public class PrdtSamp extends PrdtSamp0{
         return this;
     }
 
+    public List<UpDefMy> getUpDefMyListSale() {
+        return upDefMyListSale;
+    }
 
+    public PrdtSamp setUpDefMyListSale(List<UpDefMy> upDefMyListSale) {
+        this.upDefMyListSale = upDefMyListSale;
+        return this;
+    }
 
+    public List<UpDefMy> getUpDefMyListByer() {
+        return upDefMyListByer;
+    }
 
-
-
+    public PrdtSamp setUpDefMyListByer(List<UpDefMy> upDefMyListByer) {
+        this.upDefMyListByer = upDefMyListByer;
+        return this;
+    }
 }

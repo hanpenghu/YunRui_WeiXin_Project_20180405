@@ -1,9 +1,13 @@
 package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
+import com.winwin.picreport.Edto.Prdt;
+import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +20,7 @@ import java.util.UUID;
 @Service
 public class D1DaYangService {
     @Autowired
-    private PrdtSampMapper prdtSampMapper;
+    private Cnst cnst;
     public List<Msg> ImageUpLoadAndDataSave001(String projectPath, MultipartFile thum,  MultipartFile attach, HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
         try {
 
@@ -209,7 +213,7 @@ public class D1DaYangService {
         try {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
-            ii = prdtSampMapper.insert(prdtSamp);
+            ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");
             return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
@@ -217,4 +221,206 @@ public class D1DaYangService {
         list = new MessageGenerate().generateMessage(""+ii+"","产品打样新增"+ii+"条数据","产品打样新增"+ii+"条数据","","37");
         return list;
     }
+
+
+
+    /**
+     *判断前端传过来的要存的prdtSamp里面的prdCode
+     * 是否在表prdt中有一个name字段对应_对应就找到第一个prd_no用_
+     * 不对应就到idx表找到对应的分类_然后找到idx分类的最大no,然后加一流水到prdt中插入一项
+     * */
+
+    public PrdtSamp prdtSampObjGetPrdNo(PrdtSamp prdtSamp){
+        //得到前端传过来的prdt_code//在prdt里面其实对应的name
+        String prdCode = prdtSamp.getPrdCode();
+        //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
+        String prdtNo=cnst.a001TongYongMapper.selectTop1PrdtNo(prdCode);
+        if(NotEmpty.notEmpty(prdtNo)){
+            //如果不是空的,我们就要把这个prdtNo放到prdtSamp里面,将来进行插入prdt_samp表用
+            prdtSamp.setPrdNo(prdtNo);
+        }else{
+            //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
+            //通过prd_code(name)到表idx中找最后一个流水
+//            cnst.a001TongYongMapper.
+        }
+
+        return prdtSamp;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

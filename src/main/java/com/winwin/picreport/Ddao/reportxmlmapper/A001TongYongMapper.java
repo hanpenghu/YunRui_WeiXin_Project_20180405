@@ -2,6 +2,7 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 
 
 import com.winwin.picreport.Edto.LoginInfo;
+import com.winwin.picreport.Edto.Prdt;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import org.apache.ibatis.annotations.Insert;
@@ -144,4 +145,7 @@ public interface A001TongYongMapper {
 
    List<PrdtSamp> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
+
+   @Select("Select top 1 prd_no from prdt where name=#{prdCode}")
+   String selectTop1PrdtNo(@Param("prdCode") String prdCode);
 }

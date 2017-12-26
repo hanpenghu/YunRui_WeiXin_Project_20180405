@@ -2795,6 +2795,66 @@ public class PrdtSampExample {
             addCriterion("saleManDesc not between", value1, value2, "salemandesc");
             return (Criteria) this;
         }
+
+        public Criteria andStopusedateIsNull() {
+            addCriterion("stopUseDate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateIsNotNull() {
+            addCriterion("stopUseDate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateEqualTo(Date value) {
+            addCriterion("stopUseDate =", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateNotEqualTo(Date value) {
+            addCriterion("stopUseDate <>", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateGreaterThan(Date value) {
+            addCriterion("stopUseDate >", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateGreaterThanOrEqualTo(Date value) {
+            addCriterion("stopUseDate >=", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateLessThan(Date value) {
+            addCriterion("stopUseDate <", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateLessThanOrEqualTo(Date value) {
+            addCriterion("stopUseDate <=", value, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateIn(List<Date> values) {
+            addCriterion("stopUseDate in", values, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateNotIn(List<Date> values) {
+            addCriterion("stopUseDate not in", values, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateBetween(Date value1, Date value2) {
+            addCriterion("stopUseDate between", value1, value2, "stopusedate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopusedateNotBetween(Date value1, Date value2) {
+            addCriterion("stopUseDate not between", value1, value2, "stopusedate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
