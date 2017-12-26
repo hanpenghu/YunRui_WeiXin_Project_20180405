@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrdtSamp0 {
-    //33个字段
+
      protected String id;//一条录入记录的唯一标识符号
 
      protected String prdCode;//产品编码
@@ -66,9 +66,9 @@ public class PrdtSamp0 {
 
      protected Integer isconfirm;//是否确认，1代表已经确认  0代表未确认
 
-     protected String category;//未知
+     protected String category;//未知//老郑让弄得
 
-     protected String teamname;//未知
+     protected String teamname;//未知//老郑让弄得
 
      protected String confirmrem;//确认备注
 
@@ -80,11 +80,20 @@ public class PrdtSamp0 {
 
      protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部
 
-     protected BigDecimal modelcost;//财务模具费
+     protected BigDecimal modelcost;//模具费
 
      protected BigDecimal estimateprice;//预估价
 
      protected BigDecimal littleorderprice;//财务小单费
 
+    protected String modelcostinvoiceno;//模具费用发票号
+    //财务起订量
+    protected BigDecimal financestartsellcount;
+//财务模具费
+    protected BigDecimal financemodelcost;
+//财务小单费
+    protected BigDecimal financelittleorderprice;
+//采购描述
+    protected String buyerdesc;
 
 }

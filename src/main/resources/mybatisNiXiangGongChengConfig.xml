@@ -79,7 +79,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <table tableName="PRDT_SAMP"></table>
+        <table tableName="000000000000"></table>
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->
         <!--<table tableName="mf_ic"></table>
         <table tableName="tf_ic"></table>-->

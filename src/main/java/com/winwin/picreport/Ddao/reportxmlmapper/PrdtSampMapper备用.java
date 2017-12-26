@@ -2,12 +2,13 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSampExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.util.List;
-
 public interface PrdtSampMapper备用 {
+
     long countByExample(PrdtSampExample example);
 
     int deleteByExample(PrdtSampExample example);
@@ -35,7 +36,10 @@ public interface PrdtSampMapper备用 {
 
     @Update("update prdt_samp set attach=#{newattachs} where attach like #{attachInDataBase}")
     int updateAttachColumn(@Param("attachInDataBase") String attachInDataBase, @Param("newattachs") String newattachs);
-
-
-
+    //test PageBean
+    @Select("Select count(id) from prdt_Samp")
+    int countItem();
+    //testPageBean
+    @Select("Select * from prdt_Samp order by id DESC")
+    List<PrdtSamp> findAll();
 }

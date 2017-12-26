@@ -13,7 +13,9 @@ public class FenYe {
 	private Integer zongYeShu;
 	private Integer zongJiLuShu;
 	private PrdtSamp1 prdtSamp1;
-
+	//角色代码,0代表董事长,1表示普通用户,2表示业务员,3表示采购 4,表示销售 5表示财务
+	//具体查看RoleCnst
+	private Integer role;
 
 	public PrdtSamp1 getPrdtSamp1() {
 		return prdtSamp1;
@@ -74,14 +76,26 @@ public class FenYe {
 	}
 
 
+	public Integer getRole() {
+		return role;
+	}
 
+	public FenYe setRole(Integer role) {
+		this.role = role;
+		return this;
+	}
 
 	@Override
 	public String toString() {
-		return "FenYe [dangQianYe=" + dangQianYe + ", meiYeXianShiShu=" + meiYeXianShiShu + ", zongYeShu=" + zongYeShu
-				+ ", zongJiLuShu=" + zongJiLuShu + "]";
+		final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.FenYe{");
+		sb.append("prdtSampList=").append(prdtSampList);
+		sb.append(", dangQianYe=").append(dangQianYe);
+		sb.append(", meiYeXianShiShu=").append(meiYeXianShiShu);
+		sb.append(", zongYeShu=").append(zongYeShu);
+		sb.append(", zongJiLuShu=").append(zongJiLuShu);
+		sb.append(", prdtSamp1=").append(prdtSamp1);
+		sb.append(", role=").append(role);
+		sb.append('}');
+		return sb.toString();
 	}
-
-
-
 }

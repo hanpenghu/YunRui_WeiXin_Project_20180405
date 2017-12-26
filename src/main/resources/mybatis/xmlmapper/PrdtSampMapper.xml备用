@@ -22,19 +22,19 @@
     <result column="thum" jdbcType="VARCHAR" property="thum" />
     <result column="attach" jdbcType="VARCHAR" property="attach" />
     <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate" />
-    <!--下面是后增加的3个字段2017年12月12日23:40:42 -->
-    <result column="confirmMan" jdbcType="VARCHAR" property="confirmMan" />
-    <result column="confirmTimeStr" jdbcType="VARCHAR" property="confirmTimeStr" />
-    <result column="isConfirm" jdbcType="INTEGER" property="isConfirm" />
-    <result column="confirmRem" jdbcType="VARCHAR" property="confirmRem" />
-    <!-- 2017_12_13   weekday(3)   13:22:26老郑再让增加2个字段保存起来-->
-    <result column="TeamName" jdbcType="VARCHAR" property="TeamName" />
-    <result column="Category" jdbcType="VARCHAR" property="Category" />
-
+    <result column="confirmMan" jdbcType="VARCHAR" property="confirmman" />
+    <result column="confirmTimeStr" jdbcType="VARCHAR" property="confirmtimestr" />
+    <result column="isConfirm" jdbcType="INTEGER" property="isconfirm" />
+    <result column="Category" jdbcType="VARCHAR" property="category" />
+    <result column="TeamName" jdbcType="VARCHAR" property="teamname" />
+    <result column="confirmRem" jdbcType="VARCHAR" property="confirmrem" />
     <result column="unit" jdbcType="VARCHAR" property="unit" />
-
-
-
+    <result column="businessDesc" jdbcType="VARCHAR" property="businessdesc" />
+    <result column="financeDesc" jdbcType="VARCHAR" property="financedesc" />
+    <result column="startSellCount" jdbcType="NUMERIC" property="startsellcount" />
+    <result column="modelCost" jdbcType="NUMERIC" property="modelcost" />
+    <result column="estimatePrice" jdbcType="NUMERIC" property="estimateprice" />
+    <result column="littleOrderPrice" jdbcType="NUMERIC" property="littleorderprice" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -95,12 +95,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, prd_code, idx_name, idx_no, mark_name, mark_no,
-    colour, size, sal_name, sal_no,
-    cus_no, cus_name, isFenJie, samp_make, samp_send,
-     samp_requ, samp_desc, thum, attach, insertdate
-    ,confirmMan,confirmTimeStr,isConfirm------后来加的三个字段
-    ,Category,TeamName
+    id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, 
+    cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, 
+    insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, 
+    unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -139,9 +137,11 @@
       sal_no, cus_no, cus_name, 
       isFenJie, samp_make, samp_send, 
       samp_requ, samp_desc, thum, 
-      attach
-       ,confirmMan,confirmTimeStr,isConfirm------后来加的三个字段
-    ,Category,TeamName
+      attach,insertdate, confirmMan,
+      confirmTimeStr, isConfirm, Category, 
+      TeamName, confirmRem, unit, 
+      businessDesc, financeDesc, startSellCount, 
+      modelCost, estimatePrice, littleOrderPrice
       )
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
@@ -149,10 +149,11 @@
       #{salNo,jdbcType=VARCHAR}, #{cusNo,jdbcType=VARCHAR}, #{cusName,jdbcType=VARCHAR}, 
       #{isfenjie,jdbcType=VARCHAR}, #{sampMake,jdbcType=TIMESTAMP}, #{sampSend,jdbcType=TIMESTAMP}, 
       #{sampRequ,jdbcType=VARCHAR}, #{sampDesc,jdbcType=VARCHAR}, #{thum,jdbcType=VARCHAR}, 
-      #{attach,jdbcType=VARCHAR}
-      , #{confirmMan,jdbcType=VARCHAR}, #{confirmTimeStr,jdbcType=VARCHAR}, #{isConfirm,jdbcType=INTEGER}
-      , #{Category,jdbcType=VARCHAR}, #{TeamName,jdbcType=VARCHAR}
-
+      #{attach,jdbcType=VARCHAR}, #{insertdate,jdbcType=TIMESTAMP}, #{confirmman,jdbcType=VARCHAR}, 
+      #{confirmtimestr,jdbcType=VARCHAR}, #{isconfirm,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
+      #{teamname,jdbcType=VARCHAR}, #{confirmrem,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{businessdesc,jdbcType=VARCHAR}, #{financedesc,jdbcType=VARCHAR}, #{startsellcount,jdbcType=NUMERIC}, 
+      #{modelcost,jdbcType=NUMERIC}, #{estimateprice,jdbcType=NUMERIC}, #{littleorderprice,jdbcType=NUMERIC}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
@@ -215,6 +216,48 @@
       <if test="attach != null">
         attach,
       </if>
+      <if test="insertdate != null">
+        insertdate,
+      </if>
+      <if test="confirmman != null">
+        confirmMan,
+      </if>
+      <if test="confirmtimestr != null">
+        confirmTimeStr,
+      </if>
+      <if test="isconfirm != null">
+        isConfirm,
+      </if>
+      <if test="category != null">
+        Category,
+      </if>
+      <if test="teamname != null">
+        TeamName,
+      </if>
+      <if test="confirmrem != null">
+        confirmRem,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="businessdesc != null">
+        businessDesc,
+      </if>
+      <if test="financedesc != null">
+        financeDesc,
+      </if>
+      <if test="startsellcount != null">
+        startSellCount,
+      </if>
+      <if test="modelcost != null">
+        modelCost,
+      </if>
+      <if test="estimateprice != null">
+        estimatePrice,
+      </if>
+      <if test="littleorderprice != null">
+        littleOrderPrice,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -273,6 +316,48 @@
       </if>
       <if test="attach != null">
         #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="insertdate != null">
+        #{insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmman != null">
+        #{confirmman,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtimestr != null">
+        #{confirmtimestr,jdbcType=VARCHAR},
+      </if>
+      <if test="isconfirm != null">
+        #{isconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="teamname != null">
+        #{teamname,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmrem != null">
+        #{confirmrem,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="businessdesc != null">
+        #{businessdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="financedesc != null">
+        #{financedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startsellcount != null">
+        #{startsellcount,jdbcType=NUMERIC},
+      </if>
+      <if test="modelcost != null">
+        #{modelcost,jdbcType=NUMERIC},
+      </if>
+      <if test="estimateprice != null">
+        #{estimateprice,jdbcType=NUMERIC},
+      </if>
+      <if test="littleorderprice != null">
+        #{littleorderprice,jdbcType=NUMERIC},
       </if>
     </trim>
   </insert>
@@ -342,6 +427,49 @@
       <if test="record.attach != null">
         attach = #{record.attach,jdbcType=VARCHAR},
       </if>
+      <if test="record.insertdate != null">
+        insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.confirmman != null">
+        confirmMan = #{record.confirmman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmtimestr != null">
+        confirmTimeStr = #{record.confirmtimestr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isconfirm != null">
+        isConfirm = #{record.isconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null">
+        Category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamname != null">
+        TeamName = #{record.teamname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmrem != null">
+        confirmRem = #{record.confirmrem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessdesc != null">
+        businessDesc = #{record.businessdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financedesc != null">
+        financeDesc = #{record.financedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startsellcount != null">
+        startSellCount = #{record.startsellcount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.modelcost != null">
+        modelCost = #{record.modelcost,jdbcType=NUMERIC},
+      </if>
+      <if test="record.estimateprice != null">
+        estimatePrice = #{record.estimateprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.littleorderprice != null">
+        littleOrderPrice = #{record.littleorderprice,jdbcType=NUMERIC},
+      </if>
+      insertDate=insertDate
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -367,7 +495,21 @@
       samp_requ = #{record.sampRequ,jdbcType=VARCHAR},
       samp_desc = #{record.sampDesc,jdbcType=VARCHAR},
       thum = #{record.thum,jdbcType=VARCHAR},
-      attach = #{record.attach,jdbcType=VARCHAR}
+      attach = #{record.attach,jdbcType=VARCHAR},
+      insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
+      confirmMan = #{record.confirmman,jdbcType=VARCHAR},
+      confirmTimeStr = #{record.confirmtimestr,jdbcType=VARCHAR},
+      isConfirm = #{record.isconfirm,jdbcType=INTEGER},
+      Category = #{record.category,jdbcType=VARCHAR},
+      TeamName = #{record.teamname,jdbcType=VARCHAR},
+      confirmRem = #{record.confirmrem,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      businessDesc = #{record.businessdesc,jdbcType=VARCHAR},
+      financeDesc = #{record.financedesc,jdbcType=VARCHAR},
+      startSellCount = #{record.startsellcount,jdbcType=NUMERIC},
+      modelCost = #{record.modelcost,jdbcType=NUMERIC},
+      estimatePrice = #{record.estimateprice,jdbcType=NUMERIC},
+      littleOrderPrice = #{record.littleorderprice,jdbcType=NUMERIC}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -429,17 +571,48 @@
       <if test="attach != null">
         attach = #{attach,jdbcType=VARCHAR},
       </if>
-
-      <if test="attach != null">
-        attach = #{attach,jdbcType=VARCHAR},
+      <if test="insertdate != null">
+        insertdate = #{insertdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="attach != null">
-        attach = #{attach,jdbcType=VARCHAR},
+      <if test="confirmman != null">
+        confirmMan = #{confirmman,jdbcType=VARCHAR},
       </if>
-      <if test="attach != null">
-        attach = #{attach,jdbcType=VARCHAR},
+      <if test="confirmtimestr != null">
+        confirmTimeStr = #{confirmtimestr,jdbcType=VARCHAR},
       </if>
-      insertdate=insertdate
+      <if test="isconfirm != null">
+        isConfirm = #{isconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        Category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="teamname != null">
+        TeamName = #{teamname,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmrem != null">
+        confirmRem = #{confirmrem,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="businessdesc != null">
+        businessDesc = #{businessdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="financedesc != null">
+        financeDesc = #{financedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startsellcount != null">
+        startSellCount = #{startsellcount,jdbcType=NUMERIC},
+      </if>
+      <if test="modelcost != null">
+        modelCost = #{modelcost,jdbcType=NUMERIC},
+      </if>
+      <if test="estimateprice != null">
+        estimatePrice = #{estimateprice,jdbcType=NUMERIC},
+      </if>
+      <if test="littleorderprice != null">
+        littleOrderPrice = #{littleorderprice,jdbcType=NUMERIC},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -462,11 +635,21 @@
       samp_requ = #{sampRequ,jdbcType=VARCHAR},
       samp_desc = #{sampDesc,jdbcType=VARCHAR},
       thum = #{thum,jdbcType=VARCHAR},
-      attach = #{attach,jdbcType=VARCHAR}
+      attach = #{attach,jdbcType=VARCHAR},
+      insertdate = #{insertdate,jdbcType=TIMESTAMP},
+      confirmMan = #{confirmman,jdbcType=VARCHAR},
+      confirmTimeStr = #{confirmtimestr,jdbcType=VARCHAR},
+      isConfirm = #{isconfirm,jdbcType=INTEGER},
+      Category = #{category,jdbcType=VARCHAR},
+      TeamName = #{teamname,jdbcType=VARCHAR},
+      confirmRem = #{confirmrem,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      businessDesc = #{businessdesc,jdbcType=VARCHAR},
+      financeDesc = #{financedesc,jdbcType=VARCHAR},
+      startSellCount = #{startsellcount,jdbcType=NUMERIC},
+      modelCost = #{modelcost,jdbcType=NUMERIC},
+      estimatePrice = #{estimateprice,jdbcType=NUMERIC},
+      littleOrderPrice = #{littleorderprice,jdbcType=NUMERIC}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
-
-
-
 </mapper>
