@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.UpDefMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.UpDef">
+    <id column="PRICE_ID" jdbcType="VARCHAR" property="priceId" />
+    <id column="CUS_NO" jdbcType="VARCHAR" property="cusNo" />
+    <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
+    <id column="PRD_NO" jdbcType="VARCHAR" property="prdNo" />
+    <id column="PRD_MARK" jdbcType="VARCHAR" property="prdMark" />
+    <id column="BZ_KND" jdbcType="VARCHAR" property="bzKnd" />
+    <id column="KND" jdbcType="VARCHAR" property="knd" />
+    <id column="QTY" jdbcType="NUMERIC" property="qty" />
+    <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
+    <id column="BIL_TYPE" jdbcType="VARCHAR" property="bilType" />
+    <id column="SUP_PRD_NO" jdbcType="VARCHAR" property="supPrdNo" />
+    <id column="CUS_ARE" jdbcType="VARCHAR" property="cusAre" />
+    <result column="UP" jdbcType="NUMERIC" property="up" />
+    <result column="DIS_CNT" jdbcType="NUMERIC" property="disCnt" />
+    <result column="F_DD" jdbcType="TIMESTAMP" property="fDd" />
+    <result column="E_DD" jdbcType="TIMESTAMP" property="eDd" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="QTY_FREE" jdbcType="NUMERIC" property="qtyFree" />
+    <result column="REM" jdbcType="VARCHAR" property="rem" />
+    <result column="CHK_MAN" jdbcType="VARCHAR" property="chkMan" />
+    <result column="CHK_DATE" jdbcType="TIMESTAMP" property="chkDate" />
+    <result column="USR" jdbcType="VARCHAR" property="usr" />
+    <result column="SYS_DATE" jdbcType="TIMESTAMP" property="sysDate" />
+    <result column="HJ_NO" jdbcType="VARCHAR" property="hjNo" />
+    <result column="PRE_ITM" jdbcType="INTEGER" property="preItm" />
+    <result column="RTO_BJST" jdbcType="NUMERIC" property="rtoBjst" />
+    <result column="ZD_FLAG" jdbcType="VARCHAR" property="zdFlag" />
+    <result column="OLEFIELD" jdbcType="VARCHAR" property="olefield" />
+    <result column="UP_NET" jdbcType="NUMERIC" property="upNet" />
+    <result column="FLAG_RK_DD" jdbcType="VARCHAR" property="flagRkDd" />
+    <result column="PRM_NO" jdbcType="VARCHAR" property="prmNo" />
+    <result column="AMT_DIS_CNT" jdbcType="NUMERIC" property="amtDisCnt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PRICE_ID, CUS_NO, CUR_ID, PRD_NO, PRD_MARK, BZ_KND, KND, QTY, S_DD, BIL_TYPE, SUP_PRD_NO, 
+    CUS_ARE, UP, DIS_CNT, F_DD, E_DD, UNIT, QTY_FREE, REM, CHK_MAN, CHK_DATE, USR, SYS_DATE, 
+    HJ_NO, PRE_ITM, RTO_BJST, ZD_FLAG, OLEFIELD, UP_NET, FLAG_RK_DD, PRM_NO, AMT_DIS_CNT
+  </sql>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.UpDefExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UP_DEF
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.UpDefKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from UP_DEF
+    where PRICE_ID = #{priceId,jdbcType=VARCHAR}
+      and CUS_NO = #{cusNo,jdbcType=VARCHAR}
+      and CUR_ID = #{curId,jdbcType=VARCHAR}
+      and PRD_NO = #{prdNo,jdbcType=VARCHAR}
+      and PRD_MARK = #{prdMark,jdbcType=VARCHAR}
+      and BZ_KND = #{bzKnd,jdbcType=VARCHAR}
+      and KND = #{knd,jdbcType=VARCHAR}
+      and QTY = #{qty,jdbcType=NUMERIC}
+      and S_DD = #{sDd,jdbcType=TIMESTAMP}
+      and BIL_TYPE = #{bilType,jdbcType=VARCHAR}
+      and SUP_PRD_NO = #{supPrdNo,jdbcType=VARCHAR}
+      and CUS_ARE = #{cusAre,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.winwin.picreport.Edto.UpDefKey">
+    delete from UP_DEF
+    where PRICE_ID = #{priceId,jdbcType=VARCHAR}
+      and CUS_NO = #{cusNo,jdbcType=VARCHAR}
+      and CUR_ID = #{curId,jdbcType=VARCHAR}
+      and PRD_NO = #{prdNo,jdbcType=VARCHAR}
+      and PRD_MARK = #{prdMark,jdbcType=VARCHAR}
+      and BZ_KND = #{bzKnd,jdbcType=VARCHAR}
+      and KND = #{knd,jdbcType=VARCHAR}
+      and QTY = #{qty,jdbcType=NUMERIC}
+      and S_DD = #{sDd,jdbcType=TIMESTAMP}
+      and BIL_TYPE = #{bilType,jdbcType=VARCHAR}
+      and SUP_PRD_NO = #{supPrdNo,jdbcType=VARCHAR}
+      and CUS_ARE = #{cusAre,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.UpDefExample">
+    delete from UP_DEF
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.UpDef">
+    insert into UP_DEF (PRICE_ID, CUS_NO, CUR_ID, 
+      PRD_NO, PRD_MARK, BZ_KND, 
+      KND, QTY, S_DD, BIL_TYPE, 
+      SUP_PRD_NO, CUS_ARE, UP, 
+      DIS_CNT, F_DD, E_DD, 
+      UNIT, QTY_FREE, REM, 
+      CHK_MAN, CHK_DATE, USR, 
+      SYS_DATE, HJ_NO, PRE_ITM, 
+      RTO_BJST, ZD_FLAG, OLEFIELD, 
+      UP_NET, FLAG_RK_DD, PRM_NO, 
+      AMT_DIS_CNT)
+    values (#{priceId,jdbcType=VARCHAR}, #{cusNo,jdbcType=VARCHAR}, #{curId,jdbcType=VARCHAR}, 
+      #{prdNo,jdbcType=VARCHAR}, #{prdMark,jdbcType=VARCHAR}, #{bzKnd,jdbcType=VARCHAR}, 
+      #{knd,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{sDd,jdbcType=TIMESTAMP}, #{bilType,jdbcType=VARCHAR}, 
+      #{supPrdNo,jdbcType=VARCHAR}, #{cusAre,jdbcType=VARCHAR}, #{up,jdbcType=NUMERIC}, 
+      #{disCnt,jdbcType=NUMERIC}, #{fDd,jdbcType=TIMESTAMP}, #{eDd,jdbcType=TIMESTAMP}, 
+      #{unit,jdbcType=VARCHAR}, #{qtyFree,jdbcType=NUMERIC}, #{rem,jdbcType=VARCHAR}, 
+      #{chkMan,jdbcType=VARCHAR}, #{chkDate,jdbcType=TIMESTAMP}, #{usr,jdbcType=VARCHAR}, 
+      #{sysDate,jdbcType=TIMESTAMP}, #{hjNo,jdbcType=VARCHAR}, #{preItm,jdbcType=INTEGER}, 
+      #{rtoBjst,jdbcType=NUMERIC}, #{zdFlag,jdbcType=VARCHAR}, #{olefield,jdbcType=VARCHAR}, 
+      #{upNet,jdbcType=NUMERIC}, #{flagRkDd,jdbcType=VARCHAR}, #{prmNo,jdbcType=VARCHAR}, 
+      #{amtDisCnt,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.UpDef">
+    insert into UP_DEF
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        PRICE_ID,
+      </if>
+      <if test="cusNo != null">
+        CUS_NO,
+      </if>
+      <if test="curId != null">
+        CUR_ID,
+      </if>
+      <if test="prdNo != null">
+        PRD_NO,
+      </if>
+      <if test="prdMark != null">
+        PRD_MARK,
+      </if>
+      <if test="bzKnd != null">
+        BZ_KND,
+      </if>
+      <if test="knd != null">
+        KND,
+      </if>
+      <if test="qty != null">
+        QTY,
+      </if>
+      <if test="sDd != null">
+        S_DD,
+      </if>
+      <if test="bilType != null">
+        BIL_TYPE,
+      </if>
+      <if test="supPrdNo != null">
+        SUP_PRD_NO,
+      </if>
+      <if test="cusAre != null">
+        CUS_ARE,
+      </if>
+      <if test="up != null">
+        UP,
+      </if>
+      <if test="disCnt != null">
+        DIS_CNT,
+      </if>
+      <if test="fDd != null">
+        F_DD,
+      </if>
+      <if test="eDd != null">
+        E_DD,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="qtyFree != null">
+        QTY_FREE,
+      </if>
+      <if test="rem != null">
+        REM,
+      </if>
+      <if test="chkMan != null">
+        CHK_MAN,
+      </if>
+      <if test="chkDate != null">
+        CHK_DATE,
+      </if>
+      <if test="usr != null">
+        USR,
+      </if>
+      <if test="sysDate != null">
+        SYS_DATE,
+      </if>
+      <if test="hjNo != null">
+        HJ_NO,
+      </if>
+      <if test="preItm != null">
+        PRE_ITM,
+      </if>
+      <if test="rtoBjst != null">
+        RTO_BJST,
+      </if>
+      <if test="zdFlag != null">
+        ZD_FLAG,
+      </if>
+      <if test="olefield != null">
+        OLEFIELD,
+      </if>
+      <if test="upNet != null">
+        UP_NET,
+      </if>
+      <if test="flagRkDd != null">
+        FLAG_RK_DD,
+      </if>
+      <if test="prmNo != null">
+        PRM_NO,
+      </if>
+      <if test="amtDisCnt != null">
+        AMT_DIS_CNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        #{priceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNo != null">
+        #{cusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="curId != null">
+        #{curId,jdbcType=VARCHAR},
+      </if>
+      <if test="prdNo != null">
+        #{prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prdMark != null">
+        #{prdMark,jdbcType=VARCHAR},
+      </if>
+      <if test="bzKnd != null">
+        #{bzKnd,jdbcType=VARCHAR},
+      </if>
+      <if test="knd != null">
+        #{knd,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null">
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="sDd != null">
+        #{sDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bilType != null">
+        #{bilType,jdbcType=VARCHAR},
+      </if>
+      <if test="supPrdNo != null">
+        #{supPrdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAre != null">
+        #{cusAre,jdbcType=VARCHAR},
+      </if>
+      <if test="up != null">
+        #{up,jdbcType=NUMERIC},
+      </if>
+      <if test="disCnt != null">
+        #{disCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="fDd != null">
+        #{fDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eDd != null">
+        #{eDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyFree != null">
+        #{qtyFree,jdbcType=NUMERIC},
+      </if>
+      <if test="rem != null">
+        #{rem,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMan != null">
+        #{chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDate != null">
+        #{chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usr != null">
+        #{usr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDate != null">
+        #{sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hjNo != null">
+        #{hjNo,jdbcType=VARCHAR},
+      </if>
+      <if test="preItm != null">
+        #{preItm,jdbcType=INTEGER},
+      </if>
+      <if test="rtoBjst != null">
+        #{rtoBjst,jdbcType=NUMERIC},
+      </if>
+      <if test="zdFlag != null">
+        #{zdFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="olefield != null">
+        #{olefield,jdbcType=VARCHAR},
+      </if>
+      <if test="upNet != null">
+        #{upNet,jdbcType=NUMERIC},
+      </if>
+      <if test="flagRkDd != null">
+        #{flagRkDd,jdbcType=VARCHAR},
+      </if>
+      <if test="prmNo != null">
+        #{prmNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amtDisCnt != null">
+        #{amtDisCnt,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.UpDefExample" resultType="java.lang.Long">
+    select count(*) from UP_DEF
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update UP_DEF
+    <set>
+      <if test="record.priceId != null">
+        PRICE_ID = #{record.priceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusNo != null">
+        CUS_NO = #{record.cusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.curId != null">
+        CUR_ID = #{record.curId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prdNo != null">
+        PRD_NO = #{record.prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prdMark != null">
+        PRD_MARK = #{record.prdMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bzKnd != null">
+        BZ_KND = #{record.bzKnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knd != null">
+        KND = #{record.knd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qty != null">
+        QTY = #{record.qty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sDd != null">
+        S_DD = #{record.sDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bilType != null">
+        BIL_TYPE = #{record.bilType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supPrdNo != null">
+        SUP_PRD_NO = #{record.supPrdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusAre != null">
+        CUS_ARE = #{record.cusAre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.up != null">
+        UP = #{record.up,jdbcType=NUMERIC},
+      </if>
+      <if test="record.disCnt != null">
+        DIS_CNT = #{record.disCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fDd != null">
+        F_DD = #{record.fDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eDd != null">
+        E_DD = #{record.eDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unit != null">
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtyFree != null">
+        QTY_FREE = #{record.qtyFree,jdbcType=NUMERIC},
+      </if>
+      <if test="record.rem != null">
+        REM = #{record.rem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkMan != null">
+        CHK_MAN = #{record.chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDate != null">
+        CHK_DATE = #{record.chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usr != null">
+        USR = #{record.usr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysDate != null">
+        SYS_DATE = #{record.sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hjNo != null">
+        HJ_NO = #{record.hjNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preItm != null">
+        PRE_ITM = #{record.preItm,jdbcType=INTEGER},
+      </if>
+      <if test="record.rtoBjst != null">
+        RTO_BJST = #{record.rtoBjst,jdbcType=NUMERIC},
+      </if>
+      <if test="record.zdFlag != null">
+        ZD_FLAG = #{record.zdFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.olefield != null">
+        OLEFIELD = #{record.olefield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upNet != null">
+        UP_NET = #{record.upNet,jdbcType=NUMERIC},
+      </if>
+      <if test="record.flagRkDd != null">
+        FLAG_RK_DD = #{record.flagRkDd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prmNo != null">
+        PRM_NO = #{record.prmNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtDisCnt != null">
+        AMT_DIS_CNT = #{record.amtDisCnt,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update UP_DEF
+    set PRICE_ID = #{record.priceId,jdbcType=VARCHAR},
+      CUS_NO = #{record.cusNo,jdbcType=VARCHAR},
+      CUR_ID = #{record.curId,jdbcType=VARCHAR},
+      PRD_NO = #{record.prdNo,jdbcType=VARCHAR},
+      PRD_MARK = #{record.prdMark,jdbcType=VARCHAR},
+      BZ_KND = #{record.bzKnd,jdbcType=VARCHAR},
+      KND = #{record.knd,jdbcType=VARCHAR},
+      QTY = #{record.qty,jdbcType=NUMERIC},
+      S_DD = #{record.sDd,jdbcType=TIMESTAMP},
+      BIL_TYPE = #{record.bilType,jdbcType=VARCHAR},
+      SUP_PRD_NO = #{record.supPrdNo,jdbcType=VARCHAR},
+      CUS_ARE = #{record.cusAre,jdbcType=VARCHAR},
+      UP = #{record.up,jdbcType=NUMERIC},
+      DIS_CNT = #{record.disCnt,jdbcType=NUMERIC},
+      F_DD = #{record.fDd,jdbcType=TIMESTAMP},
+      E_DD = #{record.eDd,jdbcType=TIMESTAMP},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      QTY_FREE = #{record.qtyFree,jdbcType=NUMERIC},
+      REM = #{record.rem,jdbcType=VARCHAR},
+      CHK_MAN = #{record.chkMan,jdbcType=VARCHAR},
+      CHK_DATE = #{record.chkDate,jdbcType=TIMESTAMP},
+      USR = #{record.usr,jdbcType=VARCHAR},
+      SYS_DATE = #{record.sysDate,jdbcType=TIMESTAMP},
+      HJ_NO = #{record.hjNo,jdbcType=VARCHAR},
+      PRE_ITM = #{record.preItm,jdbcType=INTEGER},
+      RTO_BJST = #{record.rtoBjst,jdbcType=NUMERIC},
+      ZD_FLAG = #{record.zdFlag,jdbcType=VARCHAR},
+      OLEFIELD = #{record.olefield,jdbcType=VARCHAR},
+      UP_NET = #{record.upNet,jdbcType=NUMERIC},
+      FLAG_RK_DD = #{record.flagRkDd,jdbcType=VARCHAR},
+      PRM_NO = #{record.prmNo,jdbcType=VARCHAR},
+      AMT_DIS_CNT = #{record.amtDisCnt,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.UpDef">
+    update UP_DEF
+    <set>
+      <if test="up != null">
+        UP = #{up,jdbcType=NUMERIC},
+      </if>
+      <if test="disCnt != null">
+        DIS_CNT = #{disCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="fDd != null">
+        F_DD = #{fDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eDd != null">
+        E_DD = #{eDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyFree != null">
+        QTY_FREE = #{qtyFree,jdbcType=NUMERIC},
+      </if>
+      <if test="rem != null">
+        REM = #{rem,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMan != null">
+        CHK_MAN = #{chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDate != null">
+        CHK_DATE = #{chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usr != null">
+        USR = #{usr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDate != null">
+        SYS_DATE = #{sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hjNo != null">
+        HJ_NO = #{hjNo,jdbcType=VARCHAR},
+      </if>
+      <if test="preItm != null">
+        PRE_ITM = #{preItm,jdbcType=INTEGER},
+      </if>
+      <if test="rtoBjst != null">
+        RTO_BJST = #{rtoBjst,jdbcType=NUMERIC},
+      </if>
+      <if test="zdFlag != null">
+        ZD_FLAG = #{zdFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="olefield != null">
+        OLEFIELD = #{olefield,jdbcType=VARCHAR},
+      </if>
+      <if test="upNet != null">
+        UP_NET = #{upNet,jdbcType=NUMERIC},
+      </if>
+      <if test="flagRkDd != null">
+        FLAG_RK_DD = #{flagRkDd,jdbcType=VARCHAR},
+      </if>
+      <if test="prmNo != null">
+        PRM_NO = #{prmNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amtDisCnt != null">
+        AMT_DIS_CNT = #{amtDisCnt,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where PRICE_ID = #{priceId,jdbcType=VARCHAR}
+      and CUS_NO = #{cusNo,jdbcType=VARCHAR}
+      and CUR_ID = #{curId,jdbcType=VARCHAR}
+      and PRD_NO = #{prdNo,jdbcType=VARCHAR}
+      and PRD_MARK = #{prdMark,jdbcType=VARCHAR}
+      and BZ_KND = #{bzKnd,jdbcType=VARCHAR}
+      and KND = #{knd,jdbcType=VARCHAR}
+      and QTY = #{qty,jdbcType=NUMERIC}
+      and S_DD = #{sDd,jdbcType=TIMESTAMP}
+      and BIL_TYPE = #{bilType,jdbcType=VARCHAR}
+      and SUP_PRD_NO = #{supPrdNo,jdbcType=VARCHAR}
+      and CUS_ARE = #{cusAre,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.UpDef">
+    update UP_DEF
+    set UP = #{up,jdbcType=NUMERIC},
+      DIS_CNT = #{disCnt,jdbcType=NUMERIC},
+      F_DD = #{fDd,jdbcType=TIMESTAMP},
+      E_DD = #{eDd,jdbcType=TIMESTAMP},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      QTY_FREE = #{qtyFree,jdbcType=NUMERIC},
+      REM = #{rem,jdbcType=VARCHAR},
+      CHK_MAN = #{chkMan,jdbcType=VARCHAR},
+      CHK_DATE = #{chkDate,jdbcType=TIMESTAMP},
+      USR = #{usr,jdbcType=VARCHAR},
+      SYS_DATE = #{sysDate,jdbcType=TIMESTAMP},
+      HJ_NO = #{hjNo,jdbcType=VARCHAR},
+      PRE_ITM = #{preItm,jdbcType=INTEGER},
+      RTO_BJST = #{rtoBjst,jdbcType=NUMERIC},
+      ZD_FLAG = #{zdFlag,jdbcType=VARCHAR},
+      OLEFIELD = #{olefield,jdbcType=VARCHAR},
+      UP_NET = #{upNet,jdbcType=NUMERIC},
+      FLAG_RK_DD = #{flagRkDd,jdbcType=VARCHAR},
+      PRM_NO = #{prmNo,jdbcType=VARCHAR},
+      AMT_DIS_CNT = #{amtDisCnt,jdbcType=NUMERIC}
+    where PRICE_ID = #{priceId,jdbcType=VARCHAR}
+      and CUS_NO = #{cusNo,jdbcType=VARCHAR}
+      and CUR_ID = #{curId,jdbcType=VARCHAR}
+      and PRD_NO = #{prdNo,jdbcType=VARCHAR}
+      and PRD_MARK = #{prdMark,jdbcType=VARCHAR}
+      and BZ_KND = #{bzKnd,jdbcType=VARCHAR}
+      and KND = #{knd,jdbcType=VARCHAR}
+      and QTY = #{qty,jdbcType=NUMERIC}
+      and S_DD = #{sDd,jdbcType=TIMESTAMP}
+      and BIL_TYPE = #{bilType,jdbcType=VARCHAR}
+      and SUP_PRD_NO = #{supPrdNo,jdbcType=VARCHAR}
+      and CUS_ARE = #{cusAre,jdbcType=VARCHAR}
+  </update>
+</mapper>
