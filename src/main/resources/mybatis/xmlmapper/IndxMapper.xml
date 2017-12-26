@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.IndxMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.Indx">
+    <id column="IDX_NO" jdbcType="VARCHAR" property="idxNo" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IDX_UP" jdbcType="VARCHAR" property="idxUp" />
+    <result column="STOP_DD" jdbcType="TIMESTAMP" property="stopDd" />
+    <result column="REM" jdbcType="VARCHAR" property="rem" />
+    <result column="UP_STD" jdbcType="NUMERIC" property="upStd" />
+    <result column="WEB_TITLE" jdbcType="VARCHAR" property="webTitle" />
+    <result column="WEB_DESCRIPTION" jdbcType="VARCHAR" property="webDescription" />
+    <result column="WEB_KEYWORDS" jdbcType="VARCHAR" property="webKeywords" />
+    <result column="DAY_SUPPLY" jdbcType="VARCHAR" property="daySupply" />
+    <result column="CHK_YH" jdbcType="VARCHAR" property="chkYh" />
+    <result column="LOS_RTO" jdbcType="NUMERIC" property="losRto" />
+    <result column="CHK_POS" jdbcType="VARCHAR" property="chkPos" />
+    <result column="IDX_TYPE" jdbcType="VARCHAR" property="idxType" />
+    <result column="CHK_B2C" jdbcType="VARCHAR" property="chkB2c" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.winwin.picreport.Edto.Indx">
+    <result column="UP_DD" jdbcType="BINARY" property="upDd" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IDX_NO, NAME, IDX_UP, STOP_DD, REM, UP_STD, WEB_TITLE, WEB_DESCRIPTION, WEB_KEYWORDS, 
+    DAY_SUPPLY, CHK_YH, LOS_RTO, CHK_POS, IDX_TYPE, CHK_B2C
+  </sql>
+  <sql id="Blob_Column_List">
+    UP_DD
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.winwin.picreport.Edto.IndxExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from INDX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.IndxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from INDX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from INDX
+    where IDX_NO = #{idxNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from INDX
+    where IDX_NO = #{idxNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.IndxExample">
+    delete from INDX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.Indx">
+    insert into INDX (IDX_NO, NAME, IDX_UP, 
+      STOP_DD, REM, UP_STD, 
+      WEB_TITLE, WEB_DESCRIPTION, WEB_KEYWORDS, 
+      DAY_SUPPLY, CHK_YH, LOS_RTO, 
+      CHK_POS, IDX_TYPE, CHK_B2C, 
+      UP_DD)
+    values (#{idxNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idxUp,jdbcType=VARCHAR}, 
+      #{stopDd,jdbcType=TIMESTAMP}, #{rem,jdbcType=VARCHAR}, #{upStd,jdbcType=NUMERIC}, 
+      #{webTitle,jdbcType=VARCHAR}, #{webDescription,jdbcType=VARCHAR}, #{webKeywords,jdbcType=VARCHAR}, 
+      #{daySupply,jdbcType=VARCHAR}, #{chkYh,jdbcType=VARCHAR}, #{losRto,jdbcType=NUMERIC}, 
+      #{chkPos,jdbcType=VARCHAR}, #{idxType,jdbcType=VARCHAR}, #{chkB2c,jdbcType=VARCHAR}, 
+      #{upDd,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.Indx">
+    insert into INDX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idxNo != null">
+        IDX_NO,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="idxUp != null">
+        IDX_UP,
+      </if>
+      <if test="stopDd != null">
+        STOP_DD,
+      </if>
+      <if test="rem != null">
+        REM,
+      </if>
+      <if test="upStd != null">
+        UP_STD,
+      </if>
+      <if test="webTitle != null">
+        WEB_TITLE,
+      </if>
+      <if test="webDescription != null">
+        WEB_DESCRIPTION,
+      </if>
+      <if test="webKeywords != null">
+        WEB_KEYWORDS,
+      </if>
+      <if test="daySupply != null">
+        DAY_SUPPLY,
+      </if>
+      <if test="chkYh != null">
+        CHK_YH,
+      </if>
+      <if test="losRto != null">
+        LOS_RTO,
+      </if>
+      <if test="chkPos != null">
+        CHK_POS,
+      </if>
+      <if test="idxType != null">
+        IDX_TYPE,
+      </if>
+      <if test="chkB2c != null">
+        CHK_B2C,
+      </if>
+      <if test="upDd != null">
+        UP_DD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idxNo != null">
+        #{idxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idxUp != null">
+        #{idxUp,jdbcType=VARCHAR},
+      </if>
+      <if test="stopDd != null">
+        #{stopDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rem != null">
+        #{rem,jdbcType=VARCHAR},
+      </if>
+      <if test="upStd != null">
+        #{upStd,jdbcType=NUMERIC},
+      </if>
+      <if test="webTitle != null">
+        #{webTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="webDescription != null">
+        #{webDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="webKeywords != null">
+        #{webKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="daySupply != null">
+        #{daySupply,jdbcType=VARCHAR},
+      </if>
+      <if test="chkYh != null">
+        #{chkYh,jdbcType=VARCHAR},
+      </if>
+      <if test="losRto != null">
+        #{losRto,jdbcType=NUMERIC},
+      </if>
+      <if test="chkPos != null">
+        #{chkPos,jdbcType=VARCHAR},
+      </if>
+      <if test="idxType != null">
+        #{idxType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkB2c != null">
+        #{chkB2c,jdbcType=VARCHAR},
+      </if>
+      <if test="upDd != null">
+        #{upDd,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.IndxExample" resultType="java.lang.Long">
+    select count(*) from INDX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update INDX
+    <set>
+      <if test="record.idxNo != null">
+        IDX_NO = #{record.idxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idxUp != null">
+        IDX_UP = #{record.idxUp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopDd != null">
+        STOP_DD = #{record.stopDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rem != null">
+        REM = #{record.rem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upStd != null">
+        UP_STD = #{record.upStd,jdbcType=NUMERIC},
+      </if>
+      <if test="record.webTitle != null">
+        WEB_TITLE = #{record.webTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webDescription != null">
+        WEB_DESCRIPTION = #{record.webDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webKeywords != null">
+        WEB_KEYWORDS = #{record.webKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.daySupply != null">
+        DAY_SUPPLY = #{record.daySupply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkYh != null">
+        CHK_YH = #{record.chkYh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.losRto != null">
+        LOS_RTO = #{record.losRto,jdbcType=NUMERIC},
+      </if>
+      <if test="record.chkPos != null">
+        CHK_POS = #{record.chkPos,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idxType != null">
+        IDX_TYPE = #{record.idxType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkB2c != null">
+        CHK_B2C = #{record.chkB2c,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upDd != null">
+        UP_DD = #{record.upDd,jdbcType=BINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update INDX
+    set IDX_NO = #{record.idxNo,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      IDX_UP = #{record.idxUp,jdbcType=VARCHAR},
+      STOP_DD = #{record.stopDd,jdbcType=TIMESTAMP},
+      REM = #{record.rem,jdbcType=VARCHAR},
+      UP_STD = #{record.upStd,jdbcType=NUMERIC},
+      WEB_TITLE = #{record.webTitle,jdbcType=VARCHAR},
+      WEB_DESCRIPTION = #{record.webDescription,jdbcType=VARCHAR},
+      WEB_KEYWORDS = #{record.webKeywords,jdbcType=VARCHAR},
+      DAY_SUPPLY = #{record.daySupply,jdbcType=VARCHAR},
+      CHK_YH = #{record.chkYh,jdbcType=VARCHAR},
+      LOS_RTO = #{record.losRto,jdbcType=NUMERIC},
+      CHK_POS = #{record.chkPos,jdbcType=VARCHAR},
+      IDX_TYPE = #{record.idxType,jdbcType=VARCHAR},
+      CHK_B2C = #{record.chkB2c,jdbcType=VARCHAR},
+      UP_DD = #{record.upDd,jdbcType=BINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update INDX
+    set IDX_NO = #{record.idxNo,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      IDX_UP = #{record.idxUp,jdbcType=VARCHAR},
+      STOP_DD = #{record.stopDd,jdbcType=TIMESTAMP},
+      REM = #{record.rem,jdbcType=VARCHAR},
+      UP_STD = #{record.upStd,jdbcType=NUMERIC},
+      WEB_TITLE = #{record.webTitle,jdbcType=VARCHAR},
+      WEB_DESCRIPTION = #{record.webDescription,jdbcType=VARCHAR},
+      WEB_KEYWORDS = #{record.webKeywords,jdbcType=VARCHAR},
+      DAY_SUPPLY = #{record.daySupply,jdbcType=VARCHAR},
+      CHK_YH = #{record.chkYh,jdbcType=VARCHAR},
+      LOS_RTO = #{record.losRto,jdbcType=NUMERIC},
+      CHK_POS = #{record.chkPos,jdbcType=VARCHAR},
+      IDX_TYPE = #{record.idxType,jdbcType=VARCHAR},
+      CHK_B2C = #{record.chkB2c,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.Indx">
+    update INDX
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idxUp != null">
+        IDX_UP = #{idxUp,jdbcType=VARCHAR},
+      </if>
+      <if test="stopDd != null">
+        STOP_DD = #{stopDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rem != null">
+        REM = #{rem,jdbcType=VARCHAR},
+      </if>
+      <if test="upStd != null">
+        UP_STD = #{upStd,jdbcType=NUMERIC},
+      </if>
+      <if test="webTitle != null">
+        WEB_TITLE = #{webTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="webDescription != null">
+        WEB_DESCRIPTION = #{webDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="webKeywords != null">
+        WEB_KEYWORDS = #{webKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="daySupply != null">
+        DAY_SUPPLY = #{daySupply,jdbcType=VARCHAR},
+      </if>
+      <if test="chkYh != null">
+        CHK_YH = #{chkYh,jdbcType=VARCHAR},
+      </if>
+      <if test="losRto != null">
+        LOS_RTO = #{losRto,jdbcType=NUMERIC},
+      </if>
+      <if test="chkPos != null">
+        CHK_POS = #{chkPos,jdbcType=VARCHAR},
+      </if>
+      <if test="idxType != null">
+        IDX_TYPE = #{idxType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkB2c != null">
+        CHK_B2C = #{chkB2c,jdbcType=VARCHAR},
+      </if>
+      <if test="upDd != null">
+        UP_DD = #{upDd,jdbcType=BINARY},
+      </if>
+    </set>
+    where IDX_NO = #{idxNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.winwin.picreport.Edto.Indx">
+    update INDX
+    set NAME = #{name,jdbcType=VARCHAR},
+      IDX_UP = #{idxUp,jdbcType=VARCHAR},
+      STOP_DD = #{stopDd,jdbcType=TIMESTAMP},
+      REM = #{rem,jdbcType=VARCHAR},
+      UP_STD = #{upStd,jdbcType=NUMERIC},
+      WEB_TITLE = #{webTitle,jdbcType=VARCHAR},
+      WEB_DESCRIPTION = #{webDescription,jdbcType=VARCHAR},
+      WEB_KEYWORDS = #{webKeywords,jdbcType=VARCHAR},
+      DAY_SUPPLY = #{daySupply,jdbcType=VARCHAR},
+      CHK_YH = #{chkYh,jdbcType=VARCHAR},
+      LOS_RTO = #{losRto,jdbcType=NUMERIC},
+      CHK_POS = #{chkPos,jdbcType=VARCHAR},
+      IDX_TYPE = #{idxType,jdbcType=VARCHAR},
+      CHK_B2C = #{chkB2c,jdbcType=VARCHAR},
+      UP_DD = #{upDd,jdbcType=BINARY}
+    where IDX_NO = #{idxNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.Indx">
+    update INDX
+    set NAME = #{name,jdbcType=VARCHAR},
+      IDX_UP = #{idxUp,jdbcType=VARCHAR},
+      STOP_DD = #{stopDd,jdbcType=TIMESTAMP},
+      REM = #{rem,jdbcType=VARCHAR},
+      UP_STD = #{upStd,jdbcType=NUMERIC},
+      WEB_TITLE = #{webTitle,jdbcType=VARCHAR},
+      WEB_DESCRIPTION = #{webDescription,jdbcType=VARCHAR},
+      WEB_KEYWORDS = #{webKeywords,jdbcType=VARCHAR},
+      DAY_SUPPLY = #{daySupply,jdbcType=VARCHAR},
+      CHK_YH = #{chkYh,jdbcType=VARCHAR},
+      LOS_RTO = #{losRto,jdbcType=NUMERIC},
+      CHK_POS = #{chkPos,jdbcType=VARCHAR},
+      IDX_TYPE = #{idxType,jdbcType=VARCHAR},
+      CHK_B2C = #{chkB2c,jdbcType=VARCHAR}
+    where IDX_NO = #{idxNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

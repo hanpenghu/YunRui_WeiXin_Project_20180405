@@ -427,8 +427,9 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //        return fenYe;
 //    }
 
- //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口(该成所有页都调用一个接口,上面那个接口作废)/////////////////////////////////////////
-    @RequestMapping(value = InterFaceCnst.dangqianyeData, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+ //////////////////////////////徐勇页面,用户大于等于第二次点击某一页的时候调的接口(改成所有页都调用一个接口,上面那个接口作废)/////////////////////////////////////////
+    @RequestMapping(value = InterFaceCnst.dangqianyeData,
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     FenYe dangqianyeData(@RequestBody FenYe fenYe) {
         return cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
