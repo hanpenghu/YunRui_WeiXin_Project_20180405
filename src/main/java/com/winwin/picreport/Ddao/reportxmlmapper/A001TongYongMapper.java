@@ -146,6 +146,13 @@ public interface A001TongYongMapper {
    List<PrdtSamp> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 
-   @Select("Select top 1 prd_no from prdt where name=#{prdCode}")
+   @Select("Select top 1 prd_no from prdt where name=#{prdCode} order by prd_no desc")
    String selectTop1PrdtNo(@Param("prdCode") String prdCode);
+
+   @Select("Select top 1 prd_no from prdt where IDX1=#{indx1} order by prd_no desc")
+   String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
+
+   //prdCode对应name
+   @Select("insert into prdt(prd_no,idx1,name)values(#{prdNo},#{indx1},#{prdCode})")
+   Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo, @Param("indx1")String indx1,@Param("prdCode") String prdCode);
 }

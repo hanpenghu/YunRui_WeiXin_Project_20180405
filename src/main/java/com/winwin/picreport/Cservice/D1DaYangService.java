@@ -10,6 +10,7 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -18,9 +19,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+
 public class D1DaYangService {
     @Autowired
     private Cnst cnst;
+    @Transactional
     public List<Msg> ImageUpLoadAndDataSave001(String projectPath, MultipartFile thum,  MultipartFile attach, HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
         try {
 
@@ -105,7 +108,7 @@ public class D1DaYangService {
 
 
 
-
+@Transactional
     public List<Msg> ImageUpLoadAndDataSave002OfManyAttach
             (String projectPath, MultipartFile thum,  List<MultipartFile> attachList,
              HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,
@@ -207,12 +210,15 @@ public class D1DaYangService {
 
 
 
+    @Transactional
     public List<Msg> insertDaYang(PrdtSamp prdtSamp) {
         Integer ii= null;
         List<Msg> list;
         try {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
+            //获取prdNo
+            this.prdtSampObjGetPrdNo(prdtSamp);
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -230,7 +236,8 @@ public class D1DaYangService {
      * 不对应就到idx表找到对应的分类_然后找到idx分类的最大no,然后加一流水到prdt中插入一项
      * */
 
-    public PrdtSamp prdtSampObjGetPrdNo(PrdtSamp prdtSamp){
+    @Transactional
+    public void prdtSampObjGetPrdNo(PrdtSamp prdtSamp){
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
         //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
@@ -241,17 +248,35 @@ public class D1DaYangService {
         }else{
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
-
+            this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp);
         }
-
-        return prdtSamp;
     }
 
 
 
+    @Transactional
+    public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp prdtSamp){
+        synchronized (this) {
+            //得到中类代号
+            String indx1=prdtSamp.getIdxNo();
+            //在prdt里面找到相同的indx1的prdNo流水最大的那个
+            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
+            //将prdNoMax转化成long
+            if(NotEmpty.notEmpty(prdNoMax)){
+                long l = Long.parseLong(prdNoMax);
+                l=l+1;
+                String prdNo = String.valueOf(l);
+                //给prdtSamp添加货号
+                prdtSamp.setPrdNo(prdNo);
+                //对应数据库的name
+                String prdCode = prdtSamp.getPrdCode();
+                //给prdt也添加一个货号
+                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode);
 
+            }
+        }
 
-
+    }
 
 
 
