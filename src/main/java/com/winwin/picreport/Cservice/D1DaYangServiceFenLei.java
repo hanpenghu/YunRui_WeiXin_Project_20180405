@@ -2,10 +2,7 @@ package com.winwin.picreport.Cservice;
 
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
-import com.winwin.picreport.Edto.CategoryName;
-import com.winwin.picreport.Edto.CategoryNameCode;
-import com.winwin.picreport.Edto.FuZeRen;
-import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -71,6 +68,8 @@ public class D1DaYangServiceFenLei {
             try {
                 String insertdateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(insertdate);
                 prdtSampX.setInsertdateStr(insertdateStr);
+                //添加
+               this.GetPriceModel(prdtSampX);
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
             }
@@ -81,7 +80,17 @@ public class D1DaYangServiceFenLei {
         fenYe.setZongYeShu();
         return fenYe;
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//    //销售价格列表
+//    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+//    //采购价格列表
+//    List<UpDefMy>upDefMyListByer=new ArrayList<>();
+    private void GetPriceModel(PrdtSamp prdtSampX) {
+
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public FenYe daYangZongYeShuHeMeiYeXianShiShu() {
         FenYe fenYe=new FenYe();
 

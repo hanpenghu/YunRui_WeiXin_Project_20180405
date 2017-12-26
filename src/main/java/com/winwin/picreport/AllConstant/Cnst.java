@@ -1,10 +1,7 @@
 package com.winwin.picreport.AllConstant;
 
 import com.winwin.picreport.Cservice.*;
-import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
-import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
-import com.winwin.picreport.Ddao.reportxmlmapper.PrdtMapper;
-import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
+import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
+
     public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";
     public static final String  xlsHouZhuiWuDian="xls";
     public static final String  javaXieGang="/";
@@ -47,6 +45,22 @@ public class Cnst {
                 .sad(suoLueTuWenJianJia).gad();
     }
 
+    @Autowired
+    public SapsoMapper sapsoMapper;
+
+    @Autowired
+    public D3SaleOrderUpLoadFromExcelService d3SaleOrderUpLoadFromExcelService;
+
+    @Autowired
+    public A1ReportRestService a1;
+    @Autowired
+    public MfPosMapper mfPosMapper;
+
+    @Autowired
+    public TfPosMapper tfPosMapper;
+
+    @Autowired
+    public TfPosZMapper tfPosZMapper;
 
     @Autowired
     public A001TongYongMapper a001TongYongMapper;

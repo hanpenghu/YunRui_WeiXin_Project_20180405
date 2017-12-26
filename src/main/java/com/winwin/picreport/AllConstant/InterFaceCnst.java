@@ -76,14 +76,17 @@ public interface InterFaceCnst {
      * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
      * */
     String chanPinBianMaJianDangTiaoJianChaXun="chanPinBianMaJianDangTiaoJianChaXun";
+
+
+
+
+
+//    @西关大少 @等 今天：1、先把林展主要的功能操作弄好  2、把销售订单功能复制一份出来再上面弄
+//    个菜单销售订单（只用到现在的导入订单主表mf_pos,tf_pos，不拆分不合并），原来那个命名为销售订单(SAP集成)
+//
+//2、弄了吗？
     
-    
-    
-    
-    
-    
-    
-    
+    String upLoadExcelDontMerageOfSaleOrder="upLoadExcelDontMerageOfSaleOrder";
     
     
     
