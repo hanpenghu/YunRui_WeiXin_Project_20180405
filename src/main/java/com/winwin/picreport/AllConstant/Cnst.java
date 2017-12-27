@@ -16,6 +16,7 @@ import java.util.Date;
 @Component("cnst")
 public class Cnst {
 
+
     public static final String salPriceId="1";//销售的定价表中的priceId是1
     public static final String buyPriceId="2";//采购的是2
     public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";
@@ -138,7 +139,6 @@ public class Cnst {
 
     @Autowired
     public D1DaYangServiceOfDeleteOneImg deleteOneImg;
-
 
     /**
      *下面是mybatis分页插件要用的东西

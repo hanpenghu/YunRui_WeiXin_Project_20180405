@@ -1,4 +1,5 @@
 package com.winwin.picreport.Edto;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.ConstantInit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -188,8 +189,8 @@ public class PrdtSamp extends PrdtSamp0{
     public List<String> getAttachUrlList() {
         String attach1=this.getAttach();
         //把得到的缩略图的一堆路径拆成数组
-        if(attach1!=null&&!"".equals(attach1)){
-            List<String> strings = Arrays.asList(attach1.split(";"));
+        if(attach1!=null&&!Cnst.emptyStr.equals(attach1)){
+            List<String> strings = Arrays.asList(attach1.split(Cnst.fenHao));
             List<String>strList=new ArrayList<>();
             for(String str:strings){
                 strList.add(dirUrl+str);

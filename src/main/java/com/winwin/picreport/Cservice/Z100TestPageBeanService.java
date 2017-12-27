@@ -21,7 +21,7 @@ public class Z100TestPageBeanService {
         pe.createCriteria().andIdxNameIsNotNull();
         pe.setOrderByClause("id desc");
         List<PrdtSamp> allItems = cnst.prdtSampMapper.selectByExample(pe);        //全部商品
-        int countNums = cnst.prdtSampMapper.countItem();            //总记录数
+        int countNums = cnst.manyTabSerch.countItem();            //总记录数
         PageBean<PrdtSamp> pageData = new PageBean<>(currentPage, pageSize, countNums);
         pageData.setItems(allItems);
         return pageData.getItems();

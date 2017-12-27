@@ -178,4 +178,24 @@ public interface ManyTabSerch {
 
 
 
+
+
+
+
+
+
+
+
+        @Update("update prdt_samp set thum=#{newthums} where thum like #{thumInDataBase}")
+        int updateThumColumn(@Param("thumInDataBase") String thumInDataBase, @Param("newthums") String newthums);
+
+        @Update("update prdt_samp set attach=#{newattachs} where attach like #{attachInDataBase}")
+        int updateAttachColumn(@Param("attachInDataBase") String attachInDataBase, @Param("newattachs") String newattachs);
+        //test PageBean
+        @Select("Select count(id) from prdt_Samp")
+        int countItem();
+        //testPageBean
+        @Select("Select * from prdt_Samp order by id DESC")
+        List<PrdtSamp> findAll();
+
 }

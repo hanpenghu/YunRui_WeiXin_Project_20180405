@@ -3,6 +3,7 @@ package com.winwin.picreport.AllConstant;
 //注意  接口中默认是常量   public static final
 public interface InterFaceCnst {
 
+
     public static final String ContentTypeJsonAndCharsetUtf8="application/json;charset=utf-8";
     //dao层路径
      String daoCnst="com.winwin.picreport.Ddao";

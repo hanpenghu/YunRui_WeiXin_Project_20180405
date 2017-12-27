@@ -119,7 +119,7 @@ public class D1DaYangService_ConfirmOrder {
             }
             String confirmtimestr = prdtSamp.getConfirmtimestr();
             if(!NotEmpty.notEmpty(confirmtimestr)){
-                confirmtimestr=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
+                confirmtimestr=new SimpleDateFormat(p.d1).format(cnst.manyTabSerch.getDate());
             }
             String confirmrem = prdtSamp.getConfirmrem();
             PrdtSamp f = new MakeColumnNull0False<PrdtSamp>().f(prdtSamp);

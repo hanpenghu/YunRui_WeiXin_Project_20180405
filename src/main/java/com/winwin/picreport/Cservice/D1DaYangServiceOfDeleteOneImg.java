@@ -1,5 +1,6 @@
 package com.winwin.picreport.Cservice;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSampExample;
@@ -17,14 +18,14 @@ import java.util.List;
 @Transactional
 @Service("deleteOneImg")
 public class D1DaYangServiceOfDeleteOneImg {
-    @Value("${fuJianWenJianJia}")
-    private String fuJianWenJianJia;
-    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
-    private String daYangSuoLueTuAndFuJianZongPath;
-    @Value("${suoLueTuWenJianJia}")
-    private String suoLueTuWenJianJia;
+//    @Value("${fuJianWenJianJia}")
+//    private String fuJianWenJianJia;
+//    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
+//    private String daYangSuoLueTuAndFuJianZongPath;
+//    @Value("${suoLueTuWenJianJia}")
+//    private String suoLueTuWenJianJia;
     @Autowired
-    private PrdtSampMapper prdtSampMapper;
+    private Cnst cnst;
     /**
      ****************************************************************************************
      * */
@@ -58,7 +59,7 @@ public class D1DaYangServiceOfDeleteOneImg {
             System.out.println("thumInDataBase：：："+thumInDataBase);
             PrdtSampExample prdtSampExample=new PrdtSampExample();
             prdtSampExample.createCriteria().andThumLike("%"+thumInDataBase+"%");
-            List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
+            List<PrdtSamp> prdtSampList = cnst.prdtSampMapper.selectByExample(prdtSampExample);
 //        System.out.println(prdtSampList);
 //        PrdtSamp prdtSamp;
 //        String newthums=null;
@@ -71,7 +72,7 @@ public class D1DaYangServiceOfDeleteOneImg {
                 System.out.println(newthums);
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 if(newthums!=null){
-                    int i=  prdtSampMapper.updateThumColumn("%"+thumInDataBase+"%",newthums);
+                    int i=  cnst.manyTabSerch.updateThumColumn("%"+thumInDataBase+"%",newthums);
                     if(i==1){
                         return MessageGenerate.generateMessage("缩略图已经删除", "缩略图已经删除", "缩略图已经删除","", "44");
                     }
@@ -119,7 +120,7 @@ public class D1DaYangServiceOfDeleteOneImg {
             String attachInDataBase = this.getAttachInDataBase(attachUrl);
             PrdtSampExample prdtSampExample=new PrdtSampExample();
             prdtSampExample.createCriteria().andAttachLike("%"+attachInDataBase+"%");
-            List<PrdtSamp> prdtSampList = prdtSampMapper.selectByExample(prdtSampExample);
+            List<PrdtSamp> prdtSampList = cnst.prdtSampMapper.selectByExample(prdtSampExample);
             PrdtSamp prdtSamp;
             String newAttachs=null;
             if(prdtSampList.size()>0){
@@ -127,7 +128,7 @@ public class D1DaYangServiceOfDeleteOneImg {
                 //将数据库中的一堆缩略图路径中的要删除的那个替换成空字符串
                 newAttachs=prdtSamp.getAttach().replace(attachInDataBase+";","");
                 if(newAttachs!=null){
-                    int i=  prdtSampMapper.updateAttachColumn("%"+attachInDataBase+"%",newAttachs);
+                    int i=  cnst.manyTabSerch.updateAttachColumn("%"+attachInDataBase+"%",newAttachs);
                     if(i==1){
                         return MessageGenerate.generateMessage("附件已经删除", "附件已经删除", "附件已经删除","", "44");
                     }
@@ -144,12 +145,12 @@ public class D1DaYangServiceOfDeleteOneImg {
      * */
 public String getThumPath(String httpurl){
     return SpringbootJarPath.JarLuJingGet()+
-            daYangSuoLueTuAndFuJianZongPath.replace(".","")+getThumInDataBase(httpurl);
+            cnst.daYangSuoLueTuAndFuJianZongPath.replace(".","")+getThumInDataBase(httpurl);
 }
 
 public String getThumInDataBase(String url){
 //    String url="http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg";
-    int i = url.indexOf(suoLueTuWenJianJia);
+    int i = url.indexOf(cnst.suoLueTuWenJianJia);
     String substring = url.substring(i);
     return substring;
 }
@@ -163,11 +164,11 @@ public String getThumInDataBase(String url){
 
     public String getAttachPath(String httpurl){
         return SpringbootJarPath.JarLuJingGet()+
-                daYangSuoLueTuAndFuJianZongPath.replace(".","")+getAttachInDataBase(httpurl);
+                cnst.daYangSuoLueTuAndFuJianZongPath.replace(".","")+getAttachInDataBase(httpurl);
     }
     public String getAttachInDataBase(String url){
 //    String url="http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg";
-        int i = url.indexOf(fuJianWenJianJia);
+        int i = url.indexOf(cnst.fuJianWenJianJia);
         String substring = url.substring(i);
         return substring;
     }
