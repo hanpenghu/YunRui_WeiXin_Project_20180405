@@ -101,6 +101,11 @@ public class PrdtSamp0 {
     //销售描述
     protected String salemandesc;
     //停用时间
-    private Date stopusedate;
+    protected Date stopusedate;
+    //供应商编号
+    protected String cusNoGive;
+
+    //供应商名字
+    protected String cusNameGive;
 
 }

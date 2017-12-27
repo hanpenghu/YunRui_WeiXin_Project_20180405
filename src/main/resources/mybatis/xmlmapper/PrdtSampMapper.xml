@@ -43,6 +43,8 @@
     <result column="prd_no" jdbcType="VARCHAR" property="prdNo" />
     <result column="saleManDesc" jdbcType="VARCHAR" property="salemandesc" />
     <result column="stopUseDate" jdbcType="TIMESTAMP" property="stopusedate" />
+    <result column="cus_no_give" jdbcType="VARCHAR" property="cusNoGive" />
+    <result column="cus_name_give" jdbcType="VARCHAR" property="cusNameGive" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -108,7 +110,7 @@
     insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, 
     unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice, 
     modelCostInvoiceNo, financeStartSellCount, financeModelCost, financeLittleOrderPrice, 
-    buyerDesc, prd_no, saleManDesc, stopUseDate
+    buyerDesc, prd_no, saleManDesc, stopUseDate, cus_no_give, cus_name_give
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -155,7 +157,8 @@
       modelCostInvoiceNo, financeStartSellCount, 
       financeModelCost, financeLittleOrderPrice, 
       buyerDesc, prd_no, saleManDesc, 
-      stopUseDate)
+      stopUseDate, cus_no_give, cus_name_give
+      )
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -170,7 +173,8 @@
       #{modelcostinvoiceno,jdbcType=VARCHAR}, #{financestartsellcount,jdbcType=NUMERIC}, 
       #{financemodelcost,jdbcType=NUMERIC}, #{financelittleorderprice,jdbcType=NUMERIC}, 
       #{buyerdesc,jdbcType=VARCHAR}, #{prdNo,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}, 
-      #{stopusedate,jdbcType=TIMESTAMP})
+      #{stopusedate,jdbcType=TIMESTAMP}, #{cusNoGive,jdbcType=VARCHAR}, #{cusNameGive,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -298,6 +302,12 @@
       <if test="stopusedate != null">
         stopUseDate,
       </if>
+      <if test="cusNoGive != null">
+        cus_no_give,
+      </if>
+      <if test="cusNameGive != null">
+        cus_name_give,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -422,6 +432,12 @@
       </if>
       <if test="stopusedate != null">
         #{stopusedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cusNoGive != null">
+        #{cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNameGive != null">
+        #{cusNameGive,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -557,9 +573,14 @@
       <if test="record.stopusedate != null">
         stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.cusNoGive != null">
+        cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusNameGive != null">
+        cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR},
+      </if>
       id=id
     </set>
-
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -606,7 +627,9 @@
       buyerDesc = #{record.buyerdesc,jdbcType=VARCHAR},
       prd_no = #{record.prdNo,jdbcType=VARCHAR},
       saleManDesc = #{record.salemandesc,jdbcType=VARCHAR},
-      stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP}
+      stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
+      cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
+      cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -734,6 +757,12 @@
       <if test="stopusedate != null">
         stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
       </if>
+      <if test="cusNoGive != null">
+        cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNameGive != null">
+        cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
+      </if>
       id=id
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -779,7 +808,9 @@
       buyerDesc = #{buyerdesc,jdbcType=VARCHAR},
       prd_no = #{prdNo,jdbcType=VARCHAR},
       saleManDesc = #{salemandesc,jdbcType=VARCHAR},
-      stopUseDate = #{stopusedate,jdbcType=TIMESTAMP}
+      stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
+      cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
+      cus_name_give = #{cusNameGive,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

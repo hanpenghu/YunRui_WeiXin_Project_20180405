@@ -1,5 +1,7 @@
 package com.winwin.picreport.Futils;
 
+import com.winwin.picreport.AllConstant.Cnst;
+
 public class SpringbootJarPath {
 
     public static String JarLuJingGet() {
@@ -16,7 +18,10 @@ public class SpringbootJarPath {
             path = path.substring(0, i);
             path = path.substring(0, path.lastIndexOf("/"));
         }
-
+        //处理路径中的%20为 " "
+        if(path!=null&&path.contains(Cnst.enCodeSpace)){
+            path=path.replace(Cnst.enCodeSpace,Cnst.spaceStr);
+        }
         return path;
     }
 }

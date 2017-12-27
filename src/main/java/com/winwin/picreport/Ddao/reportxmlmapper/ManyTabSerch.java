@@ -15,7 +15,11 @@ public interface ManyTabSerch {
 
         List<SalePrdDetailTab1> salePrdDetailTab1(@Param("chaXunTiaoJian") ChaXunTiaoJian chaXunTiaoJian,@Param("cus_no")String cus_no);//销货明细表
 
+        @Select("SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1")//1是客户//2是厂商
         List<KeHu> getAllCustOf_obj_id_1_that_KeHuNotChangShang();
+
+        @Select("SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=2")//1是客户//2是厂商
+        List<KeHu> getAll_obj_id_2_that_ChangShang();
 
         Integer updateMfPosNullToNothing001(@Param("mfPosWithBLOBs") MfPosWithBLOBs mfPosWithBLOBs);
         Integer updateTfPosNullToNothing001(@Param("mfPosWithBLOBs") MfPosWithBLOBs mfPosWithBLOBs);

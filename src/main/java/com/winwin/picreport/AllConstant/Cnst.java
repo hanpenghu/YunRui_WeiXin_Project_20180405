@@ -3,8 +3,6 @@ package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
-import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Edto.UpDefMy;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 @Order(2)
 @Component("cnst")
@@ -36,18 +33,21 @@ public class Cnst {
     public static final String  picFgf="_";
 
     public static final String  dian=".";
-    public static final String  space="";
+    public static final String emptyStr ="";
+    public static final String spaceStr =" ";
     public static final String  ganTanHao="!";
     public static final String  fenHao=";";
+    public static final String  enCodeSpace="%20";
 
     public static String getProjectPath(){
-        return  SpringbootJarPath.JarLuJingGet();
+        String jarPath = SpringbootJarPath.JarLuJingGet();
+        return jarPath;
     }
 
     //这个路径是springbootjar运行后深入到缩略图文件夹中的路径最后带个/
     public  String getSpringbootJarSuoLueTuFilePath(){
        return  p.gp().sad(Cnst.getProjectPath())
-                .sad(daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.space))
+                .sad(daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr))
                 .sad(suoLueTuWenJianJia).gad();
     }
 

@@ -199,9 +199,9 @@
     WHEN #{chaXunTiaoJian.endTime}='' THEN '8888-12-31'-&#45;&#45;传空的过来我们就把时间尽量最大化,其实最大的是9999-12-31
     ELSE #{chaXunTiaoJian.endTime}
     END  &#45;&#45;&#45;&#45;大的(近的)时间必须在前面-->
-    <select id="getAllCustOf_obj_id_1_that_KeHuNotChangShang" resultType="com.winwin.picreport.Edto.KeHu">
-        SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1----OBJ_ID=1是客户,2代表厂商
-    </select>
+   <!-- <select id="getAllCustOf_obj_id_1_that_KeHuNotChangShang" resultType="com.winwin.picreport.Edto.KeHu">
+        SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1&#45;&#45;&#45;&#45;OBJ_ID=1是客户,2代表厂商
+    </select>-->
 
 
     <update id="updateMfPosNullToNothing001">

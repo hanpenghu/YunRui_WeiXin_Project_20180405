@@ -11,7 +11,10 @@ public interface InterFaceCnst {
     //分页测试接口//第一级路径不要加上 /d
      String itemsPage="itemsPage";
 
+    String allYeWuYuan="allYeWuYuan";
 
+     String base="/base";
+     String allKeHu="allKeHu";
     //删除单个附件接口//路径加上 /d
      String deleteOneAttach="deleteOneAttach";
     //删除单个img//路径加上 /d
@@ -89,7 +92,7 @@ public interface InterFaceCnst {
     String upLoadExcelDontMerageOfSaleOrder="upLoadExcelDontMerageOfSaleOrder";
     
     
-    
+    String allFactory="allFactory";//所有厂商接口,前面加    /base/allFactory
     
     
     

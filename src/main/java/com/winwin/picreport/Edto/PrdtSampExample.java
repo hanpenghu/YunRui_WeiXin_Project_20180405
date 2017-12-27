@@ -2855,6 +2855,146 @@ public class PrdtSampExample {
             addCriterion("stopUseDate not between", value1, value2, "stopusedate");
             return (Criteria) this;
         }
+
+        public Criteria andCusNoGiveIsNull() {
+            addCriterion("cus_no_give is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveIsNotNull() {
+            addCriterion("cus_no_give is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveEqualTo(String value) {
+            addCriterion("cus_no_give =", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveNotEqualTo(String value) {
+            addCriterion("cus_no_give <>", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveGreaterThan(String value) {
+            addCriterion("cus_no_give >", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveGreaterThanOrEqualTo(String value) {
+            addCriterion("cus_no_give >=", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveLessThan(String value) {
+            addCriterion("cus_no_give <", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveLessThanOrEqualTo(String value) {
+            addCriterion("cus_no_give <=", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveLike(String value) {
+            addCriterion("cus_no_give like", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveNotLike(String value) {
+            addCriterion("cus_no_give not like", value, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveIn(List<String> values) {
+            addCriterion("cus_no_give in", values, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveNotIn(List<String> values) {
+            addCriterion("cus_no_give not in", values, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveBetween(String value1, String value2) {
+            addCriterion("cus_no_give between", value1, value2, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNoGiveNotBetween(String value1, String value2) {
+            addCriterion("cus_no_give not between", value1, value2, "cusNoGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveIsNull() {
+            addCriterion("cus_name_give is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveIsNotNull() {
+            addCriterion("cus_name_give is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveEqualTo(String value) {
+            addCriterion("cus_name_give =", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveNotEqualTo(String value) {
+            addCriterion("cus_name_give <>", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveGreaterThan(String value) {
+            addCriterion("cus_name_give >", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveGreaterThanOrEqualTo(String value) {
+            addCriterion("cus_name_give >=", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveLessThan(String value) {
+            addCriterion("cus_name_give <", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveLessThanOrEqualTo(String value) {
+            addCriterion("cus_name_give <=", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveLike(String value) {
+            addCriterion("cus_name_give like", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveNotLike(String value) {
+            addCriterion("cus_name_give not like", value, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveIn(List<String> values) {
+            addCriterion("cus_name_give in", values, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveNotIn(List<String> values) {
+            addCriterion("cus_name_give not in", values, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveBetween(String value1, String value2) {
+            addCriterion("cus_name_give between", value1, value2, "cusNameGive");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusNameGiveNotBetween(String value1, String value2) {
+            addCriterion("cus_name_give not between", value1, value2, "cusNameGive");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

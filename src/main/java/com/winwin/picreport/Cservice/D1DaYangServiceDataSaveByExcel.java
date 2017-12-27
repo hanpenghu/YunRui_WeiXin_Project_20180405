@@ -88,7 +88,7 @@ public class D1DaYangServiceDataSaveByExcel {
             //得到要入数据库的第i条数据
             PrdtSamp ps = list.get(i);
             //定义imageurl,准备放入数据库
-            String imageurl=Cnst.space;
+            String imageurl=Cnst.emptyStr;
             //比如  0_1_5,第0个Sheet  第i+1个行,  第5个列
             String s=p.gp().sad(Cnst.sheetNo).sad(Cnst.picFgf)
                     .sad(String.valueOf(i+1)).sad(Cnst.picFgf)
