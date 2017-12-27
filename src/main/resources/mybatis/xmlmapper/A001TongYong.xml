@@ -234,6 +234,7 @@
 
     <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
        Select
+       top 10
        a.s_dd --as sDd,---价格创建日期
        ,a.up --as up ,--价格
        ,a.qty --as qty ,--数量
@@ -249,6 +250,8 @@
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
        and
         a.price_id=#{priceId,jdbcType=VARCHAR}
+        ORDER BY
+        s_dd
     </select>
 
 
