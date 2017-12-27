@@ -8,7 +8,7 @@ import java.util.*;
 public strictfp class p {
 
     public final static String space="";
-
+    public static final String unixBir="1970-01-01";
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
     public final static String d2="yyyy-MM-dd HH:mm:ss";
     public final static String d3="yyyy-MM-dd";

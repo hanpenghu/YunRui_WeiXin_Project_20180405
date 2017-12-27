@@ -158,5 +158,11 @@ public class Cnst {
 
 
 
+    /**
+     *下面是杂项
+     * */
+    public static final String testDataCurrentCode="实验数据货币代号";
+    public static final String testDataCurrentName="实验数据货币名称";
+    public static final String testDataUnit="实验数据单位";
     
 }

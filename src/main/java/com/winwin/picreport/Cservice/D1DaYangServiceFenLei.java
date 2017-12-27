@@ -11,12 +11,10 @@ import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 @Service("fenLei")
 public class D1DaYangServiceFenLei {
     @Autowired
