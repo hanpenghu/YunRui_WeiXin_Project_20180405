@@ -8,6 +8,7 @@ import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -28,7 +29,7 @@ import java.util.*;
 @CrossOrigin
 @RestController
 /**
- *导入excel,销售订单,比原来的多了一个不用导入的
+ *导入excel,销售订单,上面那个A1ReportRestControllerEXCELUpLoad是sap导入的,比这个复杂
  * */
 public class D3SaleOrderUpLoadFromExcel {
 
@@ -75,11 +76,19 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 }
 
     private void quChuKongDeMsg(List<Msg> listmsg) {
-            listmsg.forEach((msg)->{
-                if(!NotEmpty.notEmpty(msg.getMsg())){
-                    listmsg.remove(msg);
-                }
-            });
+//            listmsg.forEach((msg)->{
+//                if(!NotEmpty.notEmpty(msg.getMsg())){
+//                    listmsg.remove(msg);
+//                }
+//            });
+        Iterator<Msg> iterator = listmsg.iterator();
+        while(iterator.hasNext()){
+            Msg next = iterator.next();
+            if(NotEmpty.empty(next.getMsg())){
+                iterator.remove();
+            }
+        }
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +136,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
                     //for一次就是处理同一批号osNo一次
                     Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3,listmsg);
-                    cnst.d3SaleOrderUpLoadFromExcelService
+                    this.cnst.d3SaleOrderUpLoadFromExcelService
                             .saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
@@ -145,98 +154,109 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 ///////////////////////////////////////////////////////////////////////////////////
     public Map<String,List> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3,List<Msg> listmsg){
         Map<String,List>map=new HashMap();
-        //用list00来装入合并同一货号的几个东西后的ShouDingDanFromExcel
-        List<ShouDingDanFromExcel> list=new ArrayList<>();
-        //收集同一货号的list
-        List<List<ShouDingDanFromExcel>>samePrdNoList=new ArrayList<>();
-
-        //注意:传进来的list3已经是同一订单号下面了
-        //去重所有相同的(货号+成分代码)的组合放入set集合,因为同一订单下,货号+成分代码一起相同才能合并
-        Set<String>prdNoAndCfdmSet =new HashSet<>();
-        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-            prdNoAndCfdmSet.add(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim());
-        }
-
-        //循环所有去重后的货号+成分代码的集合,因为去重后导入主表的就只有去重后这么多了
-        for(String prdNoAndCfdm:prdNoAndCfdmSet){
-            //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
-            List<ShouDingDanFromExcel>list0=new ArrayList<>();
-            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
-                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim())){
-                    list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
-                }
-            }
-                ///list0存的其实是当前 (货号+成分代码)相同 下的所有excel数据,需要合并,但是没有合并
-            //这个算法的精妙之处在于,循环(货号+成分代码),然后一边用samePrdNoList收集没有合并的excel,一边合并list0中的数据放入list,最后
-            //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
-
-            //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
-
-            samePrdNoList.add(list0);
-          /*  System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
-                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    }
-                }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
-            //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
-//            synchronized (this){//这个内部就是为了合并
-//                double qty=0;//数量
-//                double amtn=0;//未税金额
-//                double tax=0;//税额
-//                double amt=0;//金额合并
-////                double danJia=0;//当时想错了,单价不能合并
-//                for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-//                    try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty().trim()); } catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有qty数量不是数字  "+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-//                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amtn未税金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-//                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有tax税额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-//                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-////                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
+//        //用list00来装入合并同一货号的几个东西后的ShouDingDanFromExcel
+//        List<ShouDingDanFromExcel> list=new ArrayList<>();
+//        //收集同一货号的list
+//        List<List<ShouDingDanFromExcel>>samePrdNoList=new ArrayList<>();
+//
+//        //注意:传进来的list3已经是同一订单号下面了
+//        //去重所有相同的(货号+成分代码)的组合放入set集合,因为同一订单下,货号+成分代码一起相同才能合并
+//        Set<String>prdNoAndCfdmSet =new HashSet<>();
+//        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
+//            prdNoAndCfdmSet.add(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim());
+//        }
+//
+//        //循环所有去重后的货号+成分代码的集合,因为去重后导入主表的就只有去重后这么多了
+//        for(String prdNoAndCfdm:prdNoAndCfdmSet){
+//            //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
+//            List<ShouDingDanFromExcel>list0=new ArrayList<>();
+//            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
+//                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim())){
+//                    list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
 //                }
-//                if(list0.size()>0) {
-//                    //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
-//                    ShouDingDanFromExcel shouDingDanFromExcel=new ShouDingDanFromExcel();
+//            }
+//                ///list0存的其实是当前 (货号+成分代码)相同 下的所有excel数据,需要合并,但是没有合并
+//            //这个算法的精妙之处在于,循环(货号+成分代码),然后一边用samePrdNoList收集没有合并的excel,一边合并list0中的数据放入list,最后
+//            //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
 //
-//                    ShouDingDanFromExcel shouDingDanFromExcel1 = list0.get(0);
+//            //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
 //
-//                    BeanUtils.copyProperties(shouDingDanFromExcel1,shouDingDanFromExcel);
-//
-//                    ////////////////////2017-11-23郑总让加/////////////////////////////////////////////////////////////////////////
-//                    AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,shouDingDanFromExcel);//在类内部进行判断计算各种金额
-//                    ///////////////////////////////////////////////////////////////////////////////////////////
-//                    shouDingDanFromExcel.setQty(String.valueOf(qty));
-//                    shouDingDanFromExcel.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn,2));
-//                    shouDingDanFromExcel.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax,2));
-//                    shouDingDanFromExcel.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt,2));
-////                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
-//                    list.add(shouDingDanFromExcel);//合并后放入list
-//                }
-//               /* System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            samePrdNoList.add(list0);
+//          /*  System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
 //                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
 //                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 //                    }
 //                }
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
-//            }
-        }
+//            //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
+////            synchronized (this){//这个内部就是为了合并
+////                double qty=0;//数量
+////                double amtn=0;//未税金额
+////                double tax=0;//税额
+////                double amt=0;//金额合并
+//////                double danJia=0;//当时想错了,单价不能合并
+////                for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+////                    try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty().trim()); } catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有qty数量不是数字  "+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+////                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amtn未税金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+////                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有tax税额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+////                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+//////                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
+////                }
+////                if(list0.size()>0) {
+////                    //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
+////                    ShouDingDanFromExcel shouDingDanFromExcel=new ShouDingDanFromExcel();
+////
+////                    ShouDingDanFromExcel shouDingDanFromExcel1 = list0.get(0);
+////
+////                    BeanUtils.copyProperties(shouDingDanFromExcel1,shouDingDanFromExcel);
+////
+////                    ////////////////////2017-11-23郑总让加/////////////////////////////////////////////////////////////////////////
+////                    AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,shouDingDanFromExcel);//在类内部进行判断计算各种金额
+////                    ///////////////////////////////////////////////////////////////////////////////////////////
+////                    shouDingDanFromExcel.setQty(String.valueOf(qty));
+////                    shouDingDanFromExcel.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn,2));
+////                    shouDingDanFromExcel.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax,2));
+////                    shouDingDanFromExcel.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt,2));
+//////                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
+////                    list.add(shouDingDanFromExcel);//合并后放入list
+////                }
+////               /* System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+////                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
+////                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+////                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+////                    }
+////                }
+////                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
+////            }
+//        }
 
 //        map.put("samePrdNoMeraged",list);
         //老郑让这个玩意不用合并了,所以,放入同一个东西
-        map.put("samePrdNoMeraged",samePrdNoList);
-        map.put("samePrdNoList",samePrdNoList);
+        map.put("samePrdNoMeraged",list3);
+        map.put("samePrdNoList",null);//不用了
         return  map;
     }
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
-        if(listmsg.size()>1){
-            listmsg.forEach((msg1)->{
-                if(msg.equals(msg1.getMsg())){
-                    listmsg.remove(msg1);
-                }
-            });
-        }
+        List<Msg> listmsg1=new ArrayList<>();
+//        for(Msg ms:listmsg){
+//            listmsg1.add(ms);
+//        }
+//        for(Msg ms:listmsg){
+//            if(ms!= null&&ms.getMsg()!=null&&ms.getMsg().equals(msg)){
+//                for(Msg ms1:listmsg1){
+//                    if(ms1!= null&&ms1.getMsg()!=null&&ms1.getMsg().equals(msg)){
+//                        listmsg1.remove(ms1);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        for(Msg msgg:listmsg){
+//            listmsg.remove(msgg);
+//        }
+//        listmsg.addAll(listmsg1);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})

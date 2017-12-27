@@ -4,7 +4,10 @@ import com.winwin.picreport.AllConstant.OrderPreCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.AmtAndAmtnAndTaxChongXinSuan;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.TimeStampToDate;
+import com.winwin.picreport.Futils.p;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -16,6 +19,7 @@ import java.util.Map;
 @Service
 @Transactional
 public class D3SaleOrderUpLoadFromExcelService {
+    @Autowired
     private Cnst cnst;
     @Transactional
     public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg>listmsg){
@@ -34,6 +38,7 @@ public class D3SaleOrderUpLoadFromExcelService {
 
     @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg){
+        this.prdNoGet(s);
         Msg msg=new Msg();
         MfPosWithBLOBs m=new MfPosWithBLOBs();
         TfPosWithBLOBs t=new TfPosWithBLOBs();
@@ -162,6 +167,18 @@ public class D3SaleOrderUpLoadFromExcelService {
         saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt,listmsg);
 ///////////////////////////////////////////
     }
+
+    private void prdNoGet(ShouDingDanFromExcel s) {
+        if(NotEmpty.empty(s.getPrdNo())){
+            String prdName = s.getPrdName();
+            String s1 = cnst.a001TongYongMapper.selectTop1PrdtNo(prdName);
+            s.setPrdNo(s1);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~没有prdNo,自己找到一个如下~~~~~~~~~~~~~~~~~~~~~~");
+            p.p(s1);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m,
@@ -215,7 +232,8 @@ public class D3SaleOrderUpLoadFromExcelService {
             tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
             long ll = cnst.tfPosZMapper.countByExample(tfze);
             tz.setItm(new Long(ll).intValue()+1);
-            cnst.tfPosZMapper.insert(tz);
+            //2017_12_27   weekday(3)   11:09:03,不在需要
+//            cnst.tfPosZMapper.insert(tz);
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
             cnst.manyTabSerch.updateMfPosNullToNothing001(m);
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);

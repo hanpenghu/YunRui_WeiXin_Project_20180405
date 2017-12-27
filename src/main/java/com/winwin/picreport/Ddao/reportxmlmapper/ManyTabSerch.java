@@ -3,14 +3,14 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 import com.winwin.picreport.Edto.*;
 import org.apache.ibatis.annotations.*;
 
-import java.util.List;
+import java.util.*;
 
 public interface ManyTabSerch {
 
 
         //得到数据库当前时间
         @Select("SELECT GETDATE()")
-        java.util.Date getDate();
+        Date getDate();
 
 
         List<SalePrdDetailTab1> salePrdDetailTab1(@Param("chaXunTiaoJian") ChaXunTiaoJian chaXunTiaoJian,@Param("cus_no")String cus_no);//销货明细表
