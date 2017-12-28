@@ -9,8 +9,11 @@ import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,10 +60,12 @@ public class D1DaYangServiceFenLei {
     public FenYe dangqianyeData(FenYe fenYe) {
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
-        List<PrdtSamp> prdtSampList=new ArrayList<>();
+        List<PrdtSamp0> prdtSampList=new ArrayList<>();
         List<String> idList =cnst. manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
-            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp0 prdtSampX=new PrdtSamp0();
+            BeanUtils.copyProperties(prdtSampX1,prdtSampX);
             Date insertdate = prdtSampX.getInsertdate();
             try {
                 prdtSampX.setInsertdateStr(p.dtoStr(insertdate,p.d2));

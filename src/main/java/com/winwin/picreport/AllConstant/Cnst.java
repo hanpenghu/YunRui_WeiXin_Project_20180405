@@ -16,7 +16,7 @@ import java.util.Date;
 @Component("cnst")
 public class Cnst {
 
-
+    public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1
     public static final String buyPriceId="2";//采购的是2
     public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";

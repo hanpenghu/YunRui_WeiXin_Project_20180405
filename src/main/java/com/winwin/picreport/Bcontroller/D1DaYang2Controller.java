@@ -2,6 +2,7 @@ package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.p;
@@ -29,7 +30,7 @@ public class D1DaYang2Controller {
     FenYe f(@RequestBody FenYe fenYe){
         if(fenYe==null){
             FenYe f=new FenYe();
-            ArrayList<PrdtSamp> prdtSamps = new ArrayList<>();
+            ArrayList<PrdtSamp0> prdtSamps = new ArrayList<>();
             f.setPrdtSampList(prdtSamps);
             return f;
         }else{
@@ -37,7 +38,7 @@ public class D1DaYang2Controller {
                 return  this.manyConditionSearchOfPrdtFiltList(fenYe);
             } catch (IllegalAccessException e) {
                 FenYe f1=new FenYe();
-                ArrayList<PrdtSamp> prdtSamps1 = new ArrayList<>();
+                ArrayList<PrdtSamp0> prdtSamps1 = new ArrayList<>();
                 f1.setPrdtSampList(prdtSamps1);
                 return f1;
             }
@@ -93,7 +94,7 @@ public class D1DaYang2Controller {
         //把每页显示数和当前页设置进去
         p1.setMeiYeXianShiShu(f.getMeiYeXianShiShu());
         p1.setDangQianYe(f.getDangQianYe());
-        List<PrdtSamp> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+        List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
         f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));

@@ -1,111 +1,254 @@
 package com.winwin.picreport.Edto;
-
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
+import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.Constant.ConstantInit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-/**
- *该类是数据库映射出来的原始类
- * */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PrdtSamp0 {
+import java.util.List;
 
-     protected String id;//一条录入记录的唯一标识符号
+//PrdtSamp0是原汁原味的自动生成的,  PrdtSamp是添加的功能
+public class PrdtSamp0 extends PrdtSamp{
+    //销售价格列表
+    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+    //采购价格列表
+    List<UpDefMy>upDefMyListByer=new ArrayList<>();
 
-     protected String prdCode;//产品编码
+    protected String sampMakeStamp;//打样时间戳//传给我这个
+    protected String sampSendStamp;//样品寄出时间戳//传给我这个
 
-     protected String idxName;//产品名称
+    //这个是转后的时间String格式,专门给徐勇用的在前端显示的
+    protected String sampMakeStr;//给徐勇用
+    protected String sampSendStr;//给徐勇用
 
-     protected String idxNo;//产品分类
 
-     protected String markName;//品牌
+    //给徐勇显示在前端用的该条记录插入时间
+    protected String insertdateStr;
 
-     protected String markNo;//品牌编号
 
-     protected String colour;//颜色
+    //该条记录的所有缩略图路径的集合,用上面的dirUrl来拼接
+    protected List<String> thumUrlList=new ArrayList<>();
+    //该条记录的所有附件路径的集合,用上面的dirUrl来拼接
+    protected List<String> attachUrlList=new ArrayList<>();
 
-     protected String size;//尺寸
-    //产品负责人
-     protected String salName;
-    //产品负责人编码
-     protected String salNo;
-
-     protected String cusNo;//客户编号
-
-     protected String cusName;//客户名称
-
-     protected String isfenjie;//是否分解//是否分解, y代表分解, n代表不分解
+    //服务器的和图片所在的ip和域名,用于拼接附件和图片的地址
+    protected String dirUrl="http://10.0.3.101:8070/";
+    //构造函数初始化网址
+    public PrdtSamp0(){
+        this.dirUrl= ConstantInit.getDirUrl001();
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    protected Date sampMake;//打样时间
 
-     protected Date sampSend;//----样品寄出时间
+
+
+    //打样时间戳  //前端传过来时间戳的时候变成Date赋给sampMake
+
+    public Date getSampMake() {
+        //        String res;
+        //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if(this.sampMake!=null){//用于从数据库选出来的时候
+            return this.sampMake;
+        }
+        //下面的步骤是前端穿过来的时候转化完进数据库用的
+        Date date = null;
+        try {
+            long lt = new Long(this.sampMakeStamp);
+            date = new Date(lt);
+        } catch (Exception e) {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampMakeStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
+        }
+        //        res = simpleDateFormat.format(date);
+
+        if(date!=null){
+            String format1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+                date=null;
+            }
+        }
+
+
+        this.sampMake=date;
+        return date;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////使用转换字段转换过来的时间//////////////////////////////////////////////////////////////////
+
+    //样品寄出时间戳  //前端传过来时间戳的时候变成Date赋给sampSend
+    //给数据库用的
+
+    public Date getSampSend() {
+        if(this.sampSend!=null){//用于从数据库选出来的时候
+            return this.sampSend;
+        }
+        //下面是插入数据库的时候用的,因为插入的时候徐勇传过来的sampSendStamp,所以此时sampSend肯定是空的
+        Date date = null;
+        try {
+            long lt = new Long(this.sampSendStamp);
+            date = new Date(lt);
+        } catch (Exception e) {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampSendStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
+        }
+
+        if(date!=null){
+            String format1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
+            if ("1900-01-01".equals(format1)||"1970-01-01".equals(format1)) {
+                date=null;
+            }
+        }
+
+
+        this.sampSend=date;
+        return date;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public String getSampMakeStr() {
+        System.out.println(this.getSampMake());
+        String s = null;
+        try {
+            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampMake());
+//        sampMakeStr=s;
+        } catch (Exception e) {
+
+        }
+        return s;
+    }
+
+    public PrdtSamp setSampMakeStr(String sampMakeStr) {
+        this.sampMakeStr = sampMakeStr;
+        return this;
+    }
+
+    public String getSampSendStr() {
+        String s = null;
+        try {
+            s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getSampSend());
+//        sampSendStr=s;
+        } catch (Exception e) {
+
+        }
+        return s;
+    }
+
+    public PrdtSamp setSampSendStr(String sampSendStr) {
+        this.sampSendStr = sampSendStr;
+        return this;
+    }
+
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //样品要求
-     protected String sampRequ;
-    //样品描述
-     protected String sampDesc;
-    //---缩略图名字包含的路径字符串,用;隔开,路径里面有!导致用户的缩略名字不能有!和;
-     protected String thum;
 
-    //附件路径字符串,多个用;隔开,名字中的！做分隔符号
-     protected String attach;
-  ///////////////////////////////////////////////////////////////////////////
-    //该条记录插入时间,数据库自动会添加DEFAULT一个getdate()
-     protected Date insertdate;
+/////////////////////////////////////////////////////////////////////////////////////
 
-     protected String confirmman;//确认人
 
-     protected String confirmtimestr;//确认时间   直接带-的字符串
+    public String getInsertdateStr() {
+        return insertdateStr;
+    }
 
-     protected Integer isconfirm;//是否确认，1代表已经确认  0代表未确认
+    public PrdtSamp setInsertdateStr(String insertdateStr) {
+        this.insertdateStr = insertdateStr;
+        return this;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-     protected String category;//未知//老郑让弄得
 
-     protected String teamname;//未知//老郑让弄得
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-     protected String confirmrem;//确认备注
 
-     protected String unit;//单位
+    public List<String> getThumUrlList() {
 
-     protected String businessdesc;//业务描述
+        String thum1=this.getThum();
+        //把得到的缩略图的一堆路径拆成数组
+        if(thum1!=null&&!"".equals(thum1)){
+            List<String> strings = Arrays.asList(thum1.split(";"));
+            List<String>strList=new ArrayList<>();
+            //给每个图片加上地址、
+            for(String  str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.thumUrlList=strList;
+        }
+        return thumUrlList;
+    }
 
-     protected String financedesc;//财务描述
 
-     protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部
+    public PrdtSamp setThumUrlList(List<String> thumUrlList) {
+        this.thumUrlList = thumUrlList;
+        return this;
+    }
 
-     protected BigDecimal modelcost;//模具费
 
-     protected BigDecimal estimateprice;//预估价
+    public List<String> getAttachUrlList() {
+        String attach1=this.getAttach();
+        //把得到的缩略图的一堆路径拆成数组
+        if(attach1!=null&&!Cnst.emptyStr.equals(attach1)){
+            List<String> strings = Arrays.asList(attach1.split(Cnst.fenHao));
+            List<String>strList=new ArrayList<>();
+            for(String str:strings){
+                strList.add(dirUrl+str);
+            }
+            this.attachUrlList=strList;
+        }
+        return attachUrlList;
+    }
 
-     protected BigDecimal littleorderprice;//小单费
+    public PrdtSamp setAttachUrlList(List<String> attachUrlList) {
+        this.attachUrlList = attachUrlList;
+        return this;
+    }
 
-    protected String modelcostinvoiceno;//模具费用发票号
-    //财务起订量
-    protected BigDecimal financestartsellcount;
-//财务模具费
-    protected BigDecimal financemodelcost;
-//财务小单费
-    protected BigDecimal financelittleorderprice;
-//采购描述
-    protected String buyerdesc;
-    //货号
-    protected String prdNo;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //销售描述
-    protected String salemandesc;
-    //停用时间
-    protected Date stopusedate;
-    //供应商编号
-    protected String cusNoGive;
+    public String getSampMakeStamp() {
+        return sampMakeStamp;
+    }
 
-    //供应商名字
-    protected String cusNameGive;
+    public PrdtSamp setSampMakeStamp(String sampMakeStamp) {
+        this.sampMakeStamp = sampMakeStamp;
+        return this;
+    }
 
+    public String getSampSendStamp() {
+        return sampSendStamp;
+    }
+
+    public PrdtSamp setSampSendStamp(String sampSendStamp) {
+        this.sampSendStamp = sampSendStamp;
+        return this;
+    }
+
+    public List<UpDefMy> getUpDefMyListSale() {
+        return upDefMyListSale;
+    }
+
+    public PrdtSamp setUpDefMyListSale(List<UpDefMy> upDefMyListSale) {
+        this.upDefMyListSale = upDefMyListSale;
+        return this;
+    }
+
+    public List<UpDefMy> getUpDefMyListByer() {
+        return upDefMyListByer;
+    }
+
+    public PrdtSamp setUpDefMyListByer(List<UpDefMy> upDefMyListByer) {
+        this.upDefMyListByer = upDefMyListByer;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp{");
+        sb.append("upDefMyListSale=").append(upDefMyListSale);
+        sb.append(", upDefMyListByer=").append(upDefMyListByer);
+        sb.append('}');
+        return sb.toString();
+    }
 }

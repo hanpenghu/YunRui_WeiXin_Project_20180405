@@ -51,7 +51,7 @@ public class D1DaYangController {
      * */
 
     @RequestMapping(value = InterFaceCnst.deleteOneImage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = "imgUrl", required = false) String imgUrl) {
+    public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = Cnst.imgUrl, required = false) String imgUrl) {
         return cnst.deleteOneImg.deleteOneImage(imgUrl);
     }
 
@@ -69,62 +69,62 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
-     * 这个暂时不用,用下下面那个
-     */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    @Transactional
-    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST,
-                                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-                                            produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<Msg>
-    ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
-                                       @RequestParam(value = "attach", required = false) MultipartFile attach,
-                                       HttpServletRequest request) {
-        String prdtSamp1 = request.getParameter("prdtSamp");
-        try {
-           return cnst.infoEdit.infoEdit(thum,attach,prdtSamp1);
-        } catch (Exception e) {
-            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
-            e.printStackTrace();
-        }
-        return MessageGenerate.generateMessage("保存失败", "保存失败",
-                "数据库系统级别错误", "", "38");
-    }
+//    /**
+//     * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
+//     * 这个暂时不用,用下下面那个
+//     */
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////    @Transactional
+//    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST,
+//                                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//                                            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody List<Msg>
+//    ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
+//                                       @RequestParam(value = "attach", required = false) MultipartFile attach,
+//                                       HttpServletRequest request) {
+//        String prdtSamp1 = request.getParameter("prdtSamp");
+//        try {
+//           return cnst.infoEdit.infoEdit(thum,attach,prdtSamp1);
+//        } catch (Exception e) {
+//            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
+//            e.printStackTrace();
+//        }
+//        return MessageGenerate.generateMessage("保存失败", "保存失败",
+//                "数据库系统级别错误", "", "38");
+//    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     *这个暂时不用,用下面那个接口
-     * */
-
-    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2",
-        method = RequestMethod.POST,
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-public @ResponseBody List<Msg>
-imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
-    String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-    List<MultipartFile> thumList =
-            ((MultipartHttpServletRequest) request).getFiles("thum");
-
-    List<MultipartFile> attachList =
-            ((MultipartHttpServletRequest) request).getFiles("attach");
-
-
-    MultipartFile thum=null;
-    if(NotEmpty.notEmpty(thumList)){
-        thum=thumList.get(0);
-    }
-    try {
-        return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
-    } catch (Exception e) {
-        System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
-                "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
-        e.printStackTrace();
-    }
-    return MessageGenerate.generateMessage("保存失败", "保存失败",
-            "数据库系统级别错误", "", "38");
-}
+//    /**
+//     *这个暂时不用,用下面那个接口
+//     * */
+//
+//    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2",
+//        method = RequestMethod.POST,
+//        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//public @ResponseBody List<Msg>
+//imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
+//    String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
+//    List<MultipartFile> thumList =
+//            ((MultipartHttpServletRequest) request).getFiles("thum");
+//
+//    List<MultipartFile> attachList =
+//            ((MultipartHttpServletRequest) request).getFiles("attach");
+//
+//
+//    MultipartFile thum=null;
+//    if(NotEmpty.notEmpty(thumList)){
+//        thum=thumList.get(0);
+//    }
+//    try {
+//        return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
+//    } catch (Exception e) {
+//        System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
+//                "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
+//        e.printStackTrace();
+//    }
+//    return MessageGenerate.generateMessage("保存失败", "保存失败",
+//            "数据库系统级别错误", "", "38");
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -307,10 +307,10 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      *分类实行层级制,这个已经被拦截器放行了     /d/allfenleitest
      * */
 
-    @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody CategoryNameCode allfenleitest() {
-        return cnst.fenLei.getAllLayer();
-    }
+//    @RequestMapping(value = "allfenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+//    public @ResponseBody CategoryNameCode allfenleitest() {
+//        return cnst.fenLei.getAllLayer();
+//    }
 
 
     @RequestMapping(value = InterFaceCnst.allfenlei, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
@@ -327,13 +327,13 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
         return categoryNameCodeList;
     }
-
-    @RequestMapping(value = "fenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    List<CategoryNameCode> fenleitest() {
-        List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
-        return categoryNameCodeList;
-    }
+//
+//    @RequestMapping(value = "fenleitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+//    public @ResponseBody
+//    List<CategoryNameCode> fenleitest() {
+//        List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
+//        return categoryNameCodeList;
+//    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = InterFaceCnst.fuZeRen, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
@@ -343,12 +343,12 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         return fuZeRenList;
     }
 
-    @RequestMapping(value = "fuZeRentest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    List<FuZeRen> fuZeRentest() {
-        List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
-        return fuZeRenList;
-    }
+//    @RequestMapping(value = "fuZeRentest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+//    public @ResponseBody
+//    List<FuZeRen> fuZeRentest() {
+//        List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
+//        return fuZeRenList;
+//    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = InterFaceCnst.pinPai, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
@@ -359,23 +359,23 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
 
-    @RequestMapping(value = "pinPaitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    List<PinPai> pinPaitest() {
-        List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
-        return fuZeRenList;
-    }
+//    @RequestMapping(value = "pinPaitest", method = RequestMethod.GET, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+//    public @ResponseBody
+//    List<PinPai> pinPaitest() {
+//        List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
+//        return fuZeRenList;
+//    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
     /////////////////////////////////////////////list///////////////////////////////////////////////////////
-    @RequestMapping(value = "insertDaYang", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    List<Msg> insertDaYang(@RequestBody PrdtSamp prdtSamp) {
-//        List<Msg> list=fenLei.insertDaYang(prdtSamp);
-        return MessageGenerate.generateMessage("该接口已经废弃,请调用新的接口   imageUpLoadAndDataSave");
-    }
+//    @RequestMapping(value = "insertDaYang", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+//    public @ResponseBody
+//    List<Msg> insertDaYang(@RequestBody PrdtSamp prdtSamp) {
+////        List<Msg> list=fenLei.insertDaYang(prdtSamp);
+//        return MessageGenerate.generateMessage("该接口已经废弃,请调用新的接口   imageUpLoadAndDataSave");
+//    }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 

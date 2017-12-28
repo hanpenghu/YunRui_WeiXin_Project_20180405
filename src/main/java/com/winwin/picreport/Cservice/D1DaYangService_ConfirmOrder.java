@@ -3,13 +3,16 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,10 +26,12 @@ public class D1DaYangService_ConfirmOrder {
 
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
-        List<PrdtSamp> prdtSampList=new ArrayList<>();
+        List<PrdtSamp0> prdtSampList=new ArrayList<>();
         List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdNotConfirm(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         for(String id:idList){
-            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp0 prdtSampX=new PrdtSamp0();
+            BeanUtils.copyProperties(prdtSampX1,prdtSampX);
             Date insertdate = prdtSampX.getInsertdate();
             try {
                 String insertdateStr= new SimpleDateFormat(p.d2).format(insertdate);
@@ -58,10 +63,10 @@ public class D1DaYangService_ConfirmOrder {
     /**
      *只要传过来当前页就行了//默认每页显示数10
      * */
-    public FenYe alReadyConfirmOrderPage(FenYe fenYe) {
+    public FenYe alReadyConfirmOrderPage(FenYe fenYe)  {
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
-        List<PrdtSamp> prdtSampList=new ArrayList<>();
+        List<PrdtSamp0> prdtSampList=new ArrayList<>();
 
 
         List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdAlReadyConfirm
@@ -69,7 +74,9 @@ public class D1DaYangService_ConfirmOrder {
 
 
         for(String id:idList){
-            PrdtSamp prdtSampX = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            PrdtSamp0 prdtSampX=new PrdtSamp0();
+            BeanUtils.copyProperties(prdtSampX1,prdtSampX);
             Date insertdate = prdtSampX.getInsertdate();
             try {
 

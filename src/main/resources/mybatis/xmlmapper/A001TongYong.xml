@@ -5,7 +5,7 @@
     <!-- 可以继承另一个名称空间的东西-->
     <resultMap id="PrdtSampBaseResultMap"
                extends="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.BaseResultMap"
-               type="com.winwin.picreport.Edto.PrdtSamp">
+               type="com.winwin.picreport.Edto.PrdtSamp0">
     </resultMap>
 
     <!--添加查询模块给所有返回信息

@@ -2,6 +2,7 @@ package com.winwin.picreport.Acomponent;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDefMy;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
@@ -16,7 +17,7 @@ import java.util.List;
 public class GetPriceModelUpdef {
     @Autowired
    private Cnst cnst;
-    public void GetPriceModel(PrdtSamp prdtSampX) {
+    public void GetPriceModel(PrdtSamp0 prdtSampX) {
         String prdNo=prdtSampX.getPrdNo();
         List<UpDefMy> upDefMyListSale= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.salPriceId);
         List<UpDefMy>upDefMyListByer=cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.buyPriceId);

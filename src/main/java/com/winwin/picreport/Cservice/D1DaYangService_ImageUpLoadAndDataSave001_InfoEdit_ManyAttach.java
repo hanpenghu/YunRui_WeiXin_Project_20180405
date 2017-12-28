@@ -1,7 +1,9 @@
 package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -21,16 +23,16 @@ import java.util.UUID;
 @Service("infoEditOfManyAttach")
 public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
     @Autowired
-    private PrdtSampMapper prdtSampMapper;
+    private Cnst cnst;
 
-    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
-    private String daYangSuoLueTuAndFuJianZongPath;
-
-    @Value("${suoLueTuWenJianJia}")
-    private String suoLueTuWenJianJia;
-
-    @Value("${fuJianWenJianJia}")
-    private String fuJianWenJianJia;
+//    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
+//    private String daYangSuoLueTuAndFuJianZongPath;
+//
+//    @Value("${suoLueTuWenJianJia}")
+//    private String suoLueTuWenJianJia;
+//
+//    @Value("${fuJianWenJianJia}")
+//    private String fuJianWenJianJia;
     @Transactional
     public List<Msg> infoEditOfManyAttach(MultipartFile thum ,
                                           List<MultipartFile> attachList,
@@ -45,14 +47,14 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             }
 
 
-            PrdtSamp prdtSampOb=null;
+            PrdtSamp0 prdtSampOb=null;
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
 //            p.p(prdtSamp1);
 //            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
-                prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp.class);
+                prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
             }
 
             if (NotEmpty.notEmpty(prdtSampOb)) {
@@ -66,7 +68,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
 
 
             //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-            PrdtSamp prdtSamp = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+            PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
 
             if(prdtSamp==null){
                 return MessageGenerate.generateMessage("保存失败", "保存失败",
@@ -85,8 +87,8 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
              * */
             if (thum != null) {
                 //将缩略图保存在指定的目录
-                thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
-                if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
+                thum.transferTo(new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
+                if (!new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
                     return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存！", "", "35");
                 }
 
@@ -96,7 +98,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 //给缩略图添加一个新的路径进去,用;号隔开路径，
                 //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
                 //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                imageThumUrl = imageThumUrl + suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
+                imageThumUrl = imageThumUrl + cnst.suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
             }
             if ("".equals(imageThumUrl)) {
                 imageThumUrl = null;//为了是null的时候不更新这个字段
@@ -108,7 +110,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
             prdtSampOb.setIsconfirm(null);
             //Selective是不更新null
-            if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
+            if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
                 return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
             }
 
@@ -116,9 +118,9 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
              *下面是保存多个附件8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
              * */
             for(MultipartFile attach:attachList){
-                PrdtSamp prdtSampO=new PrdtSamp();
+                PrdtSamp0 prdtSampO=new PrdtSamp0();
                 //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-                PrdtSamp prdtsa = prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+                PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
                 String attachmentUr = prdtsa.getAttach();
                 String uid = UUID.randomUUID().toString();
                 ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
@@ -127,7 +129,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 }
 
 
-                String s1 = projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + fuJianWenJianJia;
+                String s1 = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.fuJianWenJianJia;
                 if (attach != null) {
                     //将附件保存在指定的目录
                     attach.transferTo(new File(s1, uid + "!" + attach.getOriginalFilename()));
@@ -142,7 +144,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                     //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
                     //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
                     //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                    attachmentUr = attachmentUr + fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
+                    attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
                 }
                 if ("".equals(attachmentUr)) {
                     attachmentUr = null;//为了是null的时候不更新这个字段
@@ -155,7 +157,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
                 prdtSampO.setIsconfirm(null);//不更新这个
                 //Selective是不更新null
-                if (prdtSampMapper.updateByPrimaryKeySelective(prdtSampO) == 0) {
+                if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO) == 0) {
                     return MessageGenerate.generateMessage("保存失败", "保存失败",
                             "数据库系统级别错误,保存某个Attach的路径时候出错", "", "38");
                 }else{
@@ -176,7 +178,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
     }
 
     @Transactional
-    public PrdtSamp prdtSampWhereSpaceToNull(PrdtSamp prdtSamp) {
+    public PrdtSamp0 prdtSampWhereSpaceToNull(PrdtSamp0 prdtSamp) {
         if ("".equals(prdtSamp.getPrdCode())) {
             prdtSamp.setPrdCode(null);
         }

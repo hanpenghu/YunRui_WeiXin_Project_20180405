@@ -1,13 +1,14 @@
 package com.winwin.picreport.Futils;
 
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FenYe {
-	private List<PrdtSamp> prdtSampList=new ArrayList<>();//第一次需要传入的数据
+	private List<PrdtSamp0> prdtSampList=new ArrayList<>();//第一次需要传入的数据
 	private Integer dangQianYe;//当前页的页面传过来
 	private Integer meiYeXianShiShu=10;
 	private Integer zongYeShu;
@@ -26,12 +27,17 @@ public class FenYe {
 		return this;
 	}
 
-	public List<PrdtSamp> getPrdtSampList() {
+	public List<PrdtSamp0> getPrdtSampList() {
 		return prdtSampList;
 	}
 
-	public FenYe setPrdtSampList(List<PrdtSamp> prdtSampList) {
+	public FenYe setPrdtSampList(List<PrdtSamp0> prdtSampList) {
 		this.prdtSampList = prdtSampList;
+		return this;
+	}
+
+	public FenYe setZongYeShu(Integer zongYeShu) {
+		this.zongYeShu = zongYeShu;
 		return this;
 	}
 

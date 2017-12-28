@@ -140,7 +140,7 @@ public interface A001TongYongMapper {
 
 
 
-   List<PrdtSamp> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
+   List<PrdtSamp0> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 
    @Select("Select top 1 prd_no from prdt where name=#{prdCode} order by prd_no desc")

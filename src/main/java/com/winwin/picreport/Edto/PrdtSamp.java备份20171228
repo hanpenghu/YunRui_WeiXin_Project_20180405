@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
  *该类是数据库映射出来的原始类
  * */
@@ -15,7 +16,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrdtSamp {
+public class PrdtSamp备份20171228 {
 
      protected String id;//一条录入记录的唯一标识符号
 
