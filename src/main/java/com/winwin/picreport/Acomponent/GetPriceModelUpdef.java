@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDefMy;
+import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class GetPriceModelUpdef {
    private Cnst cnst;
     public void GetPriceModel(PrdtSamp0 prdtSampX) {
         String prdNo=prdtSampX.getPrdNo();
-        List<UpDefMy> upDefMyListSale= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.salPriceId);
-        List<UpDefMy>upDefMyListByer=cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.buyPriceId);
+        List<UpDefMy01> upDefMyListSale= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.salPriceId);
+        List<UpDefMy01>upDefMyListByer=cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.buyPriceId);
         if(NotEmpty.empty(upDefMyListSale)){
             //为了给徐勇做实验用
             upDefMyListSale.addAll(p.gp().setArl(UpDefMy.builder()

@@ -156,7 +156,7 @@ public interface A001TongYongMapper {
 
 
 
-    List<UpDefMy> getUpDefMy(@Param("prdNo") String prdNo,@Param("priceId") String priceId);
+    List<UpDefMy01> getUpDefMy(@Param("prdNo") String prdNo,@Param("priceId") String priceId);
 
 
 

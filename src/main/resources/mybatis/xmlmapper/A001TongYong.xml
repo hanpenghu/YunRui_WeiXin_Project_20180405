@@ -21,6 +21,7 @@
         <result column="UP" jdbcType="NUMERIC" property="up" />
         <result column="UNIT" jdbcType="VARCHAR" property="unit" />
         <result column="name" jdbcType="VARCHAR" property="curName" />
+        <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
     </resultMap>
    <!-- <sql id="PrdtSampBase_Column_List">
         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
@@ -240,6 +241,7 @@
        ,a.qty --as qty ,--数量
        ,a.unit ---as unit,---单位
        ,a.cur_id ---as curId,----币别代号
+       ,a.bil_type----01代表不含运费的单价
        ,b.name ----as curName ----币别名字
        from
        up_def a,

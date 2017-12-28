@@ -10,9 +10,9 @@ import java.util.List;
 //PrdtSamp0是原汁原味的自动生成的,  PrdtSamp是添加的功能
 public class PrdtSamp0 extends PrdtSamp{
     //销售价格列表
-    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+    List<UpDefMy01>upDefMyListSale=new ArrayList<>();
     //采购价格列表
-    List<UpDefMy>upDefMyListByer=new ArrayList<>();
+    List<UpDefMy01>upDefMyListByer=new ArrayList<>();
 
     protected String sampMakeStamp;//打样时间戳//传给我这个
     protected String sampSendStamp;//样品寄出时间戳//传给我这个
@@ -224,20 +224,20 @@ public class PrdtSamp0 extends PrdtSamp{
         return this;
     }
 
-    public List<UpDefMy> getUpDefMyListSale() {
+    public List<UpDefMy01> getUpDefMyListSale() {
         return upDefMyListSale;
     }
 
-    public PrdtSamp setUpDefMyListSale(List<UpDefMy> upDefMyListSale) {
+    public PrdtSamp0 setUpDefMyListSale(List<UpDefMy01> upDefMyListSale) {
         this.upDefMyListSale = upDefMyListSale;
         return this;
     }
 
-    public List<UpDefMy> getUpDefMyListByer() {
+    public List<UpDefMy01> getUpDefMyListByer() {
         return upDefMyListByer;
     }
 
-    public PrdtSamp setUpDefMyListByer(List<UpDefMy> upDefMyListByer) {
+    public PrdtSamp0 setUpDefMyListByer(List<UpDefMy01> upDefMyListByer) {
         this.upDefMyListByer = upDefMyListByer;
         return this;
     }
