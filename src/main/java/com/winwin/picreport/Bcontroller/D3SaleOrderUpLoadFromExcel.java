@@ -6,7 +6,7 @@ import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,18 +74,18 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 ////////////////////////////////
 }
 
-    private void quChuKongDeMsg(List<Msg> listmsg) {
-//            listmsg.forEach((msg)->{
-//                if(!NotEmpty.notEmpty(msg.getMsg())){
-//                    listmsg.remove(msg);
-//                }
-//            });
-        Iterator<Msg> iterator = listmsg.iterator();
-        while(iterator.hasNext()){
-            Msg next = iterator.next();
-            if(NotEmpty.empty(next.getMsg())){
-                iterator.remove();
-            }
+    private void quChuKongDeMsg(List<Msg> listmsg)   {
+        try {
+            //移出msg是NULL的元素
+            p.removeSameEle(listmsg,Msg.class,"msg",null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+            //移出msg是""的元素
+            p.removeSameEle(listmsg,Msg.class,"msg","");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
 
     }
@@ -238,24 +238,11 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
-        List<Msg> listmsg1=new ArrayList<>();
-//        for(Msg ms:listmsg){
-//            listmsg1.add(ms);
-//        }
-//        for(Msg ms:listmsg){
-//            if(ms!= null&&ms.getMsg()!=null&&ms.getMsg().equals(msg)){
-//                for(Msg ms1:listmsg1){
-//                    if(ms1!= null&&ms1.getMsg()!=null&&ms1.getMsg().equals(msg)){
-//                        listmsg1.remove(ms1);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        for(Msg msgg:listmsg){
-//            listmsg.remove(msgg);
-//        }
-//        listmsg.addAll(listmsg1);
+        try {
+            p.removeSameEle(listmsg,Msg.class,"msg",msg);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})

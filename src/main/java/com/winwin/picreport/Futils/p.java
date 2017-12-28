@@ -545,20 +545,25 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
      * compareContentToFieldValue是将来安排的"比较内容",比如,你要删除的元素的属性值是compareContentToFieldValue的才删除,
      * 其他不删除,  如果list装的是一般类型不是对象,这个值就代表了list里面的元素值
      *
+     *
+     * compareContentToFieldValue填入的是NULL的时候删除的就是属性值是NULL的那个元素
      * */
-    public static void removeOneEle(List<?> list ,Class listEleType,String comparedFieldName,Object compareContentToFieldValue) throws IllegalAccessException {
+    public static void removeSameEle(List<?> list ,Class listEleType,String comparedFieldName,Object compareContentToFieldValue) throws IllegalAccessException {
 
         //如果list里面没东西,直接不进行了
         if(list==null||list.size()==0){
            return;
         }
         Object listFirstObj = list.get(0);
+
         //此时是String类型
         if(StringType.equals(listEleType.getTypeName())||BigDecimalType.equals(listEleType.getTypeName())){
             Iterator<?> iterator = list.iterator();
             while(iterator.hasNext()){
                 Object next = iterator.next();
-                if(next.equals(compareContentToFieldValue)){
+                if(compareContentToFieldValue==null){
+                    iterator.remove();
+                }else if(next.equals(compareContentToFieldValue)){
                     iterator.remove();
                 }
             }
@@ -567,7 +572,9 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
             Iterator<?> iterator = list.iterator();
             while(iterator.hasNext()){
                 Object next = iterator.next();
-                if(next==(compareContentToFieldValue)){
+                if(compareContentToFieldValue==null){
+                    iterator.remove();
+                }else if(next==(compareContentToFieldValue)){
                     iterator.remove();
                 }
             }
@@ -582,8 +589,11 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
                    Object o = field.get(next);
                    String fieldName = field.getName();
                    String typeName = o.getClass().getTypeName();
-                   //属性值是String的情况
-                   if(comparedFieldName.equals(fieldName)&&StringType.equals(typeName)&&o.equals(compareContentToFieldValue)){
+                   //此时是删除是某个元素属性是NULL的那个元素
+                   if(comparedFieldName.equals(fieldName)&&StringType.equals(typeName)&&o==null&&compareContentToFieldValue==null){
+                       iterator.remove();
+                       //属性值是String的情况
+                   }else if(comparedFieldName.equals(fieldName)&&StringType.equals(typeName)&&o.equals(compareContentToFieldValue)){
                        iterator.remove();
                        //属性值是BigDecimal的情况
                    }else if(comparedFieldName.equals(fieldName)&&BigDecimalType.equals(typeName)&&o.equals(compareContentToFieldValue)){
@@ -607,7 +617,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         list.addAll(p.gp().setArl(new x().setStr("str")).setArl(new x().setStr("str")).setArl(new x().setStr("xxx")).getArl());
         p.p(list);
         //删除子弹str属性值是"xxx"的
-        removeOneEle(list,x.class,"str","xxx");
+        removeSameEle(list,x.class,"str","xxx");
         p.p(list);
 
     }
@@ -618,7 +628,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         list.addAll(p.gp().setArl(new x().setStr("str")).setArl(new x().setStr("str")).setArl(new x().setStr("xxx")).getArl());
         p.p(list);
         //删除子弹str属性值是"xxx"的
-        removeOneEle(list,x.class,"str","str");
+        removeSameEle(list,x.class,"str","str");
         p.p(list);
 
     }
