@@ -106,8 +106,10 @@ public class Cnst {
     @Autowired
     public D1DaYangService d1DaYangService;
 
-    @Value("${dirUrl}")
+    @Value(Cnst.dirUrlStr)
     public String dirUrl;
+
+    public static final String dirUrlStr="${dirUrl}";
 
     @Value("${suoLueTuWenJianJia}")
     public String suoLueTuWenJianJia;

@@ -1,7 +1,6 @@
 package com.winwin.picreport.Edto;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.ConstantInit;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,7 @@
 package com.winwin.picreport.Futils;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,7 +32,24 @@ public strictfp class p {
     public final static String hanhanBirthday_="1986-12-26";
     public final static String hanhanBirthday="1986/12/26";
     public final static String DateType="java.util.Date";
-    public final static String StringType="java.util.String";
+    public final static String StringType="java.lang.String";
+    public final static String BigDecimalType="java.math.BigDecimal";
+    public final static List<String>numberTypelist=Arrays.asList(new String[]
+            {"int","java.lang.Integer",
+                    "double","java.lang.Double",
+                    "float","java.lang.Float","java.lang.Long"
+                    ,"long","java.lang.Short","short"});
+    public final static String intType="int";
+    public final static String IntegerType="java.lang.Integer";
+    public final static String doubleType="double";
+    public final static String DoubleType="java.lang.Double";
+    public final static String floatType="float";
+    public final static String FloatType="java.lang.Float";
+    public final static String LongType="java.lang.Long";
+    public final static String longType="long";
+    public final static String ShortType="java.lang.Short";
+    public final static String shortType="short";
+//    public final static String ;
     private String ads="";
     private StringBuffer sb=new StringBuffer();
     private List lin=new LinkedList();
@@ -39,6 +57,20 @@ public strictfp class p {
     /**
      ****************************************************************************************
      * */
+    @Test
+    public void xx(){
+        p.p(int.class.getTypeName());//int
+        p.p(Integer.class.getTypeName());//java.lang.Integer
+        p.p(double.class.getTypeName());//double
+        p.p(Double.class.getTypeName());//java.lang.Double
+        p.p(float.class.getTypeName());//float
+        p.p(Float.class.getTypeName());//java.lang.Float
+        p.p(Long.class.getTypeName());//java.lang.Long
+        p.p(long.class.getTypeName());//long
+        p.p(Short.class.getTypeName());//java.lang.Short
+        p.p(short.class.getTypeName());//short
+    }
+
     /**
      *g得到s链式连接的字符串
      * */
@@ -122,7 +154,7 @@ public strictfp class p {
      ****************************************************************************************
      * */
     /**
-     *equals缩写
+     *equals缩写,判断两个字符串如果等于返回true
      * */
        public static boolean dy(String str1 ,String str2){
            if(str1!=null){
@@ -146,7 +178,7 @@ public strictfp class p {
            }
        }
 
-
+    //equals缩写,判断两个字符串如果不等于返回true
     public static boolean bdy(String str1 ,String str2){
            if(dy(str1,str2)){
                return false;
@@ -495,6 +527,160 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     @Test
     public void f5(){
         p(Date.class.getName());
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *关于list去除一个元素变长问题
+     *
+     * 这个工具主要是解决  从list元素里删除若干个符合条件的元素,list装的是基本类型的时候比较基本类型,是对象的时候比较对象
+     * 的某一个参数值来决定是否删除list中的该对象
+     *
+     *
+     * 参数  list 是一个装满  listEleType 类型的list
+     * 参数 listEleType  是list里面装的元素的类型,注意,一定要装的是同一类型才能用该工具
+     * 参数 comparedFieldName就是将来要删除的元素中如果是对象类型的,comparedFieldName就是该对象的属性名的字符串形式
+     * 如果 list里装的不是对象,compareContentToFieldValue可以写个""或者NULL,因为不会走到比较对象那一步
+     *
+     * compareContentToFieldValue是将来安排的"比较内容",比如,你要删除的元素的属性值是compareContentToFieldValue的才删除,
+     * 其他不删除,  如果list装的是一般类型不是对象,这个值就代表了list里面的元素值
+     *
+     * */
+    public static void removeOneEle(List<?> list ,Class listEleType,String comparedFieldName,Object compareContentToFieldValue) throws IllegalAccessException {
+
+        //如果list里面没东西,直接不进行了
+        if(list==null||list.size()==0){
+           return;
+        }
+        Object listFirstObj = list.get(0);
+        //此时是String类型
+        if(StringType.equals(listEleType.getTypeName())||BigDecimalType.equals(listEleType.getTypeName())){
+            Iterator<?> iterator = list.iterator();
+            while(iterator.hasNext()){
+                Object next = iterator.next();
+                if(next.equals(compareContentToFieldValue)){
+                    iterator.remove();
+                }
+            }
+        //此时是数字类型
+       }else if(numberTypelist.contains(listEleType.getTypeName())) {
+            Iterator<?> iterator = list.iterator();
+            while(iterator.hasNext()){
+                Object next = iterator.next();
+                if(next==(compareContentToFieldValue)){
+                    iterator.remove();
+                }
+            }
+       //此时是普通对象带元素的类型
+       }else if(listFirstObj.getClass().getTypeName().equals(listEleType.getTypeName())){
+           Iterator<?> iterator = list.iterator();
+           while(iterator.hasNext()){
+               Object next = iterator.next();
+               Field[] declaredFields = next.getClass().getDeclaredFields();
+               for(Field field:declaredFields){
+                   field.setAccessible(true);
+                   Object o = field.get(next);
+                   String fieldName = field.getName();
+                   String typeName = o.getClass().getTypeName();
+                   //属性值是String的情况
+                   if(comparedFieldName.equals(fieldName)&&StringType.equals(typeName)&&o.equals(compareContentToFieldValue)){
+                       iterator.remove();
+                       //属性值是BigDecimal的情况
+                   }else if(comparedFieldName.equals(fieldName)&&BigDecimalType.equals(typeName)&&o.equals(compareContentToFieldValue)){
+                       iterator.remove();
+                       //属性是数字类型的情况,数字类型就是numberTypelist里的所有类型
+                   }else if(comparedFieldName.equals(fieldName)&&numberTypelist.contains(typeName)&&o==compareContentToFieldValue){
+                       iterator.remove();
+                   }else{
+
+                   }
+               }
+           }
+       }else{
+           p.p("此时的list里面装的类型是："+listEleType.getTypeName()+"无法进行比对,请优化工具对类型的处理情况");
+       }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Test
+    public void f8() throws IllegalAccessException {
+        List<x>list=new ArrayList<>();
+        list.addAll(p.gp().setArl(new x().setStr("str")).setArl(new x().setStr("str")).setArl(new x().setStr("xxx")).getArl());
+        p.p(list);
+        //删除子弹str属性值是"xxx"的
+        removeOneEle(list,x.class,"str","xxx");
+        p.p(list);
+
+    }
+
+    @Test
+    public void f9() throws IllegalAccessException {
+        List<x>list=new ArrayList<>();
+        list.addAll(p.gp().setArl(new x().setStr("str")).setArl(new x().setStr("str")).setArl(new x().setStr("xxx")).getArl());
+        p.p(list);
+        //删除子弹str属性值是"xxx"的
+        removeOneEle(list,x.class,"str","str");
+        p.p(list);
+
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Test
+    public void f6(){
+        p.p("".getClass().getTypeName());
+        p.p(new Integer(5).getClass().getTypeName());
+        p.p(new BigDecimal(5).getClass().getTypeName());
+        p.p(new BigDecimal(5).equals(new BigDecimal(6)));//false
+        p.p(new BigDecimal(5).equals(new BigDecimal(5)));//true
+    }
+
+
+    /**
+     *System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+     * */
+    public class x{
+        public int x=1;
+        public String str="str";
+
+        public int getX() {
+            return x;
+        }
+
+        public x setX(int x) {
+            this.x = x;
+            return this;
+        }
+
+        public String getStr() {
+            return str;
+        }
+
+        public x setStr(String str) {
+            this.str = str;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.p.x{");
+            sb.append("x=").append(x);
+            sb.append(", str='").append(str).append('\'');
+            sb.append('}');
+            return sb.toString();
+        }
+    }
+
+    /**
+     *
+     * */
+    @Test
+    public void f7(){
+        Field[] declaredFields = x.class.getDeclaredFields();
+        for(Field field:declaredFields){
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p(field.getName());
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        }
+
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

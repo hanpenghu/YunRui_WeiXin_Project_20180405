@@ -1,4 +1,5 @@
 package com.winwin.picreport.AllConstant.Constant;
+import com.winwin.picreport.AllConstant.Cnst;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -6,7 +7,7 @@ import javax.annotation.PostConstruct;
 @Order(1)
 @Component
 public class ConstantInit {
-    @Value("${dirUrl}")
+    @Value(Cnst.dirUrlStr)
     private  String dirUrl="";
     private static String dirUrl001="";
     @PostConstruct//这个注解是在当构造方法初始化的时候,spring顺便初始化的方法
