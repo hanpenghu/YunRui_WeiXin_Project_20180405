@@ -9,10 +9,11 @@ import java.util.List;
 
 //PrdtSamp0是原汁原味的自动生成的,  PrdtSamp是添加的功能
 public class PrdtSamp0 extends PrdtSamp{
-    //销售价格列表
-    List<UpDefMy01>upDefMyListSale=new ArrayList<>();
-    //采购价格列表
-    List<UpDefMy01>upDefMyListByer=new ArrayList<>();
+    //价格列表,采购和销售合并
+    List<UpDefMy01>upDefMyList=new ArrayList<>();
+
+    //价格列表,单独采购的
+    List<UpDefMy01>upDefMyListBuy=new ArrayList<>();
 
     protected String sampMakeStamp;//打样时间戳//传给我这个
     protected String sampSendStamp;//样品寄出时间戳//传给我这个
@@ -224,30 +225,30 @@ public class PrdtSamp0 extends PrdtSamp{
         return this;
     }
 
-    public List<UpDefMy01> getUpDefMyListSale() {
-        return upDefMyListSale;
+    public List<UpDefMy01> getUpDefMyList() {
+        return upDefMyList;
     }
 
-    public PrdtSamp0 setUpDefMyListSale(List<UpDefMy01> upDefMyListSale) {
-        this.upDefMyListSale = upDefMyListSale;
+    public PrdtSamp0 setUpDefMyList(List<UpDefMy01> upDefMyList) {
+        this.upDefMyList = upDefMyList;
         return this;
     }
 
-    public List<UpDefMy01> getUpDefMyListByer() {
-        return upDefMyListByer;
+    public String getDirUrl() {
+        return dirUrl;
     }
 
-    public PrdtSamp0 setUpDefMyListByer(List<UpDefMy01> upDefMyListByer) {
-        this.upDefMyListByer = upDefMyListByer;
+    public PrdtSamp0 setDirUrl(String dirUrl) {
+        this.dirUrl = dirUrl;
         return this;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp{");
-        sb.append("upDefMyListSale=").append(upDefMyListSale);
-        sb.append(", upDefMyListByer=").append(upDefMyListByer);
-        sb.append('}');
-        return sb.toString();
+    public List<UpDefMy01> getUpDefMyListBuy() {
+        return upDefMyListBuy;
+    }
+
+    public PrdtSamp0 setUpDefMyListBuy(List<UpDefMy01> upDefMyListBuy) {
+        this.upDefMyListBuy = upDefMyListBuy;
+        return this;
     }
 }

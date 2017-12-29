@@ -14,7 +14,7 @@
 //    //采购价格列表
 //    List<UpDefMy>upDefMyListByer=new ArrayList<>();
     -->
-    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy">
+    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
         <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
         <id column="QTY" jdbcType="NUMERIC" property="qty" />
         <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
@@ -22,6 +22,8 @@
         <result column="UNIT" jdbcType="VARCHAR" property="unit" />
         <result column="name" jdbcType="VARCHAR" property="curName" />
         <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
+        <result column="price_id" jdbcType="VARCHAR" property="priceId" />
+        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
     </resultMap>
    <!-- <sql id="PrdtSampBase_Column_List">
         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
@@ -242,6 +244,8 @@
        ,a.unit ---as unit,---单位
        ,a.cur_id ---as curId,----币别代号
        ,a.bil_type----01代表不含运费的单价
+       ,a.rem---备注,打样系统的会存为"打样系统"
+       ,a.price_id----1代表销售价格, 2代表采购价格
        ,b.name ----as curName ----币别名字
        from
        up_def a,
@@ -250,10 +254,18 @@
        a.cur_id=b.cur_id
        and
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
-       and
-        a.price_id=#{priceId,jdbcType=VARCHAR}
+       AND
+        a.price_id=
+        <choose>
+            <when test="priceId != null and priceId != ''">
+                #{priceId}
+            </when>
+            <otherwise>
+                a.price_id
+            </otherwise>
+        </choose>
         ORDER BY
-        s_dd
+        a.s_dd DESC
     </select>
 
 

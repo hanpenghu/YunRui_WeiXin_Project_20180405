@@ -75,11 +75,11 @@ public class D1DaYangServiceFenLei {
             }
             cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.p("");p.p("");p.p("");p.p("");p.p("");
-            p.p(prdtSampX);
-            p.p("");p.p("");p.p("");p.p("");p.p("");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p("");p.p("");p.p("");p.p("");p.p("");
+//            p.p(prdtSampX);
+//            p.p("");p.p("");p.p("");p.p("");p.p("");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         fenYe.setPrdtSampList(prdtSampList);
         fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());

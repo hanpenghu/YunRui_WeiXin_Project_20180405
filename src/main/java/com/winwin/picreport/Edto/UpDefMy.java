@@ -14,17 +14,21 @@ import java.util.Date;
 @Builder
 @Data
 public class UpDefMy {
+
+    //1代表销售的//2代表采购的
+    protected String priceId;
     //bilType是01的是不含运费
     protected String bilType;
-    //定价日期
-    protected Date sDd;
     //从数据库拿到的价格
     protected BigDecimal up;
-    //下面两个不从数据库取出来,而是根据根据bilType是否等于01来用up分配
-    //不含运费单价//up_def中bil_type=01
-    protected BigDecimal noTransUp;//
-    //含运费单价//up_def中bil_type!=01
-    protected BigDecimal haveTransUp;//
+    //是否是打样系统录入的单价//如果是打样系统的,就会有四个字
+    // "打样系统"
+    protected String remOfPrdtSampOs;
+
+
+    //定价日期
+    protected Date sDd;
+
     //数量
     protected BigDecimal qty;
     //单位
@@ -33,7 +37,5 @@ public class UpDefMy {
     protected String curId;
     //币名
     protected String curName;
-    //是否是打样系统录入的单价//如果是打样系统的,就会有四个字
-    // "打样系统"
-    protected String remOfPrdtSampOs;
+
 }
