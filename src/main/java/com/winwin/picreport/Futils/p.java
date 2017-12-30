@@ -54,6 +54,19 @@ public strictfp class p {
     private StringBuffer sb=new StringBuffer();
     private List lin=new LinkedList();
     private List arl=new ArrayList();
+    private Map<String,Object>map=new HashMap<>();
+
+    /**
+     *构造map自动链式生成
+     *
+     * */
+    public p smp(String key,Object val){
+        map.put(key,val);
+        return this;
+    }
+    public Map<String,Object> gmp(){
+        return map;
+    }
     /**
      ****************************************************************************************
      * */

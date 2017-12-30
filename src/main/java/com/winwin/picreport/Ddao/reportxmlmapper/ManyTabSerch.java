@@ -198,4 +198,12 @@ public interface ManyTabSerch {
         @Select("Select * from prdt_Samp order by id DESC")
         List<PrdtSamp> findAll();
 
+        @Select("select cur_id as curId,name as name from cur_id")
+        List<CurrentType> CurrentType();
+
+        @Select("Select distinct ut from prdt ")
+        List<String> allUnit();
+
+        @Select("select prd_no from prdt_samp where id=#{uuid}")
+        String selectPrdNoFromPrdtSamp(@Param("uuid") String uuid);
 }

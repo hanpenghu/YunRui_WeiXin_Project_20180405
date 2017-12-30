@@ -7,7 +7,12 @@ import com.winwin.picreport.Futils.p;
 import java.math.BigDecimal;
 
 public class UpDefMy01 extends UpDefMy {
-
+    //输入到up_def里面的rem备注
+    String rem="打样系统";
+    //前端备注
+    String remFront;
+    //加一个uuid字段,让徐勇传过来保存新的单价
+    String  uuid;
     //不含运费单价的采购价格//up_def中bil_type=01
     BigDecimal noTransUpBuy;//
     //含运费单价采购价格//up_def中bil_type!=01
@@ -23,7 +28,7 @@ public class UpDefMy01 extends UpDefMy {
 
 
 
-    //根据实际bil_type和priceId来分配价格
+    //根据实际bil_type(没有运费是01)和priceId(销售是1,采购是2)来分配价格
 
 
     public BigDecimal getNoTransUpBuy() {
@@ -71,6 +76,33 @@ public class UpDefMy01 extends UpDefMy {
 
     public UpDefMy01 setHaveTransUpSale(BigDecimal haveTransUpSale) {
         this.haveTransUpSale = haveTransUpSale;
+        return this;
+    }
+
+    public String getRemFront() {
+        return remFront;
+    }
+
+    public UpDefMy01 setRemFront(String remFront) {
+        this.remFront = remFront;
+        return this;
+    }
+
+    public String getRem() {
+        return rem;
+    }
+
+    public UpDefMy01 setRem(String rem) {
+        this.rem = rem;
+        return this;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public UpDefMy01 setUuid(String uuid) {
+        this.uuid = uuid;
         return this;
     }
 }

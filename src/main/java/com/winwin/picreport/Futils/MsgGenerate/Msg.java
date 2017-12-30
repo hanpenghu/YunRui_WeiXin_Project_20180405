@@ -1,6 +1,10 @@
 package com.winwin.picreport.Futils.MsgGenerate;
+import com.winwin.picreport.Edto.Data;
+
+import java.util.List;
 
 public class Msg {
+    private Data data;
     private String status="0";
     private String xiaoHaoShiJian="";
     private String msg="";
@@ -112,6 +116,15 @@ public class Msg {
 
     public String getMsg() {
         return this.msg;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public Msg setData(Data data) {
+        this.data = data;
+        return this;
     }
 
 

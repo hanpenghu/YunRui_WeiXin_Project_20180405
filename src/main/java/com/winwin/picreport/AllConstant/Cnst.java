@@ -3,6 +3,7 @@ package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
+import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
+
 
     public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1
@@ -53,6 +55,12 @@ public class Cnst {
     }
 
     @Autowired
+    public GPrdNo gPrdNo;
+
+    @Autowired
+    public UpDefMapper upDefMapper;
+
+    @Autowired
     public SapsoMapper sapsoMapper;
 
     @Autowired
@@ -75,6 +83,8 @@ public class Cnst {
     @Autowired
     public A001TongYongMapper a001TongYongMapper;
 
+    @Autowired
+    public SaveSaleOrBuyPrice saveSaleOrBuyPrice;
 
     public Date getDbDate(){
         return a001TongYongMapper.selectDbDate();

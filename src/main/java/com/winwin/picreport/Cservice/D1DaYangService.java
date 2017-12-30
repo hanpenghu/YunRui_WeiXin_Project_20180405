@@ -217,8 +217,9 @@ public class D1DaYangService {
         try {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
-            //获取prdNo
-            this.prdtSampObjGetPrdNo(prdtSamp);
+            //获取prdNo//下面是void方法的暗地修改
+            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
+//            this.prdtSampObjGetPrdNo(prdtSamp);
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");

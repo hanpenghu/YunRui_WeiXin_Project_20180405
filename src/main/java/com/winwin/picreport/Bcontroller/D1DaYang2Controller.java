@@ -4,7 +4,9 @@ import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
+import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.FenYe;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,15 +46,6 @@ public class D1DaYang2Controller {
             }
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -102,6 +95,125 @@ public class D1DaYang2Controller {
 
 
     }
+
+
+
+
+    /**
+     *采购价格和销售价格的保存放在一个接口
+     * //不含运费单价的采购价格//up_def中bil_type=01
+     BigDecimal noTransUpBuy;//
+     //含运费单价采购价格//up_def中bil_type!=01
+     BigDecimal haveTransUpBuy;//
+
+
+     //不含运费单价的销售价格//up_def中bil_type=01
+     BigDecimal noTransUpSale;//
+     //含运费单价销售价格//up_def中bil_type!=01
+     BigDecimal haveTransUpSale;//
+
+     上面四个字段可以区分采购和销售,
+     比如当noTransUpBuy和haveTransUpBuy都为null的时候肯定是  销售的要保存
+     销售 传入方式
+
+
+     {"uuid":"填入给前端的唯一标识","noTransUpSale":"没有运费的销售定价",
+     "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unit":""}
+
+
+    采购传入方式
+
+
+     {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",
+     "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unit":""}
+
+
+     //地址   ip地址:8070/saveSaleOrBuyPrice
+     * */
+
+
+    @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
+    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up){
+        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up);
+        return msg1;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

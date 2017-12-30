@@ -126,6 +126,6 @@ public interface StatusCnst {
 //            49 excel保存成功
     String excelSaveSucc="49";
 //
-//50 excel保存失败
+//50 excel保存失败//打样价格保存失败也可以用这个
     String excelSaveFalse="50";
 }

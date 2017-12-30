@@ -1,8 +1,12 @@
 package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
+import com.winwin.picreport.AllConstant.StatusCnst;
+import com.winwin.picreport.Edto.CurrentType;
+import com.winwin.picreport.Edto.Data;
 import com.winwin.picreport.Edto.KeHu;
 import com.winwin.picreport.Edto.YeWuYuan;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -41,6 +45,24 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
 }
 ////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value=InterFaceCnst.CurrentType,method= RequestMethod.POST
+            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody Msg CurrentType(){
+        List<CurrentType>currentTypeList=cnst.manyTabSerch.CurrentType();
+        return Msg.gmg().setData(Data.gD().setCurrentTypeList(currentTypeList))
+                .setStatus(StatusCnst.loginSucc).setChMsg("获得所有币别成功");
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
+            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody Msg allUnit(){
+        List<String>currentTypeList=cnst.manyTabSerch.allUnit();
+        return Msg.gmg().setData(Data.gD().setUnitList(currentTypeList))
+                .setStatus(StatusCnst.loginSucc).setChMsg("获得所有单位成功");
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
 }
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////

@@ -94,7 +94,11 @@ public interface InterFaceCnst {
     
     
     String allFactory="allFactory";//所有厂商接口,前面加    /base/allFactory
-    
-    
-    
+
+
+    String saveSaleOrBuyPrice="saveSaleOrBuyPrice";
+
+
+    String CurrentType="CurrentType";
+    String allUnit="allUnit";
 }

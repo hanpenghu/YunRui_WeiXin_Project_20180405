@@ -3,9 +3,9 @@ package com.winwin.picreport.Edto;
 import java.util.Date;
 
 public class CurIdKey {
-    private String curId;
+     String curId;
 
-    private Date ijDd;
+     Date ijDd;
 
     public String getCurId() {
         return curId;

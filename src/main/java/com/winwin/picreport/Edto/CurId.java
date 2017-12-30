@@ -3,29 +3,29 @@ package com.winwin.picreport.Edto;
 import java.math.BigDecimal;
 
 public class CurId extends CurIdKey {
-    private String name;
+     String name;
 
-    private BigDecimal excRto;
+     BigDecimal excRto;
 
-    private String accNoIr;
+     String accNoIr;
 
-    private String accNoIp;
+     String accNoIp;
 
-    private String accNoChk;
+     String accNoChk;
 
-    private BigDecimal excRtoE;
+     BigDecimal excRtoE;
 
-    private BigDecimal excRtoI;
+     BigDecimal excRtoI;
 
-    private BigDecimal excRtoO;
+     BigDecimal excRtoO;
 
-    private String idSgt;
+     String idSgt;
 
-    private String dep;
+     String dep;
 
-    private String deproNo;
+     String deproNo;
 
-    private byte[] upDd;
+     byte[] upDd;
 
     public String getName() {
         return name;
