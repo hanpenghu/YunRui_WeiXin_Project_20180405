@@ -1,12 +1,8 @@
 package com.winwin.picreport.Futils;
-
-import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class FenYe {
 	private List<PrdtSamp0> prdtSampList=new ArrayList<>();//第一次需要传入的数据
 	private Integer dangQianYe;//当前页的页面传过来

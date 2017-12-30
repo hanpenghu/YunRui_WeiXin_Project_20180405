@@ -2,6 +2,7 @@ package com.winwin.picreport.Edto;
 
 //我的定价表
 
+import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
 
 import java.math.BigDecimal;
@@ -31,9 +32,14 @@ public class UpDefMy01 extends UpDefMy {
     //根据实际bil_type(没有运费是01)和priceId(销售是1,采购是2)来分配价格
 
 
+    //采购的情况
     public BigDecimal getNoTransUpBuy() {
         if(p.dy(this.bilType,"01")&&p.dy(this.priceId,"2")){
-            return this.up;
+            if(NotEmpty.notEmpty(this.up)){
+                this.noTransUpBuy=this.up;
+                return this.up;
+            }
+
         }
         return noTransUpBuy;
     }
@@ -43,9 +49,13 @@ public class UpDefMy01 extends UpDefMy {
         return this;
     }
 
+
     public BigDecimal getHaveTransUpBuy() {
         if(p.bdy(this.bilType,"01")&&p.dy(this.priceId,"2")){
-            return this.up;
+            if(NotEmpty.notEmpty(this.up)){
+                this.haveTransUpBuy=this.up;
+                return this.up;
+            }
         }
         return haveTransUpBuy;
     }
@@ -54,10 +64,15 @@ public class UpDefMy01 extends UpDefMy {
         this.haveTransUpBuy = haveTransUpBuy;
         return this;
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //销售的情况
     public BigDecimal getNoTransUpSale() {
         if(p.dy(this.bilType,"01")&&p.dy(this.priceId,"1")){
-            return this.up;
+            if(NotEmpty.notEmpty(this.up)){
+                this.noTransUpSale=this.up;
+                return this.up;
+            }
+
         }
         return noTransUpSale;
     }
@@ -69,7 +84,11 @@ public class UpDefMy01 extends UpDefMy {
 
     public BigDecimal getHaveTransUpSale() {
         if(p.bdy(this.bilType,"01")&&p.dy(this.priceId,"1")){
-            return this.up;
+            if(NotEmpty.notEmpty(this.up)){
+                this.haveTransUpSale=this.up;
+                return this.up;
+            }
+
         }
         return haveTransUpSale;
     }

@@ -141,7 +141,7 @@ public class SaveSaleOrBuyPrice {
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验5~~~~~~~~~~~~~~~~~~~~~~~~");
-            //往价格表up_def插入采购价格
+            //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             int insert = cnst.upDefMapper.insert(upDef);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验6~~~~~~~~~~~~~~~~~~~~~~~~");
             if(insert==0) {
@@ -158,7 +158,7 @@ public class SaveSaleOrBuyPrice {
             upDef.setBilType("01");
             upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验9~~~~~~~~~~~~~~~~~~~~~~~~");
-            //往价格表up_def插入采购价格
+            //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             int insert= cnst.upDefMapper.insert(upDef);
             if(insert==0) {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~10~~~~~~~~~~~~~~~~~");
@@ -209,7 +209,7 @@ public class SaveSaleOrBuyPrice {
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
             //往价格表up_def插入采购价格
-            int insert=cnst.upDefMapper.insert(upDef);
+            int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~13~~~~~~~~~~~~~~~~");
             if(insert==0) {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验14~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -227,7 +227,7 @@ public class SaveSaleOrBuyPrice {
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~17~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格
-            int insert=cnst.upDefMapper.insert(upDef);
+            int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             if(insert==0) {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~18~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)

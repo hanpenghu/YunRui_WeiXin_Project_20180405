@@ -51,9 +51,12 @@ public class D1DaYangServiceFenLei {
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样插入一条数据失败~~~~~~~~~~~~~~~~~~~~~~~~");
-            return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
+            return MessageGenerate.generateMessage("保存失败","保存失败",
+                    "数据库系统级别错误","","38");
         }
-        list = new MessageGenerate().generateMessage(""+ii+"","产品打样新增"+ii+"条数据","产品打样新增"+ii+"条数据","","37");
+        list = new MessageGenerate().generateMessage
+                (""+ii+"","产品打样新增"+ii+"条数据",
+                        "产品打样新增"+ii+"条数据","","37");
         return list;
     }
 
@@ -61,7 +64,8 @@ public class D1DaYangServiceFenLei {
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp0> prdtSampList=new ArrayList<>();
-        List<String> idList =cnst. manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        List<String> idList =cnst. manyTabSerch.selectDangQianYeSuoYouId
+                (fenYe.getDangQianYe(),fenYe.getMeiYeXianShiShu());
         for(String id:idList){
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             PrdtSamp0 prdtSampX=new PrdtSamp0();
@@ -73,6 +77,7 @@ public class D1DaYangServiceFenLei {
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
             }
+            //插入价格模块,走一遍这个模块就插入了
             cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
