@@ -68,7 +68,7 @@ public class SaveSaleOrBuyPrice {
                     .smp("curName", curName)
                     .smp("remFront", remFront)
                     .smp("rem", rem)
-                    .smp("unit", "1")//因为数据库up_def中的unit只能是1或者2这类短的
+                    .smp("unit", unit)//因为数据库up_def中的unit只能是1或者2这类短的
                     .smp("haveTransUpBuy", haveTransUpBuy)
                     .smp("noTransUpBuy", noTransUpBuy)
                     .smp("haveTransUpSale", haveTransUpSale)
@@ -87,9 +87,15 @@ public class SaveSaleOrBuyPrice {
                 cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
                 prdNo=prdtSamp.getPrdNo();
             }
+            ////////////////////////////////////////////////单位对比插入模块//////////////////////////////////////////////
+            //找到该prdNo对应的ut(就是存的单位)
+            String ut=cnst.manyTabSerch.selectUtFromPrdt(prdNo);
 
-
-
+            if(NotEmpty.empty(ut)){
+                //如果是空的,证明prdt表中没有该ut,需要插入该unit
+              int y=  cnst.manyTabSerch.insertUnitToUtOfPrdt(unit,prdNo);
+            }
+//////////////////////////////////////////////////////////////////////////////////////////////
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验1~~prdNo=~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
             if(NotEmpty.empty(prdNo)){
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验2~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -118,6 +124,7 @@ public class SaveSaleOrBuyPrice {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //采购的价格入库
     private Msg saveAsBuyer(Map<String, Object> gmp) {
+        String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
         upDef.setsDd(new Date());
         upDef.setQty((BigDecimal) gmp.get("qty"));
@@ -126,7 +133,7 @@ public class SaveSaleOrBuyPrice {
         //得到币别
         upDef.setCurId((String)gmp.get("curId"));
         //得到单位
-        upDef.setUnit((String)gmp.get("unit"));
+        upDef.setUnit((String)gmp.get("1"));
         upDef.setPriceId("2");
 
         upDef.setCusNo("");
@@ -137,7 +144,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setSupPrdNo("");
         upDef.setCusAre("");
         //采购含运费入库
-        if(NotEmpty.notEmpty( gmp.get("haveTransUpBuy"))){
+        if(NotEmpty.notEmpty(gmp.get("haveTransUpBuy"))){
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
@@ -182,6 +189,7 @@ public class SaveSaleOrBuyPrice {
 
     //销售的价格入库
     private Msg saveAsSaler(Map<String, Object> gmp) {
+        String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
         upDef.setsDd(new Date());
         upDef.setQty((BigDecimal) gmp.get("qty"));
@@ -190,7 +198,7 @@ public class SaveSaleOrBuyPrice {
         //得到币别
         upDef.setCurId((String)gmp.get("curId"));
         //得到单位
-        upDef.setUnit((String)gmp.get("unit"));
+        upDef.setUnit((String)gmp.get("1"));
         //1代表销售,2代表采购
         upDef.setPriceId("1");
 

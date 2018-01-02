@@ -9,7 +9,7 @@ import java.util.List;
 
 //PrdtSamp0是原汁原味的自动生成的,  PrdtSamp是添加的功能
 public class PrdtSamp0 extends PrdtSamp{
-    //价格列表,采购和销售合并
+    //价格列表,采购和销售合并//其实后来弄成单独销售的了
     List<UpDefMy01>upDefMyList=new ArrayList<>();
 
     //价格列表,单独采购的

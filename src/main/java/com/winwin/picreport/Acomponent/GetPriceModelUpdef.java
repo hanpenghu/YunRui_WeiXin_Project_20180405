@@ -105,8 +105,34 @@ public class GetPriceModelUpdef {
             }
 
         }
-        List<UpDefMy01> upDefMyList1=new ArrayList<>();
+        List<UpDefMy01> upDefMyList1=new LinkedList<>();
         map.forEach((key,value)->upDefMyList1.add(value));
+        //按时间从新排序
+        this.sortBySdd(upDefMyList1);
         return upDefMyList1;
     }
+
+
+    private void sortBySdd(List list){
+        Collections.sort(list, new Comparator(){
+            @Override
+            public int compare(Object o1, Object o2) {
+                UpDefMy01 s1=(UpDefMy01)o1;
+                long time1 = s1.getSDd().getTime();
+                UpDefMy01 s2=(UpDefMy01)o2;
+                long time2 = s2.getSDd().getTime();
+
+                if(time1>time2){
+                    return 1;
+                }else if(time1==time1){
+                    return 0;
+                }else{
+                    return -1;
+                }
+            }
+        });
+    }
+
+
+
 }

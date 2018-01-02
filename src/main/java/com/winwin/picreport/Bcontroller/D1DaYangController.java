@@ -172,7 +172,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                     "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
             e.printStackTrace();
         }
-        return MessageGenerate.generateMessage("保存失败", "保存失败",
+        return MessageGenerate.generateMessage
+                ("保存失败", "保存失败",
                 "数据库系统级别错误", "", "38");
     }
 

@@ -237,11 +237,11 @@
 
     <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
        Select
-       top 10
+       top 20
        a.s_dd --as sDd,---价格创建日期
        ,a.up --as up ,--价格
        ,a.qty --as qty ,--数量
-       ,a.unit ---as unit,---单位
+       ,d.ut ---as unit,---单位
        ,a.cur_id ---as curId,----币别代号
        ,a.bil_type----01代表不含运费的单价
        ,a.rem---备注,打样系统的会存为"打样系统"
@@ -249,9 +249,10 @@
        ,b.name ----as curName ----币别名字
        from
        up_def a,
-       cur_id b
+       cur_id b,
+       prdt d
        where
-       a.cur_id=b.cur_id
+       a.cur_id=b.cur_id AND d.prd_no=a.prd_no
        and
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
        AND
