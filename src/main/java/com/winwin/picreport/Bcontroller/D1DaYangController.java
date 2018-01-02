@@ -187,7 +187,9 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * (value = "attach",required = false)
      * 下面弄了那么多attach,意思是一次上传多个,最多上传10个
      *
-     *
+     *传过来的参数有prdtSamp这个json,
+     * 然后再给这个接口  加一个
+     * 参数  放在路径传过来,  usr,用于在产生prd_no的时候存入prdt表
      * 信息保存用,不能用于编辑
      */
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,

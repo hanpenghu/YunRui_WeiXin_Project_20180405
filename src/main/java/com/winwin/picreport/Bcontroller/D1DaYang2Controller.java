@@ -10,6 +10,8 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -131,10 +133,11 @@ public class D1DaYang2Controller {
      //地址   ip地址:8070/saveSaleOrBuyPrice
      * */
 
-
+    //通过路径后面跟一个  ?usr=登录的那个会员名
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
-    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up){
-        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up);
+    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up, HttpServletRequest r){
+        String usr = r.getParameter("usr");
+        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up,usr);
         return msg1;
 
     }

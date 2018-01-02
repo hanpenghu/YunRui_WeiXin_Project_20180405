@@ -20,7 +20,7 @@ public class GPrdNo {
 
 
     @Transactional
-    public void prdtSampObjGetPrdNo(PrdtSamp prdtSamp){
+    public void prdtSampObjGetPrdNo(PrdtSamp prdtSamp,String usr,String chkMan){
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
         //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
@@ -31,7 +31,7 @@ public class GPrdNo {
         }else{
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
-            this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp);
+            this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp,usr,chkMan);
         }
 
         //专门为了价格保存做的额,因为主表插入的时候会插入prd_no,但是价格保存不会动主表,动的up_def
@@ -50,7 +50,7 @@ public class GPrdNo {
 
 
     @Transactional
-    public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp prdtSamp){
+    public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp prdtSamp,String usr,String chkMan){
         synchronized (this) {
             //得到中类代号
             String indx1=prdtSamp.getIdxNo();
@@ -66,7 +66,7 @@ public class GPrdNo {
                 //对应数据库的name
                 String prdCode = prdtSamp.getPrdCode();
                 //给prdt也添加一个货号
-                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode);
+                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode,usr,chkMan);
 
             }
         }

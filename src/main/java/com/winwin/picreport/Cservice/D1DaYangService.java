@@ -24,7 +24,15 @@ public class D1DaYangService {
     @Autowired
     private Cnst cnst;
     @Transactional
-    public List<Msg> ImageUpLoadAndDataSave001(String projectPath, MultipartFile thum,  MultipartFile attach, HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
+    public List<Msg> ImageUpLoadAndDataSave001
+            (String projectPath, MultipartFile thum,
+               MultipartFile attach, HttpServletRequest request,
+               String daYangSuoLueTuAndFuJianZongPath,
+             String dirUrl,String suoLueTuWenJianJia,
+             String fuJianWenJianJia){
+
+        String usr = request.getParameter("usr");
+        String chkMan=usr;
         try {
 
             String uuidstr = UUID.randomUUID().toString();
@@ -38,19 +46,23 @@ public class D1DaYangService {
                 String thumImg= thum.getOriginalFilename();
                 //缩略图和附件不能包含截取字符串的符号
                 if(thumImg.contains("!")||thumImg.contains(";")){
-                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号","您的图片不能包含有!符号或者;符号！","","34");
+                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号",
+                            "您的图片不能包含有!符号或者;符号！","","34");
                 }else{
 
                     thumImg=uuidstr+"!"+thumImg;
                 }
                 //将缩略图保存在指定的目录
-                thum.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+suoLueTuWenJianJia, thumImg));
+                thum.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace
+                        (".","")+suoLueTuWenJianJia, thumImg));
                 //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
 //                imageThumUrl=dirUrl+suoLueTuWenJianJia+thumImg+";";//分号是分隔符
                     //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
                     imageThumUrl=suoLueTuWenJianJia+thumImg+";";
-                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+suoLueTuWenJianJia, thumImg).exists()){
-                    return MessageGenerate.generateMessage("保存失败","保存失败","缩略图没有保存成功导致所有数据没保存","","35");
+                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace
+                        (".","")+suoLueTuWenJianJia, thumImg).exists()){
+                    return MessageGenerate.generateMessage("保存失败","保存失败",
+                            "缩略图没有保存成功导致所有数据没保存","","35");
                 }
 
             }
@@ -60,19 +72,23 @@ public class D1DaYangService {
                 String attachment = attach.getOriginalFilename();
                 //缩略图和附件不能包含截取字符串的符号
                 if(attachment.contains("!")||attachment.contains(";")){
-                    return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号","您的缩略图不能包含有!符号或者;符号","","34");
+                    return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号",
+                            "您的缩略图不能包含有!符号或者;符号","","34");
                 }else{
                     attachment=uuidstr+"!"+attachment;
                 }
                 //将附件保存在指定的目录
-                attach.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+fuJianWenJianJia, attachment));
+                attach.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath
+                        .replace(".","")+fuJianWenJianJia, attachment));
 
                 //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
 //                attachmentUrl=dirUrl+fuJianWenJianJia+attachment+";";//分号是分隔符
                 //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
                 attachmentUrl=fuJianWenJianJia+attachment+";";
-                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+fuJianWenJianJia, attachment).exists()){
-                    return MessageGenerate.generateMessage("保存失败","保存失败","附件没有保存成功导致所有数据没保存","","36");
+                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace
+                        (".","")+fuJianWenJianJia, attachment).exists()){
+                    return MessageGenerate.generateMessage("保存失败","保存失败",
+                            "附件没有保存成功导致所有数据没保存","","36");
                 }
             }
 
@@ -95,12 +111,13 @@ public class D1DaYangService {
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
             prdtSampOb.setId(uuidstr);
-            List<Msg> list=this.insertDaYang(prdtSampOb);
+            List<Msg> list=this.insertDaYang(prdtSampOb,usr,chkMan);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
+        return MessageGenerate.generateMessage("保存失败","保存失败",
+                "数据库系统级别错误","","38");
     }
 
 
@@ -114,7 +131,8 @@ public class D1DaYangService {
              HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,
              String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
 
-
+        String usr = request.getParameter("usr");
+        String chkMan=usr;
         try {
 
             String uuidstr = UUID.randomUUID().toString();
@@ -128,7 +146,8 @@ public class D1DaYangService {
                 String thumImg= thum.getOriginalFilename();
                 //缩略图和附件不能包含截取字符串的符号
                 if(thumImg.contains("!")||thumImg.contains(";")){
-                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号","您的图片不能包含有!符号或者;符号","","34");
+                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号",
+                            "您的图片不能包含有!符号或者;符号","","34");
                 }else{
 
                     thumImg=uuidstr+"!"+thumImg;
@@ -139,8 +158,10 @@ public class D1DaYangService {
 //                imageThumUrl=dirUrl+suoLueTuWenJianJia+thumImg+";";//分号是分隔符
                 //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
                 imageThumUrl=suoLueTuWenJianJia+thumImg+";";
-                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+suoLueTuWenJianJia, thumImg).exists()){
-                    return MessageGenerate.generateMessage("保存失败","保存失败","缩略图没有保存成功导致所有数据没保存!","","35");
+                if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace
+                        (".","")+suoLueTuWenJianJia, thumImg).exists()){
+                    return MessageGenerate.generateMessage("保存失败","保存失败",
+                            "缩略图没有保存成功导致所有数据没保存!","","35");
                 }
 
             }
@@ -150,15 +171,19 @@ public class D1DaYangService {
                     String attachment = attach.getOriginalFilename();
                     //缩略图和附件不能包含截取字符串的符号
                     if(attachment.contains("!")||attachment.contains(";")){
-                        return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号","您的附件不能包含有!符号或者;符号","","34");
+                        return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号",
+                                "您的附件不能包含有!符号或者;符号","","34");
                     }else{
                         attachment=uuidstr+"!"+attachment;
                     }
                     //将附件保存在指定的目录
-                    attach.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+fuJianWenJianJia, attachment));
+                    attach.transferTo(new File(projectPath+daYangSuoLueTuAndFuJianZongPath
+                            .replace(".","")+fuJianWenJianJia, attachment));
 
-                    if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace(".","")+fuJianWenJianJia, attachment).exists()){
-                        return MessageGenerate.generateMessage("保存失败","保存失败","附件没有保存成功导致所有数据没保存!","","36");
+                    if(!new File(projectPath+daYangSuoLueTuAndFuJianZongPath.replace
+                            (".","")+fuJianWenJianJia, attachment).exists()){
+                        return MessageGenerate.generateMessage("保存失败",
+                                "保存失败","附件没有保存成功导致所有数据没保存!","","36");
                     }
                     //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
 //                attachmentUrl=dirUrl+fuJianWenJianJia+attachment+";";//分号是分隔符
@@ -187,7 +212,7 @@ public class D1DaYangService {
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
             prdtSampOb.setId(uuidstr);
-            List<Msg> list=this.insertDaYang(prdtSampOb);
+            List<Msg> list=this.insertDaYang(prdtSampOb,usr,chkMan);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,14 +236,14 @@ public class D1DaYangService {
 
 
     @Transactional
-    public List<Msg> insertDaYang(PrdtSamp prdtSamp) {
+    public List<Msg> insertDaYang(PrdtSamp prdtSamp,String usr,String chkMan) {
         Integer ii= null;
         List<Msg> list;
         try {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
             //获取prdNo//下面是void方法的暗地修改
-            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
+            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
 //            this.prdtSampObjGetPrdNo(prdtSamp);
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
@@ -238,7 +263,7 @@ public class D1DaYangService {
      * */
 
     @Transactional
-    public void prdtSampObjGetPrdNo(PrdtSamp prdtSamp){
+    public void prdtSampObjGetPrdNo(PrdtSamp prdtSamp,String usr,String chkMan){
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
         //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
@@ -249,14 +274,15 @@ public class D1DaYangService {
         }else{
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
-            this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp);
+            this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp,usr,chkMan);
         }
     }
 
 
 
+    //其实usr和chkMan用的都是usr,就是登录的时候的那个人
     @Transactional
-    public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp prdtSamp){
+    public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp prdtSamp,String usr,String chkMan){
         synchronized (this) {
             //得到中类代号
             String indx1=prdtSamp.getIdxNo();
@@ -272,7 +298,7 @@ public class D1DaYangService {
                 //对应数据库的name
                 String prdCode = prdtSamp.getPrdCode();
                 //给prdt也添加一个货号
-                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode);
+                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode,usr,chkMan);
 
             }
         }

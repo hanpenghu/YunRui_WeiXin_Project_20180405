@@ -20,7 +20,8 @@ import java.util.Map;
 public class SaveSaleOrBuyPrice {
     @Autowired
     private Cnst cnst;
-        public Msg saveSaleOrBuyPrice(UpDefMy01 up){
+        public Msg saveSaleOrBuyPrice(UpDefMy01 up,String usr){
+            String chkMan=usr;
             //得到打样唯一标识
             String uuid = up.getUuid();
             //先拿出来需要的全局数据
@@ -83,7 +84,7 @@ public class SaveSaleOrBuyPrice {
                 //下面流水一次单号//注意必须先得到index
                 PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
                 //给prdtSamp流水prdtNo
-                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
+                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
                 prdNo=prdtSamp.getPrdNo();
             }
 
