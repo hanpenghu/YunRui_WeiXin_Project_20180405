@@ -24,6 +24,7 @@
         <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
         <result column="price_id" jdbcType="VARCHAR" property="priceId" />
         <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
+        <result column="ut" jdbcType="VARCHAR" property="unit" />
     </resultMap>
    <!-- <sql id="PrdtSampBase_Column_List">
         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
@@ -241,7 +242,7 @@
        a.s_dd --as sDd,---价格创建日期
        ,a.up --as up ,--价格
        ,a.qty --as qty ,--数量
-       ,d.ut ---as unit,---单位
+       ,d.ut ----as unit,---单位
        ,a.cur_id ---as curId,----币别代号
        ,a.bil_type----01代表不含运费的单价
        ,a.rem---备注,打样系统的会存为"打样系统"
