@@ -8,9 +8,11 @@ import com.winwin.picreport.Futils.p;
 import java.math.BigDecimal;
 
 public class UpDefMy01 extends UpDefMy {
+    String usr;//操作员,登录的会员名
+    String cusNo;
     //输入到up_def里面的rem备注
-    String rem="打样系统";
-    //前端备注
+    String rem;//这个备注徐勇传过来
+    //前端备注,不用了
     String remFront;
     //加一个uuid字段,让徐勇传过来保存新的单价
     String  uuid;
@@ -24,6 +26,7 @@ public class UpDefMy01 extends UpDefMy {
     BigDecimal noTransUpSale;//
     //含运费单价销售价格//up_def中bil_type!=01
     BigDecimal haveTransUpSale;//
+
 
 
 
@@ -122,6 +125,24 @@ public class UpDefMy01 extends UpDefMy {
 
     public UpDefMy01 setUuid(String uuid) {
         this.uuid = uuid;
+        return this;
+    }
+
+    public String getUsr() {
+        return usr;
+    }
+
+    public UpDefMy01 setUsr(String usr) {
+        this.usr = usr;
+        return this;
+    }
+
+    public String getCusNo() {
+        return cusNo;
+    }
+
+    public UpDefMy01 setCusNo(String cusNo) {
+        this.cusNo = cusNo;
         return this;
     }
 }

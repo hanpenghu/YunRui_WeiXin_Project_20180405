@@ -5,6 +5,7 @@ import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.Prdt;
 import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
@@ -31,9 +32,6 @@ public class D1DaYangService {
                String daYangSuoLueTuAndFuJianZongPath,
              String dirUrl,String suoLueTuWenJianJia,
              String fuJianWenJianJia){
-
-        String usr = request.getParameter("usr");
-        String chkMan=usr;
         try {
 
             String uuidstr = UUID.randomUUID().toString();
@@ -107,12 +105,12 @@ public class D1DaYangService {
              *下面是插入数据库数据用的
              * */
             String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
-            PrdtSamp prdtSampOb = JSON.parseObject(prdtSamp, PrdtSamp.class);
+            PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp, PrdtSamp0.class);
             //注意,产品建档的时候直接插入缩略图url字段,将来update的时候得到原来的加上去
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
             prdtSampOb.setId(uuidstr);
-            List<Msg> list=this.insertDaYang(prdtSampOb,usr,chkMan);
+            List<Msg> list=this.insertDaYang(prdtSampOb);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,8 +130,7 @@ public class D1DaYangService {
              HttpServletRequest request,String daYangSuoLueTuAndFuJianZongPath,
              String dirUrl,String suoLueTuWenJianJia,String fuJianWenJianJia){
 
-        String usr = request.getParameter("usr");
-        String chkMan=usr;
+
         try {
 
             String uuidstr = UUID.randomUUID().toString();
@@ -209,9 +206,9 @@ public class D1DaYangService {
              * */
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
 //            p.p("                   ");p.p("                   ");p.p("                   ");
-            String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+            String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
 //            p.p(prdtSamp);
-            PrdtSamp prdtSampOb = JSON.parseObject(prdtSamp, PrdtSamp.class);
+            PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
 //            p.p(prdtSampOb);
 //            p.p("                   ");p.p("                   ");p.p("                   ");
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -219,7 +216,7 @@ public class D1DaYangService {
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
             prdtSampOb.setId(uuidstr);
-            List<Msg> list=this.insertDaYang(prdtSampOb,usr,chkMan);
+            List<Msg> list=this.insertDaYang(prdtSampOb);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
@@ -246,14 +243,14 @@ public class D1DaYangService {
 
 
     @Transactional
-    public List<Msg> insertDaYang(PrdtSamp prdtSamp,String usr,String chkMan) {
+    public List<Msg> insertDaYang(PrdtSamp0 prdtSamp) {
         Integer ii= null;
         List<Msg> list;
         try {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
             //获取prdNo//下面是void方法的暗地修改
-            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
+            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
 //            this.prdtSampObjGetPrdNo(prdtSamp);
             //如果时间没有,直接设置当前时间
             if(prdtSamp.getSampMake()==null||!p.isFirstDateBig(prdtSamp.getSampMake(),"1986/12/26")){

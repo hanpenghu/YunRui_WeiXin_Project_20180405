@@ -264,12 +264,17 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println();
             //将来用作数据库一条数据的唯一标识
             synchronized (this) {
-                return cnst.d1DaYangService.ImageUpLoadAndDataSave001(projectPath, thum, attach, request, cnst.daYangSuoLueTuAndFuJianZongPath, cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
+                return cnst.d1DaYangService.ImageUpLoadAndDataSave001
+                        (projectPath, thum, attach, request,
+                                cnst.daYangSuoLueTuAndFuJianZongPath,
+                                cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+        return MessageGenerate.generateMessage("保存失败",
+                "保存失败", "数据库系统级别错误",
+                "", "38");
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

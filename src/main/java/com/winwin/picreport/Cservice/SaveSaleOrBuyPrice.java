@@ -20,7 +20,9 @@ import java.util.Map;
 public class SaveSaleOrBuyPrice {
     @Autowired
     private Cnst cnst;
-        public Msg saveSaleOrBuyPrice(UpDefMy01 up,String usr){
+        public Msg saveSaleOrBuyPrice(UpDefMy01 up){
+            String usr=up.getUsr();
+            String cusNo=up.getCusNo();
             String chkMan=usr;
             //得到打样唯一标识
             String uuid = up.getUuid();
@@ -72,7 +74,9 @@ public class SaveSaleOrBuyPrice {
                     .smp("haveTransUpBuy", haveTransUpBuy)
                     .smp("noTransUpBuy", noTransUpBuy)
                     .smp("haveTransUpSale", haveTransUpSale)
-                    .smp("noTransUpSale", noTransUpSale).gmp();
+                    .smp("noTransUpSale", noTransUpSale)
+                    .smp("usr",usr)
+                    .smp("chkMan",usr).smp("cusNo",cusNo).gmp();
 
 
 
@@ -126,6 +130,7 @@ public class SaveSaleOrBuyPrice {
     private Msg saveAsBuyer(Map<String, Object> gmp) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
+        upDef.setHjNo("SamplesSys");
         upDef.setsDd(new Date());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"
@@ -135,8 +140,11 @@ public class SaveSaleOrBuyPrice {
         //得到单位
         upDef.setUnit((String)gmp.get("1"));
         upDef.setPriceId("2");
-
-        upDef.setCusNo("");
+        /////////////////////////////////////////////////////////////////////////////////////
+        upDef.setCusNo((String)gmp.get("cusNo"));
+        upDef.setUsr((String)gmp.get("usr"));
+        upDef.setChkMan((String)gmp.get("chkMan"));
+        /////////////////////////////////////////////////////////////////////////////////////
         upDef.setPrdMark("");
         upDef.setPrdNo((String)gmp.get("prdNo"));
         upDef.setBzKnd("");
@@ -191,6 +199,7 @@ public class SaveSaleOrBuyPrice {
     private Msg saveAsSaler(Map<String, Object> gmp) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
+        upDef.setHjNo("SamplesSys");
         upDef.setsDd(new Date());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"
@@ -203,8 +212,11 @@ public class SaveSaleOrBuyPrice {
         upDef.setPriceId("1");
 
 
-
-        upDef.setCusNo("");
+/////////////////////////////////////////////////////////////////////////////////////
+        upDef.setCusNo((String)gmp.get("cusNo"));
+        upDef.setUsr((String)gmp.get("usr"));
+        upDef.setChkMan((String)gmp.get("chkMan"));
+        /////////////////////////////////////////////////////////////////////////////////////
         upDef.setPrdMark("");
         upDef.setPrdNo((String)gmp.get("prdNo"));
         upDef.setBzKnd("");

@@ -1,8 +1,10 @@
 package com.winwin.picreport.test;
 
 import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.p;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,15 @@ public class TestDate {
         D d = JSON.parseObject(str, D.class);
 
         p.p(d.getDate());
+        p.p("！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 
+        Date tod = p.tod("1970-01-01", p.d3);
+        D dd=new D();
+        dd.setDate(tod);
+        dd.setBd(new BigDecimal(1111));
+        MakeDate1970Null.make1970null(dd);
+        String s = JSON.toJSONString(dd);
+        p.p(s);
 
     }
 }

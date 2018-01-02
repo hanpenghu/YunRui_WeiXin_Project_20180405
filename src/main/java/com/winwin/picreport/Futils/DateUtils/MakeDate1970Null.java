@@ -1,5 +1,7 @@
 package com.winwin.picreport.Futils.DateUtils;
 
+import com.winwin.picreport.Futils.p;
+
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +21,10 @@ public class MakeDate1970Null {
         for(Field field:fieldList){
             field.setAccessible(true);
             //得到当前字段类型
-            String typeName = field.getClass().getTypeName();
+            String typeName = field.getType().getTypeName();
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p(typeName);
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             if("java.util.Date".equals(typeName)){
                 //得到我的生日
                 try {

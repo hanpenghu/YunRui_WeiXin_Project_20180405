@@ -135,9 +135,9 @@ public class D1DaYang2Controller {
 
     //通过路径后面跟一个  ?usr=登录的那个会员名
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
-    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up, HttpServletRequest r){
-        String usr = r.getParameter("usr");
-        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up,usr);
+    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up){
+
+        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up);
         return msg1;
 
     }

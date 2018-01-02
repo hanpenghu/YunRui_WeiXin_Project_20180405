@@ -9,6 +9,7 @@ import java.util.List;
 
 //PrdtSamp是原汁原味的自动生成的,  PrdtSamp0是添加的功能
 public class PrdtSamp0 extends PrdtSamp{
+    String usr;//登录的会员名
     //价格列表,采购和销售合并//其实后来弄成单独销售的了
     List<UpDefMy01>upDefMyList=new ArrayList<>();
 
@@ -249,6 +250,15 @@ public class PrdtSamp0 extends PrdtSamp{
 
     public PrdtSamp0 setUpDefMyListBuy(List<UpDefMy01> upDefMyListBuy) {
         this.upDefMyListBuy = upDefMyListBuy;
+        return this;
+    }
+
+    public String getUsr() {
+        return usr;
+    }
+
+    public PrdtSamp0 setUsr(String usr) {
+        this.usr = usr;
         return this;
     }
 }
