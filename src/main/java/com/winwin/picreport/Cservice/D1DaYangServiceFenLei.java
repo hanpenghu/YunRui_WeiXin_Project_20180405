@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -79,6 +80,8 @@ public class D1DaYangServiceFenLei {
             }
             //插入价格模块,走一遍这个模块就插入了
             cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+            //处理时间为1970的为NULL
+            MakeDate1970Null.make1970null(prdtSampX);
             prdtSampList.add(prdtSampX);
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //            p.p("");p.p("");p.p("");p.p("");p.p("");
