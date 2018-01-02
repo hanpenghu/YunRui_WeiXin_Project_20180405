@@ -42,8 +42,12 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             String projectPath = SpringbootJarPath.JarLuJingGet();
 
 
-            if (thum != null && (thum.getOriginalFilename().contains("!") || thum.getOriginalFilename().contains(";"))) {
-                return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号", "您的图片不能包含有!符号或者;符号", "", "34");
+            if (thum != null &&
+                    (thum.getOriginalFilename().contains("!")
+                            || thum.getOriginalFilename().contains(";"))) {
+                return MessageGenerate.generateMessage
+                        ("您的图片不能包含有!符号或者;符号",
+                        "您的图片不能包含有!符号或者;符号", "", "34");
             }
 
 

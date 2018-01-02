@@ -8,6 +8,7 @@ import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -206,8 +207,14 @@ public class D1DaYangService {
             /**
              *下面是插入数据库数据用的
              * */
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p("                   ");p.p("                   ");p.p("                   ");
             String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+//            p.p(prdtSamp);
             PrdtSamp prdtSampOb = JSON.parseObject(prdtSamp, PrdtSamp.class);
+//            p.p(prdtSampOb);
+//            p.p("                   ");p.p("                   ");p.p("                   ");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
             //注意,产品建档的时候直接插入缩略图url字段,将来update的时候得到原来的加上去
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
