@@ -255,6 +255,10 @@ public class D1DaYangService {
             //获取prdNo//下面是void方法的暗地修改
             cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
 //            this.prdtSampObjGetPrdNo(prdtSamp);
+            //如果时间没有,直接设置当前时间
+            if(prdtSamp.getSampMake()==null||!p.isFirstDateBig(prdtSamp.getSampMake(),"1986/12/26")){
+                prdtSamp.setSampMake(new Date());
+            }
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");
