@@ -224,7 +224,10 @@ public class D1DaYangService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return MessageGenerate.generateMessage("保存失败","保存失败","数据库系统级别错误","","38");
+        return MessageGenerate.generateMessage
+                ("保存失败",
+                "保存失败","数据库系统级别错误",
+                "","38");
     }
 
 
