@@ -1,7 +1,6 @@
 package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
-import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import com.winwin.picreport.Edto.UpDefMy01;
@@ -10,8 +9,6 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
