@@ -139,7 +139,6 @@ public class D1DaYangService {
             /**
              *下面是保存缩略图和附件
              * */
-
             if(thum!=null){
                 String thumImg= thum.getOriginalFilename();
                 //缩略图和附件不能包含截取字符串的符号

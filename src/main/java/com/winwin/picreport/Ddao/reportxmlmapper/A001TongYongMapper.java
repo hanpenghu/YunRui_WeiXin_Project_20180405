@@ -150,8 +150,13 @@ public interface A001TongYongMapper {
    String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
 
    //prdCode对应name
-   @Select({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man)values(#{prdNo},#{indx1},#{prdCode},#{SamplesSys},#{usr},#{chkMan})"})
-   Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo, @Param("indx1")String indx1,@Param("prdCode") String prdCode,@Param("usr")String usr,@Param("chkMan")String chkMan);
+   @Select({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man)" +
+           "values(#{prdNo},#{indx1},#{prdCode},#{SamplesSys},#{usr},#{chkMan})"})
+   Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo,
+                              @Param("indx1")String indx1,
+                              @Param("prdCode") String prdCode,
+                              @Param("usr")String usr,
+                              @Param("chkMan")String chkMan);
 
 
 

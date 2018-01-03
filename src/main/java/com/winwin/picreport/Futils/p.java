@@ -352,7 +352,36 @@ public strictfp class p {
      * */
 
     /**
-     *时间比大小
+     *小于等于我的生日,精确到日,因为我的生日只能精确到日,这玩意可以用来处理1970和1899的判断
+     * */
+
+    public static boolean isSmallOrEqMybirth(Date date){
+        if(date==null){
+            return false;
+        }else{
+            if((date.getTime())<=(p.tod(p.hanhanBirthday_).getTime())){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+
+    /**
+     *大于我的生日,精确到日,因为我的生日只能精确到日,这玩意可以用来处理1970和1899的判断
+     * */
+
+    public static boolean isBiggerThenMybirth(Date date){
+        return !isSmallOrEqMybirth(date);
+    }
+
+//    public static void main(String[]args){
+//          p.p(isBiggerThenMybirth(new Date()));
+//        p.p(isSmallOrEqMybirth(new Date()));
+//    }
+    /**
+     *时间比大小,精确到时间戳毫秒
      * */
     public static boolean isFirstDateBig(Date first,Date second){
         if(first==null || second==null){
@@ -367,7 +396,13 @@ public strictfp class p {
     }
 
     /**
-     *默认是"yyyy-MM-dd"的str格式才能比较
+     *时间比大小,精确到时间戳毫秒
+     * */
+    public static boolean isFirstDateSmall(Date first,Date second){
+        return !isFirstDateBig(first,second);
+    }
+    /**
+     *默认是"yyyy-MM-dd"的str格式才能比较,精确到日
      * */
     public static boolean isFirstDateBig_(String firstStr,String  secondStr){
         Date first= tod(firstStr);
@@ -375,15 +410,36 @@ public strictfp class p {
         return isFirstDateBig(first,second);
     }
 
+    /**
+     *默认是"yyyy-MM-dd"的str格式才能比较,精确到日
+     * */
+    public static boolean isFirstDateSamll_(String firstStr,String  secondStr){
+        Date first= tod(firstStr);
+        Date second=tod(secondStr);
+        return !isFirstDateBig(first,second);
+    }
+
 /**
  *默认是"yyyy/MM/dd"的str格式才能比较
  * 这里说的大小是字面大小,距离1970越远越大
+ * 精确到日
  * */
 public static boolean isFirstDateBig(String firstStr,String  secondStr){
     Date first= tod(firstStr,"yyyy/MM/dd");
     Date second=tod(secondStr,"yyyy/MM/dd");
     return isFirstDateBig(first,second);
 }
+
+    /**
+     *默认是"yyyy/MM/dd"的str格式才能比较
+     * 这里说的大小是字面大小,距离1970越远越大
+     * 精确到日
+     * */
+    public static boolean isFirstDateSmall(String firstStr,String  secondStr){
+        Date first= tod(firstStr,"yyyy/MM/dd");
+        Date second=tod(secondStr,"yyyy/MM/dd");
+        return !isFirstDateBig(first,second);
+    }
     @Test
    public void f3() {
     p(isFirstDateBig("2017/12/24", "2017/12/23"));//true
@@ -397,11 +453,23 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
         return isFirstDateBig(first,second);
     }
 
+    public static boolean isFirstDateSmall(Date first,String  secondStr){
+        Date second=tod(secondStr,"yyyy/MM/dd");
+        return !isFirstDateBig(first,second);
+    }
+
 
     public static boolean isFirstDateBig(String firstStr,Date  second){
         synchronized (ThreadLocal.class) {
             Date first= tod(firstStr,"yyyy/MM/dd");
             return isFirstDateBig(first,second);
+        }
+    }
+
+    public static boolean isFirstDateSmall(String firstStr,Date  second){
+        synchronized (ThreadLocal.class) {
+            Date first= tod(firstStr,"yyyy/MM/dd");
+            return !isFirstDateBig(first,second);
         }
     }
     @Test

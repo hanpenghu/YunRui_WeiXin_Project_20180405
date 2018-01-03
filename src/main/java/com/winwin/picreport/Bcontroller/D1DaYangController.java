@@ -33,7 +33,8 @@ public class D1DaYangController {
      ****************************************************************************************
      * 删除单个附件
      * */
-    @RequestMapping(value = InterFaceCnst.deleteOneAttach, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = InterFaceCnst.deleteOneAttach,
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
 
         return cnst.deleteOneImg.deleteOneAttach(attachUrl);
