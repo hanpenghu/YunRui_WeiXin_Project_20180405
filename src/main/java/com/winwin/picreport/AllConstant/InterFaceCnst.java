@@ -100,5 +100,9 @@ public interface InterFaceCnst {
 
 
     String CurrentType="CurrentType";
+
     String allUnit="allUnit";
+
+    //通过当前的分类idxNo,查找所有的prdt里面的name
+    String currentCategoryPrdtList="currentCategoryPrdtList";
 }

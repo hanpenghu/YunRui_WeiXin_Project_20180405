@@ -119,10 +119,10 @@ public class D1DaYangServiceFenLei {
      * */
 
     /**
-     *先得到最上级
+     *先得到最上级,prdt的
      * */
 
-    public CategoryNameCode getCommonder(){
+    public CategoryNameCode getCommonderHavePrdt(){
      //其实只有一个元素
         List<CategoryNameCode> commonders = cnst.manyTabSerch.getCommonder();
         if(NotEmpty.notEmpty(commonders)){
@@ -136,10 +136,24 @@ public class D1DaYangServiceFenLei {
 
 
     /**
-     *找到某个CategoryNameCode的下级的下级,并封装进来
+     *先得到最上级,不带prdt的
      * */
 
-    public CategoryNameCode getChildAndSet(CategoryNameCode cnc){
+    public CategoryNameCode getCommonderNoPrdt(){
+        //其实只有一个元素
+        List<CategoryNameCode> commonders = cnst.manyTabSerch.getCommonder();
+        if(NotEmpty.notEmpty(commonders)){
+            CategoryNameCode categoryNameCode = commonders.get(0);
+            return categoryNameCode;
+        }
+        return null;
+    }
+
+    /**
+     *找到某个CategoryNameCode的下级的下级,并封装商品编码(名字)进来
+     * */
+
+    public CategoryNameCode getChildAndSetCode(CategoryNameCode cnc){
         //找到所有的下级
         List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
         //用一个新的list替换所有下级集合 来 搜集   装好 code的  所有下级
@@ -158,18 +172,45 @@ public class D1DaYangServiceFenLei {
         return cnc.setChilds(ccncListChild);
     }
 
+
     /**
-     *得到所有层级
+     *找到某个CategoryNameCode的下级的下级,并封装商品编码(名字)进来
      * */
 
-    public CategoryNameCode getAllLayerUtil(CategoryNameCode top){
+    public CategoryNameCode getChildAndNotSetCode(CategoryNameCode cnc){
+        //找到所有的下级
+        List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
+        //放入所有下级,不再放入商品
+        return cnc.setChilds(ccnc);
+    }
+    /**
+     *得到所有层级,使用递归,得到带商品的
+     * */
+
+    public CategoryNameCode getAllLayerUtilUseRecursionGetPrdt(CategoryNameCode top){
         //设置该top的child
-        top = this.getChildAndSet(top);
+        top = this.getChildAndSetCode(top);
         List<CategoryNameCode> childs = top.getChilds();
         if(NotEmpty.notEmpty(childs)){
             //寻找该childs里面的所有child的childs
             for(CategoryNameCode c:childs){
-                this.getAllLayerUtil(c);
+                this.getAllLayerUtilUseRecursionGetPrdt(c);
+            }
+        }
+        return top;
+    }
+    /**
+     *得到所有层级,使用递归,得到不带商品的
+     * */
+
+    public CategoryNameCode getAllLayerUtilUseRecursionNotGetPrdt(CategoryNameCode top){
+        //设置该top的child
+        top = this.getChildAndNotSetCode(top);
+        List<CategoryNameCode> childs = top.getChilds();
+        if(NotEmpty.notEmpty(childs)){
+            //寻找该childs里面的所有child的childs
+            for(CategoryNameCode c:childs){
+                this.getAllLayerUtilUseRecursionNotGetPrdt(c);
             }
         }
         return top;
@@ -179,8 +220,22 @@ public class D1DaYangServiceFenLei {
      *实现所有层级
      * */
 
-    public CategoryNameCode getAllLayer(){
-        return this.getAllLayerUtil(this.getCommonder());
+    public CategoryNameCode getAllLayerAndAllPrdt(){
+        return this.getAllLayerUtilUseRecursionGetPrdt(this.getCommonderHavePrdt());
+
+
+    }
+
+
+    public CategoryNameCode getAllLayerNotHavePrdt(){
+        Date date = new Date();
+        CategoryNameCode allLayerUtilUseRecursionNotGetPrdt = this.getAllLayerUtilUseRecursionNotGetPrdt(this.getCommonderNoPrdt());
+       System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        p.p("该次得到所有没有prdt的分级耗时秒数为: "+p.xjs(new Date(),date));
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        return allLayerUtilUseRecursionNotGetPrdt;
+
+
     }
 
 

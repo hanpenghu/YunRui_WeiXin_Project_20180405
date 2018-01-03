@@ -320,13 +320,31 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //        return cnst.fenLei.getAllLayer();
 //    }
 
-
-    @RequestMapping(value = InterFaceCnst.allfenlei, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody CategoryNameCode allfenlei() {
-        return cnst.fenLei.getAllLayer();
+    @RequestMapping(value = "allfenleiHavePrdt", method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody CategoryNameCode allfenleiHavePrdt() {
+        return cnst.fenLei.getAllLayerAndAllPrdt();
     }
 
 
+
+    @RequestMapping(value = InterFaceCnst.allfenlei, method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody CategoryNameCode allfenlei() {
+        return cnst.fenLei.getAllLayerNotHavePrdt();
+    }
+
+    /**
+     *得到当前分类的所有商品
+     * 传参数{"idxName":"idxNo"}
+     * 我传给前端的是加了  private List<String> prdCodeList=new ArrayList<>();    之后的CategoryNameCode
+     * */
+    @RequestMapping(value = InterFaceCnst.currentCategoryPrdtList, method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody CategoryNameCode currentCategoryPrdtList(@RequestBody CategoryNameCode categoryNameCode) {
+        List<String> codeList=cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
+        return categoryNameCode.setPrdCodeList(codeList);
+    }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})

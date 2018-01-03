@@ -9,10 +9,10 @@ public class CategoryNameCode {
 
     private List<String> prdCodeList=new ArrayList<>();//就是prdt中的name
 
-    private String idxName="";//分类名称
+    private String idxName;//分类名称
 
-    private String idxNo="";//分类编号
-
+    private String idxNo;//分类编号
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public List<String> getPrdCodeList() {
         return prdCodeList;
     }
