@@ -1,6 +1,9 @@
 package com.winwin.picreport.test;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.p;
 
@@ -43,6 +46,18 @@ public class TestDate {
         MakeDate1970Null.make1970null(dd);
         String s = JSON.toJSONString(dd);
         p.p(s);
+        p.p("----------------------------------------------------------------");
+        D ddd=new D();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(ddd);
+            p.p(json);
+            p.p("----------------------------------------------------------------");
+            PrdtSamp prdtSamp=new PrdtSamp();
+            p.p(mapper.writeValueAsString(prdtSamp));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -1,11 +1,14 @@
 package com.winwin.picreport.test;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class D{
     private BigDecimal bd;
-    private Date date;
+      @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date date=new Date();
 
     public Date getDate() {
         return date;

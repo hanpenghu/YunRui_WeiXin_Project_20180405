@@ -3,11 +3,13 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,9 +89,11 @@ public class SaveSaleOrBuyPrice {
             if(NotEmpty.empty(prdNo)){
                 //下面流水一次单号//注意必须先得到index
                 PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
+                PrdtSamp0 prdtSamp0=new PrdtSamp0();
+                BeanUtils.copyProperties(prdtSamp,prdtSamp0);
                 //给prdtSamp流水prdtNo
-                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp,usr,chkMan);
-                prdNo=prdtSamp.getPrdNo();
+                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
+                prdNo=prdtSamp0.getPrdNo();
             }
             ////////////////////////////////////////////////单位对比插入模块//////////////////////////////////////////////
             //找到该prdNo对应的ut(就是存的单位)

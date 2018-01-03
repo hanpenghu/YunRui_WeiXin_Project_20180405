@@ -80,8 +80,10 @@ public class D1DaYangServiceFenLei {
             }
             //插入价格模块,走一遍这个模块就插入了
             cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~1970没改变"+prdtSampX.getStopusedate()+"~~~~~~~~~~~~~~~~~~~~~~~~");
             //处理时间为1970的为NULL
             MakeDate1970Null.make1970null(prdtSampX);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~1970改变"+prdtSampX.getStopusedate()+"~~~~~~~~~~~~~~~~~~~~~~~~");
             prdtSampList.add(prdtSampX);
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //            p.p("");p.p("");p.p("");p.p("");p.p("");
