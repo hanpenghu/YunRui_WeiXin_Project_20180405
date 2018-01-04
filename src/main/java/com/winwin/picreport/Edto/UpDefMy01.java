@@ -145,4 +145,6 @@ public class UpDefMy01 extends UpDefMy {
         this.cusNo = cusNo;
         return this;
     }
+
+
 }
