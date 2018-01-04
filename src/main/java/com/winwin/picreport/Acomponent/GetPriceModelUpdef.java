@@ -114,7 +114,7 @@ public class GetPriceModelUpdef {
 
 
     private void sortBySdd(List<UpDefMy01> list){
-        Collections.sort(list, (o1,o2)->{
+        Collections.sort(list,(o1,o2)->{
             long time1 = o1.getSDd().getTime();
             long time2 = o2.getSDd().getTime();
             if(time1>time2){
