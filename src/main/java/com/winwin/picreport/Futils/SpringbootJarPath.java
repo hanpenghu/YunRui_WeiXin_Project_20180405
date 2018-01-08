@@ -22,6 +22,7 @@ public class SpringbootJarPath {
         if(path!=null&&path.contains(Cnst.enCodeSpace)){
             path=path.replace(Cnst.enCodeSpace,Cnst.spaceStr);
         }
+//       String path="E:/";
         return path;
     }
 }

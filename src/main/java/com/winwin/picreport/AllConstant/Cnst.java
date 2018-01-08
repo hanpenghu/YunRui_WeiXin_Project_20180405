@@ -4,6 +4,7 @@ import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
+import com.winwin.picreport.Futils.GeneratePrdNo.GetMaxPrdNo;
 import com.winwin.picreport.Futils.SpringbootJarPath;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,9 @@ public class Cnst {
 
     @Autowired
     public SapsoMapper sapsoMapper;
+
+    @Autowired
+    public GetMaxPrdNo getMaxPrdNo;
 
     @Autowired
     public GetPriceModelUpdef getPriceModelUpdef;

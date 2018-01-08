@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp1;
 import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.p;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,6 +60,27 @@ public class TestDate {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        PrdtSamp1 prdtSamp1=new PrdtSamp1();
+        try {
 
+            p.p(mapper.readValue("{\"isconfirm\":\"\"}",PrdtSamp1.class));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        PrdtSamp1 prdtSamp2=new PrdtSamp1();
+        try {
+
+            p.p(JSON.parseObject("{\"isconfirm\":\"\"}",PrdtSamp1.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }

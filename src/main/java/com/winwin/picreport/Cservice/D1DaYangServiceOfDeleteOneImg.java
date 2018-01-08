@@ -33,7 +33,7 @@ public class D1DaYangServiceOfDeleteOneImg {
 //"http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg"
 
     public List<Msg> deleteOneImage(String imgUrl) {
-        synchronized (this) {
+//        synchronized (this) {
             if(imgUrl==null){
                 return MessageGenerate.generateMessage("您要删除的图片不存在",
                         "您要删除的图片不存在",
@@ -74,7 +74,9 @@ public class D1DaYangServiceOfDeleteOneImg {
                 if(newthums!=null){
                     int i=  cnst.manyTabSerch.updateThumColumn("%"+thumInDataBase+"%",newthums);
                     if(i==1){
-                        return MessageGenerate.generateMessage("缩略图已经删除", "缩略图已经删除", "缩略图已经删除","", "44");
+                        return MessageGenerate.generateMessage("缩略图已经删除",
+                                "缩略图已经删除",
+                                "缩略图已经删除","", "44");
                     }
                 }
 
@@ -83,8 +85,9 @@ public class D1DaYangServiceOfDeleteOneImg {
             }
 
 
-            return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了图片或者数据库记录之中的一个","", "45");
-        }
+            return MessageGenerate.generateMessage("删除失败", "删除失败",
+                    "您可能只删除了图片或者数据库记录之中的一个","", "45");
+//        }
     }
 
     /**
@@ -92,7 +95,7 @@ public class D1DaYangServiceOfDeleteOneImg {
      * */
 
     public List<Msg> deleteOneAttach(String attachUrl) {
-        synchronized (this) {
+//        synchronized (this) {
             if(attachUrl==null){
                 return MessageGenerate.generateMessage("您要删除的附件不存在",
                         "您要删除的附件不存在",
@@ -138,7 +141,7 @@ public class D1DaYangServiceOfDeleteOneImg {
 
 
             return MessageGenerate.generateMessage("删除失败", "删除失败", "您可能只删除了附件或者数据库记录之中的一个","", "45");
-        }
+//        }
     }
     /**
      ****************************************************************************************

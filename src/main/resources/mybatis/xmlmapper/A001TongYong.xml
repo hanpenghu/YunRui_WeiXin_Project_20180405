@@ -57,6 +57,10 @@
         )
         AND
         (
+
+
+         confirmTimeStr is NULL   OR confirmTimeStr='' OR
+
                     confirmTimeStr
                     BETWEEN
                     <choose>
@@ -77,40 +81,37 @@
                         </otherwise>
                     </choose>
         )
-        AND(
+        AND
                         --产品名称
                         idx_Name=
                         <choose>
-                            <when test="idxName == null or idxName == ''">
-                                idx_Name
+                            <when test="idxName != null and idxName != ''">
+                                #{idxName}
                             </when>
                             <otherwise>
-                                #{idxName}
+                                idx_Name
                             </otherwise>
                         </choose>
-
-
         AND
             ---产品分类
                         idx_No=
                         <choose>
-                            <when test="idxNo == null or idxNo == ''">
-                                idx_No
+                            <when test=" idxNo != null and idxNo != '' ">
+                                #{idxNo}
                             </when>
                             <otherwise>
-                                #{idxNo}
+                                idx_No
                             </otherwise>
                         </choose>
-        )
         AND
         --产品编码
                     prd_Code=
                     <choose>
-                        <when test="prdCode == null or prdCode == ''">
-                            prd_Code
+                        <when test=" prdCode != null and prdCode != '' ">
+                            #{prdCode}
                         </when>
                         <otherwise>
-                            #{prdCode}
+                            prd_Code
                         </otherwise>
                     </choose>
 
@@ -118,22 +119,22 @@
                     --产品负责人
                     sal_No=
                     <choose>
-                        <when test="salNo == null or salNo == ''">
-                            sal_No
+                        <when test="salNo != null and salNo != '' ">
+                            #{salNo}
                         </when>
                         <otherwise>
-                            #{salNo}
+                            sal_No
                         </otherwise>
                     </choose>
         AND
-        --是否已经打样确认
+        --是否已经打样确认，1是确认   0是未确认   ""确认+未确认
         isConfirm=
         <choose>
-            <when test="isconfirm == null">
-                isConfirm
+            <when test=" isconfirm != null">
+                #{isconfirm}
             </when>
             <otherwise>
-                #{isconfirm}
+                isConfirm
             </otherwise>
         </choose>
     </sql>
@@ -256,6 +257,8 @@
        a.cur_id=b.cur_id AND d.prd_no=a.prd_no
        and
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.HJ_NO='SamplesSys'
        AND
         a.price_id=
         <choose>

@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,20 +57,35 @@ public class GPrdNo {
             //得到中类代号
             String indx1=prdtSamp.getIdxNo();
             //在prdt里面找到相同的indx1的prdNo流水最大的那个
-            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
+//            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~得到最大prdNo递归之前实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            String prdNoMax = cnst.getMaxPrdNo.getAllUpAndDownIdxNo(indx1);
+            System.out.println("~~~~~~~~~~~~~~~未加1未转化成long的String的prdNoMax~~~~~~~~~prdNoMax=~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~");
             //将prdNoMax转化成long
             if(NotEmpty.notEmpty(prdNoMax)){
-                long l = Long.parseLong(prdNoMax);
-                l=l+1;
-                String prdNo = String.valueOf(l);
+//                long l = Long.parseLong(prdNoMax);
+//                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~未加1的prdno~~~"+l+"~~~~~~~~~~~~~~~~~~~~~");
+//                l++;
+//                String prdNo = String.valueOf(l);
+//                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~加1的prdno~~"+l+"~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
                 //给prdtSamp添加货号
-                prdtSamp.setPrdNo(prdNo);
+                prdtSamp.setPrdNo(prdNoMax);
                 //对应数据库的name
                 String prdCode = prdtSamp.getPrdCode();
                 String usr=prdtSamp.getUsr();
                 String chkMan=prdtSamp.getUsr();
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p(prdNoMax);p.p(indx1);p.p(prdCode);p.p(usr);p.p(chkMan);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
                 //给prdt也添加一个货号
-                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNo,indx1,prdCode,usr,chkMan);
+//                try {
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
+                    cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan);
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
+//                } catch (Exception e) {
+//                    p.p("com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate有问题");
+//                    e.printStackTrace();
+//                }
 
             }
         }

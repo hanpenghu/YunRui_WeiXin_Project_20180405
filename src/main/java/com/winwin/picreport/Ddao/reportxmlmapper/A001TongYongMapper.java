@@ -151,7 +151,7 @@ public interface A001TongYongMapper {
 
    //prdCode对应name
    @Select({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man)" +
-           "values(#{prdNo},#{indx1},#{prdCode},#{SamplesSys},#{usr},#{chkMan})"})
+           "values(#{prdNo},#{indx1},#{prdCode},'SamplesSys',#{usr},#{chkMan})"})
    Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo,
                               @Param("indx1")String indx1,
                               @Param("prdCode") String prdCode,
@@ -165,7 +165,15 @@ public interface A001TongYongMapper {
 
 
 
+    @Select({"SELECT IDX_UP FROM INDX WHERE IDX_NO=#{idxNo}"})
+   String deDaoShangJi_IdxNo(@Param("idxNo") String idxNo);
 
+    @Select({"select idx_no from indx where idx_up=#{idxNo}"})
+   List<String> selectAllXiaJi(@Param("idxNo")String idxNo);
 
+    @Select({"Select count(*) from prdt where prd_no=#{prdNoMax}"})
+   Integer ifIdxNoExistInPrdt(@Param("prdNoMax") String prdNoMax);
 
+    @Select({"Select count(id) from prdt_samp where prd_code=#{prdCode}"})
+    Integer isPrdCodeExist(@Param("prdCode") String prdCode);
 }

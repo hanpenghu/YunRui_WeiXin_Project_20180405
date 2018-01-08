@@ -37,7 +37,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
     public List<Msg> infoEditOfManyAttach(MultipartFile thum ,
                                           List<MultipartFile> attachList,
                                           String prdtSamp1) throws Exception {
-        synchronized (this) {
+//        synchronized (this) {
             String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
             String projectPath = SpringbootJarPath.JarLuJingGet();
 
@@ -179,7 +179,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
 
 
 //        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
-    }
+//    }
 
     @Transactional
     public PrdtSamp0 prdtSampWhereSpaceToNull(PrdtSamp0 prdtSamp) {

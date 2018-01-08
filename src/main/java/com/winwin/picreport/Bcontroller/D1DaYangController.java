@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -231,12 +229,12 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             String projectPath=Cnst.getProjectPath();
             System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
             //将来用作数据库一条数据的唯一标识
-            synchronized (this){
+
                 return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach
                         (projectPath, thum, attachList,request,
                                 cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,
                                 cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -246,37 +244,42 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                         "", "38");
     }
 
-
-    /**
-     * 这个一次只能穿一个附件
-     * 用于同时上传缩略图(到springboot所在项目目录下某目录)和附件(到springboot所在项目目录下某目录)
-     * 和打样信息(到数据库表prdt_samp)
-     */
-    @RequestMapping(value = "imageUpLoadAndDataSave", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    List<Msg> ImageUpLoadAndDataSave001(@RequestParam(value = "thum", required = false) MultipartFile thum, @RequestParam(value = "attach", required = false) MultipartFile attach, HttpServletRequest request) {
-        //上传到指定目录
-        try {
-            String projectPath = SpringbootJarPath.JarLuJingGet();
-            System.out.println();
-            System.out.println();
-            System.out.println(projectPath);
-            System.out.println();
-            System.out.println();
-            //将来用作数据库一条数据的唯一标识
-            synchronized (this) {
-                return cnst.d1DaYangService.ImageUpLoadAndDataSave001
-                        (projectPath, thum, attach, request,
-                                cnst.daYangSuoLueTuAndFuJianZongPath,
-                                cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return MessageGenerate.generateMessage("保存失败",
-                "保存失败", "数据库系统级别错误",
-                "", "38");
-    }
+//
+//    /**
+//     * 这个一次只能穿一个附件
+//     * 用于同时上传缩略图(到springboot所在项目目录下某目录)和附件(到springboot所在项目目录下某目录)
+//     * 和打样信息(到数据库表prdt_samp)
+//     */
+//    @RequestMapping(value = "imageUpLoadAndDataSave",
+//            method = RequestMethod.POST,
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    List<Msg> ImageUpLoadAndDataSave001(@RequestParam(value = "thum", required = false) MultipartFile thum,
+//                                        @RequestParam(value = "attach", required = false) MultipartFile attach,
+//                                        HttpServletRequest request) {
+//        //上传到指定目录
+//        try {
+//            String projectPath = SpringbootJarPath.JarLuJingGet();
+//            System.out.println();
+//            System.out.println();
+//            System.out.println(projectPath);
+//            System.out.println();
+//            System.out.println();
+//            //将来用作数据库一条数据的唯一标识
+//            synchronized (this) {
+//                return cnst.d1DaYangService.ImageUpLoadAndDataSave001
+//                        (projectPath, thum, attach, request,
+//                                cnst.daYangSuoLueTuAndFuJianZongPath,
+//                                cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return MessageGenerate.generateMessage("保存失败",
+//                "保存失败", "数据库系统级别错误",
+//                "", "38");
+//    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

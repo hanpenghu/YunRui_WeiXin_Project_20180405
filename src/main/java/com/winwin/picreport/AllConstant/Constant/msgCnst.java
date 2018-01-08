@@ -1,6 +1,5 @@
 package com.winwin.picreport.AllConstant.Constant;
 
-import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 
 public enum msgCnst {
     fgf("============================================",0)

@@ -9,10 +9,7 @@ import java.util.Date;
 /**
  *该类只用于产便打样编码建档的时候的前后端条件传输
  * */
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class PrdtSamp1 {
     /**
      *下面2个时间其实都是传的创建时间条件的开始时间
@@ -68,12 +65,175 @@ public class PrdtSamp1 {
     private Integer dangQianYe;
     //0代表没有确认//1代表确认//用来生成动态sql加条件是否打样的
     private Integer isconfirm;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Date getInsertdate() {
+        return insertdate;
+    }
+
+    public PrdtSamp1 setInsertdate(Date insertdate) {
+        this.insertdate = insertdate;
+        return this;
+    }
+
+    public String getInsertdateStr() {
+        return insertdateStr;
+    }
+
+    public PrdtSamp1 setInsertdateStr(String insertdateStr) {
+        this.insertdateStr = insertdateStr;
+        return this;
+    }
+
+    public Date getInsertdateEnd() {
+        return insertdateEnd;
+    }
+
+    public PrdtSamp1 setInsertdateEnd(Date insertdateEnd) {
+        this.insertdateEnd = insertdateEnd;
+        return this;
+    }
+
+    public String getInsertdateStrEnd() {
+        return insertdateStrEnd;
+    }
+
+    public PrdtSamp1 setInsertdateStrEnd(String insertdateStrEnd) {
+        this.insertdateStrEnd = insertdateStrEnd;
+        return this;
+    }
+
+    public String getConfirmtimestr() {
+        return confirmtimestr;
+    }
+
+    public PrdtSamp1 setConfirmtimestr(String confirmtimestr) {
+        this.confirmtimestr = confirmtimestr;
+        return this;
+    }
+
+    public Date getConfirmtime() {
+        return confirmtime;
+    }
+
+    public PrdtSamp1 setConfirmtime(Date confirmtime) {
+        this.confirmtime = confirmtime;
+        return this;
+    }
+
+    public String getConfirmtimestrEnd() {
+        return confirmtimestrEnd;
+    }
+
+    public PrdtSamp1 setConfirmtimestrEnd(String confirmtimestrEnd) {
+        this.confirmtimestrEnd = confirmtimestrEnd;
+        return this;
+    }
+
+    public Date getConfirmtimeEnd() {
+        return confirmtimeEnd;
+    }
+
+    public PrdtSamp1 setConfirmtimeEnd(Date confirmtimeEnd) {
+        this.confirmtimeEnd = confirmtimeEnd;
+        return this;
+    }
+
+    public String getIdxName() {
+        return idxName;
+    }
+
+    public PrdtSamp1 setIdxName(String idxName) {
+        this.idxName = idxName;
+        return this;
+    }
+
+    public String getIdxNo() {
+        return idxNo;
+    }
+
+    public PrdtSamp1 setIdxNo(String idxNo) {
+        this.idxNo = idxNo;
+        return this;
+    }
+
+    public String getPrdCode() {
+        return prdCode;
+    }
+
+    public PrdtSamp1 setPrdCode(String prdCode) {
+        this.prdCode = prdCode;
+        return this;
+    }
+
+    public String getSalName() {
+        return salName;
+    }
+
+    public PrdtSamp1 setSalName(String salName) {
+        this.salName = salName;
+        return this;
+    }
+
+    public String getSalNo() {
+        return salNo;
+    }
+
+    public PrdtSamp1 setSalNo(String salNo) {
+        this.salNo = salNo;
+        return this;
+    }
+
+    public Integer getMeiYeXianShiShu() {
+        return meiYeXianShiShu;
+    }
+
+    public PrdtSamp1 setMeiYeXianShiShu(Integer meiYeXianShiShu) {
+        this.meiYeXianShiShu = meiYeXianShiShu;
+        return this;
+    }
+
+    public Integer getDangQianYe() {
+        return dangQianYe;
+    }
+
+    public PrdtSamp1 setDangQianYe(Integer dangQianYe) {
+        this.dangQianYe = dangQianYe;
+        return this;
+    }
+
+    public Integer getIsconfirm() {
+        return isconfirm;
+    }
+
+    public PrdtSamp1 setIsconfirm(Integer isconfirm) {
+        this.isconfirm = isconfirm;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp1{");
+        sb.append("insertdate=").append(insertdate);
+        sb.append(", insertdateStr='").append(insertdateStr).append('\'');
+        sb.append(", insertdateEnd=").append(insertdateEnd);
+        sb.append(", insertdateStrEnd='").append(insertdateStrEnd).append('\'');
+        sb.append(", confirmtimestr='").append(confirmtimestr).append('\'');
+        sb.append(", confirmtime=").append(confirmtime);
+        sb.append(", confirmtimestrEnd='").append(confirmtimestrEnd).append('\'');
+        sb.append(", confirmtimeEnd=").append(confirmtimeEnd);
+        sb.append(", idxName='").append(idxName).append('\'');
+        sb.append(", idxNo='").append(idxNo).append('\'');
+        sb.append(", prdCode='").append(prdCode).append('\'');
+        sb.append(", salName='").append(salName).append('\'');
+        sb.append(", salNo='").append(salNo).append('\'');
+        sb.append(", meiYeXianShiShu=").append(meiYeXianShiShu);
+        sb.append(", dangQianYe=").append(dangQianYe);
+        sb.append(", isconfirm=").append(isconfirm);
+        sb.append('}');
+        return sb.toString();
+    }
 
 
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

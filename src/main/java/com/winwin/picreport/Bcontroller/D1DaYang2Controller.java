@@ -55,6 +55,9 @@ public class D1DaYang2Controller {
      * */
     private FenYe manyConditionSearchOfPrdtFiltList(FenYe f) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换前多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        p.p(p1);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         //注意,Select,不用写在service里面也可以
         //得到创建开始时间时间戳
         String insertdateStr = p1.getInsertdateStr();
@@ -83,9 +86,22 @@ public class D1DaYang2Controller {
         p1.setConfirmtimestr(p.dtoStr(date2,p.d2));
         p1.setConfirmtimestrEnd(p.dtoStr(date3,p.d2));
         p1 = (PrdtSamp1) p.StringTypeNull2Space(p1);
+
         //把每页显示数和当前页设置进去
-        p1.setMeiYeXianShiShu(f.getMeiYeXianShiShu());
-        p1.setDangQianYe(f.getDangQianYe());
+        if(f.getMeiYeXianShiShu()==null){
+            p1.setMeiYeXianShiShu(10);
+        }else{
+            p1.setMeiYeXianShiShu(f.getMeiYeXianShiShu());
+        }
+        if(f.getDangQianYe()==null){
+            p1.setDangQianYe(1);
+        }else{
+            p1.setDangQianYe(f.getDangQianYe());
+        }
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        p.p(p1);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法

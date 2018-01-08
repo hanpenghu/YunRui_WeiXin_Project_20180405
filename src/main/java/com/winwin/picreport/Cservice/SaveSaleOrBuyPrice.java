@@ -101,7 +101,7 @@ public class SaveSaleOrBuyPrice {
 
             if(NotEmpty.empty(ut)){
                 //如果是空的,证明prdt表中没有该ut,需要插入该unit
-              int y=  cnst.manyTabSerch.insertUnitToUtOfPrdt(unit,prdNo);
+              Integer y=  cnst.manyTabSerch.insertUnitToUtOfPrdt(unit,prdNo);
             }
 //////////////////////////////////////////////////////////////////////////////////////////////
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验1~~prdNo=~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
