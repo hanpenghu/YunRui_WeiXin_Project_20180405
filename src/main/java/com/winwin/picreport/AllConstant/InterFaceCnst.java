@@ -105,4 +105,5 @@ public interface InterFaceCnst {
 
     //通过当前的分类idxNo,查找所有的prdt里面的name
     String currentCategoryPrdtList="currentCategoryPrdtList";
+    String getOneRecordFromAId="getOneRecordFromAId";
 }

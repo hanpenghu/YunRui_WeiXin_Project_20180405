@@ -4,15 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
-import com.winwin.picreport.Edto.Prdt;
-import com.winwin.picreport.Edto.PrdtExample;
-import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Edto.PrdtSamp0;
+import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.MsgGenerate.mg;
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -262,6 +262,62 @@ public class D1DaYangService {
                         "产品打样新增" + ii + "条数据", "", "37");
         return list;
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Transactional//37成功,38失败
+    public Msg getOneRecordFromAId(String id) {
+        PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(id);
+        if(NotEmpty.empty(prdtSamp)){
+            return Msg.gmg().setStatus(StatusCnst.dbMistakeCausePrdtSampFalse)
+                    .setMsg("获取一条信息失败").setChMsg("getOneRecordFromAId这个方法获取一条信息失败!");
+        }
+
+
+        List<Object> prdtSampList=new ArrayList<>();
+        PrdtSamp0 p0 = cnst.fenLei.getP0(prdtSamp);
+        prdtSampList.add(p0);
+        return Msg.gmg().setData(Data.gD().setObjs(prdtSampList))
+                .setStatus(StatusCnst.prdtSampSaveOneDataSucc)
+                .setMsg("得到一条数据成功").setChMsg("根据id得到一条数据成功");
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**

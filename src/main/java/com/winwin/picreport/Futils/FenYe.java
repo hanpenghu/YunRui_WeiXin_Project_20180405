@@ -14,6 +14,12 @@ public class FenYe {
 	//具体查看RoleCnst
 	private Integer role;
 
+	public static FenYe g(){
+		return new FenYe();
+	}
+
+
+
 	public PrdtSamp1 getPrdtSamp1() {
 		return prdtSamp1;
 	}
@@ -44,13 +50,13 @@ public class FenYe {
 		this.dangQianYe = dangQianYe;
 	}
 	public Integer getMeiYeXianShiShu() {
-		if(!NotEmpty.notEmpty(meiYeXianShiShu)||meiYeXianShiShu==0){
+		if(NotEmpty.empty(meiYeXianShiShu)||meiYeXianShiShu==0){
 			meiYeXianShiShu=10;
 		}
 		return meiYeXianShiShu;
 	}
 	public void setMeiYeXianShiShu(Integer meiYeXianShiShu) {
-		if(!NotEmpty.notEmpty(meiYeXianShiShu)||meiYeXianShiShu==0){
+		if(NotEmpty.empty(meiYeXianShiShu)||meiYeXianShiShu==0){
 			meiYeXianShiShu=10;
 		}
 		this.meiYeXianShiShu = meiYeXianShiShu;
@@ -61,6 +67,7 @@ public class FenYe {
 	}
 	
 	public void setZongYeShu() {
+		this.meiYeXianShiShu=this.getMeiYeXianShiShu();
 		if(this.zongJiLuShu%this.meiYeXianShiShu==0){
 			this.zongYeShu=this.zongJiLuShu/this.meiYeXianShiShu;
 		}else{

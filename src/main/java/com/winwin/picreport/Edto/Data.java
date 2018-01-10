@@ -9,6 +9,7 @@ public class Data {
         return new Data();
     }
     private List<CurrentType> currentTypeList=new ArrayList<>();
+    private List<Object>objs=new ArrayList<>();
 
     public List<CurrentType> getCurrentTypeList() {
         return currentTypeList;
@@ -25,6 +26,15 @@ public class Data {
 
     public Data setUnitList(List<String> unitList) {
         this.unitList = unitList;
+        return this;
+    }
+
+    public List<Object> getObjs() {
+        return objs;
+    }
+
+    public Data setObjs(List<Object> objs) {
+        this.objs = objs;
         return this;
     }
 }

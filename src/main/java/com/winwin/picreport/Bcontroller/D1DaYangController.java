@@ -470,6 +470,25 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *传过来一个ID得到这个Id对应的数据,用于徐勇前端修改某条记录的时候
+     * 只有一个参数id传过来
+     * */
+    @RequestMapping(value= InterFaceCnst.getOneRecordFromAId,method = RequestMethod.POST)
+    public @ResponseBody  Msg getOneRecordFromAId(@RequestBody Map<String,String> m){
+        Msg msg1 = cnst.d1DaYangService.getOneRecordFromAId(m.get("id"));
+        return msg1;
+
+    }
+
+
+
+
+
+
+
 
 //    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody FenYe dangqianyeData(@RequestBody FenYe fenYe) {
