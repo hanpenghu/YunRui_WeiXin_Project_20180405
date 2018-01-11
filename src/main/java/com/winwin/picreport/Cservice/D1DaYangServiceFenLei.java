@@ -56,7 +56,8 @@ public class D1DaYangServiceFenLei {
             ii = cnst.prdtSampMapper.insert(prdtSamp);
         } catch (Exception e) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样插入一条数据失败~~~~~~~~~~~~~~~~~~~~~~~~");
-            return MessageGenerate.generateMessage("保存失败", "保存失败",
+            return MessageGenerate.generateMessage
+                    ("保存失败", "保存失败",
                     "数据库系统级别错误", "", "38");
         }
         list = new MessageGenerate().generateMessage
