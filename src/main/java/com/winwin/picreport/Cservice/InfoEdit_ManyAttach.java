@@ -3,9 +3,12 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.AllConstant.StatusCnst;
+import com.winwin.picreport.Ddao.reportxmlmapper.PrdtMapper;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
+import com.winwin.picreport.Edto.Prdt;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
+import com.winwin.picreport.Edto.PrdtWithBLOBs;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -23,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service("infoEditOfManyAttach")
-public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
+public class InfoEdit_ManyAttach {
     @Autowired
     private Cnst cnst;
 
@@ -45,11 +48,11 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
 
 
             if (thum != null &&
-                    (thum.getOriginalFilename().contains("!")
-                            || thum.getOriginalFilename().contains(";"))) {
+                    (thum.getOriginalFilename().contains(Cnst.ganTanHao)
+                            || thum.getOriginalFilename().contains(Cnst.fenHao))) {
                 return MessageGenerate.generateMessage
                         ("您的图片不能包含有!符号或者;符号",
-                        "您的图片不能包含有!符号或者;符号", "", "34");
+                        "您的图片不能包含有!符号或者;符号", Cnst.emptyStr, "34");
             }
 
 
@@ -134,6 +137,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),msgCnst.failSave.getValue(),msgCnst.failOfDbMistake.getValue(),Cnst.emptyStr,StatusCnst.dbMistakeCausePrdtSampFalse);
             }
 
+
             /**
              *下面是保存多个附件8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
              * */
@@ -182,6 +186,20 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                             "数据库系统级别错误,保存某个Attach的路径时候出错", "", "38");
                 }else{
 
+                }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //更新商品主库的停用时间
+                Date stopusedate = prdtSampO.getStopusedate();
+                String prdNo=cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
+                PrdtWithBLOBs prdt=new PrdtWithBLOBs();
+                prdt.setPrdNo(prdNo);
+                prdt.setNouseDd(stopusedate);
+                //selective的意思就是null的不更新
+                Integer i = cnst.prdtMapper.updateByPrimaryKeySelective(prdt);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                if(null==i||0==i){
+                    throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "sunlike主表prdt停用时间更新失败", "sunlike主表prdt停用时间更新失败", "", "36").toString());
                 }
                 if (attach!=null&&!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
                     throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36").toString());

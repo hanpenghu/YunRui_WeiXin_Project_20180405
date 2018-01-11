@@ -135,18 +135,18 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<Msg>
-    ImageUpLoadAndDataSave001_InfoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
-                                                  @RequestParam(value = "attach1", required = false) MultipartFile attach1,
-                                                  @RequestParam(value = "attach2", required = false) MultipartFile attach2,
-                                                  @RequestParam(value = "attach3", required = false) MultipartFile attach3,
-                                                  @RequestParam(value = "attach4", required = false) MultipartFile attach4,
-                                                  @RequestParam(value = "attach5", required = false) MultipartFile attach5,
-                                                  @RequestParam(value = "attach6", required = false) MultipartFile attach6,
-                                                  @RequestParam(value = "attach7", required = false) MultipartFile attach7,
-                                                  @RequestParam(value = "attach8", required = false) MultipartFile attach8,
-                                                  @RequestParam(value = "attach9", required = false) MultipartFile attach9,
-                                                  @RequestParam(value = "attach10", required = false) MultipartFile attach10,
-                                                  HttpServletRequest request) {
+    infoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
+                        @RequestParam(value = "attach1", required = false) MultipartFile attach1,
+                        @RequestParam(value = "attach2", required = false) MultipartFile attach2,
+                        @RequestParam(value = "attach3", required = false) MultipartFile attach3,
+                        @RequestParam(value = "attach4", required = false) MultipartFile attach4,
+                        @RequestParam(value = "attach5", required = false) MultipartFile attach5,
+                        @RequestParam(value = "attach6", required = false) MultipartFile attach6,
+                        @RequestParam(value = "attach7", required = false) MultipartFile attach7,
+                        @RequestParam(value = "attach8", required = false) MultipartFile attach8,
+                        @RequestParam(value = "attach9", required = false) MultipartFile attach9,
+                        @RequestParam(value = "attach10", required = false) MultipartFile attach10,
+                        HttpServletRequest request) {
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
         List<MultipartFile> attachList =new LinkedList<>();
          new ListUtils<MultipartFile>()

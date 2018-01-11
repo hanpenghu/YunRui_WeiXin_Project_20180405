@@ -57,7 +57,6 @@ public class Cnst {
 
     @Autowired
     public GPrdNo gPrdNo;
-
     @Autowired
     public UpDefMapper upDefMapper;
 
@@ -109,7 +108,7 @@ public class Cnst {
     public D1DaYangService_ConfirmOrder dco;
 
     @Autowired
-    public D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach infoEditOfManyAttach;
+    public InfoEdit_ManyAttach infoEditOfManyAttach;
 
     @Value("${tokenShiXiaoShiJian_haoMiao}")
     public String tokenShiXiaoShiJian_haoMiao;
