@@ -173,7 +173,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         return MessageGenerate.generateMessage
                 ("保存失败", "保存失败",
-                "数据库系统级别错误", "", "38");
+                "数据库系统级别错误", Cnst.emptyStr, "38");
     }
 
 
