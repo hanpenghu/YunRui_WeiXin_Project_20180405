@@ -233,6 +233,9 @@ public class SaveSaleOrBuyPrice {
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
+            if(null==upDef.getCusNo()){
+                upDef.setCusNo("");
+            }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~13~~~~~~~~~~~~~~~~");
@@ -251,6 +254,9 @@ public class SaveSaleOrBuyPrice {
             upDef.setBilType("01");
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~17~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            if(null==upDef.getCusNo()){
+                upDef.setCusNo("");
+            }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             if(insert==0) {

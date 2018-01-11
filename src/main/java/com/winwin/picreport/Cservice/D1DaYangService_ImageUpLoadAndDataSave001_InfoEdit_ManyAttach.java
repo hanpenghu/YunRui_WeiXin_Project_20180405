@@ -1,6 +1,8 @@
 package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.Constant.msgCnst;
+import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
@@ -91,20 +93,34 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
              * */
             if (thum != null) {
                 //将缩略图保存在指定的目录
-                thum.transferTo(new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
-                if (!new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()).exists()) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存！", "", "35");
+//                thum.transferTo(new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
+                thum.transferTo(new File(p.gp().sad(projectPath)
+                        .sad(cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr))
+                        .sad(cnst.suoLueTuWenJianJia).gad()
+                        ,p.gp().sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).gad()));
+
+//                if (!new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr) + cnst.suoLueTuWenJianJia, uuid + Cnst.ganTanHao + thum.getOriginalFilename()).exists()) {
+//                    return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存！", "", "35");
+//                }
+
+                if (!new File(p.gp().sad(projectPath).sad(cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr)).sad(cnst.suoLueTuWenJianJia).gad(),p.gp().sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).gad()).exists()) {
+                    return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),
+                            msgCnst.failSave.getValue(),
+                            msgCnst.picFailSaveOtherMsg.getValue()
+                            , Cnst.emptyStr, StatusCnst.thumSaveFalseThenAllDataSaveFalse);
                 }
 
                 if (imageThumUrl == null) {
-                    imageThumUrl = "";
+                    imageThumUrl = Cnst.emptyStr;
                 }//第一次没上传任何东西可能是空
                 //给缩略图添加一个新的路径进去,用;号隔开路径，
                 //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
                 //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                imageThumUrl = imageThumUrl + cnst.suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
+//                imageThumUrl = imageThumUrl + cnst.suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
+                imageThumUrl=p.gp().sad(imageThumUrl).sad(cnst.suoLueTuWenJianJia)
+                        .sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).sad(Cnst.fenHao).gad();
             }
-            if ("".equals(imageThumUrl)) {
+            if (Cnst.emptyStr.equals(imageThumUrl)) {
                 imageThumUrl = null;//为了是null的时候不更新这个字段
             }
 
@@ -115,7 +131,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
             prdtSampOb.setIsconfirm(null);
             //Selective是不更新null
             if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
-                return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");
+                return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),msgCnst.failSave.getValue(),msgCnst.failOfDbMistake.getValue(),Cnst.emptyStr,StatusCnst.dbMistakeCausePrdtSampFalse);
             }
 
             /**
@@ -128,7 +144,7 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 String attachmentUr = prdtsa.getAttach();
                 String uid = UUID.randomUUID().toString();
                 ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
-                if (attach != null && (attach.getOriginalFilename().contains("!") || attach.getOriginalFilename().contains(";"))) {
+                if (attach != null && (attach.getOriginalFilename().contains(Cnst.ganTanHao) || attach.getOriginalFilename().contains(";"))) {
                     return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
                 }
 
@@ -136,8 +152,8 @@ public class D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit_ManyAttach {
                 String s1 = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.fuJianWenJianJia;
                 if (attach != null) {
                     //将附件保存在指定的目录
-                    attach.transferTo(new File(s1, uid + "!" + attach.getOriginalFilename()));
-                    if (!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
+                    attach.transferTo(new File(s1, uid + Cnst.ganTanHao + attach.getOriginalFilename()));
+                    if (!new File(s1, uid + Cnst.ganTanHao+ attach.getOriginalFilename()).exists()) {
                         return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
                     }
                     if (attachmentUr == null) {
