@@ -144,7 +144,9 @@ public interface ManyTabSerch {
         List<PinPai> pinPai();
 
 
-        List<String>selectDangQianYeSuoYouId(@Param("dangQianYe") Integer dangQianYe,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
+        List<String>selectDangQianYeSuoYouId
+                (@Param("dangQianYe") Integer dangQianYe
+                        ,@Param("meiYeXianShiShu")Integer meiYeXianShiShu);
 
         /**
          *得到某页分页id,打样未确认的
