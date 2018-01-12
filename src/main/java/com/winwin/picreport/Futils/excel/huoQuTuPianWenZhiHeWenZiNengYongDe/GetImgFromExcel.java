@@ -79,7 +79,13 @@ public class GetImgFromExcel {
         int sheetNumbers = wb.getNumberOfSheets();
 System.out.println("~~~~~~~~~~sheetNumbers="+sheetNumbers+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         // sheet list
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        //2018_1_12   weekday(5)   11:03:42
+        //暂时只支持一个sheet
+        sheetNumbers=1;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 循环sheet
         for (int i = 0; i < sheetNumbers; i++) {
@@ -181,7 +187,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~"
      * @return Map key:图片单元格索引（0_1_1）String，value:图片流PictureData
      */
     public  Map<String, PictureData> getSheetPictrues07(int sheetNum,
-                                                              XSSFSheet sheet, XSSFWorkbook workbook) {
+                                                              XSSFSheet sheet,
+                                                        XSSFWorkbook workbook) {
         Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
 
         for (POIXMLDocumentPart dr : sheet.getRelations()) {

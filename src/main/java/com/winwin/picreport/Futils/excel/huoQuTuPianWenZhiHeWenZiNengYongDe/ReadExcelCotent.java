@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.winwin.picreport.Futils.NotEmpty;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -118,11 +119,44 @@ public class ReadExcelCotent {
         }
         Map<Integer, Map<Integer,Object>> content = new HashMap<Integer, Map<Integer,Object>>();
 
+        //暂时只支持第一个sheet//暂时只支持一个sheet
         sheet = wb.getSheetAt(0);
         // 得到总行数
         int rowNum = sheet.getLastRowNum();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //下面的循环是为了去除空行,以从0开始第六列为准,如果是空的,代表本行都是空的
+        int ak47=0;//防沉迷
+        while(true){
+            String str = sheet.getRow(rowNum).getCell(6).getRichStringCellValue().getString();
+            if(NotEmpty.empty(str)){
+                rowNum--;
+            }else if(rowNum==0){
+                break;
+            }else if(ak47>300){//专业防沉迷
+                break;
+            }else{
+                break;
+            }
+            ak47++;
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
         row = sheet.getRow(0);
         int colNum = row.getPhysicalNumberOfCells();
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //暂时列数固定为12列2018_1_12   weekday(5)   11:21:39//因为老郑说后面多出来东西要没事情才行
+        colNum=12;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
         // 正文内容应该从第二行开始,第一行为表头的标题
         for (int i = 1; i <= rowNum; i++) {
             row = sheet.getRow(i);

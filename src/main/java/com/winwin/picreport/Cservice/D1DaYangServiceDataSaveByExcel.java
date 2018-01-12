@@ -179,7 +179,7 @@ public class D1DaYangServiceDataSaveByExcel {
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     *得到excel中除了图片以为的数据放入list
+     *得到excel中除了图片以外的数据放入list
      * */
     public List<Msg>  getPrdtSamp(List<PrdtSamp> list,File file){
 
@@ -203,7 +203,6 @@ public class D1DaYangServiceDataSaveByExcel {
                 prdtSamp.setIdxNo((String)map.get(i).get(2));
                 //产品名称
                 prdtSamp.setIdxName((String)map.get(i).get(3));
-
                 prdtSamp.setSalName((String)map.get(i).get(4));
                 //第五个是图片
                 prdtSamp.setPrdCode((String)map.get(i).get(6));
