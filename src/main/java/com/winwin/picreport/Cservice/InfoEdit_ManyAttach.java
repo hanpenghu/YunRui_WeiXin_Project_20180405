@@ -194,13 +194,25 @@ public class InfoEdit_ManyAttach {
                 PrdtWithBLOBs prdt=new PrdtWithBLOBs();
                 prdt.setPrdNo(prdNo);
                 prdt.setNouseDd(stopusedate);
-                //selective的意思就是null的不更新
-                Integer i = cnst.prdtMapper.updateByPrimaryKeySelective(prdt);
+                if(NotEmpty.empty(prdNo)){
+                    if(stopusedate==null){
+                        p.p("前端传过来的停用时间是null");
+                    }else{
+                        //selective的意思就是null的不更新
+                        Integer i = cnst.a001TongYongMapper.updatePrdtNouseDd(prdNo,p.dtoStr(stopusedate));
+
+                        if(null==i||0==i){
+                            p.p("货号不为空,但是保存停用时间失败！！更新条数为："+i+"！prdNo="+prdNo+"");
+                            throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "sunlike主表prdt停用时间更新失败", "sunlike主表prdt停用时间更新失败", "", "36").toString());
+                        }
+                    }
+
+                }else{
+                    System.out.println("prdNo是空的,无法更新停用时间");
+                }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                if(null==i||0==i){
-                    throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "sunlike主表prdt停用时间更新失败", "sunlike主表prdt停用时间更新失败", "", "36").toString());
-                }
+
                 if (attach!=null&&!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
                     throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36").toString());
                 }

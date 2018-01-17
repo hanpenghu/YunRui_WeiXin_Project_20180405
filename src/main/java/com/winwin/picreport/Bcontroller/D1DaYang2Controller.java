@@ -102,7 +102,8 @@ public class D1DaYang2Controller {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+        List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper
+                .chanPinBianMaJianDangTiaoJianChaXun(p1);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
         f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));

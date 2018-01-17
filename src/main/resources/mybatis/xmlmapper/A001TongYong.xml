@@ -83,10 +83,10 @@
         )
         AND
                         --产品名称
-                        idx_Name=
+                        idx_Name LIKE
                         <choose>
                             <when test="idxName != null and idxName != ''">
-                                #{idxName}
+                                ('%' + (#{idxName}) + '%')
                             </when>
                             <otherwise>
                                 idx_Name
@@ -94,10 +94,10 @@
                         </choose>
         AND
             ---产品分类
-                        idx_No=
+                        idx_No LIKE
                         <choose>
                             <when test=" idxNo != null and idxNo != '' ">
-                                #{idxNo}
+                                ('%'+( #{idxNo})+ '%')
                             </when>
                             <otherwise>
                                 idx_No
@@ -105,10 +105,10 @@
                         </choose>
         AND
         --产品编码
-                    prd_Code=
+                    prd_Code LIKE
                     <choose>
                         <when test=" prdCode != null and prdCode != '' ">
-                            #{prdCode}
+                            ('%'+( #{prdCode}) +'%')
                         </when>
                         <otherwise>
                             prd_Code
@@ -117,10 +117,10 @@
 
         AND
                     --产品负责人
-                    sal_No=
+                    sal_No LIKE
                     <choose>
                         <when test="salNo != null and salNo != '' ">
-                            #{salNo}
+                            ('%' +( #{salNo}) + '%')
                         </when>
                         <otherwise>
                             sal_No

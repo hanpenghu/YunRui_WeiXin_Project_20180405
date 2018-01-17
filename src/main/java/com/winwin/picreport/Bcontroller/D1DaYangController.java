@@ -160,7 +160,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
                  .add(attach8,attachList)
                  .add(attach9,attachList)
                  .add(attach10,attachList);
-System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
          System.out.println(attachList);
          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
@@ -291,9 +291,12 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * 49保存成功,
      * 50保存失败
      */
-    @RequestMapping(value = InterFaceCnst.dataSaveByExcel, method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = InterFaceCnst.dataSaveByExcel,
+            method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false) MultipartFile excel) {
+    List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false)
+                                      MultipartFile excel) {
         //上传到指定目录
         try {
            return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
@@ -345,13 +348,15 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * */
     @RequestMapping(value = InterFaceCnst.currentCategoryPrdtList, method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody CategoryNameCode currentCategoryPrdtList(@RequestBody CategoryNameCode categoryNameCode) {
+    public @ResponseBody CategoryNameCode currentCategoryPrdtList
+    (@RequestBody CategoryNameCode categoryNameCode) {
         List<String> codeList=cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
         return categoryNameCode.setPrdCodeList(codeList);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "fenlei", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = "fenlei", method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<CategoryNameCode> fenlei() {
         List<CategoryNameCode> categoryNameCodeList = cnst.fenLei.fenlei();
@@ -366,7 +371,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @RequestMapping(value = InterFaceCnst.fuZeRen, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = InterFaceCnst.fuZeRen, method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<FuZeRen> fuZeRen() {
         List<FuZeRen> fuZeRenList = cnst.fenLei.fuZeRen();
@@ -381,7 +387,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = InterFaceCnst.pinPai, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = InterFaceCnst.pinPai, method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<PinPai> pinPai() {
         List<PinPai> fuZeRenList = cnst.manyTabSerch.pinPai();
@@ -416,7 +423,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * //默认每页显示数10
      * */
 
-    @RequestMapping(value =InterFaceCnst.alReadyConfirmOrderPage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value =InterFaceCnst.alReadyConfirmOrderPage,
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody FenYe alReadyConfirmOrderPage(@RequestBody FenYe fenYe) {
         return cnst.dco.alReadyConfirmOrderPage(fenYe);
     }
@@ -426,7 +434,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      *得到所有打样未确认的单子第某页,这个不只是能得到第一页,还能得到很多页
      *
      * */
-    @RequestMapping(value = InterFaceCnst.notConfirmOrderFirstPage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = InterFaceCnst.notConfirmOrderFirstPage,
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {
         return cnst.dco.notConfirmOrderFirstPage(fenYe);
     }
@@ -441,7 +450,8 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      imageUpLoadAndDataSave_InfoEdit_ManyAttach
      注意调这个编辑接口的时候必须把原来的信息再传一遍,否则会更改信息
      * */
-    @RequestMapping(value = InterFaceCnst.confirmTheOrder, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = InterFaceCnst.confirmTheOrder,
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> confirmTheOrder(@RequestBody PrdtSamp prdtSamp) {
         return cnst.dco.confirmTheOrder(prdtSamp);
     }

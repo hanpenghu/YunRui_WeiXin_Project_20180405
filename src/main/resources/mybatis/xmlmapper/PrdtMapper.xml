@@ -3320,6 +3320,7 @@
       <if test="remWebM != null">
         REM_WEB_M = #{remWebM,jdbcType=LONGVARBINARY},
       </if>
+      PRD_NO=PRD_NO
     </set>
     where PRD_NO = #{prdNo,jdbcType=VARCHAR}
   </update>

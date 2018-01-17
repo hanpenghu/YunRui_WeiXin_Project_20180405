@@ -176,4 +176,13 @@ public interface A001TongYongMapper {
 
     @Select({"Select count(id) from prdt_samp where prd_code=#{prdCode}"})
     Integer isPrdCodeExist(@Param("prdCode") String prdCode);
+
+    @Update({"update prdt set nouse_dd=#{nouseDd} where prd_no=#{prdNo}"})
+   Integer updatePrdtNouseDd(@Param("prdNo") String prdNo,@Param("nouseDd") String s);
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 }
