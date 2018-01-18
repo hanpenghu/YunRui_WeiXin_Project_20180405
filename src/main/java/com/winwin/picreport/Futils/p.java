@@ -8,8 +8,47 @@ import java.util.*;
 
 public strictfp class p {
 
-    public final static String space="";
-    public static final String unixBir="1970-01-01";
+//    public static void main(String[]args){
+//            p(p.cexhx);
+//    }
+
+    public static final String dexhx="_________________";//短英文下划线
+    public static final String cexhx="____________________________________________";//长英文下划线
+    public static final String dzwxhx="————————————————";//短中文下划线
+    public static final String hlfgxd="…………………………………………";//就是^的中文状态多个组合
+    public static final String zwh="？";//中文问号
+    public static final String eeh="?";//英文问号
+    public static final String xh="*";
+    public static final String qdz="&";//and符号或者取地址符号
+    public static final String zcf="……";//中文状态下的次方符号
+    public static final String cf="^";//excel中的次方符号
+    public static final String jnh="#";
+    public static final String zgth="！";//中文感叹号
+    public static final String egth="!";//英文感叹号
+    public static final String at="@";
+    public static final String rmb="￥";
+    public static final String dollor="$";
+    public static final String bfh="%";
+    public static final String zmh="：";//中文冒号
+    public static final String emh=":";//英文冒号
+    public static final String zdh="、";//顿号、,只有中文有,英文没有
+    public static final String fxg="\\";//这个其实代表一个\,因为第一个\是转义符号
+    public static final String ys="|";//一竖
+    public static final String edyh="'";//英文单引号的一半
+    public static final String esyh="\"";//英文双引号的一半
+    public static final String ejh=".";//英文句号
+    public static final String zjh="。";//中文句号
+    public static final String zd="，";//中文逗号
+    public static final String ed=",";//英文逗号
+    public static final String xyh="<";
+    public static final String dyh=">";
+    public static final String dh="=";//等号
+    public static final String j="+";//加号
+    public static final String xhx="_";//下划线
+    public static final String jh="-";//减号
+    public final static String fh=";";//分好
+    public final static String space="";//空字符串
+    public final static String spac=" ";//空格
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
     public final static String d2="yyyy-MM-dd HH:mm:ss";
     public final static String d3="yyyy-MM-dd";
@@ -29,16 +68,20 @@ public strictfp class p {
     public final static String d13="yyyy.MM.dd HH.mm.ss.SS";
     public final static String d14="yyyy.MM.dd.HH.mm.ss.SS";
     public final static String d15="yyyy.MM.dd.HH.mm.ss";
+    public static final String unixBir="1970-01-01";
     public final static String hanhanBirthday_="1986-12-26";
     public final static String hanhanBirthday="1986/12/26";
+
     public final static String DateType="java.util.Date";
     public final static String StringType="java.lang.String";
     public final static String BigDecimalType="java.math.BigDecimal";
-    public final static List<String>numberTypelist=Arrays.asList(new String[]
-            {"int","java.lang.Integer",
+
+    public final static List<String>numberTypelist
+            =Arrays.asList(new String[]{"int","java.lang.Integer",
                     "double","java.lang.Double",
                     "float","java.lang.Float","java.lang.Long"
                     ,"long","java.lang.Short","short"});
+
     public final static String intType="int";
     public final static String IntegerType="java.lang.Integer";
     public final static String doubleType="double";
