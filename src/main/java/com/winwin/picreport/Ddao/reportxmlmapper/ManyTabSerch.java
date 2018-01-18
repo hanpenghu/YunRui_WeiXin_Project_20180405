@@ -222,10 +222,6 @@ public interface ManyTabSerch {
     String getPrdNoFromPrdtSamp(@Param("id") String id);
 
 
-
-
-
-
-
-
+    @Select({"select count(id) from prdt_samp where id=#{uuid}"})
+    Integer countByIdOfprdtSamp(@Param("uuid")String uuid);
 }

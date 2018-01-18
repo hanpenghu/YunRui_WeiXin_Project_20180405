@@ -14,6 +14,7 @@ import com.winwin.picreport.Futils.fileUtil.hanhanFileUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.PictureData;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,13 +90,23 @@ public class D1DaYangServiceDataSaveByExcel {
             String uuid= UUID.randomUUID().toString();
             //得到要入数据库的第i条数据
             PrdtSamp ps = list.get(i);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////货号流水模块//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
            //如果没有货号,就流水一个
             if(NotEmpty.empty(ps.getPrdNo())){
-                PrdtSamp0 p0=new PrdtSamp0();
-                BeanUtils.copyProperties(ps,p0);
-                cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
-                ps.setPrdNo(p0.getPrdNo());
+                try {
+                    PrdtSamp0 p0=new PrdtSamp0();
+                    BeanUtils.copyProperties(ps,p0);
+                    cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+                    ps.setPrdNo(p0.getPrdNo());
+                } catch (Exception e) {
+                    throw new RuntimeException(p.gp().sad(p.dexhx)
+                            .sad("excel打样的时候,生成流水号的时候产生异常,导致一条数据也没有打样成功")
+                            .sad(p.dexhx)
+                            .sad("excel da yang de shi hou ,sheng cheng liu ")
+                            .sad("shui hao de shi hou chan sheng mistake ,")
+                            .sad(p.dexhx)
+                            .gad());
+                }
             }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //定义imageurl,准备放入数据库

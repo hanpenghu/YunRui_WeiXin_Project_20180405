@@ -12,6 +12,7 @@ public strictfp class p {
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
 
+    public static final String excel="excel";
     public static final String zhifgf="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";//至分隔符
     public static final String zhi="~";//至符号
     public static final String dexhx="_________________";//短英文下划线
@@ -94,7 +95,8 @@ public strictfp class p {
     public final static String longType="long";
     public final static String ShortType="java.lang.Short";
     public final static String shortType="short";
-//    public final static String ;
+
+    //    public final static String ;
     private String ads="";
     private StringBuffer sb=new StringBuffer();
     private List lin=new LinkedList();

@@ -67,64 +67,6 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    /**
-//     * 对展示的数据进行信息编辑的接口,支持图片再上传和原来的数据修改
-//     * 这个暂时不用,用下下面那个
-//     */
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////    @Transactional
-//    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit", method = RequestMethod.POST,
-//                                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//                                            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody List<Msg>
-//    ImageUpLoadAndDataSave001_InfoEdit(@RequestParam(value = "thum", required = false) MultipartFile thum,
-//                                       @RequestParam(value = "attach", required = false) MultipartFile attach,
-//                                       HttpServletRequest request) {
-//        String prdtSamp1 = request.getParameter("prdtSamp");
-//        try {
-//           return cnst.infoEdit.infoEdit(thum,attach,prdtSamp1);
-//        } catch (Exception e) {
-//            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception,基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
-//            e.printStackTrace();
-//        }
-//        return MessageGenerate.generateMessage("保存失败", "保存失败",
-//                "数据库系统级别错误", "", "38");
-//    }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    /**
-//     *这个暂时不用,用下面那个接口
-//     * */
-//
-//    @RequestMapping(value = "imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2",
-//        method = RequestMethod.POST,
-//        consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//        produces = MediaType.APPLICATION_JSON_VALUE)
-//public @ResponseBody List<Msg>
-//imageUpLoadAndDataSave_InfoEdit_ManyAttachOf2(HttpServletRequest request) {
-//    String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-//    List<MultipartFile> thumList =
-//            ((MultipartHttpServletRequest) request).getFiles("thum");
-//
-//    List<MultipartFile> attachList =
-//            ((MultipartHttpServletRequest) request).getFiles("attach");
-//
-//
-//    MultipartFile thum=null;
-//    if(NotEmpty.notEmpty(thumList)){
-//        thum=thumList.get(0);
-//    }
-//    try {
-//        return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
-//    } catch (Exception e) {
-//        System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
-//                "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
-//        e.printStackTrace();
-//    }
-//    return MessageGenerate.generateMessage("保存失败", "保存失败",
-//            "数据库系统级别错误", "", "38");
-//}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *用这个进行  信息编辑
@@ -244,45 +186,6 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
                         "", "38");
     }
 
-//
-//    /**
-//     * 这个一次只能穿一个附件
-//     * 用于同时上传缩略图(到springboot所在项目目录下某目录)和附件(到springboot所在项目目录下某目录)
-//     * 和打样信息(到数据库表prdt_samp)
-//     */
-//    @RequestMapping(value = "imageUpLoadAndDataSave",
-//            method = RequestMethod.POST,
-//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody
-//    List<Msg> ImageUpLoadAndDataSave001(@RequestParam(value = "thum", required = false) MultipartFile thum,
-//                                        @RequestParam(value = "attach", required = false) MultipartFile attach,
-//                                        HttpServletRequest request) {
-//        //上传到指定目录
-//        try {
-//            String projectPath = SpringbootJarPath.JarLuJingGet();
-//            System.out.println();
-//            System.out.println();
-//            System.out.println(projectPath);
-//            System.out.println();
-//            System.out.println();
-//            //将来用作数据库一条数据的唯一标识
-//            synchronized (this) {
-//                return cnst.d1DaYangService.ImageUpLoadAndDataSave001
-//                        (projectPath, thum, attach, request,
-//                                cnst.daYangSuoLueTuAndFuJianZongPath,
-//                                cnst.dirUrl, cnst.suoLueTuWenJianJia, cnst.fuJianWenJianJia);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return MessageGenerate.generateMessage("保存失败",
-//                "保存失败", "数据库系统级别错误",
-//                "", "38");
-//    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * 上传一个包含信息的excel到数据库
      * 这个一次只能穿一个附件
@@ -295,7 +198,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg> dataSaveByExcel(@RequestParam(value = "excel", required = false)
+    List<Msg> dataSaveByExcel(@RequestParam(value = p.excel, required = false)
                                       MultipartFile excel) {
         //上传到指定目录
         try {

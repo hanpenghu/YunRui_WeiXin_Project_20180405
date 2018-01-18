@@ -40,13 +40,18 @@ public class GPrdNo {
 
         //专门为了价格保存做的额,因为主表插入的时候会插入prd_no,但是价格保存不会动主表,动的up_def
         //为了对不保存价格的时候没有prdNo,用这里的流水,但是流完后没有加入到打样主表,prdt_samp,我们再加入一次
+
         prdtNo=prdtSamp.getPrdNo();
         String uuid = prdtSamp.getId();
         //放入prdt_samp
         PrdtSamp pp=new PrdtSamp();
         pp.setPrdNo(prdtNo);
         pp.setId(uuid);
-        cnst.prdtSampMapper.updateByPrimaryKey(pp);
+        if(cnst.manyTabSerch.countByIdOfprdtSamp(uuid)>0){
+            //有记录在prdtSamp模块了再更新不迟//没有该id的记录的话证明不是采购定价或者销售定价里调用这个模块,不必更新
+            cnst.prdtSampMapper.updateByPrimaryKey(pp);
+        }
+
 
     }
 
@@ -76,14 +81,15 @@ public class GPrdNo {
                 String prdCode = prdtSamp.getPrdCode();
                 String usr=prdtSamp.getUsr();
                 String chkMan=prdtSamp.getUsr();
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
-                p.p(prdNoMax);p.p(indx1);p.p(prdCode);p.p(usr);p.p(chkMan);
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~开始~~~~~com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("prdNoMax="+prdNoMax);p.p("indx1="+indx1);p.p("prdCode="+prdCode);
+                p.p("usr="+usr);p.p("chkMan="+chkMan);
+                p.p("~~~结束~~~~~com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
                 //给prdt也添加一个货号
 //                try {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
                     cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan);
-                    p.p("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
+                    p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
 //                } catch (Exception e) {
 //                    p.p("com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate有问题");
 //                    e.printStackTrace();

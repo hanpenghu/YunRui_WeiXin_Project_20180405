@@ -149,6 +149,7 @@ public class D1DaYang2C {
      //地址   ip地址:8070/saveSaleOrBuyPrice
      * */
 
+    //保存采购和销售价格
     //保存采购的时候要供应商不要客户,保存销售的时候供应商和客户都不要
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
     public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up){
