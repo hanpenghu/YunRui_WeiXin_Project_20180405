@@ -9,7 +9,8 @@ import com.winwin.picreport.Edto.YeWuYuan;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -57,12 +58,37 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
     @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
             ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody Msg allUnit(){
-        List<String>currentTypeList=cnst.manyTabSerch.allUnit();
+        //得到所有主单位
+        List<String> units = cnst.manyTabSerch.allUnit();
+        //得到所有副单位
+        List<String> units1 = cnst.manyTabSerch.allUnit1();
+        //得到去重复的工具
+        Set<String> set=new HashSet<>();
+        units.forEach(v->set.add(v.trim()));
+        units1.forEach(v->set.add(v.trim()));
+        //创建返回给前端的list
+        List<String>currentTypeList=new ArrayList<>();
+        set.forEach(v->currentTypeList.add(v));
         return Msg.gmg().setData(Data.gD().setUnitList(currentTypeList))
                 .setStatus(StatusCnst.loginSucc).setChMsg("获得所有单位成功");
     }
 
+/*    public static void main(String[]args){
+//        Set<String> set=new TreeSet<>();
+//        set.add("abc");
+//        set.add("abc");
+//        set.add("韩寒");
+//        System.out.println(set);
 
+        Set<String> set1=new HashSet<>();
+        set1.add("abc");
+        set1.add("abc");
+        set1.add("韩寒");
+        set1.add("韩寒");
+        set1.add("韩寒1");
+        System.out.println(set1);
+
+    }*/
 ///////////////////////////////////////////////////////////////////////////////
 }
 /////////////////////////////////////////////////////////////

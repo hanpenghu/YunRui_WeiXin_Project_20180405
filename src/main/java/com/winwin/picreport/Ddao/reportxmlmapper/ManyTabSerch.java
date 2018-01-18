@@ -188,10 +188,12 @@ public interface ManyTabSerch {
 
         @Select("select cur_id as curId,name as name from cur_id")
         List<CurrentType> CurrentType();
-
-        @Select("Select distinct ut from prdt")
-        List<String> allUnit();
-
+////////////////单位模块//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        @Select("SELECT DISTINCT UT FROM PRDT WHERE ISNULL(UT,'')!=''")
+        List<String> allUnit();//所有主单位
+        @Select("SELECT DISTINCT UT1 FROM PRDT WHERE ISNULL(UT1,'')!=''")
+        List<String> allUnit1();//所有副单位
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         @Select("select prd_no from prdt_samp where id=#{uuid}")
         String selectPrdNoFromPrdtSamp(@Param("uuid") String uuid);
 
@@ -203,7 +205,7 @@ public interface ManyTabSerch {
      * */
     @Select({"SELECT TOP 1 UT FROM PRDT WHERE PRD_NO=#{prdNo}"})
     String selectUtFromPrdt(@Param("prdNo") String prdNo);
-    
+
     @Select({"SELECT TOP 1 UT1 FROM PRDT WHERE PRD_NO=#{prdNo}"})
     String selectUt1FromPrdt(@Param("prdNo") String prdNo);
 

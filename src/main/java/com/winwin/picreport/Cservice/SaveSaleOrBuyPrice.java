@@ -38,7 +38,7 @@ public class SaveSaleOrBuyPrice {
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
             if(null==cusNo){//联合主键之一,不能为null
-                cusNo="";
+                cusNo=p.space;
             }
             String chkMan=usr;
             //得到打样唯一标识
@@ -49,7 +49,7 @@ public class SaveSaleOrBuyPrice {
             //得到币别代号//RMB
             String curId = up.getCurId();
             if(null==curId){
-                curId="";
+                curId=p.space;
             }
             //得到币别名字//人民币
             String curName = up.getCurName();
@@ -164,7 +164,7 @@ public class SaveSaleOrBuyPrice {
              *插入副单位到prdt中,条件是prdt中prdno对应ut1主单位字段是空的并且前端
              * 传过来的unitFu不是空的
              * */
-            //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
+            //找到该prdNo对应的ut1(就是存的副单位)//如果是空的并且前端传过来的副单位不是空的,就给他插入当前前端传过来的单位
             String ut1=cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
             if(NotEmpty.empty(ut1)&&NotEmpty.notEmpty(unitFu)){
                 p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt1(副单位空)startInsert").sad(p.dexhx).gad());
@@ -214,8 +214,8 @@ public class SaveSaleOrBuyPrice {
         upDef.setOlefield(unit);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //我们将来取自己添加的价格的标识
-        upDef.setHjNo("SamplesSys");
-        upDef.setsDd(new Date());
+        upDef.setHjNo(Cnst.SamplesSys);
+        upDef.setsDd(cnst.getDbDate());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"
         upDef.setRem((String)gmp.get("rem"));
@@ -229,16 +229,16 @@ public class SaveSaleOrBuyPrice {
         upDef.setUsr((String)gmp.get("usr"));
         upDef.setChkMan((String)gmp.get("chkMan"));
         /////////////////////////////////////////////////////////////////////////////////////
-        upDef.setPrdMark("");
+        upDef.setPrdMark(p.space);
         upDef.setPrdNo((String)gmp.get("prdNo"));
-        upDef.setBzKnd("");
-        upDef.setKnd("");
-        upDef.setSupPrdNo("");
-        upDef.setCusAre("");
+        upDef.setBzKnd(p.space);
+        upDef.setKnd(p.space);
+        upDef.setSupPrdNo(p.space);
+        upDef.setCusAre(p.space);
         //采购含运费入库
         if(NotEmpty.notEmpty(gmp.get("haveTransUpBuy"))){
             //01代表不含运费//其他代表是含运费的
-            upDef.setBilType("");
+            upDef.setBilType(p.space);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST5~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
@@ -290,8 +290,8 @@ public class SaveSaleOrBuyPrice {
         upDef.setOlefield(unit);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        upDef.setHjNo("SamplesSys");
-        upDef.setsDd(new Date());
+        upDef.setHjNo(Cnst.SamplesSys);
+        upDef.setsDd(cnst.getDbDate());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"
         upDef.setRem((String)gmp.get("rem"));
@@ -308,20 +308,20 @@ public class SaveSaleOrBuyPrice {
         upDef.setUsr((String)gmp.get("usr"));
         upDef.setChkMan((String)gmp.get("chkMan"));
         /////////////////////////////////////////////////////////////////////////////////////
-        upDef.setPrdMark("");
+        upDef.setPrdMark(p.space);
         upDef.setPrdNo((String)gmp.get("prdNo"));
-        upDef.setBzKnd("");
-        upDef.setKnd("");
-        upDef.setSupPrdNo("");
-        upDef.setCusAre("");
+        upDef.setBzKnd(p.space);
+        upDef.setKnd(p.space);
+        upDef.setSupPrdNo(p.space);
+        upDef.setCusAre(p.space);
         //销售含运费入库
         if(NotEmpty.notEmpty( gmp.get("haveTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
             //01代表不含运费//其他代表是含运费的
-            upDef.setBilType("");
+            upDef.setBilType(p.space);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
             if(null==upDef.getCusNo()){
-                upDef.setCusNo("");
+                upDef.setCusNo(p.space);
             }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
@@ -342,7 +342,7 @@ public class SaveSaleOrBuyPrice {
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
             if(null==upDef.getCusNo()){
-                upDef.setCusNo("");
+                upDef.setCusNo(p.space);
             }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
