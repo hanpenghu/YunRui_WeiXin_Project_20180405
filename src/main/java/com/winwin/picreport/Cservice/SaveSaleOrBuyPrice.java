@@ -57,8 +57,27 @@ public class SaveSaleOrBuyPrice {
             String remFront = up.getRemFront();
             //固定的备注   //"打样系统"
             String rem = up.getRem();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //单位
-            String unit = up.getUnit();
+            String unit = up.getUnit();//放入up_def中的OLEFIELD字段中
+            //注意:后来加了主单位和副单位,
+            //进入up_def之后都存在了OLEFIELD字段中,取出来的时候也取这个
+            //但是老郑还要求了,单位分主副进入prdt中
+            //prdt中ut字段是主单位,ut1是副单位
+            String unitZhu=up.getUnitZhu();//放入prdt中的ut//当对应prdno的这条记录的ut是空的时候
+            String unitFu=up.getUnitFu();//放入prdt中的ut1//当对应prdno的这条记录的ut1是空的时候
+            if(NotEmpty.notEmpty(unitZhu)){
+                unit=unitZhu;
+            }else if(NotEmpty.notEmpty(unitFu)){
+                unit=unitFu;
+            }else{
+                unit="前端穿过来的主副单位都是空的";
+            }
+            //注意:上面 unit是为了将来插入up_def用的
+            //unitZhu和unitFu是为了将来给没有单位的prdt中的ut和ut1字段准备的
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~采购或者销售保存单位unit="+unit+"~~这个在取出的时候实际上是来自prdt,而这里的实际没有保存~~~~~~~~~~~~~~~~~~~~~~");
             //采购带运费
             BigDecimal haveTransUpBuy = up.getHaveTransUpBuy();
@@ -88,19 +107,20 @@ public class SaveSaleOrBuyPrice {
                     .smp("curName", curName)
                     .smp("remFront", remFront)
                     .smp("rem", rem)
-                    .smp("unit", unit)//因为数据库up_def中的unit只能是1或者2这类短的
+                    .smp("unit", unit)//因为数据库up_def中的unit只能是1或者2这类短的//这个unit负责放入up_def中的OLEFIELD字段以供将来取出来用
+                    .smp("unitZhu",unitZhu)//主单位//将来为了检查对应的prdt中prdno的对应的那条记录的ut是否是null,是null的用这个更新
+                    .smp("unitFu",unitFu)//副单位//将来为了检查对应的prdt中prdno的对应的那条记录的ut1是否是null,是null的用这个更新
                     .smp("haveTransUpBuy", haveTransUpBuy)
                     .smp("noTransUpBuy", noTransUpBuy)
                     .smp("haveTransUpSale", haveTransUpSale)
                     .smp("noTransUpSale", noTransUpSale)
                     .smp("usr",usr)
-                    .smp("chkMan",usr).smp("cusNo",cusNo).gmp();
-
-
+                    .smp("chkMan",usr)
+                    .smp("cusNo",cusNo)
+                    .gmp();
 //////////////////////////货号流水模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //获得uuid对应的prdt_no
             String prdNo= cnst.manyTabSerch.selectPrdNoFromPrdtSamp(uuid);
-
             //如果货号是空的,先流水一下
             if(NotEmpty.empty(prdNo)){
                 //下面流水一次单号//注意必须先得到index
@@ -123,17 +143,37 @@ public class SaveSaleOrBuyPrice {
                 //注意我们插入到prdt的记录会带rem字段是SamplesSys的标记,在mapper的sql中可以看到
                 cnst.gPrdNo.reSetPrdNo(prdtSamp0);
             }
-/////////////单位对比插入模块/////////////////////////////////////////////////////////////////////////////////
-            //找到该prdNo对应的ut(就是存的单位)//如果是空的,就给他插入当前前端传过来的单位
+/////////////prdt表单位对比插入模块/////////////////////////////////////////////////////////////////////////////////
+            /**
+             *插入主单位到prdt中,条件是prdt中prdno对应ut主单位字段是空的并且前端
+             * 传过来的unitZhu不是空的
+             * */
+            //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
             String ut=cnst.manyTabSerch.selectUtFromPrdt(prdNo);
-            if(NotEmpty.empty(ut)){
-                p.p(p.gp().sad(p.dexhx).sad("ci shi prdt zhong mei you unit ,kai shi cha ru").sad(p.dexhx).gad());
+            if(NotEmpty.empty(ut)&&NotEmpty.notEmpty(unitZhu)){
+                p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt(主单位空)startInsert").sad(p.dexhx).gad());
                 //如果是空的,证明prdt表中没有该ut,需要插入该unit
-                Integer tt= cnst.manyTabSerch.insertUnitToUtOfPrdt(unit,prdNo);
+                Integer tt= cnst.manyTabSerch.insertUnitToUtOfPrdt(unitZhu,prdNo);
                 if(NotEmpty.notEmpty(tt)&&tt>0){
-                    p.p(p.gp().sad(p.dexhx).sad("prdt dui ying de ji lu geng xin unit cheng gong").sad(p.dexhx).gad());
+                    p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位成功").sad(p.dexhx).gad());
                 }else{
-                    p.p(p.gp().sad(p.dexhx).sad("prdt dui ying de ji lu geng xin unit shiBai").sad(p.dexhx).gad());
+                    p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
+                }
+            }
+            /**
+             *插入副单位到prdt中,条件是prdt中prdno对应ut1主单位字段是空的并且前端
+             * 传过来的unitFu不是空的
+             * */
+            //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
+            String ut1=cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
+            if(NotEmpty.empty(ut1)&&NotEmpty.notEmpty(unitFu)){
+                p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt1(副单位空)startInsert").sad(p.dexhx).gad());
+                //如果是空的,证明prdt表中没有该ut,需要插入该unit
+                Integer tt1= cnst.manyTabSerch.insertUnitToUt1OfPrdt(unitFu,prdNo);
+                if(NotEmpty.notEmpty(tt1)&&tt1>0){
+                    p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位成功").sad(p.dexhx).gad());
+                }else{
+                    p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
                 }
             }
 //////////////////////////////////////////////////////////////////////////////////////////////

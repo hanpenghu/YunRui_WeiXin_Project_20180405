@@ -243,7 +243,7 @@
        a.s_dd --as sDd,---价格创建日期
        ,a.up --as up ,--价格
        ,a.qty --as qty ,--数量
-       ,d.ut ----as unit,---单位
+       ,isnull(a.OLEFIELD,'原未更新数据') as unit,---单位
        ,a.cur_id ---as curId,----币别代号
        ,a.bil_type----01代表不含运费的单价
        ,a.rem---备注,打样系统的会存为"打样系统"

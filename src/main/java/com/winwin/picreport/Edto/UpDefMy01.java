@@ -8,6 +8,8 @@ import com.winwin.picreport.Futils.p;
 import java.math.BigDecimal;
 
 public class UpDefMy01 extends UpDefMy {
+    String unitZhu;//主单位
+    String unitFu;//副单位
     String usr;//操作员,登录的会员名
     String cusNo;
     //输入到up_def里面的rem备注
@@ -146,5 +148,21 @@ public class UpDefMy01 extends UpDefMy {
         return this;
     }
 
+    public String getUnitZhu() {
+        return unitZhu;
+    }
 
+    public UpDefMy01 setUnitZhu(String unitZhu) {
+        this.unitZhu = unitZhu;
+        return this;
+    }
+
+    public String getUnitFu() {
+        return unitFu;
+    }
+
+    public UpDefMy01 setUnitFu(String unitFu) {
+        this.unitFu = unitFu;
+        return this;
+    }
 }

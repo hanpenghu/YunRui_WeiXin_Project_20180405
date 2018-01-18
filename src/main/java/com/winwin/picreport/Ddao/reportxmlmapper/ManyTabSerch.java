@@ -53,11 +53,6 @@ public interface ManyTabSerch {
         Integer update008_1_OfOnlineBug();
 
 
-
-
-
-
-
 //        @Update("UPDATE A SET A.REM=B.SO_NO FROM MF_SQ A,TF_SQ B \n" +
 //                "WHERE A.CLS_ID='F' AND A.SQ_NO=B.SQ_NO AND B.ITM=1")
 //        Integer update009_1OfOnlineBug();
@@ -179,15 +174,6 @@ public interface ManyTabSerch {
         Integer getCountOfAllNotConfirm();
 
 
-
-
-
-
-
-
-
-
-
         @Update("update prdt_samp set thum=#{newthums} where thum like #{thumInDataBase}")
         int updateThumColumn(@Param("thumInDataBase") String thumInDataBase, @Param("newthums") String newthums);
 
@@ -203,18 +189,41 @@ public interface ManyTabSerch {
         @Select("select cur_id as curId,name as name from cur_id")
         List<CurrentType> CurrentType();
 
-        @Select("Select distinct ut from prdt ")
+        @Select("Select distinct ut from prdt")
         List<String> allUnit();
 
         @Select("select prd_no from prdt_samp where id=#{uuid}")
         String selectPrdNoFromPrdtSamp(@Param("uuid") String uuid);
 
-        @Select({"SELECT TOP 1 UT FROM PRDT WHERE PRD_NO=#{prdNo}"})
-        String selectUtFromPrdt(@Param("prdNo") String prdNo);
 
-        @Select({"UPDATE PRDT SET UT=#{unit} WHERE prd_no=#{prdNo}"})
-        Integer insertUnitToUtOfPrdt(@Param("unit") String unit,@Param("prdNo") String prdNo);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        @Select({"select prd_no from prdt_samp where id=#{id}"})
-        String getPrdNoFromPrdtSamp(@Param("id") String id);
+    /**
+     *产品打样的时候,采购定价的时候,  prdno对应的在prdt中的主副单位判断和插入语句(一下4个语句)
+     * */
+    @Select({"SELECT TOP 1 UT FROM PRDT WHERE PRD_NO=#{prdNo}"})
+    String selectUtFromPrdt(@Param("prdNo") String prdNo);
+    
+    @Select({"SELECT TOP 1 UT1 FROM PRDT WHERE PRD_NO=#{prdNo}"})
+    String selectUt1FromPrdt(@Param("prdNo") String prdNo);
+
+    @Update({"UPDATE PRDT SET UT=#{unit} WHERE prd_no=#{prdNo}"})
+    Integer insertUnitToUtOfPrdt(@Param("unit") String unit,@Param("prdNo") String prdNo);
+
+    @Update({"UPDATE PRDT SET UT1=#{unit} WHERE prd_no=#{prdNo}"})
+    Integer insertUnitToUt1OfPrdt(@Param("unit") String unit,@Param("prdNo") String prdNo);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Select({"select prd_no from prdt_samp where id=#{id}"})
+    String getPrdNoFromPrdtSamp(@Param("id") String id);
+
+
+
+
+
+
+
+
 }

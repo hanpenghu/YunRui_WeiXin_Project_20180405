@@ -355,7 +355,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "fenlei", method = RequestMethod.POST,
+    @RequestMapping(value = InterFaceCnst.fenlei, method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     List<CategoryNameCode> fenlei() {
