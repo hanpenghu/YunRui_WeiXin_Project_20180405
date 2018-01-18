@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service("fenLei")
-public class D1DaYangServiceFenLei {
+public class D1DaYangS {
     @Autowired
     private Cnst cnst;
 
@@ -76,11 +76,6 @@ public class D1DaYangServiceFenLei {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             PrdtSamp0 prdtSampX = this.getP0(prdtSampX1);
             prdtSampList.add(prdtSampX);
-//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//            p.p("");p.p("");p.p("");p.p("");p.p("");
-//            p.p(prdtSampX);
-//            p.p("");p.p("");p.p("");p.p("");p.p("");
-//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         fenYe.setPrdtSampList(prdtSampList);
         fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
@@ -100,12 +95,14 @@ public class D1DaYangServiceFenLei {
         } catch (Exception e) {
 //        System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
         }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //插入价格模块,走一遍这个模块就插入了
         cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~1970没改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        p.p("~~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~1970没改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
         //处理时间为1970的为NULL
         MakeDate1970Null.make1970null(prdtSampX);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~1970改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
+        p.p("~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~~~~~1970改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
         return prdtSampX;
     }
 

@@ -23,7 +23,7 @@ import java.util.*;
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
-public class D1DaYangController {
+public class D1DaYangC {
     @Autowired
     private Cnst cnst;
     /**

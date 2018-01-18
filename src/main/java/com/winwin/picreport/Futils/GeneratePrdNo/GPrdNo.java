@@ -1,6 +1,7 @@
 package com.winwin.picreport.Futils.GeneratePrdNo;
 
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.NotEmpty;
@@ -28,6 +29,7 @@ public class GPrdNo {
         //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
         String prdtNo=cnst.a001TongYongMapper.selectTop1PrdtNo(prdCode);
         if(NotEmpty.notEmpty(prdtNo)){
+            p.p("~~~~~~货号在prdt中已经存在存在,~~~~~prdtNo="+prdtNo+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             //如果不是空的,我们就要把这个prdtNo放到prdtSamp里面,将来进行插入prdt_samp表用
             prdtSamp.setPrdNo(prdtNo);
         }else{
@@ -58,30 +60,30 @@ public class GPrdNo {
             String indx1=prdtSamp.getIdxNo();
             //在prdt里面找到相同的indx1的prdNo流水最大的那个
 //            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~得到最大prdNo递归之前实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~得到最大prdNo递归之前实验~~~~~~~~~~~~~~~~~~~~~~~~");
             String prdNoMax = cnst.getMaxPrdNo.getAllUpAndDownIdxNo(indx1);
-            System.out.println("~~~~~~~~~~~~~~~未加1未转化成long的String的prdNoMax~~~~~~~~~prdNoMax=~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~未加1未转化成long的String的prdNoMax~~~~~~~~~prdNoMax=~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~");
             //将prdNoMax转化成long
             if(NotEmpty.notEmpty(prdNoMax)){
 //                long l = Long.parseLong(prdNoMax);
-//                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~未加1的prdno~~~"+l+"~~~~~~~~~~~~~~~~~~~~~");
+//                p.p("~~~~~~~~~~~~~~~~~~~~~~~~未加1的prdno~~~"+l+"~~~~~~~~~~~~~~~~~~~~~");
 //                l++;
 //                String prdNo = String.valueOf(l);
-//                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~加1的prdno~~"+l+"~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
+//                p.p("~~~~~~~~~~~~~~~~~~~~~~~~加1的prdno~~"+l+"~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
                 //给prdtSamp添加货号
                 prdtSamp.setPrdNo(prdNoMax);
                 //对应数据库的name
                 String prdCode = prdtSamp.getPrdCode();
                 String usr=prdtSamp.getUsr();
                 String chkMan=prdtSamp.getUsr();
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
                 p.p(prdNoMax);p.p(indx1);p.p(prdCode);p.p(usr);p.p(chkMan);
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
                 //给prdt也添加一个货号
 //                try {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
                     cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan);
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
+                    p.p("~~~~~~~~~~~~~~~~~~~~~~~~生成prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
 //                } catch (Exception e) {
 //                    p.p("com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate有问题");
 //                    e.printStackTrace();
@@ -91,4 +93,32 @@ public class GPrdNo {
         }
 
     }
+    /**
+     *当prdt_samp中prdno,存在,而prdt中prdno不存在的时候的操作
+     *
+     * */
+   public void  reSetPrdNo(PrdtSamp0 prdtSamp){
+
+       //先判断prdt中是否有该prdno,没有就加入
+       PrdtExample p1=new PrdtExample();
+       p1.createCriteria().andPrdNoEqualTo(prdtSamp.getPrdNo());
+
+       long l = cnst.prdtMapper.countByExample(p1);
+       if(l==0){
+           //此时prdt中没有该货号
+           p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个~prdno=~"+prdtSamp.getPrdNo()+"~idxno="+prdtSamp.getIdxNo()+"~prdcode=~"+prdtSamp.getPrdCode()+"~~user=~~~"+prdtSamp.getUsr()+"~~~~~~~~~~~~~");
+
+           Integer integer = cnst.a001TongYongMapper.insertPrdtOnePrdNo
+                   (prdtSamp.getPrdNo(), prdtSamp.getIdxNo(), prdtSamp.getPrdCode(),
+                           prdtSamp.getUsr(), prdtSamp.getUsr());
+           if(null!=integer&&integer==1){
+               p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个完成~~~~~~~~~~~~~~~~~~~~~~~~");
+
+           }else{
+               p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个失败~~~~~~~~~~~~~~~~~~~~~~~~");
+           }
+       }
+
+
+   }
 }

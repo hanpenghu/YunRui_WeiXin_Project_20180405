@@ -139,7 +139,7 @@ public class Cnst {
 
 
     @Autowired
-    public D1DaYangServiceFenLei fenLei;
+    public D1DaYangS fenLei;
     @Autowired
     public ManyTabSerch manyTabSerch;
 

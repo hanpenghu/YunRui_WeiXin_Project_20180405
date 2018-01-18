@@ -25,13 +25,20 @@ public class SaveSaleOrBuyPrice {
         public Msg saveSaleOrBuyPrice(UpDefMy01 up){
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
+            if(null==cusNo){//联合主键之一,不能为null
+                cusNo="";
+            }
             String chkMan=usr;
             //得到打样唯一标识
             String uuid = up.getUuid();
             //先拿出来需要的全局数据
             BigDecimal qty = up.getQty();
+            if(null==qty){qty=new BigDecimal(0);}
             //得到币别代号//RMB
             String curId = up.getCurId();
+            if(null==curId){
+                curId="";
+            }
             //得到币别名字//人民币
             String curName = up.getCurName();
             //前端传过来的备注
@@ -40,15 +47,12 @@ public class SaveSaleOrBuyPrice {
             String rem = up.getRem();
             //单位
             String unit = up.getUnit();
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~采购或者销售保存单位unit="+unit+"~~这个在取出的时候实际上是来自prdt,而这里的实际没有保存~~~~~~~~~~~~~~~~~~~~~~");
             //采购带运费
             BigDecimal haveTransUpBuy = up.getHaveTransUpBuy();
             //采购无运费
             BigDecimal noTransUpBuy = up.getNoTransUpBuy();
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.p(noTransUpBuy);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+
             //销售有运费
             BigDecimal haveTransUpSale = up.getHaveTransUpSale();
             //销售无运费
@@ -58,9 +62,9 @@ public class SaveSaleOrBuyPrice {
 
 
             if(NotEmpty.empty(curId)){
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 p.p("币别代号没有传过来");
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg("curId 币别代号没有传过来");
             }
@@ -81,7 +85,7 @@ public class SaveSaleOrBuyPrice {
                     .smp("chkMan",usr).smp("cusNo",cusNo).gmp();
 
 
-
+//////////////////////////货号流水模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //获得uuid对应的prdt_no
             String prdNo= cnst.manyTabSerch.selectPrdNoFromPrdtSamp(uuid);
 
@@ -91,11 +95,20 @@ public class SaveSaleOrBuyPrice {
                 PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
                 PrdtSamp0 prdtSamp0=new PrdtSamp0();
                 BeanUtils.copyProperties(prdtSamp,prdtSamp0);
-                //给prdtSamp流水prdtNo
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //给prdtSamp流水prdtNo//下面是prdno流水模块
                 cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 prdNo=prdtSamp0.getPrdNo();
+            }else{
+                //此时货号不是空的
+                PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
+                PrdtSamp0 prdtSamp0=new PrdtSamp0();
+                BeanUtils.copyProperties(prdtSamp,prdtSamp0);
+                //此时prdNo已经存在存在prdt_Samp,那么我们看看这个prdNo在prdt表是否存在
+                cnst.gPrdNo.reSetPrdNo(prdtSamp0);
             }
-            ////////////////////////////////////////////////单位对比插入模块//////////////////////////////////////////////
+            /////////////单位对比插入模块/////////////////////////////////////////////////////////////////////////////////
             //找到该prdNo对应的ut(就是存的单位)
             String ut=cnst.manyTabSerch.selectUtFromPrdt(prdNo);
 
@@ -104,9 +117,9 @@ public class SaveSaleOrBuyPrice {
               Integer y=  cnst.manyTabSerch.insertUnitToUtOfPrdt(unit,prdNo);
             }
 //////////////////////////////////////////////////////////////////////////////////////////////
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验1~~prdNo=~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验1~~prdNo=~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
             if(NotEmpty.empty(prdNo)){
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验2~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验2~~~~~~~~~~~~~~~~~~~~~~~~");
                 //空的单号,必须告诉前端终止
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg(msgCnst.failSave.getValue())
@@ -117,11 +130,11 @@ public class SaveSaleOrBuyPrice {
                 //判断是采购的还是销售的
                 //采购的都是0,证明现在是销售的
                 if(haveTransUpBuy==null&&noTransUpBuy==null){
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验3~~~~~~~~~~~~~~~~~~~~~~~~");
+                    p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验3~~~~~~~~~~~~~~~~~~~~~~~~");
                     //按销售保存
                    return this.saveAsSaler(gmp);
                 }else{
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验4~~~~~~~~~~~~~~~~~~~~~~~~");
+                    p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验4~~~~~~~~~~~~~~~~~~~~~~~~");
                     //现在是采购的,按采购保存
                     return this.saveAsBuyer(gmp);
 
@@ -160,12 +173,12 @@ public class SaveSaleOrBuyPrice {
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验5~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验5~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             int insert = cnst.upDefMapper.insert(upDef);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验6~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验6~~~~~~~~~~~~~~~~~~~~~~~~");
             if(insert==0) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验7~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验7~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg("保存采购价格含运费的失败");
             }else{
@@ -177,15 +190,15 @@ public class SaveSaleOrBuyPrice {
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("01");
             upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验9~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验9~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             int insert= cnst.upDefMapper.insert(upDef);
             if(insert==0) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~10~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~10~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg("保存采购价格不含运费的失败");
             }else{
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~11~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~11~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
                         .setMsg("保存采购价格成功");
             }
@@ -229,7 +242,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setCusAre("");
         //销售含运费入库
         if(NotEmpty.notEmpty( gmp.get("haveTransUpSale"))){
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~12~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~12~~~~~~~~~~");
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
@@ -238,9 +251,9 @@ public class SaveSaleOrBuyPrice {
             }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~13~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~13~~~~~~~~~~~~~~~~");
             if(insert==0) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验14~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验14~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg("保存销售价格含运费的失败");
             }else{
@@ -249,22 +262,22 @@ public class SaveSaleOrBuyPrice {
         }
         //销售不含运费入库
         if(NotEmpty.notEmpty( gmp.get("noTransUpSale"))){
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~16~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~16~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("01");
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~17~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            p.p("~~~~~~~~~~~~~~~~~~~~~~17~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             if(null==upDef.getCusNo()){
                 upDef.setCusNo("");
             }
             //往价格表up_def插入采购价格
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             if(insert==0) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~18~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~18~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
                         .setMsg("保存销售价格不含运费的失败");
             }else{
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~19~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.p("~~~~~~~~~~~~~~~~~~~~~~19~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
                         .setMsg("保存销售价格的成功");
             }

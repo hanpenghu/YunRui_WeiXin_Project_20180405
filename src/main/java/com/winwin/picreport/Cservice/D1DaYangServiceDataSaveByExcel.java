@@ -2,6 +2,7 @@ package com.winwin.picreport.Cservice;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.ListUtils.LstAd;
@@ -12,6 +13,7 @@ import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.Read
 import com.winwin.picreport.Futils.fileUtil.hanhanFileUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.PictureData;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +89,15 @@ public class D1DaYangServiceDataSaveByExcel {
             String uuid= UUID.randomUUID().toString();
             //得到要入数据库的第i条数据
             PrdtSamp ps = list.get(i);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+           //如果没有货号,就流水一个
+            if(NotEmpty.empty(ps.getPrdNo())){
+                PrdtSamp0 p0=new PrdtSamp0();
+                BeanUtils.copyProperties(ps,p0);
+                cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+                ps.setPrdNo(p0.getPrdNo());
+            }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //定义imageurl,准备放入数据库
             String imageurl=Cnst.emptyStr;
             //比如  0_1_5,第0个Sheet  第i+1个行,  第5个列

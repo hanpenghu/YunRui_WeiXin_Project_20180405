@@ -37,10 +37,10 @@ public class Z001Quartz {
         try {
 //            System.out.println();
 //            System.out.println();
-            String str011_1="---011处理主副单位换算 以下按次序2秒执行一次\n" +
-                    "update prdt set formula='1;-1;-1;0;0;主单位数量/0.9144;副单位数量*0.9144' where ut='meters' and ut1='yards' and (formula IS NULL or formula='')\n" +
-                    "update prdt set formula='1;-1;-1;4;4;主单位数量*0.9144;副单位数量/0.9144' where ut='yards' and ut1='meters' and (formula IS NULL or formula='')\n" +
-                    "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')\n";
+//            String str011_1="---011处理主副单位换算 以下按次序2秒执行一次\n" +
+//                    "update prdt set formula='1;-1;-1;0;0;主单位数量/0.9144;副单位数量*0.9144' where ut='meters' and ut1='yards' and (formula IS NULL or formula='')\n" +
+//                    "update prdt set formula='1;-1;-1;4;4;主单位数量*0.9144;副单位数量/0.9144' where ut='yards' and ut1='meters' and (formula IS NULL or formula='')\n" +
+//                    "update prdt set formula='1;-1;-1;0;0;主单位数量/12;副单位数量*12' where ut='pcs' and ut1='Dozens' and (formula IS NULL or formula='')\n";
 
             Integer  i011_1= cnst.manyTabSerch.update011_1_OfOnlineBug();
 //            System.out.println(str011_1);
@@ -152,10 +152,10 @@ public class Z001Quartz {
         public void onlineBugXiuFuSql(){
 //            System.out.println("==========================定时任务A 30秒一次开始======================");
             try {
-                String str001="UPDATE A SET A.REM=B.REM FROM TF_POS A,TF_POS B,TF_SQ C \n" +
-                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.REM IS NULL or A.rem='') AND \n" +
-                        "B.os_id='SO' AND (B.REM IS NOT NULL AND B.rem<>'') AND A.SQ_NO=C.SQ_NO AND \n" +
-                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
+//                String str001="UPDATE A SET A.REM=B.REM FROM TF_POS A,TF_POS B,TF_SQ C \n" +
+//                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.REM IS NULL or A.rem='') AND \n" +
+//                        "B.os_id='SO' AND (B.REM IS NOT NULL AND B.rem<>'') AND A.SQ_NO=C.SQ_NO AND \n" +
+//                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务001 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
 //                System.out.println("~~~~~~~~~~~~~~执行update sql开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 Integer  i001= cnst.manyTabSerch.update001OfOnlineBug();
@@ -164,16 +164,16 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i001+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("001执行异常");
             }
 
 
             try {
-                String str002="UPDATE  A SET A.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS A,TF_POS B,TF_SQ C\n" +
-                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.SUP_PRD_NO IS NULL or A.SUP_PRD_NO='') AND \n" +
-                        "B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO<>'') AND A.SQ_NO=C.SQ_NO AND \n" +
-                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
+//                String str002="UPDATE  A SET A.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS A,TF_POS B,TF_SQ C\n" +
+//                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.SUP_PRD_NO IS NULL or A.SUP_PRD_NO='') AND \n" +
+//                        "B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO<>'') AND A.SQ_NO=C.SQ_NO AND \n" +
+//                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务002 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
 //                System.out.println("~~~~~~~~~~~~~~执行update sql开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 Integer  i002= cnst.manyTabSerch.update002OfOnlineBug();
@@ -182,15 +182,15 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i002+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务002 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("002执行异常");
             }
 
 
             try {
-                String str003="UPDATE  C SET C.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS B,TF_SQ C\n" +
-                        "WHERE B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO<>'') AND \n" +
-                        "C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
+//                String str003="UPDATE  C SET C.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS B,TF_SQ C\n" +
+//                        "WHERE B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO<>'') AND \n" +
+//                        "C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM";
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务003 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
 //                System.out.println("~~~~~~~~~~~~~~执行update sql开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 Integer  i003= cnst.manyTabSerch.update003OfOnlineBug();
@@ -199,7 +199,7 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i003+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务003 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("003执行异常");
             }
 
@@ -214,7 +214,7 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i004+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务004 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("004执行异常");
             }
 
@@ -230,17 +230,17 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i005+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务005 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("005执行异常");
             }
 
 
             try {
-                String str006="UPDATE D SET D.SDDH=B.OS_NO FROM TF_POS A,TF_POS B,TF_SQ C,TF_POS_Z D \n" +
-                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%'  AND \n" +
-                        "B.os_id='SO'  AND A.SQ_NO=C.SQ_NO AND \n" +
-                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM AND \n" +
-                        "D.OS_NO=A.OS_NO AND (D.SDDH IS NULL OR D.SDDH='')";
+//                String str006="UPDATE D SET D.SDDH=B.OS_NO FROM TF_POS A,TF_POS B,TF_SQ C,TF_POS_Z D \n" +
+//                        "WHERE A.os_id='PO' AND A.qt_no like 'SQ%'  AND \n" +
+//                        "B.os_id='SO'  AND A.SQ_NO=C.SQ_NO AND \n" +
+//                        "A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM AND \n" +
+//                        "D.OS_NO=A.OS_NO AND (D.SDDH IS NULL OR D.SDDH='')";
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务006 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
 //                System.out.println("~~~~~~~~~~~~~~执行update sql开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 Integer  i006= cnst.manyTabSerch.update006OfOnlineBug();
@@ -249,7 +249,7 @@ public class Z001Quartz {
 //                System.out.println("执行条数="+i006+"条");
 //                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务006 30秒一次~~~~~~~~~~~~~~~~~~~~~~~~");
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("006执行异常");
             }
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~定时任务007 30秒一次开始~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -257,8 +257,8 @@ public class Z001Quartz {
             try {
 //                System.out.println();
 //                System.out.println();
-                String str007_1="UPDATE A SET A.CK_DD=B.FHRQ FROM MF_CK A,MF_CK_Z B\n" +
-                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.SA_CLS_ID='F'";
+//                String str007_1="UPDATE A SET A.CK_DD=B.FHRQ FROM MF_CK A,MF_CK_Z B\n" +
+//                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.SA_CLS_ID='F'";
 
                 Integer  i007_1= cnst.manyTabSerch.update007_1_OfOnlineBug();
 //                System.out.println(str007_1);
@@ -267,15 +267,15 @@ public class Z001Quartz {
 //                System.out.println();
 //                System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("007-1执行异常");
             }
 
             try {
 //                System.out.println();
 //                System.out.println();
-                String str007_2="UPDATE A SET A.CK_DD=B.FHRQ FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
-                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
+//                String str007_2="UPDATE A SET A.CK_DD=B.FHRQ FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
+//                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
 
                 Integer  i007_2= cnst.manyTabSerch.update007_2_OfOnlineBug();
 //                System.out.println(str007_2);
@@ -284,17 +284,17 @@ public class Z001Quartz {
 //                System.out.println();
 //                System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("007-2执行异常");
             }
 
 
             try {
 //                System.out.println();
-//                System.out.println();
-                String str007_3="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
-                        "FROM MF_CK A,MF_CK_Z B\n" +
-                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'";
+////                System.out.println();
+//                String str007_3="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
+//                        "FROM MF_CK A,MF_CK_Z B\n" +
+//                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'";
 
                 Integer  i007_3= cnst.manyTabSerch.update007_3_OfOnlineBug();
 //                System.out.println(str007_3);
@@ -303,7 +303,7 @@ public class Z001Quartz {
 //                System.out.println();
 //                System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("007-3执行异常");
             }
 
@@ -312,9 +312,9 @@ public class Z001Quartz {
             try {
 //                System.out.println();
 //                System.out.println();
-                String str007_4="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
-                        "FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
-                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
+//                String str007_4="UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())\n" +
+//                        "FROM TF_CK A,MF_CK_Z B,MF_CK C\n" +
+//                        "WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'";
 
                 Integer  i007_4= cnst.manyTabSerch.update007_4_OfOnlineBug();
 //                System.out.println(str007_4);
@@ -323,7 +323,7 @@ public class Z001Quartz {
 //                System.out.println();
 //                System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 p.p("007-4执行异常");
             }
 

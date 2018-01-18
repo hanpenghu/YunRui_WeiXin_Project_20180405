@@ -249,13 +249,10 @@
        ,a.rem---备注,打样系统的会存为"打样系统"
        ,a.price_id----1代表销售价格, 2代表采购价格
        ,b.name ----as curName ----币别名字
-       from
-       up_def a,
-       cur_id b,
-       prdt d
+       from up_def a
+       LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
        where
-       a.cur_id=b.cur_id AND d.prd_no=a.prd_no
-       and
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
         AND
         a.HJ_NO='SamplesSys'
