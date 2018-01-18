@@ -34,6 +34,7 @@ public class SaveSaleOrBuyPrice {
     @Autowired
     private Cnst cnst;
         public Msg saveSaleOrBuyPrice(UpDefMy01 up){
+
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
             if(null==cusNo){//联合主键之一,不能为null
@@ -163,9 +164,15 @@ public class SaveSaleOrBuyPrice {
         }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //采购的价格入库
-    private Msg saveAsBuyer(Map<String, Object> gmp) {
+    private Msg saveAsBuyer(Map<String,Object> gmp) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
+        //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
+        //单位(unit为空)上面已经处理了再插入prdt单位的情况
+        upDef.setOlefield(unit);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //我们将来取自己添加的价格的标识
         upDef.setHjNo("SamplesSys");
         upDef.setsDd(new Date());
@@ -236,6 +243,13 @@ public class SaveSaleOrBuyPrice {
     private Msg saveAsSaler(Map<String, Object> gmp) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
+        //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
+        //单位(unit为空)上面已经处理了再插入prdt单位的情况
+        upDef.setOlefield(unit);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         upDef.setHjNo("SamplesSys");
         upDef.setsDd(new Date());
         upDef.setQty((BigDecimal) gmp.get("qty"));
