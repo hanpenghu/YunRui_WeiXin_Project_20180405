@@ -9,9 +9,11 @@ import java.util.*;
 public strictfp class p {
 
 //    public static void main(String[]args){
-//            p(p.cexhx);
+//            p(p.zhi);
 //    }
 
+    public static final String zhifgf="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";//至分隔符
+    public static final String zhi="~";//至符号
     public static final String dexhx="_________________";//短英文下划线
     public static final String cexhx="____________________________________________";//长英文下划线
     public static final String dzwxhx="————————————————";//短中文下划线

@@ -1,4 +1,5 @@
 package com.winwin.picreport.Bcontroller;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Cservice.A1ReportRestService;
 import com.winwin.picreport.Ddao.reportxmlmapper.MfPosMapper;
 import com.winwin.picreport.Edto.MfPosExample;
@@ -33,9 +34,7 @@ import java.util.*;
  * */
 public class A1ReportRestControllerEXCELUpLoad {
     @Autowired
-    private A1ReportRestService a1;
-    @Autowired
-    private MfPosMapper mfPosMapper;
+    private Cnst cnst;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value="shouDingDanExcelToTable",
@@ -43,9 +42,9 @@ public class A1ReportRestControllerEXCELUpLoad {
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-    System.out.println(shouDingDanFromExcels);
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    p.p(shouDingDanFromExcels);
+    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
     long time01=new Date().getTime();
     try {
@@ -124,11 +123,11 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
                 MfPosExample mfPosExample=new MfPosExample();
                 mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
-                long l = mfPosMapper.countByExample(mfPosExample);
+                long l = cnst.mfPosMapper.countByExample(mfPosExample);
                 if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
                     //for一次就是处理同一批号osNo一次
                     Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3,listmsg);
-                    a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                    cnst.a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
                     listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入"));
@@ -173,13 +172,13 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
 
             samePrdNoList.add(list0);
-          /*  System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+          /*  p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
                     for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        p.p("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     }
                 }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
             //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
             synchronized (this){//这个内部就是为了合并
                 double qty=0;//数量
@@ -212,13 +211,13 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 //                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
                     list.add(shouDingDanFromExcel);//合并后放入list
                 }
-               /* System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+               /* p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
                 if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
                     for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-                        System.out.println("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        p.p("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     }
                 }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
             }
         }
 
