@@ -12,6 +12,8 @@ public strictfp class p {
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
 
+    public static final String NULL1="NULL";
+    public static final String null1="null";
     public static final String excel="excel";
     public static final String zhifgf="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";//至分隔符
     public static final String zhi="~";//至符号

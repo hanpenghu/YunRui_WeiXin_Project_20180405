@@ -229,7 +229,7 @@ public interface ManyTabSerch {
     @Select({"SELECT TOP 1 UT1 FROM PRDT WHERE PRD_NO=#{prdNo}"})
     String selectUt1FromPrdt(@Param("prdNo") String prdNo);
 
-    @Update({"UPDATE PRDT SET UT=#{unit} WHERE prd_no=#{prdNo}"})
+    @Update({"UPDATE PRDT SET UT = #{unit} WHERE prd_no = #{prdNo}"})
     Integer insertUnitToUtOfPrdt(@Param("unit") String unit, @Param("prdNo") String prdNo);
 
     @Update({"UPDATE PRDT SET UT1=#{unit} WHERE prd_no=#{prdNo}"})
