@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @MapperScan(InterFaceCnst.daoCnst)
 public class A {
+	//过期时间通过application配置到拦截器
 	public static void main(String[] args) {
 		SpringApplication.run(A.class, args);
 	}

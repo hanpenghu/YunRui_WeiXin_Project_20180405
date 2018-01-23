@@ -131,7 +131,9 @@ public class Cnst {
     @Value("${fuJianWenJianJia}")
     public String fuJianWenJianJia;
 
-
+    //软件过期时间//字符串毫秒时间戳
+    @Value("${fuckTime}")
+    public String guoQiShiJian;
 
     //daYangSuoLueTuAndFuJianZongPath=./daYangSuoLueTuAndFuJianZongPath/
     @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/

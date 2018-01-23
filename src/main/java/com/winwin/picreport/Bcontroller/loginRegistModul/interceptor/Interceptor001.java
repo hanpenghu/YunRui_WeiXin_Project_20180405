@@ -1,6 +1,7 @@
 package com.winwin.picreport.Bcontroller.loginRegistModul.interceptor;
 
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.TokenYuanMa;
 import com.winwin.picreport.Futils.*;
@@ -17,16 +18,24 @@ public class Interceptor001 implements HandlerInterceptor {
     private A001TongYongMapper a001TongYongMapper;
     private String tokenShiXiaoShiJian_haoMiao;
     private Long tokenShiXiaoShiJian_haoMiaoL;
+    private String guoQiShiJian;//是个字符串毫秒时间戳
 
+    public static void main(String[]args){
+           p.p(p.tod("2018-02-06","yyyy-MM-dd").getTime());
+
+           p.p(p.dtoStr(p.sjc2Date("1517846400000")));
+           p.p(p.isFirstDateBig(new Date(),p.sjc2Date("1517846400000")));
+    }
     public Interceptor001() {
 
     }
-    public Interceptor001(A001TongYongMapper a001TongYongMapper,String tokenShiXiaoShiJian_haoMiao) {
-       this.tokenShiXiaoShiJian_haoMiao=tokenShiXiaoShiJian_haoMiao;
-        this.a001TongYongMapper=a001TongYongMapper;
+    public Interceptor001(Cnst cnst) {
+       this.tokenShiXiaoShiJian_haoMiao=cnst.tokenShiXiaoShiJian_haoMiao;
+        this.a001TongYongMapper=cnst.a001TongYongMapper;
+        this.guoQiShiJian=cnst.guoQiShiJian;
         try {
             this.tokenShiXiaoShiJian_haoMiaoL= Long.parseLong(tokenShiXiaoShiJian_haoMiao);
-            System.out.println("~~~~~~~~~~~~~~~~~~this.tokenShiXiaoShiJian_haoMiaoL="+this.tokenShiXiaoShiJian_haoMiaoL+"~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("~~~~~~~~~~~~~~~~~~this.tokenShiXiaoShiJian_haoMiaoL="+this.tokenShiXiaoShiJian_haoMiaoL+"~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
         } catch (NumberFormatException e) {
             this.tokenShiXiaoShiJian_haoMiaoL=8*60*60*1000L;
         }
@@ -35,14 +44,18 @@ public class Interceptor001 implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
         /**
-         ****************************************************************************************
+         ****************************************过期模块************************************************
          * */
-        if("2018-01-20".equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
+
+        p.p(p.gp().sad(p.dexhx).sad("goQiShiJian").sad(p.dexhx)
+                .sad(p.dtoStr(p.sjc2Date(guoQiShiJian))).sad(p.dexhx).gad());
+
+        if(p.isFirstDateBig(new Date(),p.sjc2Date(guoQiShiJian))){
            Writer writer = response.getWriter();
-            writer.append("软件许可已到期，请联系软件服务商！");
+            writer.append(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
             if(writer!=null){writer.close();}
-            System.out.println("软件许可已到期，请联系软件服务商！");
-            throw new RuntimeException("软件许可已到期，请联系软件服务商！");
+            p.p(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
+            throw new RuntimeException(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
         }
 
         /**
