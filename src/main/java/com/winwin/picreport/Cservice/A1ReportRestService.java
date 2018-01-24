@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class A1ReportRestService {
 
         if(cnst.sapsoChongfu.ishave(samePrdNoList)){
                 //此时存在重复数据,不能再插入
-            listmsg.add(Msg.gmg().setMsg("插入重复数据").setStatus(StatusCnst.excelSaveFalse));
+            listmsg.addAll(new MessageGenerate().generateMessage("有重复数据,未能成功插入"));
             throw new RuntimeException(p.gp().sad(p.dexhx)
                     .sad("cha ru chong fu shu ju").sad(p.dexhx).gad());
         }else{
