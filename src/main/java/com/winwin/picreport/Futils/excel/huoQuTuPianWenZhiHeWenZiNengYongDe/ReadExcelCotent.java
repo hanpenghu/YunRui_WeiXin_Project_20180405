@@ -126,22 +126,19 @@ public class ReadExcelCotent {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //下面的循环是为了去除空行,以从0开始第六列为准,如果是空的,代表本行都是空的
+        //第六列
         int ak47=0;//防沉迷
         while(true){
             String str = null;
             try {
                 str = sheet.getRow(rowNum).getCell(6).getRichStringCellValue().getString();
             } catch (Exception e) {}
-            if(NotEmpty.empty(str)){
-                rowNum--;
-            }else if(rowNum==0){
-                break;
-            }else if(ak47>300){//专业防沉迷
-                break;
-            }else{
+            if(NotEmpty.notEmpty(str)){
+                ak47++;
+            }else {
+                rowNum=ak47+1;//第一行是表头
                 break;
             }
-            ak47++;
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
