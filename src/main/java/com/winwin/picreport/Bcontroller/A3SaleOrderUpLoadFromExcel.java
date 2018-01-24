@@ -30,7 +30,7 @@ import java.util.*;
 /**
  *导入excel,销售订单,上面那个A1ReportRestControllerEXCELUpLoad是sap导入的,比这个复杂
  * */
-public class D3SaleOrderUpLoadFromExcel {
+public class A3SaleOrderUpLoadFromExcel {
 
     @Autowired
     private Cnst cnst;

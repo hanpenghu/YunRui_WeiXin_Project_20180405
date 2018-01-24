@@ -128,7 +128,10 @@ public class ReadExcelCotent {
         //下面的循环是为了去除空行,以从0开始第六列为准,如果是空的,代表本行都是空的
         int ak47=0;//防沉迷
         while(true){
-            String str = sheet.getRow(rowNum).getCell(6).getRichStringCellValue().getString();
+            String str = null;
+            try {
+                str = sheet.getRow(rowNum).getCell(6).getRichStringCellValue().getString();
+            } catch (Exception e) {}
             if(NotEmpty.empty(str)){
                 rowNum--;
             }else if(rowNum==0){
