@@ -130,6 +130,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
                     //for一次就是处理同一批号osNo一次
                     Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3,listmsg);
+                    /**
+                     *数据库插入数据
+                     * */
                     cnst.a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
