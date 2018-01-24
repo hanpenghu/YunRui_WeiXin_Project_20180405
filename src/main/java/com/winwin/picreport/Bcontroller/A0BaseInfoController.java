@@ -9,7 +9,6 @@ import com.winwin.picreport.Edto.YeWuYuan;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 @CrossOrigin

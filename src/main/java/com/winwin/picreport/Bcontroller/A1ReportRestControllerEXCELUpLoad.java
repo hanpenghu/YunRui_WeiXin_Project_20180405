@@ -117,6 +117,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
      return list1;
  }
  ////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *数据库插入数据
+     * */
     public void anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(List<List<ShouDingDanFromExcel>> list1,List<Msg> listmsg){
         for(List<ShouDingDanFromExcel> list3:list1){
             try {
@@ -142,7 +145,8 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////
-    public Map<String,List> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3,List<Msg> listmsg){
+    public Map<String,List> heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt
+        (List<ShouDingDanFromExcel> list3,List<Msg> listmsg){
         Map<String,List>map=new HashMap();
         //用list00来装入合并同一货号的几个东西后的ShouDingDanFromExcel
         List<ShouDingDanFromExcel> list=new ArrayList<>();

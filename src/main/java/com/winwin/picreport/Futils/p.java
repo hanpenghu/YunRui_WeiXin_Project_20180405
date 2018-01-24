@@ -824,6 +824,43 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
     }
 
+
+
+
+
+    /**
+     *输入一个字符串格式的数字,然后四舍五入到max和min的小数位数,一般max
+     * 和min的值都写一样,比如max=min=4就是说四舍五入后小数后面留4位
+     * */
+    public static String getNum(int max,int min,String num){
+        java.text.NumberFormat  formater  =  java.text.DecimalFormat.getInstance();
+        formater.setMaximumFractionDigits(max);
+        formater.setMinimumFractionDigits(min);
+        BigDecimal bigDecimal;
+        try {
+            bigDecimal = new BigDecimal(num);
+        } catch (Exception e) {
+            p("p.getNum yao format de bu shi shuZi001");
+            return null;
+        }
+        try {
+            return formater.format(bigDecimal);
+        } catch (Exception e) {
+            p("p.getNum yao format de bu shi shuZi002");
+            return null;
+        }
+    }
+    /**
+     *下面一个方法是为了解决String.valueOf(str)当str=null的情况的方法
+     * */
+    public static String strValeOf(Object o){
+        if (null==o){
+            return "null";
+        }else {
+            return String.valueOf(o);
+        }
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 /**

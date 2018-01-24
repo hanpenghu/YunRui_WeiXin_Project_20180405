@@ -1,6 +1,7 @@
 package com.winwin.picreport.AllConstant;
 
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
+import com.winwin.picreport.Acomponent.SapsoChongfu;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
@@ -140,6 +141,8 @@ public class Cnst {
     public String daYangSuoLueTuAndFuJianZongPath;
 
 
+    @Autowired
+    public SapsoChongfu sapsoChongfu;
 
     @Autowired
     public D1DaYangS fenLei;
