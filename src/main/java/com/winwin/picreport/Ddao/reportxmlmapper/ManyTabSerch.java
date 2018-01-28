@@ -246,4 +246,41 @@ public interface ManyTabSerch {
     Integer countByIdOfprdtSamp(@Param("uuid") String uuid);
 
 
+    @Select({"select convert(varchar(100),qty) from sapso\n" +
+            "where\n" +
+            "isnull(timeSameBatch,'')!=#{timesamebatch}\n" +
+            "and\n" +
+            "isnull(uuid,'') !=#{uuid}\n" +
+            "and \n" +
+            "isnull(osno,'')=#{osno}\n" +
+            "and\n" +
+            "isnull(ebno,'')=#{ebno}\n" +
+            "and\n" +
+            "isnull(caigouno,'')=#{caigouno}\n" +
+            "and \n" +
+            "isnull(prdno,'')=#{prdno}\n" +
+            "and\n" +
+            "isnull(saphh,'')=#{saphh}\n" +
+            "and\n" +
+            "isnull(sapph,'')=#{sapph}\n" +
+            "and \n" +
+            "isnull(sapwlm,'')=#{sapwlm}\n" +
+            "and\n" +
+            "isnull(maitouno,'')=#{maitouno}\n" +
+            "and\n" +
+            "isnull(luohao,'')=#{luohao}\n" +
+            "and\n" +
+            "isnull(ganghao,'')=#{ganghao}\n" +
+            "and\n" +
+            "isnull(realWidth,'')=#{realwidth}\n" +
+            "and\n" +
+            "isnull(realLength,'')=#{reallength}\n" +
+            "and\n" +
+            "isnull(chengfendaima,'')=#{chengFenDaiMa}"})
+    String selectStrQtyFromSapao(Sapso b);
+
+
+
+
+
 }

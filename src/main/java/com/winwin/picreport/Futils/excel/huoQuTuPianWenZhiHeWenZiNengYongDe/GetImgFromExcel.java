@@ -97,7 +97,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~"
             // 判断用07还是03的方法获取图片
             if (fileExt.equals(Cnst.xlsHouZhuiWuDian)) {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验xls~~~~~~~~~~~~~~~~~~~~~~~~");
-                sheetIndexPicMap = getSheetPictrues03(i, (HSSFSheet) sheet, (HSSFWorkbook) wb);
+                sheetIndexPicMap = this.getSheetPictrues03(i, (HSSFSheet) sheet, (HSSFWorkbook) wb);
             } else {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验xlsx~~~~~~~~~~~~~~~~~~~~~~~~");
                 sheetIndexPicMap = getSheetPictrues07(i, (XSSFSheet) sheet, (XSSFWorkbook) wb);

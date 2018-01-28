@@ -60,7 +60,7 @@ public class D1DaYangServiceDataSaveByExcel {
          *得到所有图片
          * */
         List<Map<String, PictureData>> list1=new LinkedList();
-        List<Msg> ll = getPic(list1,file);
+        List<Msg> ll = this.getPic(list1,file);
         if(ll!=null){
             return ll;
         }
@@ -231,8 +231,10 @@ public class D1DaYangServiceDataSaveByExcel {
                 prdtSamp.setColour((String)map.get(i).get(7));
                 prdtSamp.setSize((String)map.get(i).get(8));
                 try {prdtSamp.setSampMake((Date)map.get(i).get(9)); } catch (Exception e) { p.p("导入的EXcel打样时间不是日期格式！！");}
-                prdtSamp.setSampRequ((String)map.get(i).get(10));
-                prdtSamp.setSampDesc((String)map.get(i).get(11));
+                prdtSamp.setCategory((String)map.get(i).get(10));
+                prdtSamp.setTeamname((String)map.get(i).get(11));
+                prdtSamp.setSampRequ((String)map.get(i).get(12));
+                prdtSamp.setSampDesc((String)map.get(i).get(13));
 
                 /**
                  *下面判断是否有重复数据在数据库,有的话就停止导入excel

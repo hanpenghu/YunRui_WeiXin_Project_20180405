@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.p;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -127,19 +128,20 @@ public class ReadExcelCotent {
 
         //下面的循环是为了去除空行,以从0开始第六列为准,如果是空的,代表本行都是空的
         //第六列
-        int ak47=0;//防沉迷
+        int ak47=0;
         while(true){
             String str = null;
             try {
-                str = sheet.getRow(rowNum).getCell(6).getRichStringCellValue().getString();
+                str = sheet.getRow(ak47).getCell(6).getRichStringCellValue().getString();
             } catch (Exception e) {}
             if(NotEmpty.notEmpty(str)){
                 ak47++;
             }else {
-                rowNum=ak47+1;//第一行是表头
+                rowNum=ak47-1;//注意rowNum是从0开始的
                 break;
             }
         }
+        p.p(p.gp().sad(p.dexhx).sad("ak47=").sad(p.strValeOf(ak47)).sad(p.dexhx).gad());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -151,7 +153,9 @@ public class ReadExcelCotent {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //暂时列数固定为12列2018_1_12   weekday(5)   11:21:39//因为老郑说后面多出来东西要没事情才行
-        colNum=12;
+        //后来表头加了两个英文后如下
+        //品牌	客户	产品分类	产品名称	产品负责人	图片	编号	颜色	尺寸	打样时间	Category	Team	产品要求	产品描述
+        colNum=14;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

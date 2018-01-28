@@ -1,14 +1,14 @@
 package com.winwin.picreport.Cservice;
+
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.AllConstant.StatusCnst;
-import com.winwin.picreport.Ddao.reportxmlmapper.*;
+import com.winwin.picreport.AllConstant.OrderPreCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
-import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,18 +22,6 @@ import java.util.UUID;
 public class A1ReportRestService {
     @Autowired
     private Cnst cnst;
-    @Autowired
-    private ManyTabSerch manyTabSerch;
-    @Autowired
-    private SapsoMapper sapsoMapper;
-    @Autowired
-    private TfPosMapper tfPosMapper;
-    @Autowired
-    private MfPosMapper mfPosMapper;
-    @Autowired
-    private TfPosZMapper tfPosZMapper;
-    @Autowired
-    private PrdtMapper prdtMapper;
 
     ////////////////////////受订单号成功后是SO/////////////////////////////////////////////
 ///////////////////////注意事务要加在所有调用的方法上面,如果方法套方法,就必须都加事务///////////////////////////////////////////////////
@@ -47,19 +35,18 @@ public class A1ReportRestService {
         List<List<ShouDingDanFromExcel>> samePrdNoList = listMap.get("samePrdNoList");
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //增加一个判断是否有已经存在的数据的模块,判断了对于sapso中除了qty这个字段,其他字段都一样的情况
+        //这个模块实际上只是判断了sapso
+        //后来我为了让用户删除主表后还能插入数据,注释掉这个判断,然后在插入时判断是否重复,重复就不在 插入
 
 
-
-        if(cnst.sapsoChongfu.ishave(samePrdNoList)){
+        /*if(cnst.sapsoChongfu.ishave(samePrdNoList)){
                 //此时存在重复数据,不能再插入
             listmsg.addAll(new MessageGenerate().generateMessage("有重复数据,未能成功插入"));
             throw new RuntimeException(p.gp().sad(p.dexhx)
                     .sad("cha ru chong fu shu ju").sad(p.dexhx).gad());
         }else{
             //此时不存在重复数据可以继续插入
-        }
-
-
+        }*/
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,11 +71,6 @@ public class A1ReportRestService {
                     throw new RuntimeException("单号为" + shouDingDanFromExcel.getOsNo() + "的EB单号为空,该批数据没有插入一条");
                 }
                 try {
-                    //首先判断os_no在mf_pos里面有没有,有的话说明已经导入过了,就不需要再导入
-                   /* MfPosExample mfe=new MfPosExample();
-                    mfe.createCriteria().andOsNoEqualTo(shouDingDanFromExcel.getOsNo());
-                    long l101 = mfPosMapper.countByExample(mfe);
-                    if(l101==0){*/
                     Sapso b = new Sapso();
                     b.setOsno(shouDingDanFromExcel.getOsNo());
                     b.setPrdno(shouDingDanFromExcel.getPrdNo());
@@ -114,22 +96,24 @@ public class A1ReportRestService {
 
                     Integer kk;
                     try {
-                         kk= cnst.a001TongYongMapper.countIfSapsoExist(b);
+                        kk = cnst.a001TongYongMapper.countIfSapsoExist(b);
                     } catch (Exception e) {
                         p.p(p.gp().sad(p.dexhx)
                                 .sad("Integer kk= cnst.a001TongYongMapper.countIfSapsoExist(b) error")
                                 .sad(p.dexhx).gad());
-                        throw  new RuntimeException(e.toString());
+                        throw new RuntimeException(e.toString());
                     }
 
-                    if(NotEmpty.notEmpty(kk)&&kk==0){
-                        Integer pp=sapsoMapper.insert(b);//这个后期已经加上成分代码
+                    if (NotEmpty.notEmpty(kk) && kk == 0) {
+                        //此时除了qty都不相等了
+                        Integer pp = cnst.sapsoMapper.insert(b);//这个后期已经加上成分代码
                         p.p(p.gp().sad(p.dexhx)
                                 .sad("sapso cha ru yi tiao shu ju SUCCESS: ge shu:")
                                 .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
+
+
                     }
 
-//                    }
                 } catch (Exception e) {
                     Msg msg = new Msg();
                     msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
@@ -203,7 +187,7 @@ public class A1ReportRestService {
             m.setPayDd(new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-01"));
         } catch (ParseException e) {
         }
-        m.setChkDd(manyTabSerch.getDate());
+        m.setChkDd(cnst.manyTabSerch.getDate());
         m.setIntDays((short) 30);
         //2017-11-13老郑让加上
         m.setUseDep("2000");
@@ -213,7 +197,7 @@ public class A1ReportRestService {
         t.setOsNo(s.getOsNo());
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
         t.setCusOsNo(s.getOsNo());
-        t.setOsId("SO");
+        t.setOsId(OrderPreCnst.SO);
         if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
             msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,所以整个该批单号不能插入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
@@ -265,7 +249,7 @@ public class A1ReportRestService {
 //        tz.setSaphh(s.getSaphh());//20170929老郑说这个不用写入值了
         tz.setSapph(s.getSapph());
         tz.setCfdm(s.getCfdm());
-        tz.setOsId("SO");
+        tz.setOsId(OrderPreCnst.SO);
         //tz.setItm();
 ////////////////////////////////////////////////
         pdt.setPrdNo(s.getPrdNo());
@@ -275,14 +259,14 @@ public class A1ReportRestService {
         System.out.println("===osDd===="+t.getOsDd()+"=======estDd===="+t.getEstDd()+"=============");
         System.out.println("转换后");*/
 
-        this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz, pdt, listmsg);
+        this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz, pdt, s, listmsg);
 ///////////////////////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert
-    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt, List<Msg> listmsg) {
+    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt, ShouDingDanFromExcel s, List<Msg> listmsg) {
 //    try {
         //注册商品到商品库//不能再自动注册了,老郑说了,自动注册的不行,因为客户可能手动输入输错了,所以,我们就不再自动插入prdt表来注册商品
            /* PrdtExample prdtExample=new PrdtExample();
@@ -294,7 +278,7 @@ public class A1ReportRestService {
 
         PrdtExample prdtExample = new PrdtExample();
         prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo()).andNameEqualTo(pdt.getName());
-        long l2 = prdtMapper.countByExample(prdtExample);
+        long l2 = cnst.prdtMapper.countByExample(prdtExample);
         //此时数据库prdt表没有该条记录,我们下面不再插入其他记录,而是告诉客户,该记录在数据库prdt表不存在,请自行注册该商品到数据库,
         //这也是老郑的要求
         Msg msg = new Msg();
@@ -316,34 +300,71 @@ public class A1ReportRestService {
     }
 
     //////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 插入三个主表
+     */
     @Transactional
     public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, List<Msg> listmsg) {
         try {
             MfPosExample mfe = new MfPosExample();
             mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l1 = mfPosMapper.countByExample(mfe);
+            long l1 = cnst.mfPosMapper.countByExample(mfe);
+            //mf里面osno是主键,不能重复
             if (l1 == 0) {
-                mfPosMapper.insert(m);
+                cnst.mfPosMapper.insert(m);
 
             }
             //测试事务
 //            System.out.println(1/0);
             TfPosExample tfe = new TfPosExample();
             tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l = tfPosMapper.countByExample(tfe);
+            long l = cnst.tfPosMapper.countByExample(tfe);
             t.setItm(new Long(l).intValue() + 1);
             t.setEstItm(t.getItm());
-            tfPosMapper.insert(t);
+
+            TfPosExample tfe1 = new TfPosExample();
+            tfe1.createCriteria().andOsNoEqualTo(t.getOsNo())
+                    .andQtyEqualTo(t.getQty())
+                    .andPrdNoEqualTo(t.getPrdNo())
+                    .andCusOsNoEqualTo(t.getOsNo())
+                    .andPrdNameEqualTo(t.getPrdName())
+                    .andAmtnEqualTo(t.getAmtn())
+                    .andTaxEqualTo(t.getTax())
+                    .andAmtEqualTo(t.getAmt())
+                    .andTaxRtoEqualTo(t.getTaxRto())
+                    .andRemEqualTo(t.getRem());
+            if (cnst.tfPosMapper.countByExample(tfe1) == 0) {
+                //此时该条记录不存在,可以插入一个
+                cnst.tfPosMapper.insert(t);
+            } else {
+                //此时有重复数据,不插入,啥也不做
+            }
 
 
             TfPosZExample tfze = new TfPosZExample();
             tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long ll = tfPosZMapper.countByExample(tfze);
+            long ll = cnst.tfPosZMapper.countByExample(tfze);
             tz.setItm(new Long(ll).intValue() + 1);
-            tfPosZMapper.insert(tz);
+
+            TfPosZExample tfze1 = new TfPosZExample();
+            tfze1.createCriteria()
+                    .andOsNoEqualTo(tz.getOsNo())
+                    .andSapwlmEqualTo(tz.getSapwlm())
+                    .andSaphhEqualTo(tz.getSaphh())
+                    .andSapphEqualTo(tz.getSapph())
+                    .andCfdmEqualTo(tz.getCfdm())
+                    .andOsIdEqualTo(OrderPreCnst.SO);
+            if (cnst.tfPosZMapper.countByExample(tfze1) == 0) {
+                //此时证明没有重复数据,可以插入
+                cnst.tfPosZMapper.insert(tz);
+            } else {
+                //此时有重复数据,不再插入
+
+            }
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
-            manyTabSerch.updateMfPosNullToNothing001(m);
-            manyTabSerch.updateTfPosNullToNothing001(m);
+            cnst.manyTabSerch.updateMfPosNullToNothing001(m);
+            cnst.manyTabSerch.updateTfPosNullToNothing001(m);
 
 
         } catch (Exception e) {
