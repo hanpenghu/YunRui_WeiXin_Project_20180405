@@ -104,6 +104,8 @@ public class A1ReportRestService {
                         throw new RuntimeException(e.toString());
                     }
 
+                    p.p(p.gp().sad(p.dexhx).sad("sapso是否有重复数据kk=").sad(p.strValeOf(kk)).sad(p.dexhx).gad());
+
                     if (NotEmpty.notEmpty(kk) && kk == 0) {
                         //此时除了qty都不相等了
                         Integer pp = cnst.sapsoMapper.insert(b);//这个后期已经加上成分代码
@@ -351,7 +353,6 @@ public class A1ReportRestService {
             tfze1.createCriteria()
                     .andOsNoEqualTo(tz.getOsNo())
                     .andSapwlmEqualTo(tz.getSapwlm())
-                    .andSaphhEqualTo(tz.getSaphh())
                     .andSapphEqualTo(tz.getSapph())
                     .andCfdmEqualTo(tz.getCfdm())
                     .andOsIdEqualTo(OrderPreCnst.SO);
