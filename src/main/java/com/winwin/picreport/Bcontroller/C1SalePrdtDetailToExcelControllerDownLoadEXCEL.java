@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/c1")
 /**
- *导出excel
+ *导出excel  销售订单
  * */
 public class C1SalePrdtDetailToExcelControllerDownLoadEXCEL {
     @Autowired
