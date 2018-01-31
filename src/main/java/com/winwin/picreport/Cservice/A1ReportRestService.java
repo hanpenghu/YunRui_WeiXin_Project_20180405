@@ -31,6 +31,7 @@ public class A1ReportRestService {
         //循环插入所有
         //用list3来装入合并同一货号的几个东西后的ShouDingDanFromExcel
         List<ShouDingDanFromExcel> list3 = listMap.get("samePrdNoMeraged");
+
         //收集同一货号的list       samePrdNoList
         List<List<ShouDingDanFromExcel>> samePrdNoList = listMap.get("samePrdNoList");
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,10 +52,13 @@ public class A1ReportRestService {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //插入sunlike主表
-        for (ShouDingDanFromExcel shouDingDanFromExcel : list3) {
+
+        for(int iii=0;iii<list3.size();iii++){
+            ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
-            this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg);
+            this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg,iii);
         }
+
 
 //        int i=0;
 //        i=5/i;
@@ -132,7 +136,7 @@ public class A1ReportRestService {
     }
 
     @Transactional
-    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg) {
+    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
         Msg msg = new Msg();
         MfPosWithBLOBs m = new MfPosWithBLOBs();
         TfPosWithBLOBs t = new TfPosWithBLOBs();
@@ -261,14 +265,14 @@ public class A1ReportRestService {
         System.out.println("===osDd===="+t.getOsDd()+"=======estDd===="+t.getEstDd()+"=============");
         System.out.println("转换后");*/
 
-        this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz, pdt, s, listmsg);
+        this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz, pdt, s, listmsg, iii);
 ///////////////////////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert
-    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt, ShouDingDanFromExcel s, List<Msg> listmsg) {
+    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt, ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
 //    try {
         //注册商品到商品库//不能再自动注册了,老郑说了,自动注册的不行,因为客户可能手动输入输错了,所以,我们就不再自动插入prdt表来注册商品
            /* PrdtExample prdtExample=new PrdtExample();
@@ -293,7 +297,7 @@ public class A1ReportRestService {
             throw new RuntimeException(msg.getMsg());
         } else {
             //单独分出来是为了只在下面的几个插入使用事务
-            saveChuLePrdtDe(m, t, tz, listmsg);
+            this.saveChuLePrdtDe(m, t, tz, listmsg,iii);
         }
 //    } catch (RuntimeException e) {
 //        e.printStackTrace();
@@ -307,11 +311,14 @@ public class A1ReportRestService {
      * 插入三个主表
      */
     @Transactional
-    public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, List<Msg> listmsg) {
+    public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, List<Msg> listmsg,int iii) {
         try {
             MfPosExample mfe = new MfPosExample();
             mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
             long l1 = cnst.mfPosMapper.countByExample(mfe);
+            /**
+             *插入mf
+             * */
             //mf里面osno是主键,不能重复
             if (l1 == 0) {
                 cnst.mfPosMapper.insert(m);
@@ -321,8 +328,9 @@ public class A1ReportRestService {
 //            System.out.println(1/0);
             TfPosExample tfe = new TfPosExample();
             tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l = cnst.tfPosMapper.countByExample(tfe);
-            t.setItm(new Long(l).intValue() + 1);
+//            long l = cnst.tfPosMapper.countByExample(tfe);
+            //注意:tf_pos和tf_pos_z必须共用itm才对//注意iii是从0开始索引的 itm是从1  所以要加1
+            t.setItm(iii+1);
             t.setEstItm(t.getItm());
 
             TfPosExample tfe1 = new TfPosExample();
@@ -337,6 +345,9 @@ public class A1ReportRestService {
                     .andTaxRtoEqualTo(t.getTaxRto())
                     .andRemEqualTo(t.getRem());
             if (cnst.tfPosMapper.countByExample(tfe1) == 0) {
+                /**
+                 *插入tf
+                 * */
                 //此时该条记录不存在,可以插入一个
                 cnst.tfPosMapper.insert(t);
             } else {
@@ -346,9 +357,8 @@ public class A1ReportRestService {
 
             TfPosZExample tfze = new TfPosZExample();
             tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long ll = cnst.tfPosZMapper.countByExample(tfze);
-            tz.setItm(new Long(ll).intValue() + 1);
-
+            //注意:tf_pos和tf_pos_z必须共用itm才对//注意iii是从0开始索引的 itm是从1  所以要加1
+            tz.setItm(t.getItm());
             TfPosZExample tfze1 = new TfPosZExample();
             tfze1.createCriteria()
                     .andOsNoEqualTo(tz.getOsNo())
@@ -357,6 +367,9 @@ public class A1ReportRestService {
                     .andCfdmEqualTo(tz.getCfdm())
                     .andOsIdEqualTo(OrderPreCnst.SO);
             if (cnst.tfPosZMapper.countByExample(tfze1) == 0) {
+                /**
+                 *插入tfz
+                 * */
                 //此时证明没有重复数据,可以插入
                 cnst.tfPosZMapper.insert(tz);
             } else {

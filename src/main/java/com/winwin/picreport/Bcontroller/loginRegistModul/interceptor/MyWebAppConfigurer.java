@@ -28,7 +28,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/logOut")
                  .excludePathPatterns("/test")
         .excludePathPatterns("/d/allfenleitest")
-//                .excludePathPatterns("/base/*")
+                .excludePathPatterns("/base/*")
         ;
 //        registry.addWebRequestInterceptor()
         super.addInterceptors(registry);

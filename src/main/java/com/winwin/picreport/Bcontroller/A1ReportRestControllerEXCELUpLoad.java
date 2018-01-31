@@ -45,6 +45,14 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     p.p(shouDingDanFromExcels);
     p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//    shouDingDanFromExcels.forEach(v->{
+//        if(p.dy(v.getPrdNo(),"154429710")){
+//            if(p.dy(v.getOsNo(),"170856BR3SSYZYP84771")){
+//                     p.p(p.gp().sad(p.dexhx).sad(v.toString()).sad(p.dexhx).gad());
+//            }
+//        }
+//    });
+//    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
     long time01=new Date().getTime();
     try {
@@ -104,7 +112,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
  //////////////////////////////////////////////////////////////////////////////////////////////
  public List<List<ShouDingDanFromExcel>> anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe(Set<String> set,List<ShouDingDanFromExcel> shouDingDanFromExcels){
      List<List<ShouDingDanFromExcel>> list1=new ArrayList();
-     //把所有的记录根据单号分成2大类
+     //把所有的记录根据单号分成多个单号相同的大类
      for(String str:set){
          List<ShouDingDanFromExcel> list2=new ArrayList();
          for(ShouDingDanFromExcel ss:shouDingDanFromExcels){
@@ -163,12 +171,15 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             prdNoAndCfdmSet.add(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim());
         }
 
+//         p.p(p.gp().sad(p.dexhx).sad(prdNoAndCfdmSet.toString()).sad(p.dexhx).gad());
+
         //循环所有去重后的货号+成分代码的集合,因为去重后导入主表的就只有去重后这么多了
         for(String prdNoAndCfdm:prdNoAndCfdmSet){
             //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
             List<ShouDingDanFromExcel>list0=new ArrayList<>();
             for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
-                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim())){
+                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()
+                        +shouDingDanFromExcel.getCfdm().trim())){
                     list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
                 }
             }
@@ -234,12 +245,16 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
-        if(listmsg.size()>1){
-            listmsg.forEach((msg1)->{
-                if(msg.equals(msg1.getMsg())){
-                    listmsg.remove(msg1);
-                }
-            });
+        try {
+            if(listmsg.size()>1){
+                listmsg.forEach((msg1)->{
+                    if(msg.equals(msg1.getMsg())){
+                        listmsg.remove(msg1);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
