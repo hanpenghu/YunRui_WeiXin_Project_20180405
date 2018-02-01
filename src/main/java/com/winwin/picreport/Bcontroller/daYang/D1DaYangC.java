@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.daYang;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;

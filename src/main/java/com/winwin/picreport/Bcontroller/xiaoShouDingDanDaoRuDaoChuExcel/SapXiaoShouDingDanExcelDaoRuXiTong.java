@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Cservice.A1ReportRestService;
 import com.winwin.picreport.Ddao.reportxmlmapper.MfPosMapper;
@@ -32,7 +32,7 @@ import java.util.*;
 /**
  *导入excel
  * */
-public class A1ReportRestControllerEXCELUpLoad {
+public class SapXiaoShouDingDanExcelDaoRuXiTong {
     @Autowired
     private Cnst cnst;
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.daYang;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp0;

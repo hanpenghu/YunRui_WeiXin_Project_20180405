@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
@@ -28,7 +28,7 @@ import java.util.*;
 /**
  *导入excel,销售订单,上面那个A1ReportRestControllerEXCELUpLoad是sap导入的,比这个复杂
  * */
-public class A3SaleOrderUpLoadFromExcel {
+public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 
     @Autowired
     private Cnst cnst;
