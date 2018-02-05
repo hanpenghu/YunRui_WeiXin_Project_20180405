@@ -13,15 +13,15 @@
             connectionURL="jdbc:sqlserver://58.211.48.54:9002;DatabaseName=DB_HHMM" userId="sa"
             password="Zhangtao0804527">
         </jdbcConnection>-->
-        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        <!--<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://116.62.224.172:7502;DatabaseName=dblinzhan002" userId="sa"
                         password="x2g5u7h!8+gaohang@">
-        </jdbcConnection>
+        </jdbcConnection>-->
 
-         <!--<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-                       connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=DB_LZ17" userId="sa"
+         <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                       connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=dblinzhan" userId="sa"
                        password="root">
-       </jdbcConnection>-->
+       </jdbcConnection>
 
 <!--        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://120.26.73.200:7201;DatabaseName=DB_BARC" userId="sa"
@@ -79,7 +79,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <table tableName="prdt_samp000"></table><!--产品打样表 -->
+        <table tableName="prdt_samp"></table><!--产品打样表 -->
        <!-- <table tableName="up_def"></table>--><!-- 单价表-->
        <!-- <table tableName="cur_id"></table>--><!--币别表 -->
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->

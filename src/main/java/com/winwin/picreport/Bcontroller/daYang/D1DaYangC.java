@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
@@ -384,7 +385,6 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     public @ResponseBody
     FenYe dangqianyeData(@RequestBody FenYe fenYe) {
         return cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
-
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

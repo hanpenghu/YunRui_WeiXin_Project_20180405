@@ -27,6 +27,4 @@ public interface PrdtSampMapper {
     int updateByPrimaryKeySelective(PrdtSamp record);
 
     int updateByPrimaryKey(PrdtSamp record);
-
-
 }

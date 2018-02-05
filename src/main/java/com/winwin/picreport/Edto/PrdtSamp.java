@@ -1,14 +1,11 @@
 package com.winwin.picreport.Edto;
-
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
  *该类是数据库映射出来的原始类
  * */
@@ -17,16 +14,21 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrdtSamp {
-
      protected String id;//一条录入记录的唯一标识符号
 
      protected String prdCode;//产品编码
-
-     protected String idxName;//产品名称
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //下面2个用作产品名称,的name和no,   分类的再加两个
+    protected String idxName;//产品名称
 
      protected String idxNo;//产品分类
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-     protected String markName;//品牌
+    private String fenLeiNo;
+
+    private String fenLeiName;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected String markName;//品牌
 
      protected String markNo;//品牌编号
 
