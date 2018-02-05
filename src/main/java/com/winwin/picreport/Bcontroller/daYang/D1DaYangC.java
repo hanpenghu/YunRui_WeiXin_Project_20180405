@@ -1,9 +1,7 @@
 package com.winwin.picreport.Bcontroller.daYang;
-
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
-
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
@@ -19,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
@@ -32,8 +29,11 @@ public class D1DaYangC {
      * 删除单个附件
      * */
     @RequestMapping(value = InterFaceCnst.deleteOneAttach,
-            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<Msg> deleteOneAttach(@RequestParam(value = "attachUrl", required = false) String attachUrl) {
+            method = RequestMethod.POST, produces =
+            {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody List<Msg>
+            deleteOneAttach(@RequestParam(value = "attachUrl", required = false)
+                                                               String attachUrl) {
 
         return cnst.deleteOneImg.deleteOneAttach(attachUrl);
     }
@@ -49,8 +49,11 @@ public class D1DaYangC {
      * x-www-form-urlencoded
      * */
 
-    @RequestMapping(value = InterFaceCnst.deleteOneImage, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<Msg> deleteOneImage(@RequestParam(value = Cnst.imgUrl, required = false) String imgUrl) {
+    @RequestMapping(value = InterFaceCnst.deleteOneImage,
+            method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody List<Msg> deleteOneImage
+    (@RequestParam(value = Cnst.imgUrl, required = false) String imgUrl) {
         return cnst.deleteOneImg.deleteOneImage(imgUrl);
     }
 
@@ -105,6 +108,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
          System.out.println(attachList);
          System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+
 
         try {
             return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
