@@ -93,11 +93,11 @@
                             </otherwise>
                         </choose>
         AND
-            ---产品分类
-                        idx_No LIKE
+            ---产品分类通过fen_lei_name查询
+                  fen_lei_name LIKE
                         <choose>
-                            <when test=" idxNo != null and idxNo != '' ">
-                                ('%'+( #{idxNo})+ '%')
+                            <when test=" fenLeiName != null and fenLeiName != '' ">
+                                ('%'+( #{fenLeiName})+ '%')
                             </when>
                             <otherwise>
                                 idx_No

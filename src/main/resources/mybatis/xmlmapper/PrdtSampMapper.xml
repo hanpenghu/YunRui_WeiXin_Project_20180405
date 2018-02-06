@@ -599,6 +599,7 @@
       <if test="record.stopusedate != null">
         stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
       </if>
+      id=id
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

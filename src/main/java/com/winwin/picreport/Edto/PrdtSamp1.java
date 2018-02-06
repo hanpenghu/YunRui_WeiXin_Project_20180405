@@ -1,9 +1,6 @@
 package com.winwin.picreport.Edto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.util.Date;
 /**
@@ -44,8 +41,13 @@ public class PrdtSamp1 {
     //产品名称
     private String idxName;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //产品分类
+    //产品名称的no
     private String idxNo;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //分类no
+    private String fenLeiNo;
+    //分类名称
+    private String fenLeiName;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //产品编码
     private String prdCode;
@@ -210,6 +212,24 @@ public class PrdtSamp1 {
         return this;
     }
 
+    public String getFenLeiNo() {
+        return fenLeiNo;
+    }
+
+    public PrdtSamp1 setFenLeiNo(String fenLeiNo) {
+        this.fenLeiNo = fenLeiNo;
+        return this;
+    }
+
+    public String getFenLeiName() {
+        return fenLeiName;
+    }
+
+    public PrdtSamp1 setFenLeiName(String fenLeiName) {
+        this.fenLeiName = fenLeiName;
+        return this;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.PrdtSamp1{");
@@ -223,6 +243,8 @@ public class PrdtSamp1 {
         sb.append(", confirmtimeEnd=").append(confirmtimeEnd);
         sb.append(", idxName='").append(idxName).append('\'');
         sb.append(", idxNo='").append(idxNo).append('\'');
+        sb.append(", fenLeiNo='").append(fenLeiNo).append('\'');
+        sb.append(", fenLeiName='").append(fenLeiName).append('\'');
         sb.append(", prdCode='").append(prdCode).append('\'');
         sb.append(", salName='").append(salName).append('\'');
         sb.append(", salNo='").append(salNo).append('\'');
@@ -232,7 +254,6 @@ public class PrdtSamp1 {
         sb.append('}');
         return sb.toString();
     }
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
