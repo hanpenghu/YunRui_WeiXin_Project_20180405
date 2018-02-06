@@ -1,6 +1,6 @@
-package com.winwin.picreport.Bcontroller.loginRegistModul.interceptor.PowerInterceptor;
-
-
-
-public class priceUpdateInterceptor {
-}
+//package com.winwin.picreport.Bcontroller.loginRegistModul.interceptor.PowerInterceptor;
+//
+//
+//
+//public class priceUpdateInterceptor {
+//}
