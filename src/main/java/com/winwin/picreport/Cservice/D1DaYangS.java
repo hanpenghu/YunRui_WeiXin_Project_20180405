@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service("fenLei")
 public class D1DaYangS {
@@ -75,6 +76,31 @@ public class D1DaYangS {
         for (String id : idList) {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             PrdtSamp0 prdtSampX = this.getP0(prdtSampX1);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //找到页面显示的产品名称的上级作为产品分类
+            //先拿到产品名称的代号
+            String idxNo = prdtSampX.getIdxNo();
+            //通过idxno找到上级fenLeiNo
+            //0000000000的肯定没上级
+            if(p.bdy(Cnst.ten0,idxNo)){
+                Map<String,String> fenLeis=cnst.a001TongYongMapper.getFenLeiNoFromIndx(idxNo);
+                //fenLeis非空
+                if(p.notEmpty(fenLeis)){
+                    try {
+                        prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));
+                        prdtSampX.setFenLeiNo(fenLeis.get(Cnst.fenLeiNo));
+                    } catch (Exception e) {
+                        p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
+                        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf("prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));失败")).sad(p.dexhx).gad());
+                        p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
+//                e.printStackTrace();
+                    }
+                }
+            }else{
+                 p.p(p.gp().sad(p.dexhx).sad("idxNo=").sad(idxNo).sad(p.dexhx).gad());
+            }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);

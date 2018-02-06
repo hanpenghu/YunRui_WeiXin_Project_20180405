@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface A001TongYongMapper {
 
@@ -222,7 +223,7 @@ public interface A001TongYongMapper {
            "isnull(chengfendaima,'')=#{chengFenDaiMa}"})
    Integer countIfSapsoExist(Sapso b);
 
-
-
-
+   //通过产品名称中的idxNo找到页面的分类名称fenLeiNo和FenLeiName
+    @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b  where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
+    Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 }

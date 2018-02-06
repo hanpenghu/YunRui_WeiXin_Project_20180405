@@ -44,6 +44,9 @@ public class Cnst {
     public static final String  ganTanHao="!";
     public static final String  fenHao=";";
     public static final String  enCodeSpace="%20";
+    public static final String fenLeiNo="fenLeiNo";
+    public static final String fenLeiName="fenLeiName";
+    public static final String ten0="0000000000";
 
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();
