@@ -790,6 +790,7 @@
       <if test="stopusedate != null">
         stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
       </if>
+      id=id
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>

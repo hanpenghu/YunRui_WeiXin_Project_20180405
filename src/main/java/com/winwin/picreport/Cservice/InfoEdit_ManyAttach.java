@@ -52,7 +52,7 @@ public class InfoEdit_ManyAttach {
                             || thum.getOriginalFilename().contains(Cnst.fenHao))) {
                 return MessageGenerate.generateMessage
                         ("您的图片不能包含有!符号或者;符号",
-                        "您的图片不能包含有!符号或者;符号", Cnst.emptyStr, "34");
+                        "您的图片不能包含有!符号或者;符号", Cnst.emptyStr,p.s34);
             }
 
 
@@ -62,7 +62,7 @@ public class InfoEdit_ManyAttach {
 //            p.p(prdtSamp1);
 //            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            if(prdtSamp1!=null&&!"".equals(prdtSamp1)){
+            if(prdtSamp1!=null&&!p.space.equals(prdtSamp1)){
                 prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
             }
 
@@ -170,7 +170,7 @@ public class InfoEdit_ManyAttach {
                     //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
                     attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
                 }
-                if ("".equals(attachmentUr)) {
+                if (p.space.equals(attachmentUr)) {
                     attachmentUr = null;//为了是null的时候不更新这个字段
                 }
 
