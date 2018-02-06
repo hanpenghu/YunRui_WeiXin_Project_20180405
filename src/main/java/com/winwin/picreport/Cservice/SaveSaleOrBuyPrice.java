@@ -35,6 +35,8 @@ public class SaveSaleOrBuyPrice {
     private Cnst cnst;
         public Msg saveSaleOrBuyPrice(UpDefMy01 up){
 
+             p.p(p.gp().sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).sad(up.toString()).sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).gad());
+
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
             if(null==cusNo){//联合主键之一,不能为null

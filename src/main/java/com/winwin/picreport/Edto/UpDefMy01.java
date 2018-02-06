@@ -165,4 +165,31 @@ public class UpDefMy01 extends UpDefMy {
         this.unitFu = unitFu;
         return this;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.UpDefMy01{");
+        sb.append("unitZhu='").append(unitZhu).append('\'');
+        sb.append(", unitFu='").append(unitFu).append('\'');
+        sb.append(", usr='").append(usr).append('\'');
+        sb.append(", cusNo='").append(cusNo).append('\'');
+        sb.append(", rem='").append(rem).append('\'');
+        sb.append(", remFront='").append(remFront).append('\'');
+        sb.append(", uuid='").append(uuid).append('\'');
+        sb.append(", noTransUpBuy=").append(noTransUpBuy);
+        sb.append(", haveTransUpBuy=").append(haveTransUpBuy);
+        sb.append(", noTransUpSale=").append(noTransUpSale);
+        sb.append(", haveTransUpSale=").append(haveTransUpSale);
+        sb.append(", priceId='").append(priceId).append('\'');
+        sb.append(", bilType='").append(bilType).append('\'');
+        sb.append(", up=").append(up);
+        sb.append(", remOfPrdtSampOs='").append(remOfPrdtSampOs).append('\'');
+        sb.append(", sDd=").append(sDd);
+        sb.append(", qty=").append(qty);
+        sb.append(", unit='").append(unit).append('\'');
+        sb.append(", curId='").append(curId).append('\'');
+        sb.append(", curName='").append(curName).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
