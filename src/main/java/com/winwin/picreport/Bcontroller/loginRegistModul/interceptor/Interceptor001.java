@@ -20,12 +20,12 @@ public class Interceptor001 implements HandlerInterceptor {
     private Long tokenShiXiaoShiJian_haoMiaoL;
     private String guoQiShiJian;//是个字符串毫秒时间戳
 
-    public static void main(String[]args){
-           p.p(p.tod("2018-02-06","yyyy-MM-dd").getTime());
-
-           p.p(p.dtoStr(p.sjc2Date("1517846400000")));
-           p.p(p.isFirstDateBig(new Date(),p.sjc2Date("1517846400000")));
-    }
+//    public static void main(String[]args){
+//           p.p(p.tod("2018-02-06","yyyy-MM-dd").getTime());
+//
+//           p.p(p.dtoStr(p.sjc2Date("1517846400000")));
+//           p.p(p.isFirstDateBig(new Date(),p.sjc2Date("1517846400000")));
+//    }
     public Interceptor001() {
 
     }
@@ -47,16 +47,16 @@ public class Interceptor001 implements HandlerInterceptor {
          ****************************************过期模块************************************************
          * */
 
-        p.p(p.gp().sad(p.dexhx).sad("goQiShiJian").sad(p.dexhx)
-                .sad(p.dtoStr(p.sjc2Date(guoQiShiJian))).sad(p.dexhx).gad());
-
-        if(p.isFirstDateBig(new Date(),p.sjc2Date(guoQiShiJian))){
-           Writer writer = response.getWriter();
-            writer.append(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
-            if(writer!=null){writer.close();}
-            p.p(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
-            throw new RuntimeException(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
-        }
+//        p.p(p.gp().sad(p.dexhx).sad("goQiShiJian").sad(p.dexhx)
+//                .sad(p.dtoStr(p.sjc2Date(guoQiShiJian))).sad(p.dexhx).gad());
+//
+//        if(p.isFirstDateBig(new Date(),p.sjc2Date(guoQiShiJian))){
+//           Writer writer = response.getWriter();
+//            writer.append(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
+//            if(writer!=null){writer.close();}
+//            p.p(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
+//            throw new RuntimeException(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
+//        }
 
         /**
          ****************************************************************************************
