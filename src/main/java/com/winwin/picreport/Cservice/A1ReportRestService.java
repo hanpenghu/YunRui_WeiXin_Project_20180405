@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.OrderPreCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
+import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,14 +41,18 @@ public class A1ReportRestService {
         //后来我为了让用户删除主表后还能插入数据,注释掉这个判断,然后在插入时判断是否重复,重复就不在 插入
 
 
-        /*if(cnst.sapsoChongfu.ishave(samePrdNoList)){
-                //此时存在重复数据,不能再插入
-            listmsg.addAll(new MessageGenerate().generateMessage("有重复数据,未能成功插入"));
-            throw new RuntimeException(p.gp().sad(p.dexhx)
-                    .sad("cha ru chong fu shu ju").sad(p.dexhx).gad());
-        }else{
-            //此时不存在重复数据可以继续插入
-        }*/
+//        if(cnst.sapsoChongfu.ishave(samePrdNoList)){
+//            p.p("--------是否有重复数据-------------------");
+//                //此时存在重复数据,不能再插入
+//            listmsg.addAll(new MessageGenerate().generateMessage("有重复数据,未能成功插入002"));
+//            p.p("--------是有重复数据002-------------------");
+//            throw new RuntimeException(p.gp().sad(p.dexhx)
+//                    .sad("cha ru chong fu shu ju").sad(p.dexhx).gad());
+//
+//        }else{
+//            //此时不存在重复数据可以继续插入
+//            p.p("//此时不存在重复数据可以继续插入");
+//        }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +61,10 @@ public class A1ReportRestService {
         for(int iii=0;iii<list3.size();iii++){
             ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
-            this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg,iii);
+            //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
+            synchronized (this) {
+                this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg,iii);
+            }
         }
 
 
@@ -344,17 +352,17 @@ public class A1ReportRestService {
                     .andAmtEqualTo(t.getAmt())
                     .andTaxRtoEqualTo(t.getTaxRto())
                     .andRemEqualTo(t.getRem());
-            if (cnst.tfPosMapper.countByExample(tfe1) == 0) {
-                /**
-                 *插入tf
-                 * */
-                //此时该条记录不存在,可以插入一个
-                cnst.tfPosMapper.insert(t);
-            } else {
-                //此时有重复数据,不插入,啥也不做
-            }
+//            if (cnst.tfPosMapper.countByExample(tfe1) == 0) {
+//                /**
+//                 *插入tf
+//                 * */
+//                //此时该条记录不存在,可以插入一个
+////                cnst.tfPosMapper.insert(t);
+//            } else {
+//                //此时有重复数据,不插入,啥也不做
+//            }
 
-
+            cnst.tfPosMapper.insert(t);
             TfPosZExample tfze = new TfPosZExample();
             tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
             //注意:tf_pos和tf_pos_z必须共用itm才对//注意iii是从0开始索引的 itm是从1  所以要加1
@@ -366,16 +374,17 @@ public class A1ReportRestService {
                     .andSapphEqualTo(tz.getSapph())
                     .andCfdmEqualTo(tz.getCfdm())
                     .andOsIdEqualTo(OrderPreCnst.SO);
-            if (cnst.tfPosZMapper.countByExample(tfze1) == 0) {
-                /**
-                 *插入tfz
-                 * */
-                //此时证明没有重复数据,可以插入
-                cnst.tfPosZMapper.insert(tz);
-            } else {
-                //此时有重复数据,不再插入
-
-            }
+//            if (cnst.tfPosZMapper.countByExample(tfze1) == 0) {
+//                /**
+//                 *插入tfz
+//                 * */
+//                //此时证明没有重复数据,可以插入
+////                cnst.tfPosZMapper.insert(tz);
+//            } else {
+//                //此时有重复数据,不再插入
+//
+//            }
+            cnst.tfPosZMapper.insert(tz);
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
             cnst.manyTabSerch.updateMfPosNullToNothing001(m);
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);

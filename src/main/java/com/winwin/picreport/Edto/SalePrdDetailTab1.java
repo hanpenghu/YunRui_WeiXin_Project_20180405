@@ -303,4 +303,39 @@ public class SalePrdDetailTab1 {//导出excel用
         this.pz = pz;return this;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.SalePrdDetailTab1{");
+        sb.append("remHead='").append(remHead).append('\'');
+        sb.append(", psNo='").append(psNo).append('\'');
+        sb.append(", cusOsNo='").append(cusOsNo).append('\'');
+        sb.append(", prdName='").append(prdName).append('\'');
+        sb.append(", unit='").append(unit).append('\'');
+        sb.append(", qty='").append(qty).append('\'');
+        sb.append(", qtyDouble=").append(qtyDouble);
+        sb.append(", up='").append(up).append('\'');
+        sb.append(", amt='").append(amt).append('\'');
+        sb.append(", amtnNet='").append(amtnNet).append('\'');
+        sb.append(", os_no='").append(os_no).append('\'');
+        sb.append(", bat_no='").append(bat_no).append('\'');
+        sb.append(", remBody='").append(remBody).append('\'');
+        sb.append(", indxName='").append(indxName).append('\'');
+        sb.append(", bc='").append(bc).append('\'');
+        sb.append(", mz='").append(mz).append('\'');
+        sb.append(", pz='").append(pz).append('\'');
+        sb.append(", caiGouNo='").append(caiGouNo).append('\'');
+        sb.append(", itm='").append(itm).append('\'');
+        sb.append(", prdNo='").append(prdNo).append('\'');
+        sb.append(", sapph='").append(sapph).append('\'');
+        sb.append(", saphh='").append(saphh).append('\'');
+        sb.append(", luoHao='").append(luoHao).append('\'');
+        sb.append(", gangHao='").append(gangHao).append('\'');
+        sb.append(", realWidth='").append(realWidth).append('\'');
+        sb.append(", realLength='").append(realLength).append('\'');
+        sb.append(", danHao_HuoHao_ChengFenDaiMa='").append(danHao_HuoHao_ChengFenDaiMa).append('\'');
+        sb.append(", chengFenDaiMa='").append(chengFenDaiMa).append('\'');
+        sb.append(", ebNo='").append(ebNo).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

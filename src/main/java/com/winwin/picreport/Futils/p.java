@@ -76,6 +76,7 @@ public strictfp class p {
     public static final String  enCodeSpace="%20";
     public final static String spac=" ";//空格
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
+    public final static String d16="yyyy-MM-dd HH:mm:ss.SSS";
     public final static String d2="yyyy-MM-dd HH:mm:ss";
     public final static String d3="yyyy-MM-dd";
 
@@ -150,6 +151,16 @@ public strictfp class p {
     }
 
 
+    /**
+     *uuid封装
+     * */
+    public static String uuid(){
+        return UUID.randomUUID().toString();
+    }
+
+    /*public static void main(String[]args){
+         p.p(p.gp().sad(p.dexhx).sad(p.uuid()).sad(p.dexhx).gad());
+    }*/
 
 
 
@@ -641,7 +652,7 @@ public strictfp class p {
 
 
     /**
-     *Date 变成 String异常的时候转换成yyyy-MM-dd HH:mm:ss.SS
+     *Date 变成 String异常的时候转换成yyyy-MM-dd HH:mm:ss.SSS
      * */
     public static String  dtoStr(Date date,String geshi) {
         if(date==null){
@@ -651,7 +662,7 @@ public strictfp class p {
         try {
             return new SimpleDateFormat(geshi).format(date);
         } catch (Exception e) {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(date);
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
         }
 
     }

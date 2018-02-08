@@ -46,6 +46,16 @@ public class Cnst {
     public static final String fenLeiNo="fenLeiNo";
     public static final String fenLeiName="fenLeiName";
     public static final String ten0="0000000000";
+    public static final String dingJiaXiuGai="dingJiaXiuGai";
+    public static final String bilType="bilType";
+    public static final String curId="curId";
+    public static final String dingJiaGuanLian="dingJiaGuanLian";
+    public static final String qty="qty";
+    public static final String up="up";
+    public static final String unit="unit";
+    public static final String remFront="remFront";//对应up_def的rem
+    public static final String sDd="sDd";
+    public static final String dingJiaZhuJian="dingJiaZhuJian";
 
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();

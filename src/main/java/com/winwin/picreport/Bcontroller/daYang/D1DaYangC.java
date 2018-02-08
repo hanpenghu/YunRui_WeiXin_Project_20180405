@@ -384,7 +384,8 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     FenYe dangqianyeData(@RequestBody FenYe fenYe) {
-        return cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+        return cnst.fenLei
+                .dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 /**
  *注意:如果是我们打样系统流水的货号在进入
@@ -33,9 +34,24 @@ import java.util.Map;
 public class SaveSaleOrBuyPrice {
     @Autowired
     private Cnst cnst;
+
+    //由于后期加了一个本币和外币在一个界面,所以这里用循环,就是说这个list里面其实就2个东西
+    public Msg saveSaleOrBuyPrice0(List<UpDefMy01> ups){
+        Msg msg=null;
+        for(UpDefMy01 u:ups){
+            msg = this.saveSaleOrBuyPrice(u);
+            if(p.dy(msg.getStatus(),StatusCnst.excelSaveSucc)){
+                //此时保存成功,继续
+            }else{
+
+                //此时保存失败
+                throw new RuntimeException("保存定价失败");
+            }
+        }
+        return msg;
+    }
         public Msg saveSaleOrBuyPrice(UpDefMy01 up){
 
-             p.p(p.gp().sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).sad(up.toString()).sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).gad());
 
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
@@ -73,7 +89,7 @@ public class SaveSaleOrBuyPrice {
             }else if(NotEmpty.notEmpty(unitFu)){
                 unit=unitFu;
             }else{
-                unit="前端穿过来的主副单位都是空的";
+                unit="前端空的";
             }
             //注意:上面 unit是为了将来插入up_def用的
             //unitZhu和unitFu是为了将来给没有单位的prdt中的ut和ut1字段准备的
@@ -119,6 +135,7 @@ public class SaveSaleOrBuyPrice {
                     .smp("usr",usr)
                     .smp("chkMan",usr)
                     .smp("cusNo",cusNo)
+                    .smp("dingJiaGuanLian",up.getDingJiaGuanLian())
                     .gmp();
 //////////////////////////货号流水模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //获得uuid对应的prdt_no
@@ -213,10 +230,12 @@ public class SaveSaleOrBuyPrice {
         //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
         //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
         //单位(unit为空)上面已经处理了再插入prdt单位的情况
-        upDef.setOlefield(unit);
+//        upDef.setOlefield(unit);
+        upDef.setOlefield((String)gmp.get("dingJiaGuanLian"));
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //我们将来取自己添加的价格的标识
-        upDef.setHjNo(Cnst.SamplesSys);
+//        upDef.setHjNo(Cnst.SamplesSys);
+        upDef.setHjNo(unit);
         upDef.setsDd(cnst.getDbDate());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"
@@ -237,6 +256,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setKnd(p.space);
         upDef.setSupPrdNo(p.space);
         upDef.setCusAre(p.space);
+        /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //采购含运费入库
         if(NotEmpty.notEmpty(gmp.get("haveTransUpBuy"))){
             //01代表不含运费//其他代表是含运费的
@@ -272,7 +292,7 @@ public class SaveSaleOrBuyPrice {
                         .setMsg("保存采购价格成功");
             }
         }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
                 .setMsg("保存采购价格成功");
 
@@ -289,10 +309,13 @@ public class SaveSaleOrBuyPrice {
         //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
         //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
         //单位(unit为空)上面已经处理了再插入prdt单位的情况
-        upDef.setOlefield(unit);
+//        upDef.setOlefield(unit);
+        //改成界面四条数据进价格表的唯一标识符,SamplesSys+36位唯一标识
+        upDef.setOlefield((String)gmp.get("dingJiaGuanLian"));
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        upDef.setHjNo(Cnst.SamplesSys);
+//        upDef.setHjNo(Cnst.SamplesSys);
+        upDef.setHjNo(unit);
         upDef.setsDd(cnst.getDbDate());
         upDef.setQty((BigDecimal) gmp.get("qty"));
         //这个默认字符串"打样系统"

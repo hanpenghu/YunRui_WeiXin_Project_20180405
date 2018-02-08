@@ -6,6 +6,7 @@ import com.winwin.picreport.Edto.ChaXunTiaoJian;
 import com.winwin.picreport.Edto.SalePrdDetailTab1;
 import com.winwin.picreport.Edto.Sapso;
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,10 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
     private Cnst cnst;
 
 //     {"cus_no":[""],"startTimeStamp":"1506787200000","endTimeStamp":"1506873600000"}
-    @RequestMapping(value="salePrdDetailTab1",method = RequestMethod.POST,produces ={"application/json;charset=utf-8"})
-    public @ResponseBody List<SalePrdDetailTab1> salePrdDetailTab1(@RequestBody ChaXunTiaoJian chaXunTiaoJian){
+    @RequestMapping(value="salePrdDetailTab1",method = RequestMethod.POST,
+            produces ={"application/json;charset=utf-8"})
+    public @ResponseBody List<SalePrdDetailTab1> salePrdDetailTab1
+        (@RequestBody ChaXunTiaoJian chaXunTiaoJian){
         //listAll用来储存所有没有匹配sapso表的原始数据
 
         List<String> cus_nos = chaXunTiaoJian.getCus_no();
@@ -36,14 +39,25 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
         }
 
         //得到客户条件的所有未拆行的数据
-        List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang = this.salePrdDetailTab1ListWeiChaiHang(cus_nos, chaXunTiaoJian);
+        List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang =
+                this.salePrdDetailTab1ListWeiChaiHang(cus_nos, chaXunTiaoJian);
 //return salePrdDetailTab1ListWeiChaiHang;
+        for(SalePrdDetailTab1 v:salePrdDetailTab1ListWeiChaiHang){
+            if(p.dy(v.getPrdNo(),"11201043")&&p.dy(v.getCusOsNo(),"170856BR3SSYZYP84771")){
+                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
+                p.p(v);
+                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
+            }
+        }
+
 
 
 
 //        //将来要根据客户订单号+货号来通过数量拆分行号saphh,拆行后的数据放到salePrdDetailTab1ListYiChaiHang
         List <SalePrdDetailTab1>salePrdDetailTab1ListYiChaiHang=new ArrayList<>();
-        if(!NotEmpty.notEmpty(salePrdDetailTab1ListWeiChaiHang)){return salePrdDetailTab1ListYiChaiHang; }//如果未拆行的list是空的,就暂停掉
+        if(!NotEmpty.notEmpty(salePrdDetailTab1ListWeiChaiHang)){
+            return salePrdDetailTab1ListYiChaiHang;
+        }//如果未拆行的list是空的,就暂停掉
 
 //
 //
@@ -53,12 +67,14 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
         List<String>danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang=new ArrayList<>();
         for(Sapso sapso:listSapsoWeiChaiHang){
-            danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang.add(sapso.getDanHao_HuoHao_ChengFenDaiMa());
+            danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang
+                    .add(sapso.getDanHao_HuoHao_ChengFenDaiMa());
         }
 
         for(SalePrdDetailTab1 salePrdDetailTab1:salePrdDetailTab1ListWeiChaiHang){
 
-                if(danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang.contains(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa())){//是通过excel导入的
+                if(danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang
+                        .contains(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa())){//是通过excel导入的
 
                     //此时拆行,
                     int sapsoBaoHanPssBiaoShuLiang=0;//统计包sapso里面包含几个salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()
@@ -213,7 +229,8 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
         List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang=new ArrayList<>();//用来存放未拆行的
         //得到前端所需要的没有匹配sapso行号和数量的原始数据全部放入listAll
         for(String cus_no:cus_nos){
-            List<SalePrdDetailTab1> salePrdDetailTab1sOfDangQianCusNoXia = cnst.manyTabSerch.salePrdDetailTab1(chaXunTiaoJian, cus_no);
+            List<SalePrdDetailTab1> salePrdDetailTab1sOfDangQianCusNoXia =
+                    cnst.manyTabSerch.salePrdDetailTab1(chaXunTiaoJian, cus_no);
             if(!NotEmpty.notEmpty(salePrdDetailTab1sOfDangQianCusNoXia)){
                 continue;
             }

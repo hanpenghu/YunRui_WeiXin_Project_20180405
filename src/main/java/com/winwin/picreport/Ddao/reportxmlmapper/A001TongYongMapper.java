@@ -226,4 +226,13 @@ public interface A001TongYongMapper {
    //通过产品名称中的idxNo找到页面的分类名称fenLeiNo和FenLeiName
     @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b  where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
+
+   @Update({"update up_def set  " +
+           "cur_id =#{curId}," +
+           "qty=#{qty}, " +
+           "up=#{up}," +
+           "hj_no=#{unit}," +
+           "rem =#{remFront} " +
+           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+CONVERT(varchar(100),s_dd,25)"})
+   Integer updateUpdef(Map<String, String> map101);
 }

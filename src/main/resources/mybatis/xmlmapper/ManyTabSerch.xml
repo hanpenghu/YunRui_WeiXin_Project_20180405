@@ -67,7 +67,7 @@
            CONVERT(VARCHAR(40),ISNULL(tf.up,0))AS 'up',----单价
            CONVERT(VARCHAR(40),ISNULL(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
            CONVERT(VARCHAR(40),ISNULL(tf.amt,0)) AS 'amt',---本位币
-           ISNULL(tf.os_no,'') AS 'os_no' ,----EB单号
+           ISNULL(tf.os_no,'') AS 'os_no' ,----原来说的cusosno和osno一样
            ISNULL(tf.bat_no,'')AS 'bat_no',-----批号
            ISNULL(tf.rem,'') AS 'remBody',	----表身摘要
             ISNULL(dx.name,'')AS 'indxName'----种类名称

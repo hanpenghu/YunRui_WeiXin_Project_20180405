@@ -1,5 +1,4 @@
 package com.winwin.picreport.Edto;
-
 import java.math.BigDecimal;
 import java.util.Date;
 //定价表
@@ -26,15 +25,16 @@ public class UpDef extends UpDefKey {
 
     private Date sysDate;
 
-    private String hjNo;
+
+    private String hjNo;//改为存主副单位
 
     private Integer preItm;
 
     private BigDecimal rtoBjst;
 
     private String zdFlag;
-
-    private String olefield;
+////2018_2_7   weekday(3)   16:26:58改为   SamplesSys+36位唯一码,作为同一次保存用的东西
+    private String olefield;////数据库100位
 
     private BigDecimal upNet;
 

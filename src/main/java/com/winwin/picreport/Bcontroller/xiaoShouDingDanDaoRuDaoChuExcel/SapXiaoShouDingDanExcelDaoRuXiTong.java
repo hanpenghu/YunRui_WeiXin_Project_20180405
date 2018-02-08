@@ -54,13 +54,49 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 //    });
 //    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
+
     long time01=new Date().getTime();
     try {
+
+        //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //检查shouDingDanFromExcels里面的osno订单号是否统一 一样,不一样不行
+        //根据osNo订单号去重复//这里单单是为了看是否是统一单号
+        TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
+        set1.addAll(shouDingDanFromExcels);
+        int size = set1.size();
+        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
+        if(size ==1){
+            //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
+
+            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
+        }else{
+            //此时证明有2个以上不同单号,需要提示 客户,同一个excel中必须只能有一个osno
+            listmsg.addAll (new MessageGenerate()
+                    .generateMessage("excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！"));
+
+            throw new RuntimeException("excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！");
+
+        }
+       /* try {
+             p.p(p.gp().sad(p.dexhx).sad(p.strValeOf("开始线程等待")).sad(p.dexhx).gad());
+            Thread.sleep(1*60*60*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
         Msg msg=new Msg();
         if(this.panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi(shouDingDanFromExcels)){
             //guo lv suo you bu chong fu de osNo//分离出所有不相同的订单号
-            Set<String> set = this.fenLeiQuChongFuDingDanHaoDaoSetJiHe(shouDingDanFromExcels);
-            List<List<ShouDingDanFromExcel>> list1=this.anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe(set, shouDingDanFromExcels);
+            Set<String> set = this.fenLeiQuChongFuDingDanHaoDaoSetJiHe
+                    (shouDingDanFromExcels);
+            List<List<ShouDingDanFromExcel>> list1=this
+                    .anDingDanHaoFenLeiHouDe2GeJiHeFangRuYiGeJiHe
+                    (set, shouDingDanFromExcels);
             //按批号分批插入数据库,一个批号下的不成功都不成功在service成实现，listmsg暗传输msg错误信息
             this.anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(list1,listmsg);
             msg.setMsg("数据插入成功");
@@ -137,14 +173,16 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 long l = cnst.mfPosMapper.countByExample(mfPosExample);
                 if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
                     //for一次就是处理同一批号osNo一次
-                    Map<String, List> listMap = this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt(list3,listmsg);
+                    Map<String, List> listMap =
+                            this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt
+                                    (list3,listmsg);
                     /**
                      *数据库插入数据
                      * */
                     cnst.a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
-                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入"));
+                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001"));
                     return;//此时停止循环所有单号
                 }
             } catch (Exception e) {

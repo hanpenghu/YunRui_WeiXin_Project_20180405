@@ -4,10 +4,10 @@ package com.winwin.picreport.Edto;
 
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
-
 import java.math.BigDecimal;
-
 public class UpDefMy01 extends UpDefMy {
+    //dingJiaGuanLian最终存入up_def定价表OLEFIELD,为了让界面四种价格(含运费,不含运费,本币,外币)存入olefield的时候的关联字段
+    String dingJiaGuanLian;
     String unitZhu;//主单位
     String unitFu;//副单位
     String usr;//操作员,登录的会员名
@@ -16,7 +16,7 @@ public class UpDefMy01 extends UpDefMy {
     String rem;//这个备注徐勇传过来
     //前端备注,不用了
     String remFront;
-    //加一个uuid字段,让徐勇传过来保存新的单价
+    //加一个uuid字段,让徐勇传过来保存新的单价,这个uuid就是prdtSamp表里面的唯一标识
     String  uuid;
     //不含运费单价的采购价格//up_def中bil_type=01
     BigDecimal noTransUpBuy;//
@@ -29,12 +29,17 @@ public class UpDefMy01 extends UpDefMy {
     //含运费单价销售价格//up_def中bil_type!=01
     BigDecimal haveTransUpSale;//
 
+    public String getDingJiaGuanLian() {
+        return dingJiaGuanLian;
+    }
+
+    public UpDefMy01 setDingJiaGuanLian(String dingJiaGuanLian) {
+        this.dingJiaGuanLian = dingJiaGuanLian;
+        return this;
+    }
 
 
-
-
-
-    //根据实际bil_type(没有运费是01)和priceId(销售是1,采购是2)来分配价格
+//根据实际bil_type(没有运费是01)和priceId(销售是1,采购是2)来分配价格
 
 
     //采购的情况

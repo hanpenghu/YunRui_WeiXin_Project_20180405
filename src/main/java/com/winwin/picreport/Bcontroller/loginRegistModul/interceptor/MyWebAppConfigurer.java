@@ -15,7 +15,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
     @Autowired
     private Cnst cnst;
 
-    @Override
+/*    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
@@ -28,10 +28,9 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/logOut")
                  .excludePathPatterns("/test")
         .excludePathPatterns("/d/allfenleitest")
-                .excludePathPatterns("/base/*")
-        ;
+                .excludePathPatterns("/base/*");
 //        registry.addWebRequestInterceptor()
         super.addInterceptors(registry);
-    }
+    }*/
 
 }

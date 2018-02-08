@@ -1,6 +1,7 @@
 package com.winwin.picreport.Bcontroller.daYang;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
+import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import com.winwin.picreport.Edto.UpDefMy01;
@@ -152,9 +153,20 @@ public class D1DaYang2C {
     //保存采购和销售价格
     //保存采购的时候要供应商不要客户,保存销售的时候供应商和客户都不要
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
-    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody UpDefMy01 up){
-        Msg msg1 = cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice(up);
-        return msg1;
+    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币
+
+        //生成界面依次插入的四条记录的关联的uuid
+        String uid = p.uuid();
+        ups.forEach(v->v.setDingJiaGuanLian(p.gp().sad(Cnst.SamplesSys).sad(uid).gad()));
+
+//        synchronized (this){
+
+            p.p("-------------------------------！！！！！！保存价格开始！！！！！--------------------------------------");
+                return cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice0(ups);
+//            p.p(up);
+//            p.p("-------------------------------！！！！！！保存价格结束！！！！！--------------------------------------");
+//        }
+
 
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

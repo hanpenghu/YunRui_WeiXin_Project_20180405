@@ -100,7 +100,7 @@
                                 ('%'+( #{fenLeiName})+ '%')
                             </when>
                             <otherwise>
-                                idx_No
+                                fen_lei_name
                             </otherwise>
                         </choose>
         AND
@@ -243,19 +243,21 @@
        a.s_dd --as sDd,---价格创建日期
        ,a.up --as up ,--价格
        ,a.qty --as qty ,--数量
-       ,isnull(a.OLEFIELD,'原未更新数据') as unit---单位
+       ,isnull(a.HJ_NO,'原未更新数据') as unit---单位
        ,a.cur_id ---as curId,----币别代号
        ,a.bil_type----01代表不含运费的单价
        ,a.rem---备注,打样系统的会存为"打样系统"
        ,a.price_id----1代表销售价格, 2代表采购价格
        ,b.name ----as curName ----币别名字
+       --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
        from up_def a
        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
         LEFT JOIN cur_id b ON a.cur_id=b.cur_id
        where
        a.prd_no=#{prdNo,jdbcType=VARCHAR}
         AND
-        a.HJ_NO='SamplesSys'
+        a.OLEFIELD like '%SamplesSys%'
        AND
         a.price_id=
         <choose>
