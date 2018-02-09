@@ -28,28 +28,28 @@ public class GetPriceModelUpdef {
         List<UpDefMy01> upDefMyList = this.merageSameTimeUpDefMy01(upDefMyList1);
         List<UpDefMy01> upDefMyListBuy=this.merageSameTimeUpDefMy01(upDefMyListBuy1);
 
-
-        if(NotEmpty.empty(upDefMyList)){
-            UpDefMy01 upDefMy01=new UpDefMy01();
-            upDefMy01.setCurId(Cnst.testDataCurrentCode);
-            upDefMy01.setCurName(Cnst.testDataCurrentName);
-            upDefMy01.setQty(new BigDecimal(1111110));
-            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
-            upDefMy01.setUp(new BigDecimal(0));
-            //为了给徐勇做实验用
-            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
-        }
-
-        if(NotEmpty.empty(upDefMyListBuy)){
-            UpDefMy01 upDefMy01=new UpDefMy01();
-            upDefMy01.setCurId(Cnst.testDataCurrentCode);
-            upDefMy01.setCurName(Cnst.testDataCurrentName);
-            upDefMy01.setQty(new BigDecimal(1110));
-            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
-            upDefMy01.setUp(new BigDecimal(99));
-            //为了给徐勇做实验用
-            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
-        }
+//
+//        if(NotEmpty.empty(upDefMyList)){
+//            UpDefMy01 upDefMy01=new UpDefMy01();
+//            upDefMy01.setCurId(Cnst.testDataCurrentCode);
+//            upDefMy01.setCurName(Cnst.testDataCurrentName);
+//            upDefMy01.setQty(new BigDecimal(1111110));
+//            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
+//            upDefMy01.setUp(new BigDecimal(0));
+//            //为了给徐勇做实验用
+//            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
+//        }
+//
+//        if(NotEmpty.empty(upDefMyListBuy)){
+//            UpDefMy01 upDefMy01=new UpDefMy01();
+//            upDefMy01.setCurId(Cnst.testDataCurrentCode);
+//            upDefMy01.setCurName(Cnst.testDataCurrentName);
+//            upDefMy01.setQty(new BigDecimal(1110));
+//            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
+//            upDefMy01.setUp(new BigDecimal(99));
+//            //为了给徐勇做实验用
+//            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
+//        }
 
         prdtSampX.setUpDefMyList(upDefMyList);
         prdtSampX.setUpDefMyListBuy(upDefMyListBuy);

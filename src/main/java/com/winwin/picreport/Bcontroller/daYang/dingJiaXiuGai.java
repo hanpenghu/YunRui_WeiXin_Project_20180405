@@ -88,7 +88,7 @@ public class dingJiaXiuGai {
         return Msg.gmg().setMsg("定价修改成功").setStatus("1");
     }
 
-    /*public static void main(String[]args) throws ParseException {
+    public static void main(String[]args) throws ParseException {
 
         Date parse = new SimpleDateFormat(p.d16).parse("2017-12-29 19:10:52.717");
 
@@ -102,7 +102,7 @@ public class dingJiaXiuGai {
         p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1514545852717L),p.d17)).sad(p.dexhx).gad());
 
         p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1518141121777L),p.d16)).sad(p.dexhx).gad());
-    }*/
+    }
 
 
 }
