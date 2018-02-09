@@ -408,6 +408,9 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 
 
 
+
+
+
 //    @RequestMapping(value = "dangqianyeData", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody FenYe dangqianyeData(@RequestBody FenYe fenYe) {
 //        FenYe fenYe = cnst.fenLei.dangqianyeData(fenYe);//主要传过来当前页和每页显示数量

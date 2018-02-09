@@ -96,7 +96,12 @@ public class dingJiaXiuGai {
                  .sad(p.strValeOf(parse.getTime())).sad(p.dexhx).gad());//1514545852717
 
         p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date("1514545852717"),p.d16)).sad(p.dexhx).gad());
+        //_________________2017-12-29 19:10:52.717_________________
              p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1514545852717L),p.d1)).sad(p.dexhx).gad());
+             //_________________2017-12-29 19:10:52,717_________________
+        p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1514545852717L),p.d17)).sad(p.dexhx).gad());
+
+        p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1518141121777L),p.d16)).sad(p.dexhx).gad());
     }*/
 
 

@@ -73,6 +73,7 @@ public class A1ReportRestService {
         //注意: sapso里面的数据是没有合并的,而mf_pos和tf_pos里面是合并的
         //插入自建表before_same_prdNo_merge(后来表名字改成sapso)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
         for (List<ShouDingDanFromExcel> listx : samePrdNoList) {
+
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
             for (ShouDingDanFromExcel shouDingDanFromExcel : listx) {

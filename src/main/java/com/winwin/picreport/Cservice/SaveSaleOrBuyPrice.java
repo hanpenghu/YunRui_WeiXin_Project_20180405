@@ -85,9 +85,9 @@ public class SaveSaleOrBuyPrice {
             String unitZhu=up.getUnitZhu();//放入prdt中的ut//当对应prdno的这条记录的ut是空的时候
             String unitFu=up.getUnitFu();//放入prdt中的ut1//当对应prdno的这条记录的ut1是空的时候
             if(NotEmpty.notEmpty(unitZhu)){
-                unit=unitZhu;
+                unit=Cnst.zhu+unitZhu;
             }else if(NotEmpty.notEmpty(unitFu)){
-                unit=unitFu;
+                unit=Cnst.fu+unitFu;
             }else{
                 unit="前端空的";
             }

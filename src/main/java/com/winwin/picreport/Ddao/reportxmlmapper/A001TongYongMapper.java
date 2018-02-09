@@ -197,29 +197,29 @@ public interface A001TongYongMapper {
            "isnull(uuid,'') !=#{uuid}\n" +
            "and \n" +
            "isnull(osno,'')=#{osno}\n" +
+//           "and\n" +
+//           "isnull(ebno,'')=#{ebno}\n" +
            "and\n" +
-           "isnull(ebno,'')=#{ebno}\n" +
-           "and\n" +
-           "isnull(caigouno,'')=#{caigouno}\n" +
-           "and \n" +
+//           "isnull(caigouno,'')=#{caigouno}\n" +
+//           "and \n" +
            "isnull(prdno,'')=#{prdno}\n" +
            "and\n" +
            "isnull(saphh,'')=#{saphh}\n" +
            "and\n" +
-           "isnull(sapph,'')=#{sapph}\n" +
-           "and \n" +
-           "isnull(sapwlm,'')=#{sapwlm}\n" +
-           "and\n" +
-           "isnull(maitouno,'')=#{maitouno}\n" +
-           "and\n" +
-           "isnull(luohao,'')=#{luohao}\n" +
-           "and\n" +
-           "isnull(ganghao,'')=#{ganghao}\n" +
-           "and\n" +
-           "isnull(realWidth,'')=#{realwidth}\n" +
-           "and\n" +
-           "isnull(realLength,'')=#{reallength}\n" +
-           "and\n" +
+//           "isnull(sapph,'')=#{sapph}\n" +
+//           "and \n" +
+//           "isnull(sapwlm,'')=#{sapwlm}\n" +
+//           "and\n" +
+//           "isnull(maitouno,'')=#{maitouno}\n" +
+//           "and\n" +
+//           "isnull(luohao,'')=#{luohao}\n" +
+//           "and\n" +
+//           "isnull(ganghao,'')=#{ganghao}\n" +
+//           "and\n" +
+//           "isnull(realWidth,'')=#{realwidth}\n" +
+//           "and\n" +
+//           "isnull(realLength,'')=#{reallength}\n" +
+//           "and\n" +
            "isnull(chengfendaima,'')=#{chengFenDaiMa}"})
    Integer countIfSapsoExist(Sapso b);
 

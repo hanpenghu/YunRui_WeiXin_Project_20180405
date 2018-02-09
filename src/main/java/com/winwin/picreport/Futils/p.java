@@ -77,8 +77,12 @@ public strictfp class p {
     public static final String  enCodeSpace="%20";
     public final static String spac=" ";//空格
     public static final String undefined="undefined";
+    //_________________2017-12-29 19:10:52.717_________________
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
+    //_________________2017-12-29 19:10:52.717_________________
     public final static String d16="yyyy-MM-dd HH:mm:ss.SSS";
+    //_________________2017-12-29 19:10:52,717_________________
+    public final static String d17="yyyy-MM-dd HH:mm:ss,SSS";
     public final static String d2="yyyy-MM-dd HH:mm:ss";
     public final static String d3="yyyy-MM-dd";
 

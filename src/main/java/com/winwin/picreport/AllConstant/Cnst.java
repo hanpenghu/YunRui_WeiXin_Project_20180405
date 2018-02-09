@@ -56,6 +56,8 @@ public class Cnst {
     public static final String remFront="remFront";//对应up_def的rem
     public static final String sDd="sDd";
     public static final String dingJiaZhuJian="dingJiaZhuJian";
+    public static final String zhu="主:";
+    public static final String fu="副:";
 
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();
