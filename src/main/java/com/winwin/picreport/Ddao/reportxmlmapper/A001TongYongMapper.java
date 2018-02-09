@@ -1,16 +1,12 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
-
-
 import com.winwin.picreport.Edto.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 public interface A001TongYongMapper {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

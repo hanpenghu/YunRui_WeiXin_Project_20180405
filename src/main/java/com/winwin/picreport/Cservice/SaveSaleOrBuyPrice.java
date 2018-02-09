@@ -43,7 +43,6 @@ public class SaveSaleOrBuyPrice {
             if(p.dy(msg.getStatus(),StatusCnst.excelSaveSucc)){
                 //此时保存成功,继续
             }else{
-
                 //此时保存失败
                 throw new RuntimeException("保存定价失败");
             }
@@ -73,8 +72,8 @@ public class SaveSaleOrBuyPrice {
             String curName = up.getCurName();
             //前端传过来的备注
             String remFront = up.getRemFront();
-            //固定的备注   //"打样系统"
-            String rem = up.getRem();
+            //固定的备注   //"打样系统"//后来改为前端传过来的备注,因为分不清是那个,所以做如下判断
+            String rem = p.empty(up.getRem())?remFront:up.getRem();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //单位
             String unit = up.getUnit();//放入up_def中的OLEFIELD字段中
@@ -143,7 +142,8 @@ public class SaveSaleOrBuyPrice {
             //如果货号是空的,先流水一下
             if(p.empty(prdNo)){
                 //下面流水一次单号//注意必须先得到index
-                PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
+                PrdtSamp prdtSamp = cnst.prdtSampMapper
+                        .selectByPrimaryKey(uuid);
                 PrdtSamp0 prdtSamp0=new PrdtSamp0();
                 BeanUtils.copyProperties(prdtSamp,prdtSamp0);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,7 +318,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setHjNo(unit);
         upDef.setsDd(cnst.getDbDate());
         upDef.setQty((BigDecimal) gmp.get("qty"));
-        //这个默认字符串"打样系统"
+        //这个默认字符串"打样系统"//已经改为前端穿过来的
         upDef.setRem((String)gmp.get("rem"));
         //得到币别
         upDef.setCurId((String)gmp.get("curId"));
