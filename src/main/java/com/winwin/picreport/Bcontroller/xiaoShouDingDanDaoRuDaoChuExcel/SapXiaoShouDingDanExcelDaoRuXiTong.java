@@ -38,7 +38,7 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
 @RequestMapping(value="shouDingDanExcelToTable",
-        method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+        method= RequestMethod.POST,produces = {p.charsetUtf8})
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 

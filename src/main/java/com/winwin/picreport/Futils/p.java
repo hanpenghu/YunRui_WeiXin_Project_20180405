@@ -129,7 +129,7 @@ public strictfp class p {
     public final static String baoCunShiBaiCh="保存失败";
     public final static String baoCunChengGong="baoCunChengGong";
     public final static String baoCunChengGongCh="保存成功";
-
+    public final static String charsetUtf8="application/json;charset=utf-8";
     //    public final static String ;
     private String ads="";
     private StringBuffer sb=new StringBuffer();
