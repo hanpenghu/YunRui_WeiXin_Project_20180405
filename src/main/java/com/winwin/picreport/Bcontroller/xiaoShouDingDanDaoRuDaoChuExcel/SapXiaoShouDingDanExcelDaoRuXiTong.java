@@ -127,17 +127,19 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi(List<ShouDingDanFromExcel> shouDingDanFromExcels){
+    public boolean panDuanQianDuanChuanGuoLaiDeShuJuShiFouYouWenTi
+        (List<ShouDingDanFromExcel> shouDingDanFromExcels){
         boolean a=(shouDingDanFromExcels.get(0)==null);
         boolean c=shouDingDanFromExcels.get(0).getOsNo()==null;
-        boolean b = "".equals(shouDingDanFromExcels.get(0).getOsNo());
-        boolean d = "undefined".equals(shouDingDanFromExcels.get(0).getOsNo());
+        boolean b = p.space.equals(shouDingDanFromExcels.get(0).getOsNo());
+        boolean d = p.undefined.equals(shouDingDanFromExcels.get(0).getOsNo());
         boolean e=!a||!c||!b||!d;
         return e;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Set<String> fenLeiQuChongFuDingDanHaoDaoSetJiHe(List<ShouDingDanFromExcel> shouDingDanFromExcels){
+    public Set<String> fenLeiQuChongFuDingDanHaoDaoSetJiHe
+                (List<ShouDingDanFromExcel> shouDingDanFromExcels){
         Set<String> set=new HashSet();
 
         for(ShouDingDanFromExcel shouDingDanFromExcel:shouDingDanFromExcels){

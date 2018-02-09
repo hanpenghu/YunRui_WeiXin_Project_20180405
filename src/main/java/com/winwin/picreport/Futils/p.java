@@ -76,6 +76,7 @@ public strictfp class p {
     public final static String space="";//空字符串
     public static final String  enCodeSpace="%20";
     public final static String spac=" ";//空格
+    public static final String undefined="undefined";
     public final static String d1="yyyy-MM-dd HH:mm:ss.SS";//最后的SS是毫秒//like//2017-12-16 16:19:23.670
     public final static String d16="yyyy-MM-dd HH:mm:ss.SSS";
     public final static String d2="yyyy-MM-dd HH:mm:ss";
@@ -128,6 +129,7 @@ public strictfp class p {
     public final static String baoCunShiBaiCh="保存失败";
     public final static String baoCunChengGong="baoCunChengGong";
     public final static String baoCunChengGongCh="保存成功";
+
     //    public final static String ;
     private String ads="";
     private StringBuffer sb=new StringBuffer();

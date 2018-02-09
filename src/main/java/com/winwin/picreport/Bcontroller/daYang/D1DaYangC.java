@@ -378,7 +378,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 //        return fenYe;
 //    }
 
- //////////////////////////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
+ ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
     @RequestMapping(value = InterFaceCnst.dangqianyeData,
             method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
