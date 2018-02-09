@@ -7,14 +7,14 @@ import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.NotEmpty;
+//import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 import java.util.Map;
 /**
@@ -84,9 +84,9 @@ public class SaveSaleOrBuyPrice {
             //prdt中ut字段是主单位,ut1是副单位
             String unitZhu=up.getUnitZhu();//放入prdt中的ut//当对应prdno的这条记录的ut是空的时候
             String unitFu=up.getUnitFu();//放入prdt中的ut1//当对应prdno的这条记录的ut1是空的时候
-            if(NotEmpty.notEmpty(unitZhu)){
+            if(p.notEmpty(unitZhu)){
                 unit=Cnst.zhu+unitZhu;
-            }else if(NotEmpty.notEmpty(unitFu)){
+            }else if(p.notEmpty(unitFu)){
                 unit=Cnst.fu+unitFu;
             }else{
                 unit="前端空的";
@@ -101,7 +101,7 @@ public class SaveSaleOrBuyPrice {
             BigDecimal haveTransUpBuy = up.getHaveTransUpBuy();
             //采购无运费
             BigDecimal noTransUpBuy = up.getNoTransUpBuy();
-           
+
             //销售有运费
             BigDecimal haveTransUpSale = up.getHaveTransUpSale();
             //销售无运费
@@ -110,7 +110,7 @@ public class SaveSaleOrBuyPrice {
             //处理一下unit,因为unit必须存入一个1或者2
 
 
-            if(NotEmpty.empty(curId)){
+            if(p.empty(curId)){
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
                 p.p("币别代号没有传过来");
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -141,7 +141,7 @@ public class SaveSaleOrBuyPrice {
             //获得uuid对应的prdt_no
             String prdNo= cnst.manyTabSerch.selectPrdNoFromPrdtSamp(uuid);
             //如果货号是空的,先流水一下
-            if(NotEmpty.empty(prdNo)){
+            if(p.empty(prdNo)){
                 //下面流水一次单号//注意必须先得到index
                 PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
                 PrdtSamp0 prdtSamp0=new PrdtSamp0();
@@ -149,7 +149,7 @@ public class SaveSaleOrBuyPrice {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //给prdtSamp流水prdtNo//下面是prdno流水模块
                 cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 prdNo=prdtSamp0.getPrdNo();
             }else{
                 //此时货号不是空的//曾经出现过PrdtSamp表有货号但是在prdt里面不存在,此时就要再prdt里插入该货号
@@ -169,11 +169,11 @@ public class SaveSaleOrBuyPrice {
              * */
             //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
             String ut=cnst.manyTabSerch.selectUtFromPrdt(prdNo);
-            if(NotEmpty.empty(ut)&&NotEmpty.notEmpty(unitZhu)){
+            if(p.empty(ut)&&p.notEmpty(unitZhu)){
                 p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt(主单位空)startInsert").sad(p.dexhx).gad());
                 //如果是空的,证明prdt表中没有该ut,需要插入该unit
                 Integer tt= cnst.manyTabSerch.insertUnitToUtOfPrdt(unitZhu,prdNo);
-                if(NotEmpty.notEmpty(tt)&&tt>0){
+                if(p.notEmpty(tt)&&tt>0){
                     p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位成功").sad(p.dexhx).gad());
                 }else{
                     p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
@@ -185,11 +185,11 @@ public class SaveSaleOrBuyPrice {
              * */
             //找到该prdNo对应的ut1(就是存的副单位)//如果是空的并且前端传过来的副单位不是空的,就给他插入当前前端传过来的单位
             String ut1=cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
-            if(NotEmpty.empty(ut1)&&NotEmpty.notEmpty(unitFu)){
+            if(p.empty(ut1)&&p.notEmpty(unitFu)){
                 p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt1(副单位空)startInsert").sad(p.dexhx).gad());
                 //如果是空的,证明prdt表中没有该ut,需要插入该unit
                 Integer tt1= cnst.manyTabSerch.insertUnitToUt1OfPrdt(unitFu,prdNo);
-                if(NotEmpty.notEmpty(tt1)&&tt1>0){
+                if(p.notEmpty(tt1)&&tt1>0){
                     p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位成功").sad(p.dexhx).gad());
                 }else{
                     p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
@@ -197,7 +197,7 @@ public class SaveSaleOrBuyPrice {
             }
 //////////////////////////////////////////////////////////////////////////////////////////////
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST1~~prdNo=~~"+prdNo+"~~~~~~~~~~~~~~~~~~~~");
-            if(NotEmpty.empty(prdNo)){
+            if(p.empty(prdNo)){
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST2~~~~~~~~~~~~~~~~~~~~~~~~");
                 //空的单号,必须告诉前端终止
                 return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
@@ -258,7 +258,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setCusAre(p.space);
         /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //采购含运费入库
-        if(NotEmpty.notEmpty(gmp.get("haveTransUpBuy"))){
+        if(p.notEmpty(gmp.get("haveTransUpBuy"))){
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType(p.space);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
@@ -275,7 +275,7 @@ public class SaveSaleOrBuyPrice {
             }
         }
         //采购不含运费入库
-        if(NotEmpty.notEmpty( gmp.get("noTransUpBuy"))){
+        if(p.notEmpty( gmp.get("noTransUpBuy"))){
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("01");
             upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
@@ -340,7 +340,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setSupPrdNo(p.space);
         upDef.setCusAre(p.space);
         //销售含运费入库
-        if(NotEmpty.notEmpty( gmp.get("haveTransUpSale"))){
+        if(p.notEmpty( gmp.get("haveTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType(p.space);
@@ -360,7 +360,7 @@ public class SaveSaleOrBuyPrice {
             }
         }
         //销售不含运费入库
-        if(NotEmpty.notEmpty( gmp.get("noTransUpSale"))){
+        if(p.notEmpty( gmp.get("noTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~16~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
             //01代表不含运费//其他代表是含运费的
             upDef.setBilType("01");
