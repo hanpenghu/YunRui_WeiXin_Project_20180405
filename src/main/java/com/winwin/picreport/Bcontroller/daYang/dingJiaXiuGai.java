@@ -55,14 +55,21 @@ public class dingJiaXiuGai {
         try {
             for(Map<String,String>map:maps){
 
+                //把时间戳转换成一定格式的String
+                String sDdStr = p.sjc2StrDate(map.get(Cnst.sDd), p.d16);
+                sDdStr=p.empty(sDdStr)?p.space:sDdStr;
                 //其中dingJiaGuanLian(oleField)+bilType+sDd可以形成联合主键进行某条记录的修改
                 map.put(Cnst.dingJiaZhuJian,
                         map.get(Cnst.dingJiaGuanLian)
-                        +map.get(Cnst.bilType)+p.sjc2StrDate(map.get(Cnst.sDd),p.d16)
+                        +map.get(Cnst.bilType)+sDdStr
 //                        +p.dtoStr(p.sjc2Date(map.get(Cnst.sDd)),p.d16)
                 );
 
-                 p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(map.get(Cnst.dingJiaZhuJian))).sad(p.dexhx).gad());
+                 p.p(p.gp().sad(p.dexhx)
+                         .sad(p.strValeOf(
+                                 map.get(Cnst.dingJiaZhuJian)//需要打印的东西
+                         ))
+                         .sad(p.dexhx).gad());
 
                 Integer i=cnst.a001TongYongMapper.updateUpdef(map);
                 if(i==1){
@@ -81,7 +88,7 @@ public class dingJiaXiuGai {
         return Msg.gmg().setMsg("定价修改成功").setStatus("1");
     }
 
-    public static void main(String[]args) throws ParseException {
+    /*public static void main(String[]args) throws ParseException {
 
         Date parse = new SimpleDateFormat(p.d16).parse("2017-12-29 19:10:52.717");
 
@@ -90,7 +97,7 @@ public class dingJiaXiuGai {
 
         p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date("1514545852717"),p.d16)).sad(p.dexhx).gad());
              p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date(1514545852717L),p.d1)).sad(p.dexhx).gad());
-    }
+    }*/
 
 
 }
