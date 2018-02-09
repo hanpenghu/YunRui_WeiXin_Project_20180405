@@ -3,6 +3,7 @@ package com.winwin.picreport.Futils;
 //import com.alibaba.fastjson.JSONObject;
 //import org.junit.jupiter.api.Test;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -868,6 +869,33 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
 
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //时间戳变成str格式时间
+
+    public static String sjc2StrDate(String strSjc){
+       return p.dtoStr(p.sjc2Date(strSjc),p.d16);
+
+    }
+    public static String sjc2StrDate(String strSjc,String geShi){
+        return p.dtoStr(p.sjc2Date(strSjc),geShi);
+
+    }
+    public static String sjc2StrDate(Long longSjc){
+        return p.dtoStr(p.sjc2Date(longSjc),p.d16);
+
+    }
+
+    public static String sjc2StrDate(Long longSjc,String geShi){
+        return p.dtoStr(p.sjc2Date(longSjc),geShi);
+
+    }
+    /*public static void main(String[]args){
+        //1970-01-01 08:02:01.344得到这种形式
+         p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate("121344"))).sad(p.dexhx).gad());
+        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate(121344L))).sad(p.dexhx).gad());
+        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate(121344L,d16))).sad(p.dexhx).gad());
+    }*/
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *把所有是类中所有是null的字段,如果是String类型,变成""
      * */

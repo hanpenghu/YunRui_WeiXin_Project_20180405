@@ -58,8 +58,9 @@ public class dingJiaXiuGai {
                 //其中dingJiaGuanLian(oleField)+bilType+sDd可以形成联合主键进行某条记录的修改
                 map.put(Cnst.dingJiaZhuJian,
                         map.get(Cnst.dingJiaGuanLian)
-                        +map.get(Cnst.bilType)
-                        +p.dtoStr(p.sjc2Date(map.get(Cnst.sDd)),p.d16));
+                        +map.get(Cnst.bilType)+p.sjc2StrDate(map.get(Cnst.sDd),p.d16)
+//                        +p.dtoStr(p.sjc2Date(map.get(Cnst.sDd)),p.d16)
+                );
 
                  p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(map.get(Cnst.dingJiaZhuJian))).sad(p.dexhx).gad());
 
