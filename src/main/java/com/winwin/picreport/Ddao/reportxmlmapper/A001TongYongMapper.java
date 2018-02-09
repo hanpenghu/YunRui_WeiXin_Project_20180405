@@ -227,7 +227,7 @@ public interface A001TongYongMapper {
     @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b  where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 
-    //下面是定价修改模块
+    //下面是打样的销售定价和采购定价修改模块
    @Update({"update up_def set  " +
            "cur_id =#{curId}," +
            "qty=#{qty}, " +
