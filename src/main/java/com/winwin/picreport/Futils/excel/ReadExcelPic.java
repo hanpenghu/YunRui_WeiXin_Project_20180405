@@ -1,11 +1,8 @@
 package com.winwin.picreport.Futils.excel;
-
 import org.apache.poi.xssf.usermodel.*;
-
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-
 public class ReadExcelPic {
 
     public List<byte[]>ExceByteData(File file) throws IOException {

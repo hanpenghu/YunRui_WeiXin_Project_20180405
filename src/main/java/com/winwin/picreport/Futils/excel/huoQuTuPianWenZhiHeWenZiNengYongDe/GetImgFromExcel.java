@@ -53,7 +53,8 @@ public class GetImgFromExcel {
      * ,第二位是行号(从0))
      * 第三位是列号(从0)
      * */
-    public  List<Map<String, PictureData>> gPicZb(File file,List<Map<String, PictureData>> sheetList) throws IOException, InvalidFormatException {
+    public  List<Map<String, PictureData>> gPicZb(File file,List<Map<String, PictureData>> sheetList)
+            throws IOException, InvalidFormatException {
         // 创建流
         InputStream input = new FileInputStream(file);
 
@@ -100,7 +101,7 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~"
                 sheetIndexPicMap = this.getSheetPictrues03(i, (HSSFSheet) sheet, (HSSFWorkbook) wb);
             } else {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验xlsx~~~~~~~~~~~~~~~~~~~~~~~~");
-                sheetIndexPicMap = getSheetPictrues07(i, (XSSFSheet) sheet, (XSSFWorkbook) wb);
+                sheetIndexPicMap = this.getSheetPictrues07(i, (XSSFSheet) sheet, (XSSFWorkbook) wb);
             }
             // 将当前sheet图片map存入list
             sheetList.add(sheetIndexPicMap);
@@ -186,9 +187,10 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~"
      * @param workbook 工作簿对象
      * @return Map key:图片单元格索引（0_1_1）String，value:图片流PictureData
      */
-    public  Map<String, PictureData> getSheetPictrues07(int sheetNum,
-                                                              XSSFSheet sheet,
-                                                        XSSFWorkbook workbook) {
+    public  Map<String, PictureData>
+                            getSheetPictrues07(int sheetNum,
+                                                  XSSFSheet sheet,
+                                            XSSFWorkbook workbook) {
         Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
 
         for (POIXMLDocumentPart dr : sheet.getRelations()) {
@@ -203,6 +205,10 @@ System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验sheet~~~~~~~~~~~~~~~~~~~~~~~~"
                             + ctMarker.getRow() + "_" + ctMarker.getCol();
                     sheetIndexPicMap.put(picIndex, pic.getPictureData());
                 }
+            }else{
+                System.out.println("===================================");
+                System.out.println("您传入的excel可能是2007以下版本,而不能读取到图片");
+                System.out.println("===================================");
             }
         }
 
