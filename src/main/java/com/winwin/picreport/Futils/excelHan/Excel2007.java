@@ -220,7 +220,7 @@ public class Excel2007 {
         //变成2007以上版本的Sheet
         XSSFSheet sheet=(XSSFSheet)sheet0;
         //创建存储图片及其属性的list
-        List<ExcelPicTemplate> pics=new ArrayList();
+        List<ExcelPicTemplate> pics=new LinkedList<>();
         for (POIXMLDocumentPart dr : sheet.getRelations()) {
             //循环sheet里面的所有图片
             if (dr instanceof XSSFDrawing) {
