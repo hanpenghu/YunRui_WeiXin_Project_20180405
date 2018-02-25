@@ -15,7 +15,7 @@ import java.util.*;
  * */
 public class Excel2007 {
 
-    public static void main(String[]args) throws IOException {
+  /*  public static void main(String[]args) throws IOException {
         File file=new File("E:/1/000/云平台问题/A片标批量上传打样模板.xlsx");
 //        List<ExcelPicTemplate> excelPic = Excel2007.getExcelPic(file);
 //        System.out.println(excelPic);
@@ -24,7 +24,7 @@ public class Excel2007 {
         List<ExcelPicTxtTemplate> excelPicTxt = Excel2007.getExcelPicTxt(file);
         System.out.println(excelPicTxt);
 
-    }
+    }*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
