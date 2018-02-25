@@ -1340,12 +1340,31 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 
+    //所有的非空
     public static boolean allNotEmpty(Object[ ]obs){
         for(Object ob:obs){
             if(!notEmpty(ob)){return false;}
         }
         return true;
     }
+
+    //不是所有的是空的,有不为空的
+    public static boolean notAllEmpty(Object[ ]obs){
+        int i=0;
+        for(Object ob:obs){
+            if(notEmpty(ob)){i++;}
+        }
+        if(i>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    //测试notAllEmpty
+//    public static void main(String[]args){
+//           p.p(notAllEmpty(p.gp().setArl("1").setArl(null).getArl().toArray()));
+//    }
 
     public static boolean allEmpty(Object[ ]obs){
         for(int i=1;i<=obs.length;i++){
