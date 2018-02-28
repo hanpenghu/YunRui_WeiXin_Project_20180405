@@ -237,4 +237,7 @@ public interface A001TongYongMapper {
 
    @Select({"select top 1 idx_no from indx where name=#{idxName}"})
    String getIdxNoFromIdxName(@Param("idxName") String idxName);
+
+   @Select({"select top 1 prd_no from prdt where name=#{prdName}"})
+    String getPrdNoUsePrdName(@Param("prdName") String prdName);
 }

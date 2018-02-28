@@ -1,7 +1,7 @@
 package com.winwin.picreport;
 
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
-import com.winwin.picreport.Futils.ConstantOfMaLong;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.ConstantOfMaLong;
 import com.winwin.picreport.Futils.p;
 
 public class TestEnum {

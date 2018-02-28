@@ -1,4 +1,4 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Bcontroller.PicSearchPic.utils;
 
 public enum ConstantOfMaLong {
     //下面2个key和secret是艾班士公司在码隆的基础信息

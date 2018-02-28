@@ -213,6 +213,19 @@ public class A1ReportRestService {
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
         t.setCusOsNo(s.getOsNo());
         t.setOsId(OrderPreCnst.SO);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //在使用货号之前如果是空的,先流水一下货号
+        if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
+            String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
+            if(p.empty(prdNo)){
+                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+            }else{
+                s.setPrdNo(prdNo);
+            }
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
             msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,所以整个该批单号不能插入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());

@@ -5,7 +5,7 @@ import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
-import com.winwin.picreport.Futils.GetIWebClientOfMaLong;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
 
 import java.util.Date;
 public class TestExample {
@@ -30,13 +30,12 @@ public class TestExample {
          * get your accessKeyId & secretKey at https://console.productai.cn/main#/21/service_category_id=1
          */
 
-     /*   IProfile profile = new DefaultProfile();
+        /*IProfile profile = new DefaultProfile();
         //为了公司安全,写死在枚举enum里面
-        profile.setAccessKeyId((String)ConstantOfMaLong.accessKeyId.getValue());
+        profile.setAccessKeyId((String) ConstantOfMaLong.accessKeyId.getValue());
         profile.setSecretKey((String)ConstantOfMaLong.secretKey.getValue());
         profile.setVersion((String)ConstantOfMaLong.version.getValue());
-        profile.setGlobalLanguage(LanguageType.Chinese);
-*/
+        profile.setGlobalLanguage(LanguageType.Chinese);*/
         /**
          * step 2 - initialize your ProductAI client
          *

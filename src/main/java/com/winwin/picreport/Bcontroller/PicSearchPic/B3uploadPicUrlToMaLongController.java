@@ -3,7 +3,7 @@ import cn.productai.api.pai.entity.dataset.DataSetModifyResponse;
 import com.winwin.picreport.Edto.Base64Image;
 import com.winwin.picreport.Edto.PicUploadStatus;
 import com.winwin.picreport.Futils.DataSetSingleModifyExample1;
-import com.winwin.picreport.Futils.GetIWebClientOfMaLong;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
 import com.winwin.picreport.Futils.ImageAndBase64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
