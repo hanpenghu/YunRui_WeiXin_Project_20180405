@@ -7,6 +7,7 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import java.util.List;
 
 public class AmtAndAmtnAndTaxChongXinSuan {
+    //只要数量和单价不为0就行,其他的就能自动计算
     public static void f(Double amt,Double amtn,Double tax,Double qty,ShouDingDanFromExcel shouDingDanFromExcel){
         if(amt==0){
             try {
@@ -25,6 +26,10 @@ public class AmtAndAmtnAndTaxChongXinSuan {
     }
 
 
+
+    /**
+     *只要数量和单价不为0就行
+     * */
     public static void g(ShouDingDanFromExcel shouDingDanFromExcel,List<Msg> listmsg){
         String amtstr = shouDingDanFromExcel.getAmt();
         String amtnstr = shouDingDanFromExcel.getAmtn();
