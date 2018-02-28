@@ -107,6 +107,16 @@ public class D1DaYang2C {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper
                 .chanPinBianMaJianDangTiaoJianChaXun(p1);
+
+
+
+        p.p(p.zhifgf);
+        p.p(prdtSampList);
+        p.p(p.zhifgf);
+
+
+
+        p.p(prdtSampList);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
         f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
@@ -133,14 +143,14 @@ public class D1DaYang2C {
 
      上面四个字段可以区分采购和销售,
      比如当noTransUpBuy和haveTransUpBuy都为null的时候肯定是  销售的要保存
-     销售 传入方式
+     销售 传入方式//币别徐勇来拆,运费我来拆分
 
 
      {"uuid":"填入给前端的唯一标识","noTransUpSale":"没有运费的销售定价",
      "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unit":""}
 
 
-    采购传入方式
+    采购传入方式//币别徐勇来拆,运费我来拆分
 
 
      {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",

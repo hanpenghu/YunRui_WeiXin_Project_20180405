@@ -77,7 +77,9 @@ public class D1DaYangS {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             PrdtSamp0 prdtSampX = this.getP0(prdtSampX1);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //找到页面显示的产品名称的上级作为产品分类
+          //后期的分类存在了prdt_Samp表,所以下面代码不要了     2018_2_27   weekday(2)   16:24:10
+
+           /* //找到页面显示的产品名称的上级作为产品分类
             //先拿到产品名称的代号
             String idxNo = prdtSampX.getIdxNo();
             //通过idxno找到上级fenLeiNo
@@ -98,7 +100,7 @@ public class D1DaYangS {
                 }
             }else{
                  p.p(p.gp().sad(p.dexhx).sad("idxNo=").sad(idxNo).sad(p.dexhx).gad());
-            }
+            }*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             prdtSampList.add(prdtSampX);

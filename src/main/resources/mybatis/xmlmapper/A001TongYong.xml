@@ -8,6 +8,9 @@
                type="com.winwin.picreport.Edto.PrdtSamp0">
     </resultMap>
 
+
+
+
     <!--添加查询模块给所有返回信息
     //    //销售价格列表
 //    List<UpDefMy>upDefMyListSale=new ArrayList<>();
@@ -33,7 +36,13 @@
         unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
     </sql>-->
     <!-- 产品打样列表多条件查询的条件-->
+
+
+
     <sql id="productProofWithManyCondition">
+
+
+
         (
                 insertDate
                 BETWEEN
@@ -82,59 +91,59 @@
                     </choose>
         )
         AND
-                        --产品名称
-                        idx_Name LIKE
+                        --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
+                        isnull(idx_Name,'') LIKE
                         <choose>
                             <when test="idxName != null and idxName != ''">
                                 ('%' + (#{idxName}) + '%')
                             </when>
                             <otherwise>
-                                idx_Name
+                                isnull(idx_Name,'')
                             </otherwise>
                         </choose>
         AND
-            ---产品分类通过fen_lei_name查询
-                  fen_lei_name LIKE
+            ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
+                  isnull(fen_lei_name,'') LIKE
                         <choose>
                             <when test=" fenLeiName != null and fenLeiName != '' ">
                                 ('%'+( #{fenLeiName})+ '%')
                             </when>
                             <otherwise>
-                                fen_lei_name
+                                isnull(fen_lei_name,'')
                             </otherwise>
                         </choose>
         AND
         --产品编码
-                    prd_Code LIKE
+                    isnull(prd_Code,'') LIKE
                     <choose>
                         <when test=" prdCode != null and prdCode != '' ">
                             ('%'+( #{prdCode}) +'%')
                         </when>
                         <otherwise>
-                            prd_Code
+                            isnull(prd_Code,'')
                         </otherwise>
                     </choose>
 
         AND
                     --产品负责人
-                    sal_No LIKE
+                    isnull(sal_No,'') LIKE
                     <choose>
                         <when test="salNo != null and salNo != '' ">
                             ('%' +( #{salNo}) + '%')
                         </when>
                         <otherwise>
-                            sal_No
+                            isnull(sal_No,'')
                         </otherwise>
                     </choose>
         AND
         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认
-        isConfirm=
+        isnull(isConfirm,9)=
         <choose>
             <when test=" isconfirm != null">
                 #{isconfirm}
             </when>
             <otherwise>
-                isConfirm
+                isnull(isConfirm,9)
             </otherwise>
         </choose>
     </sql>

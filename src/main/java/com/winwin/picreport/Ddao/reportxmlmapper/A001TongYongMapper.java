@@ -220,7 +220,9 @@ public interface A001TongYongMapper {
    Integer countIfSapsoExist(Sapso b);
 
    //通过产品名称中的idxNo找到页面的分类名称fenLeiNo和FenLeiName
-    @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b  where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
+   //后来这个方法暂时没用了
+    @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b " +
+            " where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 
     //下面是打样的销售定价和采购定价修改模块
@@ -232,4 +234,7 @@ public interface A001TongYongMapper {
            "rem =#{remFront} " +
            "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+CONVERT(varchar(100),s_dd,25)"})
    Integer updateUpdef(Map<String, String> map101);
+
+   @Select({"select top 1 idx_no from indx where name=#{idxName}"})
+   String getIdxNoFromIdxName(@Param("idxName") String idxName);
 }

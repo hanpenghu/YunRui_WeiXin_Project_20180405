@@ -95,9 +95,30 @@ public class D1DaYangServiceDataSaveByExcel {
             if(NotEmpty.empty(ps.getPrdNo())){
                 try {
                     PrdtSamp0 p0=new PrdtSamp0();
+//                    p0.setPrdCode(ps.getPrdCode());
                     BeanUtils.copyProperties(ps,p0);
+
+                    p.p("---------------1111111111--------------------");
+                    p.p(p0.getPrdCode());
+                    p.p(p0.getPrdNo());
+                    p.p(p0);
+                    p.p("---------------1111111111--------------------");
+
                     cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+
+                    p.p("---------------22222222222222--------------------");
+                    p.p(p0.getPrdCode());
+                    p.p(p0.getPrdNo());
+                    p.p(p0);
+                    p.p("---------------22222222222222--------------------");
+
                     ps.setPrdNo(p0.getPrdNo());
+
+                    p.p("---------------33333333333--------------------");
+                    p.p(ps.getPrdCode());
+                    p.p(ps.getPrdNo());
+                    p.p(ps);
+                    p.p("---------------33333333333--------------------");
                 } catch (Exception e) {
                     throw new RuntimeException(p.gp().sad(p.dexhx)
                             .sad("excel打样的时候,生成流水号的时候产生异常,导致一条数据也没有打样成功")
@@ -221,10 +242,24 @@ public class D1DaYangServiceDataSaveByExcel {
                 prdtSamp.setId(UUID.randomUUID().toString());
                 prdtSamp.setCusName((String)map.get(i).get(1));
 
-                //产品分类
-                prdtSamp.setIdxNo((String)map.get(i).get(2));
-                //产品名称
+//                //产品分类
+//                prdtSamp.setIdxNo((String)map.get(i).get(2));
+                //excel的产品名称就是产品名称,
                 prdtSamp.setIdxName((String)map.get(i).get(3));
+
+               String idxNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(prdtSamp.getIdxName());
+
+                prdtSamp.setIdxNo(idxNo);
+
+
+
+                //excel的产品名称就是产品分类就是产品分类
+                prdtSamp.setFenLeiName((String)map.get(i).get(2));
+
+                String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(prdtSamp.getFenLeiName());
+
+                prdtSamp.setFenLeiNo(fenLeiNo);
+
                 prdtSamp.setSalName((String)map.get(i).get(4));
                 //第五个是图片
                 prdtSamp.setPrdCode((String)map.get(i).get(6));

@@ -41,7 +41,7 @@ public class GPrdNo {
         //专门为了价格保存做的额,因为主表插入的时候会插入prd_no,但是价格保存不会动主表,动的up_def
         //为了对不保存价格的时候没有prdNo,用这里的流水,但是流完后没有加入到打样主表,prdt_samp,我们再加入一次
 
-        prdtNo=prdtSamp.getPrdNo();
+       /* prdtNo=prdtSamp.getPrdNo();
         String uuid = prdtSamp.getId();
         //放入prdt_samp
         PrdtSamp pp=new PrdtSamp();
@@ -50,7 +50,7 @@ public class GPrdNo {
         if(cnst.manyTabSerch.countByIdOfprdtSamp(uuid)>0){
             //有记录在prdtSamp模块了再更新不迟//没有该id的记录的话证明不是采购定价或者销售定价里调用这个模块,不必更新
             cnst.prdtSampMapper.updateByPrimaryKey(pp);
-        }
+        }*/
 
 
     }
@@ -61,8 +61,8 @@ public class GPrdNo {
     @Transactional
     public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp0 prdtSamp){
         synchronized (this) {
-            //得到中类代号
-            String indx1=prdtSamp.getIdxNo();
+            //得到中类代号,fenLeiNo是最小范围的
+            String indx1=prdtSamp.getFenLeiNo();
             //在prdt里面找到相同的indx1的prdNo流水最大的那个
 //            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~得到最大prdNo递归之前实验~~~~~~~~~~~~~~~~~~~~~~~~");
