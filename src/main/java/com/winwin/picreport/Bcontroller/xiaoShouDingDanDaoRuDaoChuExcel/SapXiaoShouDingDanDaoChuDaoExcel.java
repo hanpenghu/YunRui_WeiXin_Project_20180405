@@ -77,7 +77,8 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                         .contains(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa())){//是通过excel导入的
 
                     //此时拆行,
-                    int sapsoBaoHanPssBiaoShuLiang=0;//统计包sapso里面包含几个salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()
+                    //统计包sapso里面包含几个salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()
+                    int sapsoBaoHanPssBiaoShuLiang=0;
 
                     List<Sapso>sapsoYongYuChai1Ge_salePrdDetailTab1_de_List=new ArrayList<>();
                     for(Sapso sapso:listSapsoWeiChaiHang){
@@ -98,9 +99,12 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                                 salePrdDetailTab1.setRealWidth(sapso.getRealwidth());
                                 salePrdDetailTab1.setRealLength(sapso.getReallength());
                                 salePrdDetailTab1.setAmt(String.valueOf(Double.parseDouble(salePrdDetailTab1.getQty())*Double.parseDouble(salePrdDetailTab1.getUp())));
-                                salePrdDetailTab1
-                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso
-                                                (salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
+//                                salePrdDetailTab1.setEbNo
+//                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
+
+                                salePrdDetailTab1.setEbNo
+                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
                                 break;
                             }
@@ -123,9 +127,9 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
                             if(sapso.getQtyDouble()-salePrdDetailTab1.getQtyDouble()>=0){
 //
-                                salePrdDetailTab1
-                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso
-                                                (salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
+//                                salePrdDetailTab1
+//                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso
+//                                                (salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
                                 //此时用自己的数量,不拆行
                                 salePrdDetailTab1.setSapph(sapso.getSapph());
                                 salePrdDetailTab1.setCaiGouNo(sapso.getCaigouno());
@@ -136,11 +140,13 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                                 salePrdDetailTab1.setRealLength(sapso.getReallength());
                                 salePrdDetailTab1.setAmt(String.valueOf(Double.parseDouble(salePrdDetailTab1.getQty())*Double.parseDouble(salePrdDetailTab1.getUp())));
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
+                                salePrdDetailTab1
+                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
                                 break;//此时不再拆行
                             }else{
-                                salePrdDetailTab1
-                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso
-                                                (salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
+//                                salePrdDetailTab1
+//                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso
+//                                                (salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
                                 salePrdDetailTab1.setSapph(sapso.getSapph());
                                 salePrdDetailTab1.setCaiGouNo(sapso.getCaigouno());
                                 salePrdDetailTab1.setSaphh(sapso.getSaphh());
@@ -152,6 +158,8 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                                 double chaiHangHouQtyDouble = salePrdDetailTab1.getQtyDouble() - sapso.getQtyDouble();
                                 salePrdDetailTab1.setQty(String.valueOf(sapso.getQty()));
                                 salePrdDetailTab1.setAmt(String.valueOf(sapso.getQty().doubleValue()*Double.parseDouble(salePrdDetailTab1.getUp())));
+                                salePrdDetailTab1
+                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
 
                                 //改变salePrdDetailTab1的数量,准备下次拆行

@@ -32,6 +32,7 @@ public class SalePrdDetailTab1 {//导出excel用
     private String realWidth="";//实际幅宽  来自sapsoN
     private String realLength="";//实际长度来自sapso
     private String danHao_HuoHao_ChengFenDaiMa="";
+    private String danHao_HuoHao_ChengFenDaiMa_saphh="";
     private String chengFenDaiMa="";
     private String ebNo="";
 
@@ -56,6 +57,11 @@ public class SalePrdDetailTab1 {//导出excel用
     public String getDanHao_HuoHao_ChengFenDaiMa() {
         this.danHao_HuoHao_ChengFenDaiMa=this.cusOsNo.trim()+this.prdNo.trim()+this.chengFenDaiMa.trim();
         return danHao_HuoHao_ChengFenDaiMa;
+    }
+
+    public String getDanHao_HuoHao_ChengFenDaiMa_saphh() {
+        this.danHao_HuoHao_ChengFenDaiMa_saphh=this.cusOsNo.trim()+this.prdNo.trim()+this.chengFenDaiMa.trim()+this.saphh.trim();
+        return danHao_HuoHao_ChengFenDaiMa_saphh;
     }
 
     public SalePrdDetailTab1 setDanHao_HuoHao_ChengFenDaiMa(String danHao_HuoHao_ChengFenDaiMa) {
