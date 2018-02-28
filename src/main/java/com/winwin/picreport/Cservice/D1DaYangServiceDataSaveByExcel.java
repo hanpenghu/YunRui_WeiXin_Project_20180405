@@ -1,4 +1,5 @@
 package com.winwin.picreport.Cservice;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
@@ -93,7 +94,7 @@ public class D1DaYangServiceDataSaveByExcel {
 ////////////////////////货号流水模块//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
            //如果没有货号,就流水一个
             if(NotEmpty.empty(ps.getPrdNo())){
-                try {
+//                try {
                     PrdtSamp0 p0=new PrdtSamp0();
 //                    p0.setPrdCode(ps.getPrdCode());
                     BeanUtils.copyProperties(ps,p0);
@@ -105,6 +106,21 @@ public class D1DaYangServiceDataSaveByExcel {
                     p.p("---------------1111111111--------------------");
 
                     cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+
+                    //如果流水不到prdNo,就抛出异常,最后在controller层捕捉到具体信息
+                    if(p.empty(p0.getPrdNo())){
+                        String s=p.gp().sad("产品编码为：《")
+                                .sad(p0.getPrdCode())
+                                .sad("》的产品中类《")
+                                .sad(p0.getFenLeiName())
+                                .sad("》无法匹配,所有数据未导入").gad();
+                        Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
+                        p.p("-------------------------------------------------------");
+                        p.p(s);
+                        p.p("-------------------------------------------------------");
+                        throw new RuntimeException(JSON.toJSONString(msg));
+                    }
+
 
                     p.p("---------------22222222222222--------------------");
                     p.p(p0.getPrdCode());
@@ -119,15 +135,15 @@ public class D1DaYangServiceDataSaveByExcel {
                     p.p(ps.getPrdNo());
                     p.p(ps);
                     p.p("---------------33333333333--------------------");
-                } catch (Exception e) {
-                    throw new RuntimeException(p.gp().sad(p.dexhx)
-                            .sad("excel打样的时候,生成流水号的时候产生异常,导致一条数据也没有打样成功")
-                            .sad(p.dexhx)
-                            .sad("excel da yang de shi hou ,sheng cheng liu ")
-                            .sad("shui hao de shi hou chan sheng mistake ,")
-                            .sad(p.dexhx)
-                            .gad());
-                }
+//                } catch (Exception e) {
+//                    throw new RuntimeException(p.gp().sad(p.dexhx)
+//                            .sad("excel打样的时候,生成流水号的时候产生异常,导致一条数据也没有打样成功")
+//                            .sad(p.dexhx)
+//                            .sad("excel da yang de shi hou ,sheng cheng liu ")
+//                            .sad("shui hao de shi hou chan sheng mistake ,")
+//                            .sad(p.dexhx)
+//                            .gad());
+//                }
             }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //定义imageurl,准备放入数据库
@@ -253,7 +269,7 @@ public class D1DaYangServiceDataSaveByExcel {
 
 
 
-                //excel的产品名称就是产品分类就是产品分类
+                //excel的产品分类就是产品分类
                 prdtSamp.setFenLeiName((String)map.get(i).get(2));
 
                 String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(prdtSamp.getFenLeiName());

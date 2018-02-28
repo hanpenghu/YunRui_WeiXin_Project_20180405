@@ -203,17 +203,20 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg> dataSaveByExcel(@RequestParam(value = p.excel, required = false)
-                                      MultipartFile excel) {
+    List<Msg> dataSaveByExcel(@RequestParam(value = p.excel, required = false) MultipartFile excel) {
         //上传到指定目录
         try {
            return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             try {
+                p.p("-------------------------------------------------------");
+                p.p(e.getMessage());
+                p.p("-------------------------------------------------------");
                 return mg.gm(JSON.parseObject(e.getMessage(),Msg.class));
             } catch (Exception e1) {
                 e1.printStackTrace();
+
                 return mg.gm(Msg.gmg()
                         .setStatus(msgCnst.failSaveStatus.getValue())
                         .setMsg(msgCnst.failSave.getValue()));
