@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.PicSearchPic;
 import cn.productai.api.pai.entity.dataset.DataSetModifyResponse;
 import com.winwin.picreport.Edto.Base64Image;
 import com.winwin.picreport.Edto.PicUploadStatus;

@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller;
+package com.winwin.picreport.Bcontroller.PicSearchPic;
 
 import cn.productai.api.example.TestExample;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
@@ -51,7 +51,9 @@ public class B2JieShouQianDuanTuPianBase64Controller {
                     System.out.println(dest.getAbsolutePath());
                     //上传到指定目录
                     ImageAndBase64.GenerateImage(base64Image.getBase64str(),dest);
-                    ImageSearchResponse imageSearchResponse = new TestExample().fullFlowExample(fileUrl, tupianserviceId, tupianFanHuiCount);
+                    ImageSearchResponse imageSearchResponse =
+                            new TestExample().fullFlowExample
+                                    (fileUrl, tupianserviceId, tupianFanHuiCount);
                     for(SearchResult searchResult:imageSearchResponse.getResults()){
                         list.add(searchResult);
                     }

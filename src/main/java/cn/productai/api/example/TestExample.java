@@ -1,14 +1,10 @@
 package cn.productai.api.example;
-import cn.productai.api.core.DefaultProductAIClient;
-import cn.productai.api.core.DefaultProfile;
-import cn.productai.api.core.IProfile;
 import cn.productai.api.core.IWebClient;
 import cn.productai.api.core.enums.LanguageType;
 import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
-import com.winwin.picreport.Futils.ConstantOfMaLong;
 import com.winwin.picreport.Futils.GetIWebClientOfMaLong;
 
 import java.util.Date;
@@ -17,7 +13,9 @@ public class TestExample {
     public static void main(String[]args){
         Date date1=new Date();
        long time1= date1.getTime();
-        new TestExample().fullFlowExample("http://116.62.224.172:8070/lzpic/1/WW-VSUP5950-858.jpeg","yppse9v1",10);
+        new TestExample().fullFlowExample
+                ("http://116.62.224.172:8070/lzpic/1/WW-VSUP5950-858.jpeg",
+                        "yppse9v1",10);
         Date date2=new Date();
         long time2 = date2.getTime();
         long time3=time2-time1;
