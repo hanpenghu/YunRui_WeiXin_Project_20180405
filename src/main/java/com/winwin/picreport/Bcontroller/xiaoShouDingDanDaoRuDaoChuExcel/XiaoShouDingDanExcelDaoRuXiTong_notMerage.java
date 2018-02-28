@@ -1,5 +1,6 @@
 package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
@@ -34,9 +35,9 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
     private Cnst cnst;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO//注释掉暂时不用
-/*@RequestMapping(value= InterFaceCnst.upLoadExcelDontMerageOfSaleOrder,
+@RequestMapping(value= InterFaceCnst.upLoadExcelDontMerageOfSaleOrder,
         method= RequestMethod.POST,
-        produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})*/
+        produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 

@@ -118,14 +118,8 @@ public interface ManyTabSerch {
 
 
 
-    @Select("SELECT ebNo FROM SAPSO WHERE \n" +
-            "\t\tRTRIM(LTRIM(ISNULL(osno,'')))\n" +
-            "\t\t+RTRIM(LTRIM(ISNULL(prdno,'')))\n" +
-            "\t\t+RTRIM(LTRIM(ISNULL(chengFenDaiMa,'')))\n" +
-            "\t\t+RTRIM(LTRIM(ISNULL(saphh,'')))\n" +
-            "         =#{danHao_huoHao_chengFenDaiMa_saphh}\"")
-    List<String> selectEbNoFromSapso(@Param("danHao_huoHao_chengFenDaiMa_saphh")
-                                             String danHao_huoHao_chengFenDaiMa_saphh);
+    @Select({"SELECT ebNo FROM SAPSO WHERE RTRIM(LTRIM(ISNULL(osno,'')))+RTRIM(LTRIM(ISNULL(prdno,'')))+RTRIM(LTRIM(ISNULL(chengFenDaiMa,'')))+RTRIM(LTRIM(ISNULL(saphh,'')))=#{s}"})
+    List<String> selectEbNoFromSapso(@Param("s") String s);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx")

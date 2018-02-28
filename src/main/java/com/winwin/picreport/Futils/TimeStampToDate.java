@@ -9,17 +9,15 @@ public class TimeStampToDate {
 /**
  * lg是毫秒
  */
-    public static Date timeStampToDate(long lg){
+    public static Date timeStampToDate(long lg) throws ParseException {
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long time=lg;
         String d = format.format(time);
         Date date= null;
-        try {
-            date = format.parse(d);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+        date = format.parse(d);
+
 
         return date;
     }

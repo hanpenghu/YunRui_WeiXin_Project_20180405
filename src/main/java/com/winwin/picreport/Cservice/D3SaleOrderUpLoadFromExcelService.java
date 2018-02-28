@@ -47,6 +47,23 @@ public class D3SaleOrderUpLoadFromExcelService {
 
         String osDd=s.getOsDd();
         String estDd=s.getEstDd();
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //在使用货号之前如果是空的,先流水一下货号
+        if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
+            String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
+            if(p.empty(prdNo)){
+                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+            }else{
+                s.setPrdNo(prdNo);
+            }
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
        /* System.out.println("没有转换前");
         System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
         System.out.println("没有转换前");*/
@@ -58,6 +75,7 @@ public class D3SaleOrderUpLoadFromExcelService {
             estDd=null;//2999-12-31
 //            estDd="32503564800000";
         }
+
         //////////////////////////////////////
         m.setOsNo(s.getOsNo());
         m.setRem(s.getRemhead());
@@ -83,10 +101,17 @@ public class D3SaleOrderUpLoadFromExcelService {
         m.setPayMth("1");
         m.setPayDays((short) 1);
         m.setChkDays((short) 30);
+
         if(osDd==null) {
             m.setOsDd(null);
         }else{
-            m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            try {
+                m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单非sap导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                throw new RuntimeException("销售订单非sap导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+
+            }
         }
         //下面2017-10-24老郑让我加的
         m.setZhangId("3");
@@ -136,13 +161,24 @@ public class D3SaleOrderUpLoadFromExcelService {
         if(estDd==null){
             t.setEstDd(null);
         }else{
-            t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+            try {
+                t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单非sap导入的时候《预交日期》不是有效的时间戳estDd:《"+estDd+"》");
+                throw new RuntimeException("销售订单非sap导入的时候《预交日期》不是有效的时间戳estDd:《"+estDd+"》");
+
+            }
         }
 
         if(osDd==null){
             t.setOsDd(null);
         }else{
-            t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            try {
+                t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+            }
         }
 
         //t.setItm();

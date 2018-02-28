@@ -154,6 +154,20 @@ public class A1ReportRestService {
 
         String osDd = s.getOsDd();
         String estDd = s.getEstDd();
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //在使用货号之前如果是空的,先流水一下货号
+        if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
+            String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
+            if(p.empty(prdNo)){
+                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+            }else{
+                s.setPrdNo(prdNo);
+            }
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
        /* System.out.println("没有转换前");
         System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
         System.out.println("没有转换前");*/
@@ -193,7 +207,14 @@ public class A1ReportRestService {
         if (osDd == null) {
             m.setOsDd(null);
         } else {
-            m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            //"销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》"
+            try {
+                m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+            }
+
         }
         //下面2017-10-24老郑让我加的
         m.setZhangId("3");
@@ -213,19 +234,7 @@ public class A1ReportRestService {
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
         t.setCusOsNo(s.getOsNo());
         t.setOsId(OrderPreCnst.SO);
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //在使用货号之前如果是空的,先流水一下货号
-        if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
-            String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
-            if(p.empty(prdNo)){
-                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
-                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
-            }else{
-                s.setPrdNo(prdNo);
-            }
-        }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
             msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,所以整个该批单号不能插入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
@@ -259,13 +268,24 @@ public class A1ReportRestService {
         if (estDd == null) {
             t.setEstDd(null);
         } else {
-            t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+            try {
+                t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
+                throw new RuntimeException("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
+            }
         }
 
         if (osDd == null) {
             t.setOsDd(null);
         } else {
-            t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            try {
+                t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+            } catch (Exception e) {
+                msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+            }
+
         }
 
         //t.setItm();
