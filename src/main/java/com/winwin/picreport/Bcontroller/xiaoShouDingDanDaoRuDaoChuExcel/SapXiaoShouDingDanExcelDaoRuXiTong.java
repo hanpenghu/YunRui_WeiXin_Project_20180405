@@ -67,14 +67,13 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
         if(size ==1){
             //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
-
             p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
         }else{
+            String s="excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入";
             //此时证明有2个以上不同单号,需要提示 客户,同一个excel中必须只能有一个osno
-            listmsg.addAll (new MessageGenerate()
-                    .generateMessage("excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！"));
+            listmsg.addAll (new MessageGenerate().generateMessage(s));
 
-            throw new RuntimeException("excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！");
+            throw new RuntimeException(s);
 
         }
        /* try {

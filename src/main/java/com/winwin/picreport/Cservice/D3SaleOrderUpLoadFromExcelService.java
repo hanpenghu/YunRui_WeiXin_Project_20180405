@@ -53,8 +53,11 @@ public class D3SaleOrderUpLoadFromExcelService {
         if (p.empty(s.getPrdNo())) {
             String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
             if(p.empty(prdNo)){
-                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
-                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() +
+                        "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()
+                        +"在数据库也找不到货号,所以整个该批单号不能插入！");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }else{
                 s.setPrdNo(prdNo);
             }
@@ -109,7 +112,8 @@ public class D3SaleOrderUpLoadFromExcelService {
                 m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单非sap导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
-                throw new RuntimeException("销售订单非sap导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
 
             }
         }
@@ -133,7 +137,7 @@ public class D3SaleOrderUpLoadFromExcelService {
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
             listmsg.add(msg);
             //这个功能是迎合老郑说的:货品代号（品号） PRDT.PRD_NO里不存在提示整单不能导入
-            throw new RuntimeException("订单号为:~~~~"+s.getOsNo()+"~~~~的这一批货品里面有货号为空,所以整个该单号不能插入！");
+            throw new RuntimeException(msg.getMsg());
         }
         t.setPrdNo(s.getPrdNo());
         t.setPrdName(s.getPrdName());
@@ -152,7 +156,7 @@ public class D3SaleOrderUpLoadFromExcelService {
             msg.setMsg("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题(单价是0或者没有单价),导致该订单号的所有记录都未能成功录入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
             listmsg.add(msg);
-            throw new RuntimeException("订单号osNo="+s.getOsNo()+"的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
+            throw new RuntimeException(msg.getMsg());
         }
         t.setUp(new BigDecimal(s.getUp()));
 //        t.setWh("0000");
@@ -165,7 +169,8 @@ public class D3SaleOrderUpLoadFromExcelService {
                 t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单非sap导入的时候《预交日期》不是有效的时间戳estDd:《"+estDd+"》");
-                throw new RuntimeException("销售订单非sap导入的时候《预交日期》不是有效的时间戳estDd:《"+estDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
 
             }
         }
@@ -177,7 +182,8 @@ public class D3SaleOrderUpLoadFromExcelService {
                 t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
-                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }
         }
 
@@ -278,10 +284,12 @@ public class D3SaleOrderUpLoadFromExcelService {
         } catch (Exception e) {
             Msg msg=new Msg();
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
-            msg.setMsg("--订单号osNo为--osNo=“"+m.getOsNo()+"”--的这批数据(整个EXcel的数据)一个也没有插入--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
+            msg.setMsg("--订单号osNo为--osNo=“"+m.getOsNo()+
+                    "”--的这批数据(整个EXcel的数据)一个也没有插入--因为在插入时发生了不可预料的异常," +
+                    "可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
             listmsg.add(msg);
-            e.printStackTrace();
-            throw new RuntimeException(e);
+//            e.printStackTrace();
+            throw new RuntimeException(msg.getMsg());
         }
 
 
