@@ -5,6 +5,7 @@ import cn.productai.api.core.enums.LanguageType;
 import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.dataset.DataSetModifyResponse;
 import cn.productai.api.pai.entity.dataset.DataSetSingleAddByImageUrlRequest;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Futils.p;
 
 /**
@@ -15,8 +16,11 @@ import com.winwin.picreport.Futils.p;
 public class DataSetSingleModifyExample1 {
 
     public static void main(String[]args){
-
-//        g().run();
+        IWebClient client = GetIWebClientOfMaLong.getIWebClient();
+        DataSetModifyResponse res= g().run(client, Cnst.image_set_idOfWinWinPrdtSamp, Cnst.testPicUrl);
+        p.p("-------------------------------------------------------");
+        p.p(JSON.toJSONString(res));
+        p.p("-------------------------------------------------------");
     }
 
 
