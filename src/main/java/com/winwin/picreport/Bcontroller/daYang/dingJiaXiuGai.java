@@ -59,11 +59,7 @@ public class dingJiaXiuGai {
                 String sDdStr = p.sjc2StrDate(map.get(Cnst.sDd), p.d16);
                 sDdStr=p.empty(sDdStr)?p.space:sDdStr;
                 //其中dingJiaGuanLian(oleField)+bilType+sDd可以形成联合主键进行某条记录的修改
-                map.put(Cnst.dingJiaZhuJian,
-                        map.get(Cnst.dingJiaGuanLian)
-                        +map.get(Cnst.bilType)+sDdStr
-//                        +p.dtoStr(p.sjc2Date(map.get(Cnst.sDd)),p.d16)
-                );
+                map.put(Cnst.dingJiaZhuJian,map.get(Cnst.dingJiaGuanLian)+map.get(Cnst.bilType)+sDdStr);
 
                  p.p(p.gp().sad(p.dexhx)
                          .sad(p.strValeOf(

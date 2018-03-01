@@ -14,7 +14,15 @@ import com.winwin.picreport.Futils.p;
  */
 public class DataSetSingleModifyExample1 {
 
+    public static void main(String[]args){
 
+//        g().run();
+    }
+
+
+    public static DataSetSingleModifyExample1 g(){
+        return new DataSetSingleModifyExample1();
+    }
     public DataSetModifyResponse  run(IWebClient client,String image_set_id,String imageUrl) {
 
         p.p("==>  Demo - 向数据集增加单条数据  <==");
