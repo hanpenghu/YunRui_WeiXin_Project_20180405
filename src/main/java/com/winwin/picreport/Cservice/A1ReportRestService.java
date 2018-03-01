@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+/**
+ *sap销售订单导入
+ * */
 @Service("a1")
 public class A1ReportRestService {
     @Autowired
@@ -328,7 +330,8 @@ public class A1ReportRestService {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert
-    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt, ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
+    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
+     ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
 //    try {
         //注册商品到商品库//不能再自动注册了,老郑说了,自动注册的不行,因为客户可能手动输入输错了,所以,我们就不再自动插入prdt表来注册商品
            /* PrdtExample prdtExample=new PrdtExample();
@@ -391,17 +394,17 @@ public class A1ReportRestService {
             t.setItm(iii+1);
             t.setEstItm(t.getItm());
 
-            TfPosExample tfe1 = new TfPosExample();
-            tfe1.createCriteria().andOsNoEqualTo(t.getOsNo())
-                    .andQtyEqualTo(t.getQty())
-                    .andPrdNoEqualTo(t.getPrdNo())
-                    .andCusOsNoEqualTo(t.getOsNo())
-                    .andPrdNameEqualTo(t.getPrdName())
-                    .andAmtnEqualTo(t.getAmtn())
-                    .andTaxEqualTo(t.getTax())
-                    .andAmtEqualTo(t.getAmt())
-                    .andTaxRtoEqualTo(t.getTaxRto())
-                    .andRemEqualTo(t.getRem());
+//            TfPosExample tfe1 = new TfPosExample();
+//            tfe1.createCriteria().andOsNoEqualTo(t.getOsNo())
+//                    .andQtyEqualTo(t.getQty())
+//                    .andPrdNoEqualTo(t.getPrdNo())
+//                    .andCusOsNoEqualTo(t.getOsNo())
+//                    .andPrdNameEqualTo(t.getPrdName())
+//                    .andAmtnEqualTo(t.getAmtn())
+//                    .andTaxEqualTo(t.getTax())
+//                    .andAmtEqualTo(t.getAmt())
+//                    .andTaxRtoEqualTo(t.getTaxRto())
+//                    .andRemEqualTo(t.getRem());
 //            if (cnst.tfPosMapper.countByExample(tfe1) == 0) {
 //                /**
 //                 *插入tf
@@ -413,17 +416,17 @@ public class A1ReportRestService {
 //            }
 
             cnst.tfPosMapper.insert(t);
-            TfPosZExample tfze = new TfPosZExample();
-            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
+//            TfPosZExample tfze = new TfPosZExample();
+//            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
             //注意:tf_pos和tf_pos_z必须共用itm才对//注意iii是从0开始索引的 itm是从1  所以要加1
             tz.setItm(t.getItm());
-            TfPosZExample tfze1 = new TfPosZExample();
-            tfze1.createCriteria()
-                    .andOsNoEqualTo(tz.getOsNo())
-                    .andSapwlmEqualTo(tz.getSapwlm())
-                    .andSapphEqualTo(tz.getSapph())
-                    .andCfdmEqualTo(tz.getCfdm())
-                    .andOsIdEqualTo(OrderPreCnst.SO);
+//            TfPosZExample tfze1 = new TfPosZExample();
+//            tfze1.createCriteria()
+//                    .andOsNoEqualTo(tz.getOsNo())
+//                    .andSapwlmEqualTo(tz.getSapwlm())
+//                    .andSapphEqualTo(tz.getSapph())
+//                    .andCfdmEqualTo(tz.getCfdm())
+//                    .andOsIdEqualTo(OrderPreCnst.SO);
 //            if (cnst.tfPosZMapper.countByExample(tfze1) == 0) {
 //                /**
 //                 *插入tfz

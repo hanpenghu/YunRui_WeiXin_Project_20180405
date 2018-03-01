@@ -16,6 +16,10 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ *非sap销售订单导入
+ * */
 @Service
 @Transactional
 public class D3SaleOrderUpLoadFromExcelService {
@@ -30,14 +34,29 @@ public class D3SaleOrderUpLoadFromExcelService {
         //收集同一货号的list       samePrdNoList
 //        List<List<ShouDingDanFromExcel>>samePrdNoList = listMap.get("samePrdNoList");
         //插入sunlike主表
-        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-            AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel,listmsg);//在类内部进行判断计算各种金额
-            this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
+//        for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
+//            AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel,listmsg);//在类内部进行判断计算各种金额
+//            this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel,listmsg);
+//        }
+
+
+
+        //插入sunlike主表
+
+        for(int iii=0;iii<list3.size();iii++){
+            ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
+            AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
+            //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
+            synchronized (this) {
+                this.saveOneShouDingDanFromExcelToTable
+                        (shouDingDanFromExcel, listmsg,iii);
+            }
         }
+
     }
 
     @Transactional
-    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg){
+    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg,int iii){
         this.prdNoGet(s);
         Msg msg=new Msg();
         MfPosWithBLOBs m=new MfPosWithBLOBs();
@@ -70,11 +89,11 @@ public class D3SaleOrderUpLoadFromExcelService {
        /* System.out.println("没有转换前");
         System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
         System.out.println("没有转换前");*/
-        if(osDd==null||"".equals(osDd)){
+        if(p.empty(osDd)){
 //            osDd="32503564800000";//2999-12-31
             osDd=null;
         }
-        if(estDd==null||"".equals(estDd)){
+        if(p.empty(estDd)){
             estDd=null;//2999-12-31
 //            estDd="32503564800000";
         }
@@ -206,7 +225,7 @@ public class D3SaleOrderUpLoadFromExcelService {
         System.out.println("===osDd===="+t.getOsDd()+"=======estDd===="+t.getEstDd()+"=============");
         System.out.println("转换后");*/
 
-        saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt,listmsg);
+        this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt,listmsg,iii);
 ///////////////////////////////////////////
     }
 
@@ -227,7 +246,7 @@ public class D3SaleOrderUpLoadFromExcelService {
                                                          TfPosWithBLOBs t,
                                                          TfPosZ tz,
                                                          PrdtWithBLOBs pdt,
-                                                         List<Msg>listmsg){
+                                                         List<Msg>listmsg,int iii){
 
 
         PrdtExample prdtExample=new PrdtExample();
@@ -239,19 +258,22 @@ public class D3SaleOrderUpLoadFromExcelService {
         if(l2==0){
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
             msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
-            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面或者 商品名="+pdt.getName()+"不在商品表中,导致无法插入数据,--------");
+            msg.setMsg("--------------该订单号osNo="+t.getOsNo()+"这批(整个excel的数据)一个也没有插入," +
+                    "插入数据的时候遇到--商品(prdtNo="+pdt.getPrdNo()+")--没有在商品表Prdt表里面或者 " +
+                    "商品名="+pdt.getName()+"不在商品表中,导致无法插入数据,--------");
             listmsg.add(msg);
             //不再进行下面步骤
             throw new RuntimeException(msg.getMsg());
         }else{
             //单独分出来是为了只在下面的几个插入使用事务
-            saveChuLePrdtDe(m,t,tz,listmsg);
+            this.saveChuLePrdtDe(m,t,tz,listmsg,iii);
         }
 
     }
     //////////////////////////////////////////////////////////////////////////////////
     @Transactional
-    public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,TfPosZ tz,List<Msg>listmsg){
+    public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,
+                                TfPosZ tz,List<Msg>listmsg,int iii){
         try {
             MfPosExample mfe=new MfPosExample();
             mfe.createCriteria().andOsNoEqualTo(m.getOsNo());
@@ -262,18 +284,20 @@ public class D3SaleOrderUpLoadFromExcelService {
             }
             //测试事务
 //            System.out.println(1/0);
-            TfPosExample tfe=new TfPosExample();
-            tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long l = cnst.tfPosMapper.countByExample(tfe);
-            t.setItm(new Long(l).intValue()+1);
+//            TfPosExample tfe=new TfPosExample();
+//            tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
+//            long l = cnst.tfPosMapper.countByExample(tfe);
+//            t.setItm(new Long(l).intValue()+1);
+            t.setEstItm(iii+1);
             t.setEstItm(t.getItm());
             cnst.tfPosMapper.insert(t);
 
 
-            TfPosZExample tfze=new TfPosZExample();
-            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
-            long ll = cnst.tfPosZMapper.countByExample(tfze);
-            tz.setItm(new Long(ll).intValue()+1);
+//            TfPosZExample tfze=new TfPosZExample();
+//            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
+//            long ll = cnst.tfPosZMapper.countByExample(tfze);
+//            tz.setItm(new Long(ll).intValue()+1);
+            tz.setItm(t.getItm());
             //2017_12_27   weekday(3)   11:09:03,不在需要
 //            cnst.tfPosZMapper.insert(tz);
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方

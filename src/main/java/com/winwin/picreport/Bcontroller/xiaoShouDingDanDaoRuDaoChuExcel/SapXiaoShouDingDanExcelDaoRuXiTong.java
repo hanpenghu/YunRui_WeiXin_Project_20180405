@@ -118,11 +118,23 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 }
 
     private void quChuKongDeMsg(List<Msg> listmsg) {
-            listmsg.forEach((msg)->{
-                if(!NotEmpty.notEmpty(msg.getMsg())){
-                    listmsg.remove(msg);
+        try {
+            if(listmsg.size()>1){
+                for(int i=0;i<listmsg.size();i++){
+                    Msg msg1 = listmsg.get(i);
+                    if(p.empty(msg1.getMsg())){
+                        listmsg.remove(msg1);
+                    }
                 }
-            });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//            listmsg.forEach((msg)->{
+//                if(!NotEmpty.notEmpty(msg.getMsg())){
+//                    listmsg.remove(msg);
+//                }
+//            });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////

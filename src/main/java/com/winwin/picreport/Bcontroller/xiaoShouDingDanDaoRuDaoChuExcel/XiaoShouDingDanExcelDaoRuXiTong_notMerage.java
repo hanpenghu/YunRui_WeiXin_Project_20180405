@@ -108,18 +108,21 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 }
 
     private void quChuKongDeMsg(List<Msg> listmsg)   {
+
         try {
-            //移出msg是NULL的元素
-            p.removeSameEle(listmsg,Msg.class,"msg",null);
-        } catch (IllegalAccessException e) {
+            if(listmsg.size()>1){
+                for(int i=0;i<listmsg.size();i++){
+                    Msg msg1 = listmsg.get(i);
+                    if(p.empty(msg1.getMsg())){
+                        listmsg.remove(msg1);
+                    }
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            //移出msg是""的元素
-            p.removeSameEle(listmsg,Msg.class,"msg","");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+
+
 
     }
 
@@ -165,11 +168,18 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 MfPosExample mfPosExample=new MfPosExample();
                 mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
                 long l = cnst.mfPosMapper.countByExample(mfPosExample);
+                /**
+                 *判断excel的单号在数据库是否存在,存在就不插入
+                 * */
                 if(l==0){//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
                     //for一次就是处理同一批号osNo一次
                     Map<String, List> listMap =
                             this.heBingTongYiDingDanXiaMianHuoHaoXiangTongDe_qty_amtn_tax_amt
                             (list3,listmsg);
+
+                    /**
+                     *插入数据到数据库
+                     * */
                     this.cnst.d3SaleOrderUpLoadFromExcelService
                             .saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
@@ -274,8 +284,15 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
         try {
-            p.removeSameEle(listmsg,Msg.class,"msg",msg);
-        } catch (IllegalAccessException e) {
+            if(listmsg.size()>1){
+                for(int i=0;i<listmsg.size();i++){
+                    Msg msg1 = listmsg.get(i);
+                    if(p.dy(msg,msg1.getMsg())){
+                        listmsg.remove(msg1);
+                    }
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
