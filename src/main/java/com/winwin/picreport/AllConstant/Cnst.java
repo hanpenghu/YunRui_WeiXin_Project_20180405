@@ -58,6 +58,7 @@ public class Cnst {
     public static final String dingJiaZhuJian="dingJiaZhuJian";
     public static final String zhu="主:";
     public static final String fu="副:";
+    public static final String curIdBefore="curIdBefore";
 
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();

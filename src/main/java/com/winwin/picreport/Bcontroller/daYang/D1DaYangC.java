@@ -381,6 +381,13 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
 //        return fenYe;
 //    }
 
+
+
+    /**
+     *返回给前端的dingJiaGuanLian对应数据库的oleField,是一个SimplesSys+uuid组成
+     *
+     * 前端徐勇根据  dingJiaGuanLian+
+     * */
  ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
     @RequestMapping(value = InterFaceCnst.dangqianyeData,
             method = RequestMethod.POST,

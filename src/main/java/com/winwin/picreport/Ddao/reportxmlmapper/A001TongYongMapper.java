@@ -226,13 +226,22 @@ public interface A001TongYongMapper {
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 
     //下面是打样的销售定价和采购定价修改模块
+//   @Update({"update up_def set  " +
+//           "cur_id =#{curId}," +
+//           "qty=#{qty}, " +
+//           "up=#{up}," +
+//           "hj_no=#{unit}," +
+//           "rem =#{remFront} " +
+//           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+CONVERT(varchar(100),s_dd,25)"})
+//   Integer updateUpdef(Map<String, String> map101);
+//    dingJiaZhuJian= dingJiaGuanLian(oleField)+bilType+curIdBefore
    @Update({"update up_def set  " +
-           "cur_id =#{curId}," +
+           "cur_id =#{curIdAfter}," +
            "qty=#{qty}, " +
            "up=#{up}," +
            "hj_no=#{unit}," +
            "rem =#{remFront} " +
-           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+CONVERT(varchar(100),s_dd,25)"})
+           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')"})
    Integer updateUpdef(Map<String, String> map101);
 
    @Select({"select top 1 idx_no from indx where name=#{idxName}"})

@@ -26,7 +26,8 @@ public class dingJiaXiuGai {
     //curId是区分币别的  USD代表美元,RMB代表人民币
     //priceId   //1代表销售的//2代表采购的
     //localhost:8070/dingJiaXiuGai
-    //[{"dingJiaGuanLian":"","curId":"RMB","qty":"100","up":"44","unit":"","remFront":"阿里巴巴","bilType":"","sDd":"1514545852717"}]
+    //curIdBefore是原来的币别  dingJiaGuanLian+bilType+curIdBefore  确定唯一的一条数据
+    //[{"dingJiaGuanLian":"","qty":"100","up":"44","unit":"","remFront":"阿里巴巴","bilType":"","curIdBefore":"RMB","curIdAfter":"USD"}]
     //
     @RequestMapping(value=Cnst.dingJiaXiuGai,method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
@@ -44,7 +45,7 @@ public class dingJiaXiuGai {
 //        map.get(Cnst.qty);
 //        //up,单价,对应数据库up,
 //        map.get(Cnst.up);
-//        //单位unit对应数据库hj_no
+//        //单位unit对应数据库hj_no,前端自己在字段上加上  主或者副
 //        map.get(Cnst.unit);
 //        //remFront对应数据库的rem字段备注
 //        map.get(Cnst.remFront);
@@ -56,14 +57,11 @@ public class dingJiaXiuGai {
                 //把时间戳转换成一定格式的String
                 String sDdStr = p.sjc2StrDate(map.get(Cnst.sDd), p.d16);
                 sDdStr=p.empty(sDdStr)?p.space:sDdStr;
-                //其中dingJiaGuanLian(oleField)+bilType+sDd可以形成联合主键进行某条记录的修改
-                map.put(Cnst.dingJiaZhuJian,map.get(Cnst.dingJiaGuanLian)+map.get(Cnst.bilType)+sDdStr);
+                //其中dingJiaGuanLian(oleField)+bilType+curIdBefore可以形成联合主键进行某条记录的修改
+                String dingJiaZhuJian=map.get(Cnst.dingJiaGuanLian)+map.get(Cnst.bilType)+map.get(Cnst.curIdBefore);
+                map.put(Cnst.dingJiaZhuJian,dingJiaZhuJian);
 
-                 p.p(p.gp().sad(p.dexhx)
-                         .sad(p.strValeOf(
-                                 map.get(Cnst.dingJiaZhuJian)//需要打印的东西
-                         ))
-                         .sad(p.dexhx).gad());
+                 p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(map.get(Cnst.dingJiaZhuJian))).sad(p.dexhx).gad());
 
                 Integer i=cnst.a001TongYongMapper.updateUpdef(map);
                 if(i==1){
