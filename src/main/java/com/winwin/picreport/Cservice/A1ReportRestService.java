@@ -1,5 +1,6 @@
 package com.winwin.picreport.Cservice;
 
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.OrderPreCnst;
 import com.winwin.picreport.Edto.*;
@@ -419,6 +420,7 @@ public class A1ReportRestService {
 //            TfPosZExample tfze = new TfPosZExample();
 //            tfze.createCriteria().andOsNoEqualTo(m.getOsNo());
             //注意:tf_pos和tf_pos_z必须共用itm才对//注意iii是从0开始索引的 itm是从1  所以要加1
+            //公用itm才能在erp界面进行关联
             tz.setItm(t.getItm());
 //            TfPosZExample tfze1 = new TfPosZExample();
 //            tfze1.createCriteria()
@@ -437,7 +439,14 @@ public class A1ReportRestService {
 //                //此时有重复数据,不再插入
 //
 //            }
-            cnst.tfPosZMapper.insert(tz);
+            //判断表tf_pos_z是否存在
+//            if(cnst.a001TongYongMapper.ifExistTfPosZ()==-1){
+                //此时表不存在,什么也不做
+//            }else{
+                //此时表存在
+                cnst.tfPosZMapper.insert(tz);
+//            }
+
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
             cnst.manyTabSerch.updateMfPosNullToNothing001(m);
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);
@@ -451,8 +460,8 @@ public class A1ReportRestService {
                     "--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题," +
                     "检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
             listmsg.add(msg);
-//            e.printStackTrace();
-            throw new RuntimeException(msg.getMsg());
+            e.printStackTrace();
+            throw new RuntimeException(JSON.toJSONString(msg));
         }
 
 

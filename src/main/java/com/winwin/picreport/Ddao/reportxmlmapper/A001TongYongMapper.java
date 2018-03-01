@@ -240,4 +240,8 @@ public interface A001TongYongMapper {
 
    @Select({"select top 1 prd_no from prdt where name=#{prdName}"})
     String getPrdNoUsePrdName(@Param("prdName") String prdName);
+
+   @Select({"select  isnull(object_id('tf_pos_z'),-1)"})
+    Integer ifExistTfPosZ();
+
 }

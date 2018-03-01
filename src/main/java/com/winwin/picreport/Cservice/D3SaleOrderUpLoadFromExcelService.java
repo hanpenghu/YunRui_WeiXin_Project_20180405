@@ -1,4 +1,5 @@
 package com.winwin.picreport.Cservice;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.OrderPreCnst;
 import com.winwin.picreport.Edto.*;
@@ -57,6 +58,15 @@ public class D3SaleOrderUpLoadFromExcelService {
 
     @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg,int iii){
+
+        /**
+         *判断字段长度开始,
+         * */
+
+        /**
+         *判断字段长度结束,
+         * */
+
         this.prdNoGet(s);
         Msg msg=new Msg();
         MfPosWithBLOBs m=new MfPosWithBLOBs();
@@ -288,7 +298,7 @@ public class D3SaleOrderUpLoadFromExcelService {
 //            tfe.createCriteria().andOsNoEqualTo(m.getOsNo());
 //            long l = cnst.tfPosMapper.countByExample(tfe);
 //            t.setItm(new Long(l).intValue()+1);
-            t.setEstItm(iii+1);
+            t.setItm(iii+1);
             t.setEstItm(t.getItm());
             cnst.tfPosMapper.insert(t);
 
@@ -298,8 +308,14 @@ public class D3SaleOrderUpLoadFromExcelService {
 //            long ll = cnst.tfPosZMapper.countByExample(tfze);
 //            tz.setItm(new Long(ll).intValue()+1);
             tz.setItm(t.getItm());
-            //2017_12_27   weekday(3)   11:09:03,不在需要
-//            cnst.tfPosZMapper.insert(tz);
+
+            //判断表tf_pos_z是否存在
+            if(cnst.a001TongYongMapper.ifExistTfPosZ()==-1){
+                //此时表不存在,什么也不做
+            }else{
+                //此时表存在
+                cnst.tfPosZMapper.insert(tz);
+            }
             //接下来update一下老郑于2017年-10-09要把null变成固定值的地方
             cnst.manyTabSerch.updateMfPosNullToNothing001(m);
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);
@@ -312,8 +328,8 @@ public class D3SaleOrderUpLoadFromExcelService {
                     "”--的这批数据(整个EXcel的数据)一个也没有插入--因为在插入时发生了不可预料的异常," +
                     "可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
             listmsg.add(msg);
-//            e.printStackTrace();
-            throw new RuntimeException(msg.getMsg());
+            e.printStackTrace();
+            throw new RuntimeException(JSON.toJSONString(msg));
         }
 
 
