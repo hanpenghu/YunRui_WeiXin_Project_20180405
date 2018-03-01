@@ -55,7 +55,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 //    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
 
-    long time01=new Date().getTime();
+//    long time01=new Date().getTime();
     try {
 
         //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,10 +108,10 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     } catch (Exception e) {
         e.printStackTrace();
     }
-    long time02=new Date().getTime();
-    Msg msg001=new Msg();
-    msg001.setXiaoHaoShiJian(String.valueOf((time02-time01)/1000));
-    listmsg.add(msg001);
+//    long time02=new Date().getTime();
+//    Msg msg001=new Msg();
+//    msg001.setXiaoHaoShiJian(String.valueOf((time02-time01)/1000));
+//    listmsg.add(msg001);
     ////////////////////////////////////////////////////////////////////////
     return listmsg;
 ////////////////////////////////
