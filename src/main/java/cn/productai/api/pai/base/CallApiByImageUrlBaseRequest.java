@@ -111,7 +111,7 @@ public abstract class CallApiByImageUrlBaseRequest<T extends BaseResponse> exten
             throw new IllegalArgumentException("serviceType can not be null");
         }
         if (serviceId.isEmpty()) {
-            throw new IllegalArgumentException("serviceId can not be null");
+            throw new IllegalArgumentException("serviceIdOfWinWinPrdtSamp can not be null");
         }
 
         this.serviceType = serviceType;

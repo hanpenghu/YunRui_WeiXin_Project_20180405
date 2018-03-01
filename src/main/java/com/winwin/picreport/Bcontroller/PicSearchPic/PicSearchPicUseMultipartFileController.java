@@ -3,57 +3,77 @@ package com.winwin.picreport.Bcontroller.PicSearchPic;
 import cn.productai.api.example.TestExample;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
-import com.winwin.picreport.Edto.Base64Image;
-import com.winwin.picreport.Futils.ImageAndBase64;
-import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 //import org.apache.commons.lang.StringUtils;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/b2")
-public class B2JieShouQianDuanTuPianBase64Controller {
-    @Value("${tupianserviceId}")
-    private String  tupianserviceId;
+@RequestMapping("/b")
+public class PicSearchPicUseMultipartFileController {
+//    @Value("${tupianserviceId}")
+    private String  tupianserviceId= Cnst.serviceIdOfWinWinPrdtSamp;
     @Value("${tupianFanHuiCount}")
     private int tupianFanHuiCount;
-    @Value("${filePath}")//./1234567/
+//    ##用于当客户上传一张图片找相似图片的时候的缓存目录
+//            filePath=C:/1234567/
+    @Value("${filePath}")
     private String filePath;
+//    #接口服务器url
+//            url=http://${server.IP}:${server.port}
     @Value("${dirUrl}")
     private String dirUrl;
+    //                             116.62.224.17253258:8070/b/jieShouQianduanChuanGuoLaiDeYiZhangTuPian
 ////////////////////////////////////////////////consumes是请求类型,/////produces是返回类型//////////////////////////
-    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     *接受前端传过来的一张图片传给码隆,然后返回给前端所有相似的图片的信息,参数是MultipartFile
+     * 后来应该用的这个
+     * */
+    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //    @PostMapping(value = "/jieShouQianduanChuanGuoLaiDeYiZhangTuPian", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //@RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian(@RequestBody Base64Image base64Image){//@RequestParam("file")
+    public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian(@RequestParam("file")MultipartFile file){//@RequestParam("file")
         List<SearchResult> list=new ArrayList<>();
-        if (NotEmpty.notEmpty(base64Image)) {
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println(file.getOriginalFilename());
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        if (!file.isEmpty()) {
+            if (file.getContentType().contains("image")) {
                 File dest=null;
                 try {
-                    String fileName= UUID.randomUUID().toString().replace("-","");
-//                    public static boolean GenerateImage(String imgStr,String pathToGenerateImg)
-                    ImageAndBase64.GenerateImage(base64Image.getBase64str(),"");
-                    String fileUrl=dirUrl+fileName+".jpeg";
-                    System.out.println(fileUrl);
+                    // 获取图片的文件名
+                    String fileName = file.getOriginalFilename();
+                    System.out.println(fileName);
+
+
+
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                   //将图片存到临时目录
                     //   ./1234567/
                     //E:\CloudPlatformBackstage\winwin\.\1234567\WW-VSUP5950-778.jpg
-                    dest = new File(filePath, fileName+".jpeg");
+                    dest = new File(filePath, fileName);
                     System.out.println(dest.getAbsolutePath());
                     //上传到指定目录
-                    ImageAndBase64.GenerateImage(base64Image.getBase64str(),dest);
+                    file.transferTo(dest);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //得到网址,因为网址在配置文件配置过,所以必须这么
+                    //其实就是得到上面存的文件的网址
+                    String fileUrl=dirUrl+fileName;
+                    System.out.println(fileUrl);
                     ImageSearchResponse imageSearchResponse =
                             new TestExample().fullFlowExample
                                     (fileUrl, tupianserviceId, tupianFanHuiCount);
+
                     for(SearchResult searchResult:imageSearchResponse.getResults()){
                         list.add(searchResult);
                     }
@@ -63,7 +83,7 @@ public class B2JieShouQianDuanTuPianBase64Controller {
                 } catch (Exception e) {System.out.println(""); }finally{
                     try { FileUtils.forceDelete(dest) ;} catch (IOException e) { }
                 }
-
+            }
         }
         return list;
     }

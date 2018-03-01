@@ -77,11 +77,14 @@ public class A1ReportRestService {
             String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
             String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
             for (ShouDingDanFromExcel shouDingDanFromExcel : listx) {
-                if (!NotEmpty.notEmpty(shouDingDanFromExcel.getEbNo())) {
+                if (p.empty(shouDingDanFromExcel.getEbNo())) {
                     Msg msg = new Msg();
-                    msg.setMsg("单号为" + shouDingDanFromExcel.getOsNo() + ",货号为" + shouDingDanFromExcel.getPrdNo() + ",成分代码为【" + shouDingDanFromExcel.getCfdm() + "】,的EB单号为空,该批数据没有插入一条");
+                    msg.setMsg("单号为" + shouDingDanFromExcel.getOsNo() +
+                            ",货号为" + shouDingDanFromExcel.getPrdNo() +
+                            ",成分代码为【" + shouDingDanFromExcel.getCfdm() +
+                            "】,的EB单号为空,该批数据没有插入一条");
                     listmsg.add(msg);
-                    throw new RuntimeException("单号为" + shouDingDanFromExcel.getOsNo() + "的EB单号为空,该批数据没有插入一条");
+                    throw new RuntimeException(msg.getMsg());
                 }
                 try {
                     Sapso b = new Sapso();
@@ -133,12 +136,16 @@ public class A1ReportRestService {
                     Msg msg = new Msg();
                     msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
 
+                    String s="在插入数据库表sapso(原始数据表)的时候,单号为:" +
+                            msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao() +
+                            "的osNo(订单号)下面的某条数据有异常,导致该批(整个excel的)数据一个都没插入！";
+
 //                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(os_no下面)数据一个都没插入！");
-                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:" + msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao() + "的osNo(订单号)下面的某条数据有异常,导致该批(整个excel的)数据一个都没插入！");
+                    msg.setMsg(s);
 
                     listmsg.add(msg);
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
+//                    e.printStackTrace();
+                    throw new RuntimeException(s);
                 }
             }
         }
@@ -159,8 +166,11 @@ public class A1ReportRestService {
         if (s.getPrdNo() == null || "".equals(s.getPrdNo())) {
             String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
             if(p.empty(prdNo)){
-                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
-                throw new RuntimeException("订单号osNo为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,根据"+s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                msg.setMsg("订单号osNo为:~~~~" + s.getOsNo() +
+                        "~~~~的这一批货品里面有货号为空,根据"+
+                        s.getPrdName()+"在数据库也找不到货号,所以整个该批单号不能插入！");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }else{
                 s.setPrdNo(prdNo);
             }
@@ -212,7 +222,8 @@ public class A1ReportRestService {
                 m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
-                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }
 
         }
@@ -240,7 +251,7 @@ public class A1ReportRestService {
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
             listmsg.add(msg);
             //这个功能是迎合老郑说的:货品代号（品号） PRDT.PRD_NO里不存在提示整单不能导入
-            throw new RuntimeException("订单号为:~~~~" + s.getOsNo() + "~~~~的这一批货品里面有货号为空,所以整个该单号不能插入！");
+            throw new RuntimeException(msg.getMsg());
         }
         t.setPrdNo(s.getPrdNo());
         t.setPrdName(s.getPrdName());
@@ -256,10 +267,11 @@ public class A1ReportRestService {
 
         //如果单价有问题,就要抛出异常
         if ("".equals(s.getUp()) || "0".equals(s.getUp())) {
-            msg.setMsg("订单号osNo=" + s.getOsNo() + "的单号因为某条数据中的“单价”(Up)有问题(单价是0或者没有单价),导致该订单号的所有记录都未能成功录入！");
+            msg.setMsg("订单号osNo=" + s.getOsNo() +
+                    "的单号因为某条数据中的“单价”(Up)有问题(单价是0或者没有单价),导致该订单号的所有记录都未能成功录入！");
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(s.getOsNo());
             listmsg.add(msg);
-            throw new RuntimeException("订单号osNo=" + s.getOsNo() + "的单号因为某条数据中的“单价”(Up)有问题,导致该订单号的所有记录都未能成功录入！");
+            throw new RuntimeException(msg.getMsg());
         }
         t.setUp(new BigDecimal(s.getUp()));
 //        t.setWh("0000");
@@ -272,7 +284,8 @@ public class A1ReportRestService {
                 t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
-                throw new RuntimeException("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }
         }
 
@@ -283,7 +296,8 @@ public class A1ReportRestService {
                 t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
             } catch (Exception e) {
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
-                throw new RuntimeException("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
             }
 
         }
@@ -333,7 +347,9 @@ public class A1ReportRestService {
         if (l2 == 0) {
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
             msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
-            msg.setMsg("--------------该订单号osNo=" + t.getOsNo() + "这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo=" + pdt.getPrdNo() + ")--没有在商品表Prdt表里面或者 商品名=" + pdt.getName() + "不在商品表中,导致无法插入数据,--------");
+            msg.setMsg("--------------该订单号osNo=" + t.getOsNo() +
+                    "这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo=" + pdt.getPrdNo()
+                    + ")--没有在商品表Prdt表里面或者 商品名=" + pdt.getName() + "不在商品表中,导致无法插入数据,--------");
             listmsg.add(msg);
             //不再进行下面步骤
             throw new RuntimeException(msg.getMsg());
@@ -427,10 +443,13 @@ public class A1ReportRestService {
         } catch (Exception e) {
             Msg msg = new Msg();
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
-            msg.setMsg("--订单号osNo为--osNo=“" + m.getOsNo() + "”--的这批数据(整个EXcel的数据)一个也没有插入--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题,检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
+            msg.setMsg("--订单号osNo为--osNo=“" + m.getOsNo() +
+                    "”--的这批数据(整个EXcel的数据)一个也没有插入" +
+                    "--因为在插入时发生了不可预料的异常,可能是插入数据的字段长度有问题," +
+                    "检查表mf_Pos,tf_pos,tf_pos_z中字段的长度是否够用----");
             listmsg.add(msg);
-            e.printStackTrace();
-            throw new RuntimeException(e);
+//            e.printStackTrace();
+            throw new RuntimeException(msg.getMsg());
         }
 
 

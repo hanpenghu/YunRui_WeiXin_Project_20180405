@@ -5,6 +5,7 @@ import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
 
 import java.util.Date;
@@ -15,7 +16,7 @@ public class TestExample {
        long time1= date1.getTime();
         new TestExample().fullFlowExample
                 ("http://116.62.224.172:8070/lzpic/1/WW-VSUP5950-858.jpeg",
-                        "yppse9v1",10);
+                        Cnst.serviceIdOfWinWinPrdtSamp, Cnst.searchResultcount);
         Date date2=new Date();
         long time2 = date2.getTime();
         long time3=time2-time1;
@@ -41,6 +42,8 @@ public class TestExample {
          *
          */
 
+        //这里设置了 String accessKeyId="61978e61a90b979a90a47296ea0f32cf";
+//        String secretKey="0bc16f8a8e3129b84cfa8d7e24f5f7cf";
         IWebClient client = GetIWebClientOfMaLong.getIWebClient();
 
         /**

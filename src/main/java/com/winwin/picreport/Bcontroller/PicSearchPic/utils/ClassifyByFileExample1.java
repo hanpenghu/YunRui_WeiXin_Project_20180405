@@ -1,4 +1,4 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Bcontroller.PicSearchPic.utils;
 
 import cn.productai.api.core.DefaultProductAIClient;
 import cn.productai.api.core.DefaultProfile;
@@ -7,7 +7,6 @@ import cn.productai.api.core.IWebClient;
 import cn.productai.api.core.enums.LanguageType;
 import cn.productai.api.core.enums.ServiceType;
 import cn.productai.api.core.exceptions.ClientException;
-import cn.productai.api.example.TestExample;
 import cn.productai.api.pai.entity.classify.ClassifyByImageFileRequest;
 import cn.productai.api.pai.entity.classify.ClassifyResponse;
 import cn.productai.api.pai.response.ClassifyResult;
@@ -34,7 +33,7 @@ public class ClassifyByFileExample1{
     }
 
     public void run1(File file) {
-System.out.println("========草草草================");
+        System.out.println("========草草草================");
         IProfile profile = new DefaultProfile();
         profile.setAccessKeyId("b9c6156c60b5776b7547d46475f670b3");
         profile.setSecretKey("b2e44e5b6b1590c3a67526c4bfd16b72");

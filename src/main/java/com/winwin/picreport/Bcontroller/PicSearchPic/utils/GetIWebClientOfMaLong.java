@@ -11,9 +11,9 @@ public class GetIWebClientOfMaLong {
     public static IWebClient getIWebClient(){
         IProfile profile = new DefaultProfile();
         //为了公司安全,写死在枚举enum里面
-        profile.setAccessKeyId((String) ConstantOfMaLong.accessKeyId.getValue());
-        profile.setSecretKey((String)ConstantOfMaLong.secretKey.getValue());
-        profile.setVersion((String)ConstantOfMaLong.version.getValue());
+        profile.setAccessKeyId(Cnst.accessKeyId);
+        profile.setSecretKey(Cnst.secretKey);
+        profile.setVersion(Cnst.maLongSdkVersion);
         profile.setGlobalLanguage(LanguageType.Chinese);
 
         /**

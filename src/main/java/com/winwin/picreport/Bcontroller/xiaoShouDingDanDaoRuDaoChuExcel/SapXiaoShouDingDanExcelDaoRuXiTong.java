@@ -287,11 +287,19 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
         try {
             if(listmsg.size()>1){
-                listmsg.forEach((msg1)->{
-                    if(msg.equals(msg1.getMsg())){
+                for(int i=0;i<listmsg.size();i++){
+                    Msg msg1 = listmsg.get(i);
+                    if(p.dy(msg,msg1.getMsg())){
                         listmsg.remove(msg1);
                     }
-                });
+                }
+
+//              老的方法存在弊端,可能remove不掉
+//                listmsg.forEach((msg1)->{
+//                    if(msg.equals(msg1.getMsg())){
+//                        listmsg.remove(msg1);
+//                    }
+//                });
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Bcontroller.PicSearchPic.utils;
 
 import cn.productai.api.core.IWebClient;
 import cn.productai.api.core.enums.LanguageType;
