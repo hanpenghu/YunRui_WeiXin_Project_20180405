@@ -96,6 +96,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         }
 
     } catch (Exception e) {
+        //有异常的话肯定不能导入excel的
+        listmsg=new ArrayList<>();//清空listmsg
+        listmsg.add(Msg.gmg().setMsg("excel没有插入成功！出现不可预料异常,请仔细检查你的数据"));
         e.printStackTrace();
     }
 //    long time02=new Date().getTime();

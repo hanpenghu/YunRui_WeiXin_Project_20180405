@@ -173,10 +173,34 @@ public class D3SaleOrderUpLoadFromExcelService {
         t.setQty(new BigDecimal(s.getQty()));
 //        t.setUnit(s.getUnit());
         t.setUnit("1");
-        t.setAmtn(new BigDecimal(s.getAmtn()));
-        t.setTax(new BigDecimal(s.getTax()));
-        t.setAmt(new BigDecimal(s.getAmt()));
-        t.setTaxRto(new BigDecimal(s.getTaxRto()));
+        try {
+            t.setAmtn(new BigDecimal(s.getAmtn()));
+        } catch (Exception e) {
+            String ss="amtn  未税金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setTax(new BigDecimal(s.getTax()));
+        } catch (Exception e) {
+            String ss="tax  税额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setAmt(new BigDecimal(s.getAmt()));
+        } catch (Exception e) {
+            String ss="amt  金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setTaxRto(new BigDecimal(s.getTaxRto()));
+        } catch (Exception e) {
+            String ss="taxRto  税率 字段有非法数据  导致excel没有插入 根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
         t.setRem(s.getRemBody());
         t.setPrdMark("");
 

@@ -29,6 +29,10 @@ public class AmtAndAmtnAndTaxChongXinSuan {
 
     /**
      *只要数量和单价不为0就行
+     * amt是金额
+     * amtn是未税金额
+     * tax是 税额
+     * taxRto税率
      * */
     public static void g(ShouDingDanFromExcel shouDingDanFromExcel,List<Msg> listmsg){
         String amtstr = shouDingDanFromExcel.getAmt();

@@ -29,6 +29,16 @@ public class Z001Quartz {
     @Scheduled(fixedDelay=two_Second)//执行完毕后1分钟再执行
     public void fixedDelayJob001(){
         this.onlineBugXiuFuSql001();
+
+        try {
+//            --013处理外币冲全掉了，人民币差几分的。以下按次序2秒执行一次
+            cnst.manyTabSerch.chuLiWaiBiQuanChongDiao();
+        } catch (Exception e) {
+            p.p("-------------------------------------------------------");
+            p.p("013处理外币冲全掉了，人民币差几分的2秒执行一次《异常》");
+            p.p("-------------------------------------------------------");
+        }
+
     }
 
     private void onlineBugXiuFuSql001() {
