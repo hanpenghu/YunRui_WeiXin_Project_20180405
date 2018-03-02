@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -104,6 +105,11 @@ public strictfp class p {
     public final static String d10="yyyyMMddHHmmssSS";
     public final static String d11="yyyyMMddHHmmss";
     public final static String d12="yyyyMMdd";
+
+    public final static String fail="fail";
+    public final static String FAIL="FAIL";
+    public final static String success="success";
+    public final static String SUCCESS="SUCCESS";
 
     public final static String d13="yyyy.MM.dd HH.mm.ss.SS";
     public final static String d14="yyyy.MM.dd.HH.mm.ss.SS";
@@ -1801,11 +1807,37 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //异常抛出
+    public static void throwE(String s){
+        throw new RuntimeException(s);
+    }
+
+    //去除空白符
+    public static String replaceBlank(String str){
+        String dest = null;
+        if(str == null){
+            return dest;
+        }else{
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+            return dest;
+        }
+    }
 
 
 
+//    public static void main(String[]args){
+//        String s=p.readAllTxt("E:\\1\\work_space\\LinZhan_Picture_ReportTable\\src\\main\\java\\com\\winwin\\picreport\\Bcontroller\\loginRegistModul\\auth\\权限的json.json");
+//
+//        p(replaceBlank(s));
+//    }
 
 
+    //去掉字符串数字末尾的0
+    public static void main(String[]args){
+            p(new BigDecimal("0.10000"));
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public	final	static	int	n0	=	0	;
     public	final	static	int	n1	=	1	;

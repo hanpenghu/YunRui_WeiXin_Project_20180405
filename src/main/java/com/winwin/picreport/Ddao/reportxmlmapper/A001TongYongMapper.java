@@ -225,16 +225,6 @@ public interface A001TongYongMapper {
             " where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 
-    //下面是打样的销售定价和采购定价修改模块
-//   @Update({"update up_def set  " +
-//           "cur_id =#{curId}," +
-//           "qty=#{qty}, " +
-//           "up=#{up}," +
-//           "hj_no=#{unit}," +
-//           "rem =#{remFront} " +
-//           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+CONVERT(varchar(100),s_dd,25)"})
-//   Integer updateUpdef(Map<String, String> map101);
-//    dingJiaZhuJian= dingJiaGuanLian(oleField)+bilType+curIdBefore
    @Update({"update up_def set  " +
            "cur_id =#{curIdAfter}," +
            "qty=#{qty}, " +
@@ -252,5 +242,14 @@ public interface A001TongYongMapper {
 
    @Select({"select  isnull(object_id('tf_pos_z'),-1)"})
     Integer ifExistTfPosZ();
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /**
+    *权限模块
+    * */
+   @Select({"select u.auth from tenant t,users u where t.tenantId=u.tenantId and t.tenantId=#{tenantId} and u.user_name=#{userName}"})
+   String getAuth(@Param("tenantId")String tenantId ,@Param("userName")String userName);
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

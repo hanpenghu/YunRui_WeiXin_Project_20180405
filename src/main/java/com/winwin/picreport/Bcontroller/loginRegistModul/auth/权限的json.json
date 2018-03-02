@@ -1,0 +1,38 @@
+{
+  "logistics": {
+    "possess": [
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false"
+    ],
+    "salesorder": {
+      "page": "false"
+    },
+    "salesorderForSAP": {
+      "page": "false"
+    },
+    "salesDetail": {
+      "page": "false"
+    },
+    "productCode": {
+      "page": "false"
+    },
+    "purchasePricing": {
+      "page": "false"
+    },
+    "salesPricing": {
+      "page": "false",
+      "part": {
+        "purchasePrice": "false",
+        "salesPrice": "false"
+      }
+    },
+    "sampleConfirm": {
+      "page": "false"
+    }
+  }
+}

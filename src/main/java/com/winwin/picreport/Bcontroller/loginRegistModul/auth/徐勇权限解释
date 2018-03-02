@@ -1,0 +1,39 @@
+auth:{
+  salesorder:{----销售订单
+    page:false
+  },
+  salesorderForSAP:{----销售订单（SAP集成）
+    page:true
+  },
+  salesDetail:{----销货明细表
+    page:true
+  },
+  productCode:{------产品编码建档
+    page:true
+  },
+  purchasePricing:{-------采购定价
+    page:true
+  },
+  salesPricing:{-----销售定价
+    page:true
+    part:{
+      purchasePrice:false,----采购价格
+      salesPrice:true-----销售价格
+    }
+  },
+  sampleConfirm:{----样品确认
+    page:true
+  }
+}
+
+
+（page）销售订单：salesorder
+（page）销售订单（SAP集成）：salesorderForSAP
+（page）销货明细表：salesDetail
+（page）产品编码建档：productCode
+（page）采购定价：purchasePricing
+（page）销售定价：salesPricing  (part)采购价格purchasePrice  (part)销售价格salesPrice
+（page）样品确认：sampleConfirm
+
+page代表整个页面的权限，false是没有权限，true是有权限
+part是代表页面中某一个栏位或者选项卡的权限，也就是页面内容的部分权限

@@ -123,8 +123,9 @@ public class A1ReportRestService {
                         throw new RuntimeException(e.toString());
                     }
 
-                    p.p(p.gp().sad(p.dexhx).sad("sapso是否有重复数据kk=").sad(p.strValeOf(kk)).sad(p.dexhx).gad());
+//                    p.p(p.gp().sad(p.dexhx).sad("sapso是否有重复数据kk=").sad(p.strValeOf(kk)).sad(p.dexhx).gad());
 
+                    //注意 sapao是excel的原始记录,跟erp系统表没有关系,只是将来sap导出excel的时候拆行用的
                     if (NotEmpty.notEmpty(kk) && kk == 0) {
                         //此时除了qty都不相等了
                         Integer pp = cnst.sapsoMapper.insert(b);//这个后期已经加上成分代码
@@ -133,6 +134,8 @@ public class A1ReportRestService {
                                 .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
 
 
+                    }else{
+                        p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
                     }
 
                 } catch (Exception e) {
@@ -261,10 +264,37 @@ public class A1ReportRestService {
         t.setQty(new BigDecimal(s.getQty()));
 //        t.setUnit(s.getUnit());
         t.setUnit("1");
-        t.setAmtn(new BigDecimal(s.getAmtn()));
-        t.setTax(new BigDecimal(s.getTax()));
-        t.setAmt(new BigDecimal(s.getAmt()));
-        t.setTaxRto(new BigDecimal(s.getTaxRto()));
+        try {
+            t.setTax(new BigDecimal(s.getTax().trim()));
+        } catch (Exception e) {
+            String ss="tax  税额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setTaxRto(new BigDecimal(s.getTaxRto().trim()));
+        } catch (Exception e) {
+            String ss="taxRto  税率 字段有非法数据  导致excel没有插入 根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setAmt(new BigDecimal(s.getAmt().trim()));
+        } catch (Exception e) {
+            String ss="amt  金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+        try {
+            t.setAmtn(new BigDecimal(s.getAmtn().trim()));
+        } catch (Exception e) {
+            String ss="amtn  未税金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+
+
+
         t.setRem(s.getRemBody());
         t.setPrdMark("");
 
@@ -276,7 +306,14 @@ public class A1ReportRestService {
             listmsg.add(msg);
             throw new RuntimeException(msg.getMsg());
         }
-        t.setUp(new BigDecimal(s.getUp()));
+        try {
+            t.setUp(new BigDecimal(s.getUp().trim()));
+        } catch (Exception e) {
+            String sss="单号为"+s.getOsNo()+",货品名称为"+s.getPrdName()+
+                    ",的价格《"+s.getUp()+"》在excel中不正确";
+            listmsg.add(Msg.gmg().setMsg(sss));
+            p.throwE(sss);
+        }
 //        t.setWh("0000");
         //20171113老郑让改
         t.setWh("1000");
@@ -300,6 +337,7 @@ public class A1ReportRestService {
             } catch (Exception e) {
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
                 listmsg.add(msg);
+                p.p(JSON.toJSONString(s));
                 throw new RuntimeException(msg.getMsg());
             }
 

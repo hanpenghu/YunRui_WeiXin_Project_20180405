@@ -17,6 +17,17 @@ public class Msg {
     private String userEmail="";//公司里面该用户的用
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
+    //权限模块,直接是json字符串放在了数据库,默认的是下面的
+    private String auth="";
+
+    public String getAuth() {
+        return auth;
+    }
+
+    public Msg setAuth(String auth) {
+        this.auth = auth;
+        return this;
+    }
 
     public static Msg gmg(){
         return new Msg();

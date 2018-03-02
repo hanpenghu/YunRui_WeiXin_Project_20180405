@@ -174,28 +174,28 @@ public class D3SaleOrderUpLoadFromExcelService {
 //        t.setUnit(s.getUnit());
         t.setUnit("1");
         try {
-            t.setAmtn(new BigDecimal(s.getAmtn()));
+            t.setAmtn(new BigDecimal(s.getAmtn().trim()));
         } catch (Exception e) {
             String ss="amtn  未税金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
-            t.setTax(new BigDecimal(s.getTax()));
+            t.setTax(new BigDecimal(s.getTax().trim()));
         } catch (Exception e) {
             String ss="tax  税额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
-            t.setAmt(new BigDecimal(s.getAmt()));
+            t.setAmt(new BigDecimal(s.getAmt().trim()));
         } catch (Exception e) {
             String ss="amt  金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
-            throw new RuntimeException(ss);
+            p.throwE(ss);
         }
         try {
-            t.setTaxRto(new BigDecimal(s.getTaxRto()));
+            t.setTaxRto(new BigDecimal(s.getTaxRto().trim()));
         } catch (Exception e) {
             String ss="taxRto  税率 字段有非法数据  导致excel没有插入 根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
@@ -211,7 +211,16 @@ public class D3SaleOrderUpLoadFromExcelService {
             listmsg.add(msg);
             throw new RuntimeException(msg.getMsg());
         }
-        t.setUp(new BigDecimal(s.getUp()));
+
+        try {
+            t.setUp(new BigDecimal(s.getUp().trim()));
+        } catch (Exception e) {
+            String sss="单号为"+s.getOsNo()+",货品名称为"+s.getPrdName()+
+                    ",的价格《"+s.getUp()+"》在excel中不正确";
+            listmsg.add(Msg.gmg().setMsg(sss));
+            p.p(JSON.toJSONString(s));
+            p.throwE(sss);
+        }
 //        t.setWh("0000");
         //20171113老郑让改
         t.setWh("1000");

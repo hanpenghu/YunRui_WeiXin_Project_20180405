@@ -43,7 +43,9 @@ public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
     p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    p.p(shouDingDanFromExcels);
+    if(shouDingDanFromExcels.size()<=50){
+        System.out.println(shouDingDanFromExcels);
+    }
     p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 //    shouDingDanFromExcels.forEach(v->{
 //        if(p.dy(v.getPrdNo(),"154429710")){
@@ -106,7 +108,13 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         this.quChuDuoYuDeSuccessMsg(listmsg,"数据插入成功");
         this.quChuKongDeMsg(listmsg);//如果Msg中的字段msg是"",那么久去除这一条数据
     } catch (Exception e) {
-        e.printStackTrace();
+
+        if(p.empty(listmsg)){//此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
+            //有异常的话肯定不能导入excel的
+            listmsg=new ArrayList<>();//清空listmsg
+            listmsg.add(Msg.gmg().setMsg("excel没有插入成功,请仔细检查你的数据"));
+            e.printStackTrace();
+        }
     }
 //    long time02=new Date().getTime();
 //    Msg msg001=new Msg();
@@ -179,7 +187,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
      * */
     public void anDingDanHaoFenLeiHouXiangServiceCengChuanShuJu(List<List<ShouDingDanFromExcel>> list1,List<Msg> listmsg){
         for(List<ShouDingDanFromExcel> list3:list1){
-            try {
+//            try {
                 //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
                 MfPosExample mfPosExample=new MfPosExample();
                 mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
@@ -198,12 +206,12 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                     listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001"));
                     return;//此时停止循环所有单号
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                //下面的return 是针对    if(l==0)抛出的异常的
-                return;//这个意思是:如果一个excel中有一个单号没有插入成功,那么,停止循环其他单号，所有单号都不会插入成功
-
-            }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                //下面的return 是针对    if(l==0)抛出的异常的
+//                return;//这个意思是:如果一个excel中有一个单号没有插入成功,那么,停止循环其他单号，所有单号都不会插入成功
+//
+//            }
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////
@@ -296,7 +304,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 /////////////////////////////////////////////////////////////////////////////
     public void quChuDuoYuDeSuccessMsg(List<Msg> listmsg,String msg){
-        try {
+//        try {
             if(listmsg.size()>1){
                 for(int i=0;i<listmsg.size();i++){
                     Msg msg1 = listmsg.get(i);
@@ -312,9 +320,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 //                    }
 //                });
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
