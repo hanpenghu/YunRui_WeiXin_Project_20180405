@@ -1,5 +1,4 @@
 {
-  "logistics": {
     "salesorder": {
       "page": "false"
     },
@@ -25,5 +24,4 @@
     "sampleConfirm": {
       "page": "false"
     }
-  }
 }
