@@ -37,3 +37,47 @@ auth:{
 
 page代表整个页面的权限，false是没有权限，true是有权限
 part是代表页面中某一个栏位或者选项卡的权限，也就是页面内容的部分权限
+
+
+
+
+
+
+
+
+select*from model_auth
+select *from model_users
+drop table model_auth
+drop table model_users
+delete from model_auth
+insert into model_auth(model_uuid,model_name,rem)values('1','salesorder','销售订单模块')
+insert into model_auth(model_uuid,model_name,rem)values('2','salesorderForSAP','销售订单（SAP集成）模块')
+insert into model_auth(model_uuid,model_name,rem)values('3','salesDetail','销货明细表')
+insert into model_auth(model_uuid,model_name,rem)values('4','productCode','产品编码建档')
+insert into model_auth(model_uuid,model_name,rem)values('5','purchasePricing','采购定价')
+insert into model_auth(model_uuid,model_name,rem)values('6','salesPricing','销售定价')
+insert into model_auth(model_uuid,model_name,rem)values('7','purchasePrice','采购价格')
+insert into model_auth(model_uuid,model_name,rem)values('8','salesPrice','销售价格')
+insert into model_auth(model_uuid,model_name,rem)values('9','sampleConfirm','样品确认')
+
+
+select uuid,* from users where user_name='hanpenghu'
+
+
+
+delete from model_users
+insert into model_users(model_uuid,users_uuid,can_use)values('1','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('2','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('3','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('4','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('5','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('6','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('7','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('8','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+insert into model_users(model_uuid,users_uuid,can_use)values('9','DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','T')
+
+
+
+
+
+

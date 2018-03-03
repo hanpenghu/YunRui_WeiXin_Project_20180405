@@ -1,14 +1,5 @@
 {
   "logistics": {
-    "possess": [
-      "false",
-      "false",
-      "false",
-      "false",
-      "false",
-      "false",
-      "false"
-    ],
     "salesorder": {
       "page": "false"
     },

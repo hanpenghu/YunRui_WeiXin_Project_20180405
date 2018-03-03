@@ -1,4 +1,5 @@
 package com.winwin.picreport.Futils.MsgGenerate;
+import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.AuthJsonObj.Auth;
 import com.winwin.picreport.Edto.Data;
 
 import java.util.List;
@@ -17,14 +18,16 @@ public class Msg {
     private String userEmail="";//公司里面该用户的用
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
-    //权限模块,直接是json字符串放在了数据库,默认的是下面的
-    private String auth="";
 
-    public String getAuth() {
+
+    //注意,下面这个对象是怕上面那个字符串auth在前端解析不出来才做的
+    private Auth auth=new Auth();
+
+    public Auth getAuth() {
         return auth;
     }
 
-    public Msg setAuth(String auth) {
+    public Msg setAuth(Auth auth) {
         this.auth = auth;
         return this;
     }

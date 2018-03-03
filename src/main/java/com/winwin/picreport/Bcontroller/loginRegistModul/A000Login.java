@@ -41,7 +41,6 @@ public class A000Login {
         List<Msg> list;
         if(IsEmail.isEmail1(info.getUserEmail())){//这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
             list = loginShiEmaiDeQingkuang.f(info);
-
         }else if(IsPhoneNo.isPhoneNo(info.getUserEmail())){//这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
             list=  loginShiPhoneNoDeQingkuang.f(info);
         }else{//此时是会员名

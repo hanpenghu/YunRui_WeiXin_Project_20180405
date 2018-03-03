@@ -1,4 +1,6 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
+import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.Model;
+import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.ModelUsers;
 import com.winwin.picreport.Edto.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -250,6 +252,15 @@ public interface A001TongYongMapper {
     * */
    @Select({"select u.auth from tenant t,users u where t.tenantId=u.tenantId and t.tenantId=#{tenantId} and u.user_name=#{userName}"})
    String getAuth(@Param("tenantId")String tenantId ,@Param("userName")String userName);
+
+   @Select({"select u.uuid from tenant t,users u where t.tenantId=u.tenantId and t.tenantId=#{tenantId} and u.user_name=#{userName}"})
+    String getUsersUuid(@Param("tenantId")String tenantId ,@Param("userName")String userName);
+
+   @Select({"select isnull(model_uuid,'') as modelUuid,isnull(users_uuid,'') as usersUuid,isnull(can_use,'') as canUse from model_users where users_uuid=#{usersUuid}"})
+   List<ModelUsers> getModelUsers(@Param("usersUuid")String usersUuid);
+
+   @Select({"select top 1 isnull(model_uuid,'') as modelUuid,isnull(model_name,'') as modelName,isnull(rem,'') as rem from model_auth where model_uuid=#{modelUuid}"})
+   Model getModels(@Param("modelUuid")String modelUuid);
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
