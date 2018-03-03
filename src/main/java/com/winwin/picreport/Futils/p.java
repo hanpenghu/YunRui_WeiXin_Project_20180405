@@ -1250,10 +1250,15 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 
-
+    public static boolean notExists(File file){
+        return !exists(file);
+    }
     /**
      *根据路径判断文件是否存在
      * */
+    public static boolean notExists(String filePath){
+        return !exists(filePath);
+    }
     public static boolean exists(String filePath){
         if(null==filePath||"".equals(filePath)){
             return false;
@@ -1549,6 +1554,29 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
+     *将字符串写入文本,注意会覆盖原来的文本内容
+     * 注意,这个写入文件,如果文件不存在,会自动创建并写入,但是文件 路径中的文件夹必须存在
+     * */
+    public static boolean  writeToTxt(String strToWrite,String txtPath) {
+
+        FileWriter writer=null;
+        try {
+            writer = new FileWriter(txtPath);
+            writer.write(strToWrite);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static void main(String[]args){
+        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
+        System.out.println(b);
+    }
+    /**
      *读文本的所有内容变为字符串
      * */
     public static String readAllTxt(String txtPath){
@@ -1835,9 +1863,9 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
 
     //去掉字符串数字末尾的0
-    public static void main(String[]args){
-            p(new BigDecimal("0.10000"));
-    }
+//    public static void main(String[]args){
+//            p(new BigDecimal("0.10000"));
+//    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public	final	static	int	n0	=	0	;
     public	final	static	int	n1	=	1	;

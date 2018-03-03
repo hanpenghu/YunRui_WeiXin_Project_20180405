@@ -1,3 +1,4 @@
+/*
 package com.winwin.picreport.test;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.stereotype.Controller;
@@ -32,3 +33,4 @@ public class ExceptionThrowExample {
 }
 
 
+*/
