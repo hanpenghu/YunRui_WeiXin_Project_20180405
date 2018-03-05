@@ -64,7 +64,7 @@ public class dingJiaXiuGai {
                  p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(map.get(Cnst.dingJiaZhuJian))).sad(p.dexhx).gad());
 
                 Integer i=cnst.a001TongYongMapper.updateUpdef(map);
-                if(i==1){
+                if(i>=0){
                     //修改成功继续修改下一个
                 }else{
                     throw new RuntimeException("定价修改失败");

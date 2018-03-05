@@ -55,9 +55,13 @@ public class A000Login {
         //注意,我们现在是用户权限,权限直接放在用户表的一个字段存json格式
         Msg msg = list.get(0);
         //此时msg指向list.get(0);
-        if(p.dy(msg.getMsg(),p.success)){
-            //登录成功了再加验证模块
-            userAuth.addAuth(msg);
+        try {
+            if(p.dy(msg.getMsg(),p.success)){
+                //登录成功了再加验证模块
+                userAuth.addAuth(msg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         p.p("----------权限模块在auth---------------------------------------------");

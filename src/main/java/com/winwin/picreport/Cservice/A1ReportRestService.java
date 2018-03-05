@@ -129,10 +129,10 @@ public class A1ReportRestService {
                     if (NotEmpty.notEmpty(kk) && kk == 0) {
                         //此时除了qty都不相等了
                         Integer pp = cnst.sapsoMapper.insert(b);//这个后期已经加上成分代码
-                        p.p(p.gp().sad(p.dexhx)
-                                .sad("sapso cha ru yi tiao shu ju SUCCESS: ge shu:")
-                                .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
-
+//                        p.p(p.gp().sad(p.dexhx)
+//                                .sad("sapso cha ru yi tiao shu ju SUCCESS: ge shu:")
+//                                .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
+                        p.p("--------------sapso cha ru yi tiao shu ju SUCCESS: ge shu:"+pp+"------------");
 
                     }else{
                         p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
