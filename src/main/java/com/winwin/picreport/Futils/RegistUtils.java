@@ -100,9 +100,10 @@ public class RegistUtils {
 
         if(emailNotEmpty&&!userNameNotEmpty&&!phoneNoNotEmpty){
             if(b){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
+                Integer count =a001TongYongMapper.insertUser(info);
 
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -121,8 +122,9 @@ public class RegistUtils {
         } else if(userNameNotEmpty&&!emailNotEmpty&&!phoneNoNotEmpty){
             if(b1){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
 
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -138,8 +140,9 @@ public class RegistUtils {
         } else if(phoneNoNotEmpty&&!emailNotEmpty&&!userNameNotEmpty){
             if(b2){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
 
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -154,8 +157,9 @@ public class RegistUtils {
         } else if(emailNotEmpty&&userNameNotEmpty&&phoneNoNotEmpty){
             if(b&& b1&& b2){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
 
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -180,8 +184,9 @@ public class RegistUtils {
             }
         } else if(emailNotEmpty&&userNameNotEmpty&&!phoneNoNotEmpty){
             if(b&&b1){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -202,8 +207,9 @@ public class RegistUtils {
             }
         } else if(userNameNotEmpty&&phoneNoNotEmpty&&!emailNotEmpty){
             if(b1&&b2){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{
@@ -223,8 +229,9 @@ public class RegistUtils {
             }
         } else if(emailNotEmpty&&phoneNoNotEmpty&&!userNameNotEmpty){
             if(b&&b2){//注意公司id是否唯一已经在前面判断过了//只需要联合查询tenantid和userEmail不存在就行了
-                Integer count =a001TongYongMapper.insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(info);
-                if(count==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
+                Integer count =a001TongYongMapper.insertUser(info);
+                Integer count0 =a001TongYongMapper.insertTenant(info);
+                if(count==1&&count0==1){//该方法正常情况下会插入2条数据,tenant和users里面各插入一条
                     msgList.addAll(new MessageGenerate().generateMessage("success", "注册并通过","","6"));
 //                msgList.addAll(msgList1);
                 }else{

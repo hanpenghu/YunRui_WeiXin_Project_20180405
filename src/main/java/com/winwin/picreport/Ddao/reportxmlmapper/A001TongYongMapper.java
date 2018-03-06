@@ -19,7 +19,8 @@ public interface A001TongYongMapper {
    Date selectDbDate();
 
 
-   @Select("SELECT COUNT(TENANTID) FROM TENANT WHERE TENANTID=#{tenantId}")
+   //在字段后面加上collate Chinese_PRC_CS_AS_WS是强制sqlServer区分大小写
+   @Select({"select count(*) from tenant where tenantid collate Chinese_PRC_CS_AS_WS= #{tenantId}"})
    Integer conutTenantId(@Param("tenantId") String tenantId);
 
 
@@ -115,9 +116,14 @@ public interface A001TongYongMapper {
    @Select("SELECT COUNT(U.TENANTID) FROM USERS U,TENANT T WHERE U.TENANTID=T.TENANTID and T.TENANTID=#{info.tenantId} and U.TENANTID=#{info.tenantId} AND U.PHONE_NO=#{info.phoneNo}")
    Integer seletTenantIdAndPhoneNo(@Param("info") LoginInfo info);
 
-   @Insert({"insert into tenant (tenantid,tenantname)values(#{info.tenantId},#{info.tenantName})"
-           ,"insert into users(tenantid,userEmail,userPswd,lockbill,phone_no,user_name)values(#{info.tenantId},#{info.userEmail},#{info.userPswd},#{info.lockBill},#{info.phoneNo},#{info.userName})"})
-   Integer insertTenantAndUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(@Param("info") LoginInfo info);
+
+
+
+   @Insert({"insert into tenant (tenantid,tenantname)values(#{info.tenantId},#{info.tenantName})"})
+   Integer insertTenant(@Param("info") LoginInfo info);
+
+   @Insert({"insert into users(tenantid,userEmail,userPswd,lockbill,phone_no,user_name)values(#{info.tenantId},#{info.userEmail},#{info.userPswd},#{info.lockBill},#{info.phoneNo},#{info.userName})"})
+   Integer insertUser(@Param("info") LoginInfo info);
 
 //   @Select("SELECT COUNT(U.TENANTID) FROM USERS U,TENANT T WHERE U.TENANTID=T.TENANTID and T.TENANTID=#{info.tenantId} and U.TENANTID=#{info.tenantId} AND U.USEREMAIL=#{info.userEmail} AND U.USER_NAME=#{info.userName} AND U.PHONE_NO=#{info.phoneNo}")
 //   Integer seletTenantIdAndUserEmailAndUserNamePhoneNo(@Param("info")LoginInfo info);
@@ -150,13 +156,15 @@ public interface A001TongYongMapper {
    String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
 
    //prdCode对应name
-   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man)" +
-           "values(#{prdNo},#{indx1},#{prdCode},'SamplesSys',#{usr},#{chkMan})"})
+   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man,knd,dfu_ut)" +
+           "values(#{prdNo},#{indx1},#{prdCode},'SamplesSys',#{usr},#{chkMan},#{knd},#{dfuUt})"})
    Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo,
                               @Param("indx1")String indx1,
                               @Param("prdCode") String prdCode,
                               @Param("usr")String usr,
-                              @Param("chkMan")String chkMan);
+                              @Param("chkMan")String chkMan,
+                              @Param("knd") String knd,
+                              @Param("dfuUt") String dfuUt);
 
 
 

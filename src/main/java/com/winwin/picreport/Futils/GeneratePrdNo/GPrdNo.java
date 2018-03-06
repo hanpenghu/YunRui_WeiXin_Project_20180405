@@ -88,7 +88,12 @@ public class GPrdNo {
                 //给prdt也添加一个货号
 //                try {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
-                    cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan);
+//                knd=1,dfu_ut=1,usr='ADMIN',chk_man='ADMIN'
+                    String knd="1";
+                    String dfu_ut="1";
+                    usr="ADMIN";
+                    chkMan="ADMIN";
+                    cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan,knd,dfu_ut);
                     p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
 //                } catch (Exception e) {
 //                    p.p("com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate有问题");
@@ -113,10 +118,13 @@ public class GPrdNo {
        if(l==0){
            //此时prdt中没有该货号
            p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个~prdno=~"+prdtSamp.getPrdNo()+"~idxno="+prdtSamp.getIdxNo()+"~prdcode=~"+prdtSamp.getPrdCode()+"~~user=~~~"+prdtSamp.getUsr()+"~~~~~~~~~~~~~");
-
+           String knd="1";
+           String dfu_ut="1";
+           String usr="ADMIN";
+           String  chkMan="ADMIN";
            Integer integer = cnst.a001TongYongMapper.insertPrdtOnePrdNo
                    (prdtSamp.getPrdNo(), prdtSamp.getIdxNo(), prdtSamp.getPrdCode(),
-                           prdtSamp.getUsr(), prdtSamp.getUsr());
+                           usr, chkMan,knd,dfu_ut);
            if(null!=integer&&integer==1){
                p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个完成~~~~~~~~~~~~~~~~~~~~~~~~");
 
