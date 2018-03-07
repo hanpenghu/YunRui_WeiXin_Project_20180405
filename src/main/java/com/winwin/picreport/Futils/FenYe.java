@@ -3,6 +3,21 @@ import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ *首先set  dangQianYe---前端穿过来
+ *
+ * 再set  meiYeXianShiShu-----前端穿过来,不传默认写死10
+ *
+ * 再set   zongJiLuShu-------查数据库的总记录数
+ *
+ *
+ *
+ * 再set   zongYeShu------这一步是为了自动计算zongYeShu,
+ * 但是这个set可以不用,因为我在上一步set调
+ * 了这个set
+ *
+ *
+ * */
 public class FenYe {
 	private List<PrdtSamp0> prdtSampList=new ArrayList<>();//第一次需要传入的数据
 	private Integer dangQianYe;//当前页的页面传过来
@@ -94,17 +109,4 @@ public class FenYe {
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.FenYe{");
-		sb.append("prdtSampList=").append(prdtSampList);
-		sb.append(", dangQianYe=").append(dangQianYe);
-		sb.append(", meiYeXianShiShu=").append(meiYeXianShiShu);
-		sb.append(", zongYeShu=").append(zongYeShu);
-		sb.append(", zongJiLuShu=").append(zongJiLuShu);
-		sb.append(", prdtSamp1=").append(prdtSamp1);
-		sb.append(", role=").append(role);
-		sb.append('}');
-		return sb.toString();
-	}
 }

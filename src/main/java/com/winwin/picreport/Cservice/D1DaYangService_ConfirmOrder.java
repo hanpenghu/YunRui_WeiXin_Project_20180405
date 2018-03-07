@@ -1,4 +1,5 @@
 package com.winwin.picreport.Cservice;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
@@ -23,11 +24,16 @@ public class D1DaYangService_ConfirmOrder {
     @Autowired
     private Cnst cnst;
     public FenYe notConfirmOrderFirstPage(FenYe fenYe) {//对方传过来当前页
-
+        p.p("-------------------------------------------------------");
+        p.p("刚刚进入  得到当前页打样未确认的数据的类D1DaYangService_ConfirmOrder service方法notConfirmOrderFirstPage  ");
+        p.p("-------------------------------------------------------");
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp0> prdtSampList=new ArrayList<>();
         List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdNotConfirm(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        p.p("-------得到打样未确认当前页的所有id------------------------------------------------");
+        p.p(idList);
+        p.p("-------------------------------------------------------");
         for(String id:idList){
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             PrdtSamp0 prdtSampX=new PrdtSamp0();
@@ -40,13 +46,18 @@ public class D1DaYangService_ConfirmOrder {
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,，对应的id是："+id);
             }
+
             //添加价格模块//经过下一个方法,就会自动赋予一个模块
             cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
         }
+        p.p("----------打样未确认的当前页数据全部插入FenYeLei的prdtSampList完成--一下是prdtSampList----json化后的形式---------------------------------------");
+        p.p(JSON.toJSONString(prdtSampList));
+        p.p("-------------------------------------------------------");
         fenYe.setPrdtSampList(prdtSampList);
+        //只要掉了setZongJiLuShu就会自动setZongYeShu
         fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllNotConfirm());
-        fenYe.setZongYeShu();
+//        fenYe.setZongYeShu();
         return fenYe;
     }
 

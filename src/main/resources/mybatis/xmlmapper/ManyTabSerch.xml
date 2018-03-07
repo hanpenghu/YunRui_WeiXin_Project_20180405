@@ -32,8 +32,8 @@
                 (
                     (#{meiYeXianShiShu})*((#{dangQianYe})-1)
                 )
-            id from PRDT_SAMP WHERE isConfirm=0 OR isConfirm is null ORDER BY insertDate DESC
-        )and isConfirm=0 OR isConfirm is null ORDER BY insertDate DESC
+            id from PRDT_SAMP WHERE isnull(isConfirm,0)=0 ORDER BY insertDate DESC
+        )and isnull(isConfirm,0)=0 ORDER BY insertDate DESC
     </select>
 
 
