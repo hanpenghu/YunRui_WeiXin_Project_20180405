@@ -4,7 +4,7 @@ package com.winwin.picreport.Bcontroller.daYang;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,21 +36,21 @@ public class dingJiaXiuGai {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //对应up_def中的oleField//对应唯一码
-//        map.get(Cnst.dingJiaGuanLian);
+//        hashmap.get(Cnst.dingJiaGuanLian);
 //        //对应up_def中的cur_id//币别
-//        map.get(Cnst.curId);
+//        hashmap.get(Cnst.curId);
 //        //对应up_def中的bil_type//对应是否包含运费,01是不含运费
-//        map.get(Cnst.bilType);
+//        hashmap.get(Cnst.bilType);
 //        //qty对应数据库的qty,对应页面的数量区间
-//        map.get(Cnst.qty);
+//        hashmap.get(Cnst.qty);
 //        //up,单价,对应数据库up,
-//        map.get(Cnst.up);
+//        hashmap.get(Cnst.up);
 //        //单位unit对应数据库hj_no,前端自己在字段上加上  主或者副
-//        map.get(Cnst.unit);
+//        hashmap.get(Cnst.unit);
 //        //remFront对应数据库的rem字段备注
-//        map.get(Cnst.remFront);
+//        hashmap.get(Cnst.remFront);
 //        //sDd,前端传过来的时间戳,对应数据库的s_Dd
-//        map.get(Cnst.sDd);
+//        hashmap.get(Cnst.sDd);
         try {
             for(Map<String,String>map:maps){
 

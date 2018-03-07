@@ -6,7 +6,7 @@ import com.winwin.picreport.Edto.ChaXunTiaoJian;
 import com.winwin.picreport.Edto.SalePrdDetailTab1;
 import com.winwin.picreport.Edto.Sapso;
 import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

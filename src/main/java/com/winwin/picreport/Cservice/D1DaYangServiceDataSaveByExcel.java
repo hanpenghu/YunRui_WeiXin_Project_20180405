@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
+import com.winwin.picreport.Edto.PrdtSampCreateUser;
 import com.winwin.picreport.Edto.PrdtSampExample;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.ListUtils.LstAd;
@@ -12,14 +13,16 @@ import com.winwin.picreport.Futils.MsgGenerate.mg;
 import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.GetImgFromExcel;
 import com.winwin.picreport.Futils.excel.huoQuTuPianWenZhiHeWenZiNengYongDe.ReadExcelCotent;
 import com.winwin.picreport.Futils.fileUtil.hanhanFileUtil;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.PictureData;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
@@ -33,14 +36,51 @@ public class D1DaYangServiceDataSaveByExcel {
      ****************************************************************************************
      * */
 //状态码只有50(失败)跟37(成功)
-    public List<Msg> dataSaveByExcel(MultipartFile excel) throws IOException, ParseException {
+    public List<Msg> dataSaveByExcel(MultipartFile excel,HttpServletRequest r) throws IOException, ParseException {
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String user = r.getParameter("user");
+        String userName="",tenantId="";
+        PrdtSampCreateUser prdtSampCreateUser =null;
+
+        try {
+            if(p.notEmpty(user)){
+                    //将来跟随excel中每条数据倒要插入userName和tenantId的对象
+                try {
+                    prdtSampCreateUser = JSON.parseObject(user, PrdtSampCreateUser.class);
+                } catch (Exception e) {
+                    String s="前端传过来的user的格式不是   {\"tenantId\":\"\",\"userName\":\"\"}   这种,可能是参数名被前端写错了";
+                    Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
+                    throw new RuntimeException(JSON.toJSONString(msg));
+                }
+                userName=prdtSampCreateUser.getUserName()==null?"":prdtSampCreateUser.getUserName();
+                tenantId=prdtSampCreateUser.getTenantId()==null?"":prdtSampCreateUser.getTenantId();
+            }else{
+                String s="前端传过来的user是空的,至少是   {\"tenantId\":\"\",\"userName\":\"\"}   这种格式";
+                Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
+                throw new RuntimeException(JSON.toJSONString(msg));
+            }
+
+            p.p("-------------得到前端穿过来的用户对象------------------------------------------");
+            p.p(JSON.toJSONString(prdtSampCreateUser));
+            p.p("-------------------------------------------------------");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            p.p("-------------------------------------------------------");
+            p.p("我在这里catch掉是因为害怕  这个   EXcel保存打样信息的模块出错引起不能打样, ");
+            p.p(" 等前端做对后,这里try catch应该删掉");
+            p.p("-------------------------------------------------------");
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //判断是否有！或者 ;  ,有的话不通过,因为这2个是我的分隔符
         if(shangChuanTongYiReturn.isHavaIgll(excel.getOriginalFilename())){
             return shangChuanTongYiReturn.yourPicNameCanNotHaveIgll();
         }
-        String path=p.gp().sad(Cnst.getProjectPath())
-                .sad(Cnst.javaXieGang).sad(UUID.randomUUID().toString())
+        String path=p.gp()
+                .sad(Cnst.getProjectPath())
+                .sad(Cnst.javaXieGang)
+                .sad(UUID.randomUUID().toString())
                 .sad(excel.getOriginalFilename()).gad();
 //        p.p(msgCnst.fgf.getValue());
 //        p.p(path);
@@ -192,6 +232,8 @@ public class D1DaYangServiceDataSaveByExcel {
 
             //设置插入时间
             ps.setInsertdate(cnst.getDbDate());
+            ps.setUserName(userName);
+            ps.setTenantId(tenantId);
             //把数据存入数据库
             int i1 = cnst.prdtSampMapper.insertSelective(ps);
             if(i1==0){
@@ -259,7 +301,7 @@ public class D1DaYangServiceDataSaveByExcel {
                 prdtSamp.setCusName((String)map.get(i).get(1));
 
 //                //产品分类
-//                prdtSamp.setIdxNo((String)map.get(i).get(2));
+//                prdtSamp.setIdxNo((String)hashmap.get(i).get(2));
                 //excel的产品名称就是产品名称,
                 prdtSamp.setIdxName((String)map.get(i).get(3));
 

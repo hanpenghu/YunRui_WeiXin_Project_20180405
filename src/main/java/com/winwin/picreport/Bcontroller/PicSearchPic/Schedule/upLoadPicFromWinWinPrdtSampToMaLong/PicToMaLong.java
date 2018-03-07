@@ -7,15 +7,12 @@ import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.CnstO;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.DataSetSingleModifyExample1;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
-import com.winwin.picreport.Futils.p;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;

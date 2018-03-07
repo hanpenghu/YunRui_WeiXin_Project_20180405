@@ -1,26 +1,21 @@
 package com.winwin.picreport.Cservice;
 
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
-import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service("fenLei")
 public class D1DaYangS {

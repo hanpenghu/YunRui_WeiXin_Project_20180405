@@ -6,7 +6,7 @@ import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
 import com.winwin.picreport.Futils.GeneratePrdNo.GetMaxPrdNo;
 import com.winwin.picreport.Futils.SpringbootJarPath;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
@@ -17,8 +17,6 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
-
-
     public static final String SamplesSys="SamplesSys";//产品打样的时候我们插入系统表prdt和up_def(定价)的时候做的标记,该标记证明了是打样系统产生的记录
     public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1

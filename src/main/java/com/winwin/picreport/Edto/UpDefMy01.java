@@ -3,7 +3,7 @@ package com.winwin.picreport.Edto;
 //我的定价表
 
 import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import java.math.BigDecimal;
 public class UpDefMy01 extends UpDefMy {
     //dingJiaGuanLian最终存入up_def定价表OLEFIELD,为了让界面四种价格(含运费,不含运费,本币,外币)存入olefield的时候的关联字段

@@ -13,7 +13,7 @@ public class Test {
 //        strList.add("b");
 //        strList.add("c");
 //        System.out.println(strList);
-//        strList = strList.stream().map(v -> "~" + v + "~").collect(Collectors.toList());
+//        strList = strList.stream().hashmap(v -> "~" + v + "~").collect(Collectors.toList());
 //        System.out.println(strList);
         Map<String,String> map=new LinkedHashMap<>();
         map.put("1","2");

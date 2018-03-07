@@ -185,7 +185,7 @@ public interface A001TongYongMapper {
     @Select({"Select count(id) from prdt_samp where prd_code=#{prdCode}"})
     Integer isPrdCodeExist(@Param("prdCode") String prdCode);
 
-    @Update({"update prdt set nouse_dd=#{nouseDd} where prd_no=#{prdNo}"})
+    @Update({"update prdt hashset nouse_dd=#{nouseDd} where prd_no=#{prdNo}"})
    Integer updatePrdtNouseDd(@Param("prdNo") String prdNo,@Param("nouseDd") String s);
 
 
@@ -236,7 +236,7 @@ public interface A001TongYongMapper {
             " where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
 
-   @Update({"update up_def set  " +
+   @Update({"update up_def hashset  " +
            "cur_id =#{curIdAfter}," +
            "qty=#{qty}, " +
            "up=#{up}," +

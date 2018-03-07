@@ -1,9 +1,8 @@
-package com.winwin.picreport.Futils;
+package com.winwin.picreport.Futils.hanhan;
 //import com.alibaba.fastjson.JSONArray;
 //import com.alibaba.fastjson.JSONObject;
 //import org.junit.jupiter.api.Test;
 
-import com.winwin.picreport.AllConstant.Cnst;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -1163,7 +1162,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.p.x{");
+            final StringBuffer sb = new StringBuffer("com.winwin.picreport.Futils.hanhan.p.x{");
             sb.append("x=").append(x);
             sb.append(", str='").append(str).append('\'');
             sb.append('}');

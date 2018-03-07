@@ -27,7 +27,7 @@ public class test0518 {
 
     private static List<JavaBean> getListByGroup(List<JavaBean> list) {
 
-        // 如果需要sum多个字段，可以定义 key value(object) Map<String, object> map
+        // 如果需要sum多个字段，可以定义 key value(object) Map<String, object> hashmap
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (JavaBean bean : list) {
             // 如果需要group by 多个字段，对应key=字段a+字段b...

@@ -2,10 +2,9 @@ package com.winwin.picreport.Futils.GeneratePrdNo;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtExample;
-import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

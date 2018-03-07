@@ -9,6 +9,7 @@ import com.winwin.picreport.Futils.ListUtils.ListUtils;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.MsgGenerate.mg;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -138,7 +139,59 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * 然后再给这个接口  加一个
      * 参数  放在路径传过来,  usr,用于在产生prd_no的时候存入prdt表
      * 信息保存用,不能用于编辑
+     * http://61.177.44.218:8070/d/imageUpLoadAndDataSaveOfManyAttach?token=MTUyMDQxMTM0NjE3NHt-fWlwYWNle359MTM2NDE5Mjg3NDE=
+     *
+     *
+     * 参数,只是写了一部分字段,后来加了userName和tenantId让徐勇传过来是为了记录谁创建的记录,参数名是prdtSamp,类型multipart
+     * {"prdCode":"aaa","idxName":"bbb","idxNo":"af","fenLeiNo":"dffas","fenLeiName":"dsfa","userName":"hanhan","tenantId":"hanhanCompany"}
+     *
      */
+    //返回数据如下
+   /* [
+    {
+        "data": null,
+            "status": "37",
+            "xiaoHaoShiJian": "",
+            "msg": "1",
+            "chMsg": "产品打样新增1条数据",
+            "otherMsg": "产品打样新增1条数据",
+            "token": "",
+            "tenantId": "",
+            "tenantName": "",
+            "userEmail": "",
+            "notExsitThisPrdtNoInPrdtTab": "",
+            "weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao": "",
+            "auth": {
+        "logistics": {
+            "salesorder": {
+                "page": "F"
+            },
+            "salesorderForSAP": {
+                "page": "F"
+            },
+            "salesDetail": {
+                "page": "F"
+            },
+            "productCode": {
+                "page": "F"
+            },
+            "purchasePricing": {
+                "page": "F"
+            },
+            "salesPricing": {
+                "page": "F",
+                        "part": {
+                    "purchasePrice": "F",
+                            "salesPrice": "F"
+                }
+            },
+            "sampleConfirm": {
+                "page": "F"
+            }
+        }
+    }
+    }
+]*/
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,
             method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -191,6 +244,27 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
                         "", "38");
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 上传一个包含信息的excel到数据库
      * 这个一次只能穿一个附件
@@ -200,13 +274,22 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * 50保存失败
      */
     @RequestMapping(value = InterFaceCnst.dataSaveByExcel,
-            method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST, //客户端请求的类型
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,//接受的类型
+            produces = MediaType.APPLICATION_JSON_VALUE)//返回的类型
     public @ResponseBody
-    List<Msg> dataSaveByExcel(@RequestParam(value = p.excel, required = false) MultipartFile excel) {
+    List<Msg> dataSaveByExcel(
+            @RequestParam(value = p.excel, required = false) MultipartFile excel
+            ,HttpServletRequest r
+    ) {
+
+
+
+
+
         //上传到指定目录
         try {
-           return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel);
+           return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel,r);
         } catch (Exception e) {
 //            e.printStackTrace();
             try {
@@ -347,6 +430,14 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     /**
      *得到所有打样未确认的单子第某页,这个不只是能得到第一页,还能得到很多页
      *物流管理里面的 样品确认模块
+     *
+     * http://61.177.44.218:8070/d/notConfirmOrderFirstPage?token=MTUyMDM5OTQ1MTM2N3t-fWlwYWNle359MTM2NDE5Mjg3NDE=
+     *
+     * 请求参数
+     *{"dangQianYe":"1","meiYeXianShiShu":"10"}
+     *
+     *
+     *
      * */
     @RequestMapping(value = InterFaceCnst.notConfirmOrderFirstPage,method = RequestMethod.POST)
     public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {

@@ -73,11 +73,11 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
     }
 
 /*    public static void main(String[]args){
-//        Set<String> set=new TreeSet<>();
-//        set.add("abc");
-//        set.add("abc");
-//        set.add("韩寒");
-//        System.out.println(set);
+//        Set<String> hashset=new TreeSet<>();
+//        hashset.add("abc");
+//        hashset.add("abc");
+//        hashset.add("韩寒");
+//        System.out.println(hashset);
 
         Set<String> set1=new HashSet<>();
         set1.add("abc");

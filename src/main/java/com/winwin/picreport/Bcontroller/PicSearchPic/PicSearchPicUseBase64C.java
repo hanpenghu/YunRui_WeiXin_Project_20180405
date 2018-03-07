@@ -10,7 +10,7 @@ import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.Base64Image;
 import com.winwin.picreport.Futils.ImageAndBase64;
 import com.winwin.picreport.Futils.NotEmpty;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

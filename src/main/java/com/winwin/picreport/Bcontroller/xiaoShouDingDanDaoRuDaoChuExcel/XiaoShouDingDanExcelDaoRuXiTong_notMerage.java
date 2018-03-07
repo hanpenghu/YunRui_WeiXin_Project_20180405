@@ -5,7 +5,7 @@ import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -283,7 +283,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 ////            }
 //        }
 
-//        map.put("samePrdNoMeraged",list);
+//        hashmap.put("samePrdNoMeraged",list);
         //老郑让这个玩意不用合并了,所以,放入同一个东西
         map.put("samePrdNoMeraged",list3);
         map.put("samePrdNoList",null);//不用了

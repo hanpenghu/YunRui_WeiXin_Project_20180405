@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

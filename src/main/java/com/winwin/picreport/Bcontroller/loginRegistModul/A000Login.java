@@ -10,12 +10,11 @@ import com.winwin.picreport.Edto.LoginInfo;
 import com.winwin.picreport.Futils.IsEmail;
 import com.winwin.picreport.Futils.IsPhoneNo;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.p;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin//java的跨域
