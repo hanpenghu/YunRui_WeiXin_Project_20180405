@@ -247,6 +247,7 @@ public class D1DaYangService {
             if (prdtSamp.getSampMake() == null || !p.isFirstDateBig(prdtSamp.getSampMake(), "1986/12/26")) {
                 prdtSamp.setSampMake(new Date());
             }
+
             ii = cnst.prdtSampMapper.insert(prdtSamp);
 //        } catch (Exception e) {
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");

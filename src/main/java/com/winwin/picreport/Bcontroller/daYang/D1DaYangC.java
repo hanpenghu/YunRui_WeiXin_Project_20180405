@@ -142,8 +142,9 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * http://61.177.44.218:8070/d/imageUpLoadAndDataSaveOfManyAttach?token=MTUyMDQxMTM0NjE3NHt-fWlwYWNle359MTM2NDE5Mjg3NDE=
      *
      *
-     * 参数,只是写了一部分字段,后来加了userName和tenantId让徐勇传过来是为了记录谁创建的记录,参数名是prdtSamp,类型multipart
-     * {"prdCode":"aaa","idxName":"bbb","idxNo":"af","fenLeiNo":"dffas","fenLeiName":"dsfa","userName":"hanhan","tenantId":"hanhanCompany"}
+     * 参数,只是写了一部分字段,后来加了userName和tenantId让徐勇传过来是为了记录谁创建的记录,
+     * 参数名是prdtSamp,类型multipart
+     * {"userName":"hanhan","tenantId":"hanhanCompany","prdCode":"aaa","idxName":"bbb","idxNo":"af","fenLeiNo":"dffas","fenLeiName":"dsfa"}
      *
      */
     //返回数据如下
@@ -272,6 +273,20 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * 和打样信息(到数据库表prdt_samp)
      * 49保存成功,
      * 50保存失败
+     *
+     *
+     *
+     * 传输格式form-data
+     * http://127.0.0.1:8070/d/dataSaveByExcel?token=MTUyMDQxNDgzMzAwNHt-fWlwYWNle359MTM2NDE5Mjg3NDE=
+     *
+     *key     user
+     *value    {"tenantId":"1","userName":"1"}
+     * 外加一个
+     * key  excel
+     * value  具体的excel
+     *
+     *
+     *
      */
     @RequestMapping(value = InterFaceCnst.dataSaveByExcel,
             method = RequestMethod.POST, //客户端请求的类型
