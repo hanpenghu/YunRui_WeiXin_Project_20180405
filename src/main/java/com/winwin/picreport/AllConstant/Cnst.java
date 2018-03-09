@@ -71,6 +71,8 @@ public class Cnst {
     }
 
     @Autowired
+     public  AlterPriceRecMapper alterPriceRecMapper;
+    @Autowired
     public GPrdNo gPrdNo;
     @Autowired
     public UpDefMapper upDefMapper;

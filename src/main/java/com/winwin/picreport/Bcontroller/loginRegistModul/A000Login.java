@@ -30,6 +30,54 @@ public class A000Login {
 
     @Autowired
     private LoginShiPhoneNoDeQingkuang loginShiPhoneNoDeQingkuang;
+    //http://127.0.0.1:8070/login
+    //参数{"tenantId":"ipace","userEmail":"13641928741","userPswd":"123456"}
+    //返回结果：
+   /* [
+    {
+        "data": null,
+            "status": "1",---1成功  0失败
+            "xiaoHaoShiJian": "",
+            "msg": "success",
+            "chMsg": "登录成功",
+            "otherMsg": "",
+            "token": "MTUyMDQ5MDMyNDk5NXt-fWlwYWNle359MTM2NDE5Mjg3NDE=",
+            "tenantId": "ipace",
+            "tenantName": "上海艾班仕信息科技有限公司",
+            "userEmail": "演示数据",---这个实际上我是把数据库的userName返回过来给徐勇用的
+            "notExsitThisPrdtNoInPrdtTab": "",
+            "weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao": "",
+            "auth": {//权限模块
+        "logistics": {
+            "salesorder": {
+                "page": "F"
+            },
+            "salesorderForSAP": {
+                "page": "F"
+            },
+            "salesDetail": {
+                "page": "F"
+            },
+            "productCode": {
+                "page": "F"
+            },
+            "purchasePricing": {
+                "page": "F"
+            },
+            "salesPricing": {
+                "page": "F",
+                        "part": {
+                    "purchasePrice": "F",
+                            "salesPrice": "F"
+                }
+            },
+            "sampleConfirm": {
+                "page": "F"
+            }
+        }
+    }
+    }
+]*/
     @RequestMapping(value="login",method= RequestMethod.POST)
     public
     @ResponseBody

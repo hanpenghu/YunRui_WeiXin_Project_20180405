@@ -94,7 +94,7 @@ public class PrdtSamp {
 
     //销售描述
     protected String salemandesc;
-    //停用时间
+//    /停用时间/
     protected Date stopusedate;
     //供应商编号
     protected String cusNoGive;

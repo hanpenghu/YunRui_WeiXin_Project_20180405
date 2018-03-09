@@ -538,9 +538,6 @@
       <if test="record.attach != null">
         attach = #{record.attach,jdbcType=VARCHAR},
       </if>
-      <if test="record.insertdate != null">
-        insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.cusNoGive != null">
         cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
       </if>
@@ -622,6 +619,12 @@
       <if test="record.tenantId != null">
         tenant_id = #{record.tenantId,jdbcType=VARCHAR},
       </if>
+      <if test="insertdate != null">
+        insertdate = #{insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertdate == null">
+        insertdate = insertdate,
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -683,9 +686,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     update PRDT_SAMP
     <set>
-      <if test="prdCode != null">
-        prd_code = #{prdCode,jdbcType=VARCHAR},
-      </if>
       <if test="idxName != null">
         idx_name = #{idxName,jdbcType=VARCHAR},
       </if>
@@ -736,9 +736,6 @@
       </if>
       <if test="attach != null">
         attach = #{attach,jdbcType=VARCHAR},
-      </if>
-      <if test="insertdate != null">
-        insertdate = #{insertdate,jdbcType=TIMESTAMP},
       </if>
       <if test="cusNoGive != null">
         cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
@@ -821,10 +818,17 @@
       <if test="tenantId != null">
         tenant_id = #{tenantId,jdbcType=VARCHAR},
       </if>
-
+      <if test="prdCode != null">
+        prd_code = #{prdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="insertdate != null">
+        insertdate = #{insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertdate == null">
+        insertdate = insertdate,
+      </if>
     </set>
-
-    where id = #{id,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     update PRDT_SAMP

@@ -1,5 +1,6 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
+import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.Model;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.ModelUsers;
 import com.winwin.picreport.Edto.*;
@@ -128,7 +129,7 @@ public interface A001TongYongMapper {
 //   @Select("SELECT COUNT(U.TENANTID) FROM USERS U,TENANT T WHERE U.TENANTID=T.TENANTID and T.TENANTID=#{info.tenantId} and U.TENANTID=#{info.tenantId} AND U.USEREMAIL=#{info.userEmail} AND U.USER_NAME=#{info.userName} AND U.PHONE_NO=#{info.phoneNo}")
 //   Integer seletTenantIdAndUserEmailAndUserNamePhoneNo(@Param("info")LoginInfo info);
 
-   @Update("insert into users(tenantid,userEmail,userPswd,lockbill,phone_no,user_name)values(#{info.tenantId},#{info.userEmail},#{info.userPswd},#{info.lockBill},#{info.phoneNo},#{info.userName})")
+   @Insert("insert into users(tenantid,userEmail,userPswd,lockbill,phone_no,user_name)values(#{info.tenantId},#{info.userEmail},#{info.userPswd},#{info.lockBill},#{info.phoneNo},#{info.userName})")
    Integer insertUsersOfTenantIdAndUserEmailOrPhoneNoOrUserName(@Param("info") LoginInfo info);
 
    @Select("select count(tenantid) from tenant where tenantName=#{info.tenantName}")
@@ -185,7 +186,7 @@ public interface A001TongYongMapper {
     @Select({"Select count(id) from prdt_samp where prd_code=#{prdCode}"})
     Integer isPrdCodeExist(@Param("prdCode") String prdCode);
 
-    @Update({"update prdt hashset nouse_dd=#{nouseDd} where prd_no=#{prdNo}"})
+    @Update({"update prdt set nouse_dd=#{nouseDd} where prd_no=#{prdNo}"})
    Integer updatePrdtNouseDd(@Param("prdNo") String prdNo,@Param("nouseDd") String s);
 
 
@@ -235,15 +236,30 @@ public interface A001TongYongMapper {
     @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b " +
             " where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
-
-   @Update({"update up_def hashset  " +
+   //////////////价格修改模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   @Update({"update up_def set  " +
            "cur_id =#{curIdAfter}," +
-           "qty=#{qty}, " +
-           "up=#{up}," +
-           "hj_no=#{unit}," +
-           "rem =#{remFront} " +
+           "qty=#{qtyAfter}, " +
+           "up=#{upAfter}," +
+           "hj_no=#{unitAfter}," +
+           "rem =#{remFrontAfter} " +
            "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')"})
-   Integer updateUpdef(Map<String, String> map101);
+   Integer updateUpdef(AlterPrice alterPrice);
+
+
+
+//   @Insert({"insert into alter_price_rec(ding_Jia_Guan_Lian,user_Name,tenant_Id" +
+//           ",alter_Time,prdt_Code,prdt_Samp_Uuid,qty_Before" +
+//           ",qty_After,up_Before,up_After,unit_Before,unit_After" +
+//           ",rem_Front_Before,rem_Front_After,bil_Type" +
+//           ",cur_Id_Before,cur_Id_After)values" +
+//           "(#{dingJiaGuanLian},#{userName},#{tenantId},#{alterTime}" +
+//           ",#{prdtCode},#{prdtSampUuid},#{qtyBefore}" +
+//           ",#{qtyAfter},#{upBefore},#{upAfter},#{unitBefore},#{unitAfter}" +
+//           ",#{remFrontBefore},#{remFrontAfter},#{bilType},#{curIdBefore},#{curIdAfter})"})
+//   Integer insertAlterPriceRec(AlterPrice alterPrice);
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
    @Select({"select top 1 idx_no from indx where name=#{idxName}"})
    String getIdxNoFromIdxName(@Param("idxName") String idxName);
@@ -274,6 +290,11 @@ public interface A001TongYongMapper {
    //图片搜索模块的根据图片afterUrl得到打样的简单信息
    @Select({" select prd_code as prdtCode,idx_name as prdtName from prdt_samp   where thum like #{urlAfter}"})
     List<SimplePrdtSamp> getSimplePrdtSamps(@Param("urlAfter") String urlAfter);
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   //定价修改记录修改内容模块
+   @Select({"SELECT top 20 ding_jia_guan_lian as dingJiaGuanLian,USER_NAME as userName,tenant_id as tenantId,alter_time as alterTime,prdt_code as prdtCode,prdt_samp_uuid as prdtSampUuid,qty_before as qtyBefore,qty_after as qtyAfter,up_before as upBefore,up_after as upAfter,unit_before as unitBefore,unit_after as unitAfter,rem_front_before as remFrontBefore,rem_front_after as remfrontAfter,bil_type as bilType,cur_id_before as curIdBefore,cur_id_after as curIdAfter,sale_or_buy as saleOrBuy from alter_price_rec where prdt_samp_uuid=#{prdtSampUuid} and sale_or_buy=#{saleOrBuy} order by alter_time desc"})
+   List<AlterPriceRec> selectTop20AlterPriceRec(@Param("prdtSampUuid") String prdtSampUuid, @Param("saleOrBuy") String saleOrBuy);
+   /////////////////////////////////////////////////////////////////////////////////////////////
 }

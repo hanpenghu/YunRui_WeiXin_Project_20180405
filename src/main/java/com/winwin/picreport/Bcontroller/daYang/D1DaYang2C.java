@@ -7,6 +7,7 @@ import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -123,128 +124,6 @@ public class D1DaYang2C {
 
 
     }
-
-
-
-
-    /**
-     *采购价格和销售价格的保存放在一个接口
-     * //不含运费单价的采购价格//up_def中bil_type=01
-     BigDecimal noTransUpBuy;//
-     //含运费单价采购价格//up_def中bil_type!=01
-     BigDecimal haveTransUpBuy;//
-
-
-     //不含运费单价的销售价格//up_def中bil_type=01
-     BigDecimal noTransUpSale;//
-     //含运费单价销售价格//up_def中bil_type!=01
-     BigDecimal haveTransUpSale;//
-
-     上面四个字段可以区分采购和销售,
-     比如当noTransUpBuy和haveTransUpBuy都为null的时候肯定是  销售的要保存
-     销售 传入方式//币别徐勇来拆,运费我来拆分
-
-
-     {"uuid":"填入给前端的唯一标识","noTransUpSale":"没有运费的销售定价",
-     "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unit":""}
-
-
-    采购传入方式//币别徐勇来拆,运费我来拆分
-
-
-     {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",
-     "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unit":""}
-
-
-     //地址   ip地址:8070/saveSaleOrBuyPrice
-     * */
-
-    //保存采购和销售价格
-    //保存采购的时候要供应商不要客户,保存销售的时候供应商和客户都不要
-    @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
-    public @ResponseBody  Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币
-
-        //生成界面依次插入的四条记录的关联的uuid
-        String uid = p.uuid();
-        ups.forEach(v->v.setDingJiaGuanLian(p.gp().sad(Cnst.SamplesSys).sad(uid).gad()));
-
-//        synchronized (this){
-
-            p.p("-------------------------------！！！！！！保存价格开始！！！！！--------------------------------------");
-                return cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice0(ups);
-//            p.p(up);
-//            p.p("-------------------------------！！！！！！保存价格结束！！！！！--------------------------------------");
-//        }
-
-
-    }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
