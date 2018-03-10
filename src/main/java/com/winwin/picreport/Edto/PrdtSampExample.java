@@ -3275,6 +3275,76 @@ public class PrdtSampExample {
             addCriterion("tenant_id not between", value1, value2, "tenantId");
             return (Criteria) this;
         }
+
+        public Criteria andMainUnitIsNull() {
+            addCriterion("main_unit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitIsNotNull() {
+            addCriterion("main_unit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitEqualTo(String value) {
+            addCriterion("main_unit =", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitNotEqualTo(String value) {
+            addCriterion("main_unit <>", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitGreaterThan(String value) {
+            addCriterion("main_unit >", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitGreaterThanOrEqualTo(String value) {
+            addCriterion("main_unit >=", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitLessThan(String value) {
+            addCriterion("main_unit <", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitLessThanOrEqualTo(String value) {
+            addCriterion("main_unit <=", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitLike(String value) {
+            addCriterion("main_unit like", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitNotLike(String value) {
+            addCriterion("main_unit not like", value, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitIn(List<String> values) {
+            addCriterion("main_unit in", values, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitNotIn(List<String> values) {
+            addCriterion("main_unit not in", values, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitBetween(String value1, String value2) {
+            addCriterion("main_unit between", value1, value2, "mainUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMainUnitNotBetween(String value1, String value2) {
+            addCriterion("main_unit not between", value1, value2, "mainUnit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

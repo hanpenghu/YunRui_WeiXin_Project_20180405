@@ -1,22 +1,30 @@
 package com.winwin.picreport.Bcontroller.daYang;
 
 
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.hanhan.arraylist;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
+import org.apache.juli.logging.LogFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @RestController
 @CrossOrigin
 public class DingJiaXiuGai {
-
+    private  Logger logger = LogManager.getLogger(this.getClass().getName());
     @Autowired
     private  Cnst cnst;
     //定价主要是修改up_def定价表
@@ -121,50 +129,34 @@ public class DingJiaXiuGai {
 
     @RequestMapping(value=Cnst.dingJiaXiuGai,method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    @Transactional
     public @ResponseBody Msg dingJiaXiuGai(@RequestBody List<AlterPrice> alterPrices){
 
+        p.p("--------定价修改,前端传过来的东西-----------------------------------------------");
+        p.p(JSON.toJSONString(alterPrices));
+        p.p("-------------------------------------------------------");
+        //错误信息注册列表
+        List<Object> msgs= arraylist.b().a("定价修改失败").a("定价修改成功").g();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(p.empty(alterPrices)){
+            return Msg.gmg().setMsg("定价修改失败,前端传过来的是空数组或者null").setStatus("0");
+        }
 
         try {
-            for(AlterPrice alterPrice:alterPrices){
-
-//                //把时间戳转换成一定格式的String
-//                String sDdStr = p.sjc2StrDate(map.get(Cnst.sDd), p.d16);
-//                sDdStr=p.empty(sDdStr)?p.space:sDdStr;
-                //其中dingJiaGuanLian(oleField)+bilType+curIdBefore可以形成联合主键进行某条记录的修改
-                String dingJiaZhuJian=stra.b()
-                        .a(p.strNullToSpace(alterPrice.getDingJiaGuanLian()))
-                        .a(p.strNullToSpace(alterPrice.getBilType()))
-                        .a(p.strNullToSpace(alterPrice.getCurIdBefore()))
-                        .g();
-                //设置定价主键,将来更新updef表 用
-                alterPrice.setDingJiaZhuJian(dingJiaZhuJian);
-
-                //设置修改时间,将来插入修改记录表
-                alterPrice.setAlterTime(p.dtoStr(new Date(),p.d16));
-                 p.p("-------------------"+dingJiaZhuJian+"----------------------");
-
-
-                 //修改价格主表up_def
-                Integer i=cnst.a001TongYongMapper.updateUpdef(alterPrice);
-                //插入修改记录表alter_price_rec修改记录
-//                Integer j=cnst.a001TongYongMapper.insertAlterPriceRec(alterPrice);
-                Integer j=cnst.alterPriceRecMapper.insertSelective(alterPrice);
-                if(i>=0&&j>=0){
-                    //修改成功继续修改下一个
-                }else{
-                    throw new RuntimeException("定价修改失败");
-                }
-            }
-        } catch (RuntimeException e) {
+            return cnst.dingJiaXiuGaiService.dingJiaXiuGai(alterPrices);
+        } catch (Exception e) {
             e.printStackTrace();
-            return Msg.gmg().setMsg("定价修改失败").setStatus("0");
+            logger.error(e.getMessage(),e);
+            //看msg是否在注册列表里面
+            if(msgs.contains(e.getMessage())){
+                return Msg.gmg().setMsg("定价修改失败").setChMsg(e.getMessage()).setStatus("0");
+            }else{
+                return Msg.gmg().setMsg("未知异常导致定价修改失败").setChMsg("未知异常").setStatus("0");
+            }
+
         }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        return Msg.gmg().setMsg("定价修改成功").setStatus("1");
     }
 
 //    public static void main(String[]args) throws ParseException {

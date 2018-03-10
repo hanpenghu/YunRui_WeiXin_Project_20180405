@@ -1,6 +1,7 @@
 package com.winwin.picreport.Cservice;
 
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Bcontroller.daYang.dto.AlterPriceRecToFront;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.DateUtils.MakeDate1970Null;
 import com.winwin.picreport.Futils.FenYe;
@@ -136,7 +137,7 @@ public class D1DaYangS {
 //                .andSaleOrBuyEqualTo("sale");
 //        List<AlterPriceRec> saleAlterRecList = cnst.alterPriceRecMapper.selectByExample(aa);
 
-        List<AlterPriceRec> saleAlterRecList= cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"sale");
+        List<AlterPriceRecToFront> saleAlterRecList= cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"sale");
         
         
         prdtSampX.setSaleAlterRecList(saleAlterRecList);
@@ -148,7 +149,7 @@ public class D1DaYangS {
 //                .andSaleOrBuyEqualTo("buy");
 //        List<AlterPriceRec> buyAlterRecList = cnst.alterPriceRecMapper.selectByExample(aaa);
 
-        List<AlterPriceRec> buyAlterRecList =cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"buy");
+        List<AlterPriceRecToFront> buyAlterRecList =cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"buy");
         prdtSampX.setBuyAlterRecList(buyAlterRecList);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         p.p("~~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~1970没改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");

@@ -155,7 +155,8 @@ public class ReadExcelCotent {
         //暂时列数固定为12列2018_1_12   weekday(5)   11:21:39//因为老郑说后面多出来东西要没事情才行
         //后来表头加了两个英文后如下
         //品牌	客户	产品分类	产品名称	产品负责人	图片	编号	颜色	尺寸	打样时间	Category	Team	产品要求	产品描述
-        colNum=14;
+//        colNum=14;
+        colNum=15;//2018_3_10   weekday(6)   19:14:48老郑让加上一个主单位
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -167,7 +168,7 @@ public class ReadExcelCotent {
             int j = 0;
             Map<Integer,Object> cellValue = new HashMap<Integer, Object>();
             while (j < colNum) {
-                Object obj = getCellFormatValue(row.getCell(j));
+                Object obj = this.getCellFormatValue(row.getCell(j));
                 cellValue.put(j, obj);
                 j++;
             }

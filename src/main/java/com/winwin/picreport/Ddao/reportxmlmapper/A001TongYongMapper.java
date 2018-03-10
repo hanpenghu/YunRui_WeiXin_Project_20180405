@@ -1,6 +1,7 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
+import com.winwin.picreport.Bcontroller.daYang.dto.AlterPriceRecToFront;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.Model;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.ModelUsers;
 import com.winwin.picreport.Edto.*;
@@ -8,6 +9,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.sql.ParameterMetaData;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -157,15 +160,17 @@ public interface A001TongYongMapper {
    String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
 
    //prdCode对应name
-   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man,knd,dfu_ut)" +
-           "values(#{prdNo},#{indx1},#{prdCode},'SamplesSys',#{usr},#{chkMan},#{knd},#{dfuUt})"})
+   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man,knd,dfu_ut,ut)" +
+           "values(#{prdNo},#{indx1},#{prdCode}," +
+           "'SamplesSys',#{usr},#{chkMan},#{knd},#{dfuUt},#{mainUnit})"})
    Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo,
                               @Param("indx1")String indx1,
                               @Param("prdCode") String prdCode,
                               @Param("usr")String usr,
                               @Param("chkMan")String chkMan,
                               @Param("knd") String knd,
-                              @Param("dfuUt") String dfuUt);
+                              @Param("dfuUt") String dfuUt,
+                              @Param("mainUnit")String mainUnit);
 
 
 
@@ -294,7 +299,15 @@ public interface A001TongYongMapper {
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    //定价修改记录修改内容模块
-   @Select({"SELECT top 20 ding_jia_guan_lian as dingJiaGuanLian,USER_NAME as userName,tenant_id as tenantId,alter_time as alterTime,prdt_code as prdtCode,prdt_samp_uuid as prdtSampUuid,qty_before as qtyBefore,qty_after as qtyAfter,up_before as upBefore,up_after as upAfter,unit_before as unitBefore,unit_after as unitAfter,rem_front_before as remFrontBefore,rem_front_after as remfrontAfter,bil_type as bilType,cur_id_before as curIdBefore,cur_id_after as curIdAfter,sale_or_buy as saleOrBuy from alter_price_rec where prdt_samp_uuid=#{prdtSampUuid} and sale_or_buy=#{saleOrBuy} order by alter_time desc"})
-   List<AlterPriceRec> selectTop20AlterPriceRec(@Param("prdtSampUuid") String prdtSampUuid, @Param("saleOrBuy") String saleOrBuy);
-   /////////////////////////////////////////////////////////////////////////////////////////////
+   @Select({"SELECT top 20  have_Trans_Up_Other_After as haveTransUpOtherAfter,have_Trans_Up_Other_Before as haveTransUpOtherBefore,have_Trans_Up_My_After as haveTransUpMyAfter,have_Trans_Up_My_Before as haveTransUpMyBefore,no_Trans_Up_Other_After as noTransUpOtherAfter,no_Trans_Up_Other_Before as noTransUpOtherBefore,no_Trans_Up_My_After as noTransUpMyAfter,no_Trans_Up_My_Before as noTransUpMyBefore, ding_jia_guan_lian as dingJiaGuanLian,USER_NAME as userName,tenant_id as tenantId,alter_time as alterTime,prdt_code as prdtCode,prdt_samp_uuid as prdtSampUuid,qty_before as qtyBefore,qty_after as qtyAfter,up_before as upBefore,up_after as upAfter,unit_before as unitBefore,unit_after as unitAfter,rem_front_before as remFrontBefore,rem_front_after as remfrontAfter,bil_type as bilType,cur_id_before as curIdBefore,cur_id_after as curIdAfter,sale_or_buy as saleOrBuy from alter_price_rec where prdt_samp_uuid=#{prdtSampUuid} and sale_or_buy=#{saleOrBuy} order by alter_time desc"})
+   List<AlterPriceRecToFront> selectTop20AlterPriceRec(@Param("prdtSampUuid") String prdtSampUuid, @Param("saleOrBuy") String saleOrBuy);
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+   //在prdt表中通过prdNo找主单位ut
+   @Select({"select ut from prdt where prd_no=#{prdtNo}"})
+    String selectUtByPrdNoFromPrdt(@Param("prdtNo") String prdtNo);
+
+   @Select({"update prdt set ut=#{mainUnit} where prd_no=#{prdtNo}"})
+   int updateUtToPrdtUsePrdNo(@Param("prdtNo") String prdtNo,@Param("mainUnit")  String mainUnit);
 }

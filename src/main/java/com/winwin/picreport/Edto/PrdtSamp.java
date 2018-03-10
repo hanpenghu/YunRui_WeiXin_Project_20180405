@@ -94,7 +94,7 @@ public class PrdtSamp {
 
     //销售描述
     protected String salemandesc;
-//    /停用时间/
+    //    /停用时间/
     protected Date stopusedate;
     //供应商编号
     protected String cusNoGive;
@@ -106,6 +106,9 @@ public class PrdtSamp {
     protected String userName;
     //创建人所在的公司,
     protected String tenantId;
+//主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
+    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
+    protected String mainUnit;
 
     public String getId() {
         return id;
@@ -481,5 +484,13 @@ public class PrdtSamp {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId == null ? null : tenantId.trim();
+    }
+
+    public String getMainUnit() {
+        return mainUnit;
+    }
+
+    public void setMainUnit(String mainUnit) {
+        this.mainUnit = mainUnit == null ? null : mainUnit.trim();
     }
 }

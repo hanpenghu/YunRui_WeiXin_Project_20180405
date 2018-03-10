@@ -171,6 +171,8 @@ public class Cnst {
     public D1DaYangServiceOfDeleteSome deleteSome;
 
 
+    @Autowired
+    public DingJiaXiuGaiService dingJiaXiuGaiService;
 
 
     @Autowired

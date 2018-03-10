@@ -49,6 +49,7 @@
     <result column="fen_lei_name" jdbcType="VARCHAR" property="fenLeiName" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+    <result column="main_unit" jdbcType="VARCHAR" property="mainUnit" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -115,7 +116,7 @@
     Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, 
     modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, 
     businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name, 
-    user_name, tenant_id
+    user_name, tenant_id, main_unit
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -163,8 +164,8 @@
       estimatePrice, littleOrderPrice, financeLittleOrderPrice, 
       businessDesc, financeDesc, saleManDesc, 
       buyerdesc, stopUseDate, fen_lei_no, 
-      fen_lei_name, user_name, tenant_id
-      )
+      fen_lei_name, user_name, tenant_id, 
+      main_unit)
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -180,8 +181,8 @@
       #{estimateprice,jdbcType=NUMERIC}, #{littleorderprice,jdbcType=NUMERIC}, #{financelittleorderprice,jdbcType=NUMERIC}, 
       #{businessdesc,jdbcType=VARCHAR}, #{financedesc,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}, 
       #{buyerdesc,jdbcType=VARCHAR}, #{stopusedate,jdbcType=TIMESTAMP}, #{fenLeiNo,jdbcType=VARCHAR}, 
-      #{fenLeiName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}
-      )
+      #{fenLeiName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{mainUnit,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -327,6 +328,9 @@
       <if test="tenantId != null">
         tenant_id,
       </if>
+      <if test="mainUnit != null">
+        main_unit,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -470,6 +474,9 @@
       <if test="tenantId != null">
         #{tenantId,jdbcType=VARCHAR},
       </if>
+      <if test="mainUnit != null">
+        #{mainUnit,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultType="java.lang.Long">
@@ -537,6 +544,9 @@
       </if>
       <if test="record.attach != null">
         attach = #{record.attach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertdate != null">
+        insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.cusNoGive != null">
         cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
@@ -619,11 +629,8 @@
       <if test="record.tenantId != null">
         tenant_id = #{record.tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="insertdate != null">
-        insertdate = #{insertdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="insertdate == null">
-        insertdate = insertdate,
+      <if test="record.mainUnit != null">
+        main_unit = #{record.mainUnit,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -678,7 +685,8 @@
       fen_lei_no = #{record.fenLeiNo,jdbcType=VARCHAR},
       fen_lei_name = #{record.fenLeiName,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
-      tenant_id = #{record.tenantId,jdbcType=VARCHAR}
+      tenant_id = #{record.tenantId,jdbcType=VARCHAR},
+      main_unit = #{record.mainUnit,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -686,6 +694,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     update PRDT_SAMP
     <set>
+      <if test="prdCode != null">
+        prd_code = #{prdCode,jdbcType=VARCHAR},
+      </if>
       <if test="idxName != null">
         idx_name = #{idxName,jdbcType=VARCHAR},
       </if>
@@ -736,6 +747,9 @@
       </if>
       <if test="attach != null">
         attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="insertdate != null">
+        insertdate = #{insertdate,jdbcType=TIMESTAMP},
       </if>
       <if test="cusNoGive != null">
         cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
@@ -818,17 +832,11 @@
       <if test="tenantId != null">
         tenant_id = #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="prdCode != null">
-        prd_code = #{prdCode,jdbcType=VARCHAR},
-      </if>
-      <if test="insertdate != null">
-        insertdate = #{insertdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="insertdate == null">
-        insertdate = insertdate,
+      <if test="mainUnit != null">
+        main_unit = #{mainUnit,jdbcType=VARCHAR},
       </if>
     </set>
-        WHERE id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     update PRDT_SAMP
@@ -877,7 +885,8 @@
       fen_lei_no = #{fenLeiNo,jdbcType=VARCHAR},
       fen_lei_name = #{fenLeiName,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
-      tenant_id = #{tenantId,jdbcType=VARCHAR}
+      tenant_id = #{tenantId,jdbcType=VARCHAR},
+      main_unit = #{mainUnit,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

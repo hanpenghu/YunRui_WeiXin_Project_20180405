@@ -197,10 +197,20 @@ public class DangQianYeDataC {
                     "unitAfter": "主:kg",
                     "remFrontBefore": "阿里巴巴",
                     "remFrontAfter": "阿里巴巴001",
-                    "bilType": "01",
+                    ------"bilType": "01",//这个返回的时候不要了,因为下面的价格就是根据这个来订的,但是bilType在传过来的时候,是指的当时档次徐勇拆分的币别
+                    //下面的修改前后curid指的是外币的,不是rmb的,因为rmb的币别不需要改
                     "curIdBefore": "USD",
                     "curIdAfter": "USD",
-                    "saleOrBuy": "sale"
+                    "saleOrBuy": "sale",
+
+                    "noTransUpMyBefore": "",
+                    "noTransUpMyAfter": "",
+                    "noTransUpOtherBefore": "900",
+                    "noTransUpOtherAfter": "9101",
+                    "haveTransUpMyBefore": "",
+                    "haveTransUpMyAfter": "",
+                    "haveTransUpOtherBefore": "",
+                    "haveTransUpOtherAfter": ""
                 }
             ],
             //采购修改价格记录表

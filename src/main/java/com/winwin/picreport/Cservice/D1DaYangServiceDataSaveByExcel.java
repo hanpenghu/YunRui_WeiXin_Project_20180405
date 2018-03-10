@@ -51,14 +51,14 @@ public class D1DaYangServiceDataSaveByExcel {
                 } catch (Exception e) {
                     String s="前端传过来的user的格式不是   {\"tenantId\":\"\",\"userName\":\"\"}   这种,可能是参数名被前端写错了";
                     Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
-                    throw new RuntimeException(JSON.toJSONString(msg));
+                    p.throwE(JSON.toJSONString(msg));
                 }
                 userName=prdtSampCreateUser.getUserName()==null?"":prdtSampCreateUser.getUserName();
                 tenantId=prdtSampCreateUser.getTenantId()==null?"":prdtSampCreateUser.getTenantId();
             }else{
                 String s="前端传过来的user是空的,至少是   {\"tenantId\":\"\",\"userName\":\"\"}   这种格式";
                 Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
-                throw new RuntimeException(JSON.toJSONString(msg));
+                p.throwE(JSON.toJSONString(msg));
             }
 
             p.p("-------------得到前端穿过来的用户对象------------------------------------------");
@@ -95,7 +95,11 @@ public class D1DaYangServiceDataSaveByExcel {
         if(l!=null){//null代表继续走下去,
             return l;
         }
+///////////////////////////////////////////////////////////////////////////////
+        //判断prdCode是否存在于数据库,存在于数据库就抛出异常
 
+
+/////////////////////////////////////////////////////////////////////////////
 
         /**
          *得到所有图片
@@ -145,7 +149,10 @@ public class D1DaYangServiceDataSaveByExcel {
                     p.p(p0);
                     p.p("---------------1111111111--------------------");
 
+                    //给当前的prdtSamp流水一个货号
                     cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+
+
 
                     //如果流水不到prdNo,就抛出异常,最后在controller层捕捉到具体信息
                     if(p.empty(p0.getPrdNo())){
@@ -244,6 +251,9 @@ public class D1DaYangServiceDataSaveByExcel {
                 throw new RuntimeException(msgCnst.excelSaveFailOfDbMistakeJson.getValue());//excel保存失败码,数据库级别错误
 
             }
+            //
+
+
         }//for结束
         hanhanFileUtil.Del(file);
         //返回成功信息
@@ -328,34 +338,113 @@ public class D1DaYangServiceDataSaveByExcel {
                 prdtSamp.setTeamname((String)map.get(i).get(11));
                 prdtSamp.setSampRequ((String)map.get(i).get(12));
                 prdtSamp.setSampDesc((String)map.get(i).get(13));
-
+                prdtSamp.setMainUnit((String)map.get(i).get(14));
                 /**
                  *下面判断是否有重复数据在数据库,有的话就停止导入excel
+                 * //这个判断重复的其实已经做了,但是后来老郑说只要prdtCode重复就 不能导入,
                  * */
                 PrdtSampExample pse=new PrdtSampExample();
                 pse.createCriteria()
-                        .andMarkNameEqualTo(prdtSamp.getMarkName())
-                .andCusNameEqualTo(prdtSamp.getCusName())
-                .andIdxNoEqualTo(prdtSamp.getIdxNo())
-                .andIdxNameEqualTo(prdtSamp.getIdxName())
-                .andSalNameEqualTo(prdtSamp.getSalName())
+//                        .andMarkNameEqualTo(prdtSamp.getMarkName())
+//                .andCusNameEqualTo(prdtSamp.getCusName())
+//                .andIdxNoEqualTo(prdtSamp.getIdxNo())
+//                .andIdxNameEqualTo(prdtSamp.getIdxName())
+//                .andSalNameEqualTo(prdtSamp.getSalName())
                 .andPrdCodeEqualTo(prdtSamp.getPrdCode())
-                .andColourEqualTo(prdtSamp.getColour())
-                .andSizeEqualTo(prdtSamp.getSize())
-                .andSampMakeEqualTo(prdtSamp.getSampMake())
-                .andSampRequEqualTo(prdtSamp.getSampRequ())
-                .andSampDescEqualTo(prdtSamp.getSampDesc());
+//                .andColourEqualTo(prdtSamp.getColour())
+//                .andSizeEqualTo(prdtSamp.getSize())
+//                .andSampMakeEqualTo(prdtSamp.getSampMake())
+//                .andSampRequEqualTo(prdtSamp.getSampRequ())
+//                .andSampDescEqualTo(prdtSamp.getSampDesc())
+                     ;
                 if(cnst.prdtSampMapper.countByExample(pse)>0){
                     hanhanFileUtil.Del(file);
-                    return mg.gm(Msg.gmg().setMsg(msgCnst.failSave.getValue())
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg(msgCnst.excelYouChongFuShuJuZaiDB.getValue())
                             .setChMsg(msgCnst.excelYouChongFuShuJuZaiDB.getValue())
                             .setStatus(msgCnst.failSaveStatus.getValue()));
                 }
+
+                //判断prdtSamp的几个非空 字段是否是空的,为空的return
+
+
+                if(p.empty(prdtSamp.getMarkName())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有品牌是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+                if(p.empty(prdtSamp.getCusName())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有客户名字是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+                if(p.empty(prdtSamp.getFenLeiName())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有产品分类是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+                if(p.empty(prdtSamp.getIdxName())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有产品名称是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+                if(p.empty(prdtSamp.getSalName())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有产品负责人是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+
+                if(p.empty(prdtSamp.getPrdCode())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有产品编码是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+                if(p.empty(prdtSamp.getSampMake())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有打样时间是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+                if(p.empty(prdtSamp.getMainUnit())){
+                    return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                            .setMsg("你的excel中有主单位是空的！")
+                            .setStatus(msgCnst.failSaveStatus.getValue()));
+                }
+
+
                 /**
                  *没有重复数据在数据库的话才能继续搜集excel中的数据
                  * */
                 list.add(prdtSamp);
             }
+            //下面是判断所有的prdtSamp里面有没有prdtCode是重复的,如果有,就不能导入
+            int sizeBefor = list.size();
+            Set<PrdtSamp> prdtSampSet = new TreeSet<>(Comparator.comparing(PrdtSamp::getPrdCode));
+            prdtSampSet.addAll(list);
+            int sizeAfter = prdtSampSet.size();
+            if(sizeBefor!=sizeAfter){
+                hanhanFileUtil.Del(file);
+                return mg.gm(Msg.gmg()
+//                            .setMsg(msgCnst.failSave.getValue())
+                        .setMsg("您的excel中prdtCode有重复数据,请检查！")
+                        .setStatus(msgCnst.failSaveStatus.getValue()));
+            }
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

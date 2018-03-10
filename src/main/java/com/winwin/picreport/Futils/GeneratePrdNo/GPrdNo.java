@@ -1,6 +1,7 @@
 package com.winwin.picreport.Futils.GeneratePrdNo;
 
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Edto.Prdt;
 import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.NotEmpty;
@@ -31,6 +32,14 @@ public class GPrdNo {
             p.p("~~~~~~货号在prdt中已经存在存在,~~~~~prdtNo="+prdtNo+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             //如果不是空的,我们就要把这个prdtNo放到prdtSamp里面,将来进行插入prdt_samp表用
             prdtSamp.setPrdNo(prdtNo);
+            //此时再判断 该prdNo在prdt表中对应的有ut没有,没有就插入一个,有的话算了
+           String ut= cnst.a001TongYongMapper.selectUtByPrdNoFromPrdt(prdtNo);
+            if(p.empty(ut)){
+                String mainUnit = prdtSamp.getMainUnit();
+                //此时prdt表么没有ut单位,插入一个
+                int i=cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo,mainUnit);
+            }
+
         }else{
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
@@ -92,7 +101,8 @@ public class GPrdNo {
                     String dfu_ut="1";
                     usr="ADMIN";
                     chkMan="ADMIN";
-                    cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan,knd,dfu_ut);
+                String mainUnit = prdtSamp.getMainUnit();
+                cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax,indx1,prdCode,usr,chkMan,knd,dfu_ut,mainUnit);
                     p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
 //                } catch (Exception e) {
 //                    p.p("com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate有问题");
@@ -121,9 +131,10 @@ public class GPrdNo {
            String dfu_ut="1";
            String usr="ADMIN";
            String  chkMan="ADMIN";
+           String mainUnit=prdtSamp.getMainUnit();
            Integer integer = cnst.a001TongYongMapper.insertPrdtOnePrdNo
                    (prdtSamp.getPrdNo(), prdtSamp.getIdxNo(), prdtSamp.getPrdCode(),
-                           usr, chkMan,knd,dfu_ut);
+                           usr, chkMan,knd,dfu_ut,mainUnit);
            if(null!=integer&&integer==1){
                p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt表中没有该货号,插入一个完成~~~~~~~~~~~~~~~~~~~~~~~~");
 

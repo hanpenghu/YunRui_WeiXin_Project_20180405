@@ -1,12 +1,31 @@
 [
   {
-    "uuid": "10478a3d-e981-40d6-92ee-4a07d6bb54b8",
-    "noTransUpSale": "100",
-    "haveTransUpSale": "120",
-    "curId": "RMB",
-    "curName": "人民币",
-    "remFront": "客户备注",
-    "qty": "100",
-    "unitZhu": "包"
+    "alterTime": "2018-03-09 20:12:05.839",
+    "bilType": "",
+    "curIdAfter": "RMB",
+    "curIdBefore": "RMB",
+    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
+    "dingJiaZhuJian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847fRMB"
+  },
+  {
+    "bilType": "01",
+    "curIdAfter": "RMB",
+    "curIdBefore": "RMB",
+    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
+    "dingJiaZhuJian": ""
+  },
+  {
+    "bilType": "",
+    "curIdAfter": "USD",
+    "curIdBefore": "USD",
+    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
+    "dingJiaZhuJian": ""
+  },
+  {
+    "bilType": "01",
+    "curIdAfter": "USD",
+    "curIdBefore": "USD",
+    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
+    "dingJiaZhuJian": ""
   }
 ]
