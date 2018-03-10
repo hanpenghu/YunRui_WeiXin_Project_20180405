@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.AlterPriceRecMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.AlterPriceRec">
+    <result column="ding_Jia_Guan_Lian" jdbcType="VARCHAR" property="dingJiaGuanLian" />
+    <result column="user_Name" jdbcType="VARCHAR" property="userName" />
+    <result column="tenant_Id" jdbcType="VARCHAR" property="tenantId" />
+    <result column="alter_Time" jdbcType="VARCHAR" property="alterTime" />
+    <result column="prdt_Code" jdbcType="VARCHAR" property="prdtCode" />
+    <result column="prdt_Samp_Uuid" jdbcType="VARCHAR" property="prdtSampUuid" />
+    <result column="qty_Before" jdbcType="VARCHAR" property="qtyBefore" />
+    <result column="qty_After" jdbcType="VARCHAR" property="qtyAfter" />
+    <result column="up_Before" jdbcType="VARCHAR" property="upBefore" />
+    <result column="up_After" jdbcType="VARCHAR" property="upAfter" />
+    <result column="unit_Before" jdbcType="VARCHAR" property="unitBefore" />
+    <result column="unit_After" jdbcType="VARCHAR" property="unitAfter" />
+    <result column="rem_Front_Before" jdbcType="VARCHAR" property="remFrontBefore" />
+    <result column="rem_Front_After" jdbcType="VARCHAR" property="remFrontAfter" />
+    <result column="bil_Type" jdbcType="VARCHAR" property="bilType" />
+    <result column="cur_Id_Before" jdbcType="VARCHAR" property="curIdBefore" />
+    <result column="cur_Id_After" jdbcType="VARCHAR" property="curIdAfter" />
+    <result column="sale_or_buy" jdbcType="VARCHAR" property="saleOrBuy" />
+    <result column="no_Trans_Up_My_Before" jdbcType="VARCHAR" property="noTransUpMyBefore" />
+    <result column="no_Trans_Up_My_After" jdbcType="VARCHAR" property="noTransUpMyAfter" />
+    <result column="no_Trans_Up_Other_Before" jdbcType="VARCHAR" property="noTransUpOtherBefore" />
+    <result column="no_Trans_Up_Other_After" jdbcType="VARCHAR" property="noTransUpOtherAfter" />
+    <result column="have_Trans_Up_My_Before" jdbcType="VARCHAR" property="haveTransUpMyBefore" />
+    <result column="have_Trans_Up_My_After" jdbcType="VARCHAR" property="haveTransUpMyAfter" />
+    <result column="have_Trans_Up_Other_Before" jdbcType="VARCHAR" property="haveTransUpOtherBefore" />
+    <result column="have_Trans_Up_Other_After" jdbcType="VARCHAR" property="haveTransUpOtherAfter" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ding_Jia_Guan_Lian, user_Name, tenant_Id, alter_Time, prdt_Code, prdt_Samp_Uuid, 
+    qty_Before, qty_After, up_Before, up_After, unit_Before, unit_After, rem_Front_Before, 
+    rem_Front_After, bil_Type, cur_Id_Before, cur_Id_After, sale_or_buy, no_Trans_Up_My_Before, 
+    no_Trans_Up_My_After, no_Trans_Up_Other_Before, no_Trans_Up_Other_After, have_Trans_Up_My_Before, 
+    have_Trans_Up_My_After, have_Trans_Up_Other_Before, have_Trans_Up_Other_After
+  </sql>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.AlterPriceRecExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alter_price_rec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.AlterPriceRecExample">
+    delete from alter_price_rec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.AlterPriceRec">
+    insert into alter_price_rec (ding_Jia_Guan_Lian, user_Name, tenant_Id, 
+      alter_Time, prdt_Code, prdt_Samp_Uuid, 
+      qty_Before, qty_After, up_Before, 
+      up_After, unit_Before, unit_After, 
+      rem_Front_Before, rem_Front_After, bil_Type, 
+      cur_Id_Before, cur_Id_After, sale_or_buy, 
+      no_Trans_Up_My_Before, no_Trans_Up_My_After, no_Trans_Up_Other_Before, 
+      no_Trans_Up_Other_After, have_Trans_Up_My_Before, 
+      have_Trans_Up_My_After, have_Trans_Up_Other_Before, 
+      have_Trans_Up_Other_After)
+    values (#{dingJiaGuanLian,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{alterTime,jdbcType=VARCHAR}, #{prdtCode,jdbcType=VARCHAR}, #{prdtSampUuid,jdbcType=VARCHAR}, 
+      #{qtyBefore,jdbcType=VARCHAR}, #{qtyAfter,jdbcType=VARCHAR}, #{upBefore,jdbcType=VARCHAR}, 
+      #{upAfter,jdbcType=VARCHAR}, #{unitBefore,jdbcType=VARCHAR}, #{unitAfter,jdbcType=VARCHAR}, 
+      #{remFrontBefore,jdbcType=VARCHAR}, #{remFrontAfter,jdbcType=VARCHAR}, #{bilType,jdbcType=VARCHAR}, 
+      #{curIdBefore,jdbcType=VARCHAR}, #{curIdAfter,jdbcType=VARCHAR}, #{saleOrBuy,jdbcType=VARCHAR}, 
+      #{noTransUpMyBefore,jdbcType=VARCHAR}, #{noTransUpMyAfter,jdbcType=VARCHAR}, #{noTransUpOtherBefore,jdbcType=VARCHAR}, 
+      #{noTransUpOtherAfter,jdbcType=VARCHAR}, #{haveTransUpMyBefore,jdbcType=VARCHAR}, 
+      #{haveTransUpMyAfter,jdbcType=VARCHAR}, #{haveTransUpOtherBefore,jdbcType=VARCHAR}, 
+      #{haveTransUpOtherAfter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.AlterPriceRec">
+    insert into alter_price_rec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dingJiaGuanLian != null">
+        ding_Jia_Guan_Lian,
+      </if>
+      <if test="userName != null">
+        user_Name,
+      </if>
+      <if test="tenantId != null">
+        tenant_Id,
+      </if>
+      <if test="alterTime != null">
+        alter_Time,
+      </if>
+      <if test="prdtCode != null">
+        prdt_Code,
+      </if>
+      <if test="prdtSampUuid != null">
+        prdt_Samp_Uuid,
+      </if>
+      <if test="qtyBefore != null">
+        qty_Before,
+      </if>
+      <if test="qtyAfter != null">
+        qty_After,
+      </if>
+      <if test="upBefore != null">
+        up_Before,
+      </if>
+      <if test="upAfter != null">
+        up_After,
+      </if>
+      <if test="unitBefore != null">
+        unit_Before,
+      </if>
+      <if test="unitAfter != null">
+        unit_After,
+      </if>
+      <if test="remFrontBefore != null">
+        rem_Front_Before,
+      </if>
+      <if test="remFrontAfter != null">
+        rem_Front_After,
+      </if>
+      <if test="bilType != null">
+        bil_Type,
+      </if>
+      <if test="curIdBefore != null">
+        cur_Id_Before,
+      </if>
+      <if test="curIdAfter != null">
+        cur_Id_After,
+      </if>
+      <if test="saleOrBuy != null">
+        sale_or_buy,
+      </if>
+      <if test="noTransUpMyBefore != null">
+        no_Trans_Up_My_Before,
+      </if>
+      <if test="noTransUpMyAfter != null">
+        no_Trans_Up_My_After,
+      </if>
+      <if test="noTransUpOtherBefore != null">
+        no_Trans_Up_Other_Before,
+      </if>
+      <if test="noTransUpOtherAfter != null">
+        no_Trans_Up_Other_After,
+      </if>
+      <if test="haveTransUpMyBefore != null">
+        have_Trans_Up_My_Before,
+      </if>
+      <if test="haveTransUpMyAfter != null">
+        have_Trans_Up_My_After,
+      </if>
+      <if test="haveTransUpOtherBefore != null">
+        have_Trans_Up_Other_Before,
+      </if>
+      <if test="haveTransUpOtherAfter != null">
+        have_Trans_Up_Other_After,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dingJiaGuanLian != null">
+        #{dingJiaGuanLian,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null">
+        #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="prdtCode != null">
+        #{prdtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="prdtSampUuid != null">
+        #{prdtSampUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyBefore != null">
+        #{qtyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyAfter != null">
+        #{qtyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="upBefore != null">
+        #{upBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="upAfter != null">
+        #{upAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="unitBefore != null">
+        #{unitBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="unitAfter != null">
+        #{unitAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="remFrontBefore != null">
+        #{remFrontBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="remFrontAfter != null">
+        #{remFrontAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="bilType != null">
+        #{bilType,jdbcType=VARCHAR},
+      </if>
+      <if test="curIdBefore != null">
+        #{curIdBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="curIdAfter != null">
+        #{curIdAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrBuy != null">
+        #{saleOrBuy,jdbcType=VARCHAR},
+      </if>
+      <if test="noTransUpMyBefore != null">
+        #{noTransUpMyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="noTransUpMyAfter != null">
+        #{noTransUpMyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="noTransUpOtherBefore != null">
+        #{noTransUpOtherBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="noTransUpOtherAfter != null">
+        #{noTransUpOtherAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="haveTransUpMyBefore != null">
+        #{haveTransUpMyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="haveTransUpMyAfter != null">
+        #{haveTransUpMyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="haveTransUpOtherBefore != null">
+        #{haveTransUpOtherBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="haveTransUpOtherAfter != null">
+        #{haveTransUpOtherAfter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.AlterPriceRecExample" resultType="java.lang.Long">
+    select count(*) from alter_price_rec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update alter_price_rec
+    <set>
+      <if test="record.dingJiaGuanLian != null">
+        ding_Jia_Guan_Lian = #{record.dingJiaGuanLian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_Name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null">
+        tenant_Id = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alterTime != null">
+        alter_Time = #{record.alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prdtCode != null">
+        prdt_Code = #{record.prdtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prdtSampUuid != null">
+        prdt_Samp_Uuid = #{record.prdtSampUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtyBefore != null">
+        qty_Before = #{record.qtyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtyAfter != null">
+        qty_After = #{record.qtyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upBefore != null">
+        up_Before = #{record.upBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upAfter != null">
+        up_After = #{record.upAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitBefore != null">
+        unit_Before = #{record.unitBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitAfter != null">
+        unit_After = #{record.unitAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remFrontBefore != null">
+        rem_Front_Before = #{record.remFrontBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remFrontAfter != null">
+        rem_Front_After = #{record.remFrontAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bilType != null">
+        bil_Type = #{record.bilType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.curIdBefore != null">
+        cur_Id_Before = #{record.curIdBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.curIdAfter != null">
+        cur_Id_After = #{record.curIdAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrBuy != null">
+        sale_or_buy = #{record.saleOrBuy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noTransUpMyBefore != null">
+        no_Trans_Up_My_Before = #{record.noTransUpMyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noTransUpMyAfter != null">
+        no_Trans_Up_My_After = #{record.noTransUpMyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noTransUpOtherBefore != null">
+        no_Trans_Up_Other_Before = #{record.noTransUpOtherBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noTransUpOtherAfter != null">
+        no_Trans_Up_Other_After = #{record.noTransUpOtherAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haveTransUpMyBefore != null">
+        have_Trans_Up_My_Before = #{record.haveTransUpMyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haveTransUpMyAfter != null">
+        have_Trans_Up_My_After = #{record.haveTransUpMyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haveTransUpOtherBefore != null">
+        have_Trans_Up_Other_Before = #{record.haveTransUpOtherBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haveTransUpOtherAfter != null">
+        have_Trans_Up_Other_After = #{record.haveTransUpOtherAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haveTransUpOtherAfter == null">
+        have_Trans_Up_Other_After = have_Trans_Up_Other_After,
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update alter_price_rec
+    set ding_Jia_Guan_Lian = #{record.dingJiaGuanLian,jdbcType=VARCHAR},
+      user_Name = #{record.userName,jdbcType=VARCHAR},
+      tenant_Id = #{record.tenantId,jdbcType=VARCHAR},
+      alter_Time = #{record.alterTime,jdbcType=VARCHAR},
+      prdt_Code = #{record.prdtCode,jdbcType=VARCHAR},
+      prdt_Samp_Uuid = #{record.prdtSampUuid,jdbcType=VARCHAR},
+      qty_Before = #{record.qtyBefore,jdbcType=VARCHAR},
+      qty_After = #{record.qtyAfter,jdbcType=VARCHAR},
+      up_Before = #{record.upBefore,jdbcType=VARCHAR},
+      up_After = #{record.upAfter,jdbcType=VARCHAR},
+      unit_Before = #{record.unitBefore,jdbcType=VARCHAR},
+      unit_After = #{record.unitAfter,jdbcType=VARCHAR},
+      rem_Front_Before = #{record.remFrontBefore,jdbcType=VARCHAR},
+      rem_Front_After = #{record.remFrontAfter,jdbcType=VARCHAR},
+      bil_Type = #{record.bilType,jdbcType=VARCHAR},
+      cur_Id_Before = #{record.curIdBefore,jdbcType=VARCHAR},
+      cur_Id_After = #{record.curIdAfter,jdbcType=VARCHAR},
+      sale_or_buy = #{record.saleOrBuy,jdbcType=VARCHAR},
+      no_Trans_Up_My_Before = #{record.noTransUpMyBefore,jdbcType=VARCHAR},
+      no_Trans_Up_My_After = #{record.noTransUpMyAfter,jdbcType=VARCHAR},
+      no_Trans_Up_Other_Before = #{record.noTransUpOtherBefore,jdbcType=VARCHAR},
+      no_Trans_Up_Other_After = #{record.noTransUpOtherAfter,jdbcType=VARCHAR},
+      have_Trans_Up_My_Before = #{record.haveTransUpMyBefore,jdbcType=VARCHAR},
+      have_Trans_Up_My_After = #{record.haveTransUpMyAfter,jdbcType=VARCHAR},
+      have_Trans_Up_Other_Before = #{record.haveTransUpOtherBefore,jdbcType=VARCHAR},
+      have_Trans_Up_Other_After = #{record.haveTransUpOtherAfter,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
