@@ -1,31 +1,77 @@
-[
-  {
-    "alterTime": "2018-03-09 20:12:05.839",
-    "bilType": "",
+[{
+    "saleOrBuy": "sale",
+    "userName": "演示数据",
+    "tenantId": "ipace",
+    "prdtCode": "WW-NEPEP-001(W)112",
+    "prdtSampUuid": "80470aa6-04cd-48c7-9543-be2fe24b9aca",
+    "dingJiaGuanLian": "SamplesSys1ca0b309-6af1-4c3e-a466-2229238f8a24",
     "curIdAfter": "RMB",
     "curIdBefore": "RMB",
-    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
-    "dingJiaZhuJian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847fRMB"
+    "bilType": "",
+    "upBefore": 20,
+    "upAfter": "200",
+    "qtyBefore": 10,
+    "qtyAfter": "100",
+    "unitBefore": "主:sheets",
+    "unitAfter": "主:sheets",
+    "remFrontBefore": "备注",
+    "remFrontAfter": "备注222"
   },
   {
-    "bilType": "01",
+    "saleOrBuy": "sale",
+    "userName": "演示数据",
+    "tenantId": "ipace",
+    "prdtCode": "WW-NEPEP-001(W)112",
+    "prdtSampUuid": "80470aa6-04cd-48c7-9543-be2fe24b9aca",
+    "dingJiaGuanLian": "SamplesSys1ca0b309-6af1-4c3e-a466-2229238f8a24",
     "curIdAfter": "RMB",
     "curIdBefore": "RMB",
-    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
-    "dingJiaZhuJian": ""
-  },
-  {
-    "bilType": "",
-    "curIdAfter": "USD",
-    "curIdBefore": "USD",
-    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
-    "dingJiaZhuJian": ""
-  },
-  {
     "bilType": "01",
+    "upBefore": 10,
+    "upAfter": "100",
+    "qtyBefore": 10,
+    "qtyAfter": "100",
+    "unitBefore": "主:sheets",
+    "unitAfter": "主:sheets",
+    "remFrontBefore": "备注",
+    "remFrontAfter": "备注222"
+  },
+  {
+    "saleOrBuy": "sale",
+    "userName": "演示数据",
+    "tenantId": "ipace",
+    "prdtCode": "WW-NEPEP-001(W)112",
+    "prdtSampUuid": "80470aa6-04cd-48c7-9543-be2fe24b9aca",
+    "dingJiaGuanLian": "SamplesSys1ca0b309-6af1-4c3e-a466-2229238f8a24",
     "curIdAfter": "USD",
     "curIdBefore": "USD",
-    "dingJiaGuanLian": "SamplesSysb4b707e6-2e0b-4088-be7d-57348e9a847f",
-    "dingJiaZhuJian": ""
+    "bilType": "",
+    "upBefore": 40,
+    "upAfter": "400",
+    "qtyBefore": 10,
+    "qtyAfter": "100",
+    "unitBefore": "主:sheets",
+    "unitAfter": "主:sheets",
+    "remFrontBefore": "备注",
+    "remFrontAfter": "备注222"
+  },
+  {
+    "saleOrBuy": "sale",
+    "userName": "演示数据",
+    "tenantId": "ipace",
+    "prdtCode": "WW-NEPEP-001(W)112",
+    "prdtSampUuid": "80470aa6-04cd-48c7-9543-be2fe24b9aca",
+    "dingJiaGuanLian": "SamplesSys1ca0b309-6af1-4c3e-a466-2229238f8a24",
+    "curIdAfter": "USD",
+    "curIdBefore": "USD",
+    "bilType": "01",
+    "upBefore": 30,
+    "upAfter": "300",
+    "qtyBefore": 10,
+    "qtyAfter": "100",
+    "unitBefore": "主:sheets",
+    "unitAfter": "主:sheets",
+    "remFrontBefore": "备注",
+    "remFrontAfter": "备注222"
   }
 ]

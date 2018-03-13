@@ -632,6 +632,9 @@
       <if test="record.mainUnit != null">
         main_unit = #{record.mainUnit,jdbcType=VARCHAR},
       </if>
+      <if test="record.mainUnit == null">
+        main_unit = main_unit,
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -834,6 +837,9 @@
       </if>
       <if test="mainUnit != null">
         main_unit = #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit == null">
+        main_unit = main_unit,
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
