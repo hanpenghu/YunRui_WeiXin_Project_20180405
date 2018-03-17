@@ -23,6 +23,7 @@ import java.util.UUID;
  *sap销售订单导入
  * */
 @Service("a1")
+//@Transactional(timeout=20)//事务超时设置,默认30秒
 public class A1ReportRestService {
     @Autowired
     private Cnst cnst;
@@ -117,9 +118,9 @@ public class A1ReportRestService {
                     try {
                         kk = cnst.a001TongYongMapper.countIfSapsoExist(b);
                     } catch (Exception e) {
-                        p.p(p.gp().sad(p.dexhx)
-                                .sad("Integer kk= cnst.a001TongYongMapper.countIfSapsoExist(b) error")
-                                .sad(p.dexhx).gad());
+                        p.p("-------------------------------------------------------");
+                        p.p("Integer kk= cnst.a001TongYongMapper.countIfSapsoExist(b) error");
+                        p.p("-------------------------------------------------------");
                         throw new RuntimeException(e.toString());
                     }
 
@@ -132,10 +133,10 @@ public class A1ReportRestService {
 //                        p.p(p.gp().sad(p.dexhx)
 //                                .sad("sapso cha ru yi tiao shu ju SUCCESS: ge shu:")
 //                                .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
-                        p.p("--------------sapso cha ru yi tiao shu ju SUCCESS: ge shu:"+pp+"------------");
+//                        p.p("--------------sapso cha ru yi tiao shu ju SUCCESS: ge shu:"+pp+"------------");
 
                     }else{
-                        p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
+//                        p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
                     }
 
                 } catch (Exception e) {
@@ -156,6 +157,7 @@ public class A1ReportRestService {
             }
         }
     }
+
 
     @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {

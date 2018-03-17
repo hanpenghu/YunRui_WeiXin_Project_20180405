@@ -21,13 +21,15 @@ public class Z001Quartz {
     public final static long two_Second =  2 * 1000;
 
 
-    @Scheduled(fixedDelay=thirty_Second)//执行完毕后1分钟再执行
+//    @Scheduled(fixedDelay=60 * 1000)
     public void fixedDelayJob(){
+
         this.onlineBugXiuFuSql();
     }
 
-    @Scheduled(fixedDelay=two_Second)//执行完毕后1分钟再执行
+//    @Scheduled(fixedDelay=2 * 1000)
     public void fixedDelayJob001(){
+
         this.onlineBugXiuFuSql001();
 
         try {

@@ -26,6 +26,8 @@ public interface A001TongYongMapper {
    //在字段后面加上collate Chinese_PRC_CS_AS_WS是强制sqlServer区分大小写
    @Select({"select count(*) from tenant where tenantid collate Chinese_PRC_CS_AS_WS= #{tenantId}"})
    Integer conutTenantId(@Param("tenantId") String tenantId);
+//   @Select({"select count(*) from tenant where tenantid= #{tenantId}"})
+//   Integer conutTenantId(@Param("tenantId") String tenantId);
 
 
    @Select("SELECT COUNT(U.TENANTID) FROM USERS AS U,TENANT AS T WHERE U.TENANTID=T.TENANTID AND U.TENANTID=#{tenantId} AND T.TENANTID=#{tenantId} AND U.USEREMAIL=#{userEmail} AND U.USERPSWD=#{userPswd}")

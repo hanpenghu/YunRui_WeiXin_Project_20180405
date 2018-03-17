@@ -80,6 +80,8 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody CategoryNameCode allfenleiHavePrdt() {
         return cnst.fenLei.getAllLayerAndAllPrdt();
+
+
     }
 
 
@@ -176,6 +178,7 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody FenYe alReadyConfirmOrderPage(@RequestBody FenYe fenYe) {
         return cnst.dco.alReadyConfirmOrderPage(fenYe);
+
     }
 
 
@@ -201,6 +204,8 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
         p.p("----------这个接口是为了得到未打样当前页的数据---------");
         p.p("-------------------------------------------------------");
         return cnst.dco.notConfirmOrderFirstPage(fenYe);
+
+
     }
 
 
@@ -220,6 +225,9 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
             method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> confirmTheOrder(@RequestBody PrdtSamp prdtSamp) {
         return cnst.dco.confirmTheOrder(prdtSamp);
+
+
+
     }
 
 
@@ -259,14 +267,14 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-    public String getmSecondTime() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
-    }
+//    public String getmSecondTime() {
+//        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
+//    }
 /////////////////////////////////////////////////////////////////////////
-@Test
-    public void f(){
-        p.p(getmSecondTime());
-}
+//@Test
+//    public void f(){
+//        p.p(getmSecondTime());
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 

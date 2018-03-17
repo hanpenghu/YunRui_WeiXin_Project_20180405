@@ -276,9 +276,9 @@ public class D3SaleOrderUpLoadFromExcelService {
             String prdName = s.getPrdName();
             String s1 = cnst.a001TongYongMapper.selectTop1PrdtNo(prdName);
             s.setPrdNo(s1);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~没有prdNo,自己找到一个如下~~~~~~~~~~~~~~~~~~~~~~");
-            p.p(s1);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~没有prdNo,自己找到一个如下~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p(s1);
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
 
