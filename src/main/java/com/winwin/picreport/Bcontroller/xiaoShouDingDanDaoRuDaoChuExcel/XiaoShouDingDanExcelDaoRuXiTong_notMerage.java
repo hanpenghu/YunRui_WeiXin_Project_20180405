@@ -41,11 +41,11 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-    if(shouDingDanFromExcels.size()<=50){
-        System.out.println(shouDingDanFromExcels);
-    }
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//    if(shouDingDanFromExcels.size()<=50){
+//        System.out.println(shouDingDanFromExcels);
+//    }
+//    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
 //    long time01=new Date().getTime();
     try {
@@ -56,10 +56,10 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
         set1.addAll(shouDingDanFromExcels);
         int size = set1.size();
-        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
         if(size ==1){
             //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
-            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
+//            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
         }else{
             String s="excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！";
             //此时证明有2个以上不同单号,需要提示 客户,同一个excel中必须只能有一个osno
@@ -105,7 +105,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                  e.printStackTrace();
              }
 
+            l.error(e.getMessage(),e);
     }
+
 //    long time02=new Date().getTime();
 //    Msg msg001=new Msg();
 //    msg001.setXiaoHaoShiJian(String.valueOf((time02-time01)/1000));
@@ -114,6 +116,8 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     return listmsg;
 ////////////////////////////////
 }
+
+private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
     private void quChuKongDeMsg(List<Msg> listmsg)   {
 

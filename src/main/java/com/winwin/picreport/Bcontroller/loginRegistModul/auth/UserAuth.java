@@ -132,6 +132,7 @@ public class UserAuth {
         } catch (Exception e) {
             msg.setOtherMsg("该用户添加权限模块的时候发生异常导致权限默认为全部F");
             e.printStackTrace();
+            l.error(e.getMessage(),e);
         }
 //        p.p("-------------------------------------------------------");
 //        p.p(authJsonStr);
@@ -140,5 +141,6 @@ public class UserAuth {
         msg.setAuth(auth);
 
     }
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
 }

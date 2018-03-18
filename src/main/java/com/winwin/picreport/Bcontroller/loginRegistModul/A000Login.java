@@ -109,25 +109,27 @@ public class A000Login {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            l.error(e.getMessage(),e);
         }
 
-        p.p("----------权限模块在auth---------------------------------------------");
-        p.p(JSON.toJSONString(msg));
-        p.p("-------------------------------------------------------");
+//        p.p("----------权限模块在auth---------------------------------------------");
+//        p.p(JSON.toJSONString(msg));
+//        p.p("-------------------------------------------------------");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return list;
     }
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 //    public static void main(String[]args){
 //        System.out.println(Base64.getUrlEncoder().encodeToString(("1510371121000{~}ZYHX{~}1@qq.com").getBytes()));
 //    }
 
 
 
-    //已经在拦截器排除了
-    @RequestMapping(value="test99",method = RequestMethod.GET)
-    public String  test(){
-        return "~~~~~~~~~~~~~测试成功!!!~~~~~~~~~~~";
-    }
+//    //已经在拦截器排除了
+//    @RequestMapping(value="test99",method = RequestMethod.GET)
+//    public String  test(){
+//        return "~~~~~~~~~~~~~测试成功!!!~~~~~~~~~~~";
+//    }
 
 }
 

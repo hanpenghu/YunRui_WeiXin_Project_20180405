@@ -42,13 +42,13 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
         List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang =
                 this.salePrdDetailTab1ListWeiChaiHang(cus_nos, chaXunTiaoJian);
 //return salePrdDetailTab1ListWeiChaiHang;
-        for(SalePrdDetailTab1 v:salePrdDetailTab1ListWeiChaiHang){
-            if(p.dy(v.getPrdNo(),"11201043")&&p.dy(v.getCusOsNo(),"170856BR3SSYZYP84771")){
-                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
-                p.p(v);
-                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
-            }
-        }
+//        for(SalePrdDetailTab1 v:salePrdDetailTab1ListWeiChaiHang){
+//            if(p.dy(v.getPrdNo(),"11201043")&&p.dy(v.getCusOsNo(),"170856BR3SSYZYP84771")){
+//                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
+//                p.p(v);
+//                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
+//            }
+//        }
 
 
 

@@ -37,6 +37,7 @@ public class A001LogOut {
                         .generateMessage("success", "成功安全退", "", "14");
             }
         } catch (Exception e) {
+            l.error(e.getMessage(),e);
             return new MessageGenerate()
                     .generateMessage("fail", "账号退出失败", "", "15");
         }
@@ -44,6 +45,6 @@ public class A001LogOut {
                 .generateMessage("fail", "账号退出失败", "", "15");
 
     }
-
+private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
 }

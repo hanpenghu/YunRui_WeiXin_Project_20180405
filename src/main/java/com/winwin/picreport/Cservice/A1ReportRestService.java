@@ -25,6 +25,10 @@ import java.util.UUID;
 @Service("a1")
 //@Transactional(timeout=20)//事务超时设置,默认30秒
 public class A1ReportRestService {
+
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
+
+
     @Autowired
     private Cnst cnst;
 
@@ -118,9 +122,8 @@ public class A1ReportRestService {
                     try {
                         kk = cnst.a001TongYongMapper.countIfSapsoExist(b);
                     } catch (Exception e) {
-                        p.p("-------------------------------------------------------");
-                        p.p("Integer kk= cnst.a001TongYongMapper.countIfSapsoExist(b) error");
-                        p.p("-------------------------------------------------------");
+
+                        l.error(e.getMessage(),e);
                         throw new RuntimeException(e.toString());
                     }
 

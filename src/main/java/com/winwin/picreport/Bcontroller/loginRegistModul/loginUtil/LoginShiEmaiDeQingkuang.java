@@ -42,7 +42,7 @@ public class LoginShiEmaiDeQingkuang {
                         gongsiMingzi=tenantNames.get(0);
                     }
                     List<LoginInfo>loginfoList001=cnst.a001TongYongMapper.selectUsers(tenantId,userEmail);
-                    System.out.println(loginfoList001.get(0).getUserName()+"login用的userEmail");
+//                    System.out.println(loginfoList001.get(0).getUserName()+"login用的userEmail");
                     if(!NotEmpty.notEmpty(loginfoList001.get(0).getUserName())){
                         return new MessageGenerate().generateMessage("fail","登录失败,没有会员名","","31");
                     }

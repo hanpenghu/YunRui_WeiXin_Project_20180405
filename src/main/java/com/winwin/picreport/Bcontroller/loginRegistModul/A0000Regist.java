@@ -33,16 +33,16 @@ public class A0000Regist {
         }
         Integer conutTenantIdOfTenant = a001TongYongMapper.conutTenantId(info.getTenantId());
         if(conutTenantIdOfTenant ==0){//此时 tenant数据库是插入的
-            p.p("------------"+conutTenantIdOfTenant+"-------------------------------------------");
-            p.p("此时公司表  没有  该公司id："+info.getTenantId()+"");
-            p.p("-------------------------------------------------------");
+//            p.p("------------"+conutTenantIdOfTenant+"-------------------------------------------");
+//            p.p("此时公司表  没有  该公司id："+info.getTenantId()+"");
+//            p.p("-------------------------------------------------------");
             //此时判断用户id在联合查询的时候是否存在,用联合查询是因为一个users表中允许有重复的用户id(email,phoneNo,会员名)
             //注意,上面经过第一次判断之后,email和会员名和电话号码肯定有一个非非空的
             registUtils.f2(info,msgList);//这个方法里面进行了插入数据的操作
         }else{//conutTenantId不是0,tenant数据库不需要再插入,直接检测users表去
-            p.p("--------------------"+conutTenantIdOfTenant+"-----------------------------------");
-            p.p("此时公司表  有  该公司id："+info.getTenantId()+"");
-            p.p("-------------------------------------------------------");
+//            p.p("--------------------"+conutTenantIdOfTenant+"-----------------------------------");
+//            p.p("此时公司表  有  该公司id："+info.getTenantId()+"");
+//            p.p("-------------------------------------------------------");
             registUtils.f3(info,msgList);
         }
 

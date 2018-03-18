@@ -35,11 +35,13 @@ public class Interceptor001 implements HandlerInterceptor {
         this.guoQiShiJian=cnst.guoQiShiJian;
         try {
             this.tokenShiXiaoShiJian_haoMiaoL= Long.parseLong(tokenShiXiaoShiJian_haoMiao);
-            System.out.println("~~~~~~~~~~~~~~~~~~this.tokenShiXiaoShiJian_haoMiaoL="+this.tokenShiXiaoShiJian_haoMiaoL+"~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~this.tokenShiXiaoShiJian_haoMiaoL="+this.tokenShiXiaoShiJian_haoMiaoL+"~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
         } catch (NumberFormatException e) {
             this.tokenShiXiaoShiJian_haoMiaoL=8*60*60*1000L;
+            l.error(e.getMessage(),e);
         }
     }
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
@@ -101,16 +103,17 @@ public class Interceptor001 implements HandlerInterceptor {
         //根据公司id得到给公司的令牌有效时间
         try {//失效时间先从数据库取,取不到,使用application配置文件的,配置文件的有异常,使用默认的代码写死8小时
             shiXiaoTime=a001TongYongMapper.getTenantShiXiaoShiJianCha(tokenYuanMa.getTenantId());
-            System.out.println("~~~~~~~~~~~~~~~失效时间使用数据库"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~失效时间使用数据库"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             //如果失效时间在数据库取不到,就用默认时间
             if(shiXiaoTime==null||shiXiaoTime==0){
                 shiXiaoTime=tokenShiXiaoShiJian_haoMiaoL;
-                System.out.println("~~~~~~~~~~~~~~~失效时间使用配置文件"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//                System.out.println("~~~~~~~~~~~~~~~失效时间使用配置文件"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
             }
 
         } catch (Exception e) {
             shiXiaoTime=8*60*60*1000L;//默认八小时
-            System.out.println("~~~~~~~~~~~~~~~失效时间使用异常包裹"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~失效时间使用异常包裹"+shiXiaoTime+"~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+            l.error(e.getMessage(),e);
         }
 //        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~token失效时间~~~~"+shiXiaoTime+"~~~~~~~~~~~~~~~~~~~~");
         //公司id和数据token+ip都存在,并且登陆时间和当前时间之差是规定时间的时候,拦截器才放行
