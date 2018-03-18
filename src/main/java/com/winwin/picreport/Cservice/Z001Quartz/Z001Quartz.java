@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
  * 我都是1分钟执行1次，而fixedDelay是当任务执行完毕后1分钟在执行。所以根据实际业务不同，
  * 我们会选择不同的方式。
  * */
-@Component
+//@Component
 public class Z001Quartz {
-    @Autowired
+//    @Autowired
     private Cnst cnst;
 
     public final static long thirty_Second =  30 * 1000;
