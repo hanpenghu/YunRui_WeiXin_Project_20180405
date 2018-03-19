@@ -77,7 +77,7 @@ public class PrdtSamp0 extends PrdtSamp{
             long lt = new Long(this.sampMakeStamp);
             date = new Date(lt);
         } catch (Exception e) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampMakeStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampMakeStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
         }
         //        res = simpleDateFormat.format(date);
 
@@ -109,7 +109,7 @@ public class PrdtSamp0 extends PrdtSamp{
             long lt = new Long(this.sampSendStamp);
             date = new Date(lt);
         } catch (Exception e) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampSendStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~前端穿过来的打样时间戳无法解析成时间~"+this.sampSendStamp+"~~~~~~~~~~~~~~~~~~~~~~~");
         }
 
         if(date!=null){

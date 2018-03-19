@@ -55,7 +55,7 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
 //        //将来要根据客户订单号+货号来通过数量拆分行号saphh,拆行后的数据放到salePrdDetailTab1ListYiChaiHang
         List <SalePrdDetailTab1>salePrdDetailTab1ListYiChaiHang=new ArrayList<>();
-        if(!NotEmpty.notEmpty(salePrdDetailTab1ListWeiChaiHang)){
+        if(p.empty(salePrdDetailTab1ListWeiChaiHang)){
             return salePrdDetailTab1ListYiChaiHang;
         }//如果未拆行的list是空的,就暂停掉
 

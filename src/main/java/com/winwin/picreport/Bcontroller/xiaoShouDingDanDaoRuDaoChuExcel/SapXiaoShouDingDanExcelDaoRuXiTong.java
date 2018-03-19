@@ -204,7 +204,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     cnst.a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
-                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001"));
+                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001---单号"+list3.get(0).getOsNo()+"已经存在于mfPos"));
                     return;//此时停止循环所有单号
                 }
 //            } catch (Exception e) {

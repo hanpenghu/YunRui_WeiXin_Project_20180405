@@ -152,10 +152,10 @@ public class D1DaYangS {
         List<AlterPriceRecToFront> buyAlterRecList =cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"buy");
         prdtSampX.setBuyAlterRecList(buyAlterRecList);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        p.p("~~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~1970没改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
+//        p.p("~~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~1970没改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
         //处理时间为1970的为NULL
         MakeDate1970Null.make1970null(prdtSampX);
-        p.p("~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~~~~~1970改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
+//        p.p("~~~~~~~~~请求当前页的时候~~~prdtSampX.getStopusedate() ~~~~~~~~~~~~~~~1970改变" + prdtSampX.getStopusedate() + "~~~~~~~~~~~~~~~~~~~~~~~~");
         return prdtSampX;
     }
 
@@ -294,9 +294,9 @@ public class D1DaYangS {
     public CategoryNameCode getAllLayerNotHavePrdt() {
         Date date = new Date();
         CategoryNameCode allLayerUtilUseRecursionNotGetPrdt = this.getAllLayerUtilUseRecursionNotGetPrdt(this.getCommonderNoPrdt());
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        p.p("该次得到所有没有prdt的分级耗时秒数为: " + p.xjs(new Date(), date));
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        p.p("该次得到所有没有prdt的分级耗时秒数为: " + p.xjs(new Date(), date));
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         return allLayerUtilUseRecursionNotGetPrdt;
 
 
