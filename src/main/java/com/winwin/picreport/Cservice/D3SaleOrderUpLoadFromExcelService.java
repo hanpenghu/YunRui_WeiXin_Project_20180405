@@ -29,7 +29,7 @@ public class D3SaleOrderUpLoadFromExcelService {
     private Cnst cnst;
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg>listmsg){
 //        System.out.println(list3);
         //循环插入所有
@@ -61,7 +61,7 @@ public class D3SaleOrderUpLoadFromExcelService {
 
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg,int iii){
 
         /**
@@ -278,7 +278,7 @@ public class D3SaleOrderUpLoadFromExcelService {
     }
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void prdNoGet(ShouDingDanFromExcel s) {
         if(p.empty(s.getPrdNo())){
             String prdName = s.getPrdName();
@@ -293,7 +293,7 @@ public class D3SaleOrderUpLoadFromExcelService {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m,
                                                          TfPosWithBLOBs t,
                                                          TfPosZ tz,
@@ -325,7 +325,7 @@ public class D3SaleOrderUpLoadFromExcelService {
     //////////////////////////////////////////////////////////////////////////////////
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,
                                 TfPosZ tz,List<Msg>listmsg,int iii){
         try {

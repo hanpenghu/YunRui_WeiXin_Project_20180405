@@ -39,7 +39,7 @@ public class A1ReportRestService {
     //timeout=30超时30秒后自动解除事务
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg> listmsg) {
 //        System.out.println(list3);
         //循环插入所有
