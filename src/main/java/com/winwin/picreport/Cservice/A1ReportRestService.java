@@ -49,23 +49,6 @@ public class A1ReportRestService {
         //收集同一货号的list       samePrdNoList
         List<List<ShouDingDanFromExcel>> samePrdNoList = listMap.get("samePrdNoList");
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //增加一个判断是否有已经存在的数据的模块,判断了对于sapso中除了qty这个字段,其他字段都一样的情况
-        //这个模块实际上只是判断了sapso
-        //后来我为了让用户删除主表后还能插入数据,注释掉这个判断,然后在插入时判断是否重复,重复就不在 插入
-
-
-//        if(cnst.sapsoChongfu.ishave(samePrdNoList)){
-//            p.p("--------是否有重复数据-------------------");
-//                //此时存在重复数据,不能再插入
-//            listmsg.addAll(new MessageGenerate().generateMessage("有重复数据,未能成功插入002"));
-//            p.p("--------是有重复数据002-------------------");
-//            throw new RuntimeException(p.gp().sad(p.dexhx)
-//                    .sad("cha ru chong fu shu ju").sad(p.dexhx).gad());
-//
-//        }else{
-//            //此时不存在重复数据可以继续插入
-//            p.p("//此时不存在重复数据可以继续插入");
-//        }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,14 +58,10 @@ public class A1ReportRestService {
             ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-//            synchronized (this) {
+
                 this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg,iii);
-//            }
         }
 
-
-//        int i=0;
-//        i=5/i;
         //注意: sapso里面的数据是没有合并的,而mf_pos和tf_pos里面是合并的
         //插入自建表before_same_prdNo_merge(后来表名字改成sapso)//这个表是为了记录合并prdNo之前的saphh(sap行号)用的
         for (List<ShouDingDanFromExcel> listx : samePrdNoList) {
@@ -138,10 +117,6 @@ public class A1ReportRestService {
                     if (NotEmpty.notEmpty(kk) && kk == 0) {
                         //此时除了qty都不相等了
                         Integer pp = cnst.sapsoMapper.insert(b);//这个后期已经加上成分代码
-//                        p.p(p.gp().sad(p.dexhx)
-//                                .sad("sapso cha ru yi tiao shu ju SUCCESS: ge shu:")
-//                                .sad(p.dexhx).sad(p.strValeOf(pp)).sad(p.dexhx).gad());
-//                        p.p("--------------sapso cha ru yi tiao shu ju SUCCESS: ge shu:"+pp+"------------");
 
                     }else{
 //                        p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
@@ -156,12 +131,9 @@ public class A1ReportRestService {
                     String s="在插入数据库表sapso(原始数据表)的时候,单号为:" +
                             msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao() +
                             "的osNo(订单号)下面的某条数据有异常,导致该批(整个excel的)数据一个都没插入！";
-
-//                    msg.setMsg("在插入数据库表sapso(原始数据表)的时候,单号为:"+msg.getWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao()+"的osNo(订单号)下面的某条数据有异常,导致该批(os_no下面)数据一个都没插入！");
-                    msg.setMsg(s);
+                       msg.setMsg(s);
 
                     listmsg.add(msg);
-//                    e.printStackTrace();
                     throw new RuntimeException(s);
                 }
             }
@@ -171,7 +143,7 @@ public class A1ReportRestService {
 
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
         Msg msg = new Msg();
         MfPosWithBLOBs m = new MfPosWithBLOBs();
@@ -198,9 +170,7 @@ public class A1ReportRestService {
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-       /* System.out.println("没有转换前");
-        System.out.println("===osDd===="+osDd+"=======estDd===="+estDd+"=============");
-        System.out.println("没有转换前");*/
+
         if (osDd == null || "".equals(osDd)) {
 //            osDd="32503564800000";//2999-12-31
             osDd = null;
@@ -383,7 +353,7 @@ public class A1ReportRestService {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveOneShouDingDanFromExcelToTableInsert
     (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
      ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
@@ -428,7 +398,7 @@ public class A1ReportRestService {
      */
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    @Transactional
     public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, List<Msg> listmsg,int iii) {
         try {
             MfPosExample mfe = new MfPosExample();

@@ -41,22 +41,8 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
-//    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//    if(shouDingDanFromExcels.size()<=50){
-////        System.out.println(shouDingDanFromExcels);
-//    }
-//    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//    shouDingDanFromExcels.forEach(v->{
-//        if(p.dy(v.getPrdNo(),"154429710")){
-//            if(p.dy(v.getOsNo(),"170856BR3SSYZYP84771")){
-//                     p.p(p.gp().sad(p.dexhx).sad(v.toString()).sad(p.dexhx).gad());
-//            }
-//        }
-//    });
-//    p.p("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
 
-//    long time01=new Date().getTime();
     try {
 
         //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,10 +51,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
         set1.addAll(shouDingDanFromExcels);
         int size = set1.size();
-//        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
+
         if(size ==1){
             //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
-//            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
         }else{
             String s="excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入";
             //此时证明有2个以上不同单号,需要提示 客户,同一个excel中必须只能有一个osno
@@ -77,12 +62,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             throw new RuntimeException(s);
 
         }
-       /* try {
-             p.p(p.gp().sad(p.dexhx).sad(p.strValeOf("开始线程等待")).sad(p.dexhx).gad());
-            Thread.sleep(1*60*60*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -115,10 +95,10 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             e.printStackTrace();
         }
     }
-//    long time02=new Date().getTime();
-//    Msg msg001=new Msg();
-//    msg001.setXiaoHaoShiJian(String.valueOf((time02-time01)/1000));
-//    listmsg.add(msg001);
+
+
+
+
     ////////////////////////////////////////////////////////////////////////
     return listmsg;
 ////////////////////////////////
@@ -139,11 +119,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             e.printStackTrace();
 
         }
-//            listmsg.forEach((msg)->{
-//                if(!NotEmpty.notEmpty(msg.getMsg())){
-//                    listmsg.remove(msg);
-//                }
-//            });
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,12 +183,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001---单号"+list3.get(0).getOsNo()+"已经存在于mfPos"));
                     return;//此时停止循环所有单号
                 }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                //下面的return 是针对    if(l==0)抛出的异常的
-//                return;//这个意思是:如果一个excel中有一个单号没有插入成功,那么,停止循环其他单号，所有单号都不会插入成功
-//
-//            }
+
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////
@@ -250,15 +221,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
 
             samePrdNoList.add(list0);
-          /*  p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
-                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-                        p.p("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    }
-                }
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
-            //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
-//            synchronized (this){//这个内部就是为了合并
+
                 double qty=0;//数量
                 double amtn=0;//未税金额
                 double tax=0;//税额
@@ -289,18 +252,11 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 //                    shouDingDanFromExcel.setUp(String.valueOf(danJia));
                     list.add(shouDingDanFromExcel);//合并后放入list
                 }
-               /* p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-                if("EBNE1701491YZ750381070048292".equals(list0.get(0).getOsNo().trim()+list0.get(0).getPrdNo().trim()+list0.get(0).getCfdm().trim())){
-                    for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
-                        p.p("~~~~~~~~~~~saphh~"+shouDingDanFromExcel.getSaphh()+"~~~qty~~~"+shouDingDanFromExcel.getQty()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    }
-                }
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
-//            }
         }
 
         map.put("samePrdNoMeraged",list);
         map.put("samePrdNoList",samePrdNoList);
+
         return  map;
     }
 /////////////////////////////////////////////////////////////////////////////
@@ -314,29 +270,12 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     }
                 }
 
-//              老的方法存在弊端,可能remove不掉
-//                listmsg.forEach((msg1)->{
-//                    if(msg.equals(msg1.getMsg())){
-//                        listmsg.remove(msg1);
-//                    }
-//                });
+
             }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    @RequestMapping(value="f",method= RequestMethod.POST,produces = {"text/plain;charset=utf-8"})
-//    public String  f(){
-//        return "你好！！！";
-//    }
-//    /////////////////////////////////////////////////////////////////////////////////////////////////
-//    @RequestMapping(value="h",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})
-//    public @ResponseBody  Test  h(){
-//        Test test=new Test();
-//        test.setStr("韩寒！！！");
-//        return test;
-//    }
+
 
 //////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////

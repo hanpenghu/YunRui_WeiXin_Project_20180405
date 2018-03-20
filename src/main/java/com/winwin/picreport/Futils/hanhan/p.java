@@ -573,6 +573,23 @@ public strictfp class p {
     /**
      ****************************************************************************************
      * */
+
+    /**
+     *得到当前的Date格式的时间
+     * */
+    public static Date getDate(){
+        return new Date();
+    }
+
+
+    /**
+     *得到当前的Long格式的时间戳
+     * */
+    public static Long getTimeStamp(){
+        return new Date().getTime();
+    }
+
+
     /**
      *2个日期相减得到的毫秒数量
      * */

@@ -193,51 +193,6 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*public void tfPssDuiYingDuoGeSapsoChaiHangSaphh(){
-        //此时的salePrdDetailTab1对应的多个sapso在sapsoYongYuChai1Ge_salePrdDetailTab1_de_List里面
-        Collections.sort(sapsoYongYuChai1Ge_salePrdDetailTab1_de_List);//通过saphh升序
-        //下面for里面才是对sapso里面的数据正式拆行
-        Iterator<Sapso> iterator = sapsoYongYuChai1Ge_salePrdDetailTab1_de_List.iterator();
-        while(iterator.hasNext()){
-            //salePrdDetailTab2用来存放改变的数量,其他不变
-            SalePrdDetailTab1 salePrdDetailTab2=new SalePrdDetailTab1();
-            BeanUtils.copyProperties(salePrdDetailTab1,salePrdDetailTab2);
-            Sapso sapso = iterator.next();
-
-
-            if(sapso.getQtyDouble()-salePrdDetailTab1.getQtyDouble()>=0){
-//
-                //此时用自己的数量,不拆行
-                salePrdDetailTab1.setSapph(sapso.getSapph());
-                salePrdDetailTab1.setCaiGouNo(sapso.getCaigouno());
-                salePrdDetailTab1.setSaphh(sapso.getSaphh());
-                salePrdDetailTab1.setLuoHao(sapso.getLuohao());
-                salePrdDetailTab1.setGangHao(sapso.getGanghao());
-                salePrdDetailTab1.setRealWidth(sapso.getRealwidth());
-                salePrdDetailTab1.setRealLength(sapso.getReallength());
-                salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
-                break;//此时不再拆行
-            }else{
-
-                salePrdDetailTab1.setSapph(sapso.getSapph());
-                salePrdDetailTab1.setCaiGouNo(sapso.getCaigouno());
-                salePrdDetailTab1.setSaphh(sapso.getSaphh());
-                salePrdDetailTab1.setLuoHao(sapso.getLuohao());
-                salePrdDetailTab1.setGangHao(sapso.getGanghao());
-                salePrdDetailTab1.setRealWidth(sapso.getRealwidth());
-                salePrdDetailTab1.setRealLength(sapso.getReallength());
-                //因为此时比sapso的qty大,需要继续拆行,就使用sapso的qty,进行下次对比sapso拆行,一直拆到只用自己的,因为自己的总数永远是小于等于sapso的qty的
-                double chaiHangHouQtyDouble = salePrdDetailTab1.getQtyDouble() - sapso.getQtyDouble();
-                salePrdDetailTab1.setQty(String.valueOf(sapso.getQty()));
-                salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
-
-                //改变salePrdDetailTab1的数量,准备下次拆行
-                salePrdDetailTab2.setQty(String.valueOf(chaiHangHouQtyDouble));//为下一次拆行准备
-                salePrdDetailTab1=salePrdDetailTab2;//然后把2再赋给1,2除了数量变了,其他地方都保持原样
-                iterator.remove();
-            }
-        }
-    }*/
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
