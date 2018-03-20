@@ -1,6 +1,4 @@
 package com.winwin.picreport.Edto;
-
-import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Futils.NotEmpty;
 
 import java.text.SimpleDateFormat;

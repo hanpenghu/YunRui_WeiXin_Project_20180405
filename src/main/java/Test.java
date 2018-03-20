@@ -18,6 +18,6 @@ public class Test {
         Map<String,String> map=new LinkedHashMap<>();
         map.put("1","2");
         map.put("1","3");
-        System.out.println(map);//key相同,会覆盖
+//        System.out.println(map);//key相同,会覆盖
     }
 }

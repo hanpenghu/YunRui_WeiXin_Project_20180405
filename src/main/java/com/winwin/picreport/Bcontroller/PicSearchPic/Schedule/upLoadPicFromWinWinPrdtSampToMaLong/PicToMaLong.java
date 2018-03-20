@@ -54,7 +54,7 @@ public class PicToMaLong {
             if(thumDic.isDirectory()){
             }else{
                 //不是文件
-                p.p("---------您要找的缩略图文件夹不是个文件夹----------"+suoLueTuWenJianJiaPath+"----------------");
+//                p.p("---------您要找的缩略图文件夹不是个文件夹----------"+suoLueTuWenJianJiaPath+"----------------");
                 return;//该return是为了不再执行该方法return 以后的代码
             }
 

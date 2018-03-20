@@ -199,10 +199,10 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
      * */
     @RequestMapping(value = InterFaceCnst.notConfirmOrderFirstPage,method = RequestMethod.POST)
     public @ResponseBody FenYe notConfirmOrderFirstPage(@RequestBody FenYe fenYe) {
-        p.p("-------------------------------------------------------");
-        p.p("----------接口/d/notConfirmOrderFirstPage被调用--------");
-        p.p("----------这个接口是为了得到未打样当前页的数据---------");
-        p.p("-------------------------------------------------------");
+//        p.p("-------------------------------------------------------");
+//        p.p("----------接口/d/notConfirmOrderFirstPage被调用--------");
+//        p.p("----------这个接口是为了得到未打样当前页的数据---------");
+//        p.p("-------------------------------------------------------");
         return cnst.dco.notConfirmOrderFirstPage(fenYe);
 
 

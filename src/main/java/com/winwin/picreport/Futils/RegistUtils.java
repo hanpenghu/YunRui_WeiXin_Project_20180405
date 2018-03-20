@@ -114,7 +114,7 @@ public class RegistUtils {
 
 
             }else{
-                System.out.println("请更换Email 001");
+//                System.out.println("请更换Email 001");
                 msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                 msgList.addAll(msgList1);
             }
@@ -170,7 +170,7 @@ public class RegistUtils {
 
             }else{
                 if(!b){
-                    System.out.println("请更换Email 002");
+//                    System.out.println("请更换Email 002");
                     msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                     msgList.addAll(msgList1);
                 } else  if(!b1){
@@ -197,7 +197,7 @@ public class RegistUtils {
 
             }else{
                 if(!b){
-                    System.out.println("请更换Email 003");
+//                    System.out.println("请更换Email 003");
                     msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                     msgList.addAll(msgList1);
                 } else if(!b1){
@@ -242,7 +242,7 @@ public class RegistUtils {
 
             }else{
                 if(!b){
-                    System.out.println("请更换Email 004");
+//                    System.out.println("请更换Email 004");
                     msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                     msgList.addAll(msgList1);
                 } else if(!b2){
@@ -278,7 +278,7 @@ public void f3(LoginInfo info, List<Msg> msgList){//tenant里面有了的时候�
 
 
         }else{
-            System.out.println("请更换Email 005");
+//            System.out.println("请更换Email 005");
             msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
             msgList.addAll(msgList1);
         }
@@ -331,7 +331,7 @@ public void f3(LoginInfo info, List<Msg> msgList){//tenant里面有了的时候�
 
         }else{
             if(!b){
-                System.out.println("请更换Email 006");
+//                System.out.println("请更换Email 006");
                 msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                 msgList.addAll(msgList1);
             }
@@ -359,7 +359,7 @@ public void f3(LoginInfo info, List<Msg> msgList){//tenant里面有了的时候�
 
         }else{
             if(!b){
-                System.out.println("请更换Email 007");
+//                System.out.println("请更换Email 007");
                 msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                 msgList.addAll(msgList1);
             }
@@ -404,7 +404,7 @@ public void f3(LoginInfo info, List<Msg> msgList){//tenant里面有了的时候�
 
         }else{
             if(!b){
-                System.out.println("请更换Email 008");
+//                System.out.println("请更换Email 008");
                 msgList1.addAll(new MessageGenerate().generateMessage("fail", "请更换email","","24"));
                 msgList.addAll(msgList1);
             } else if(!b2){

@@ -58,11 +58,11 @@ public class PicSearchPicUseBase64C {
                     ImageAndBase64.GenerateImage(base64Image.getBase64str(),"");
                     //创造给码隆临时搜索的林展服务器图片的url
                     String fileUrl=dirUrl+fileName+".jpeg";
-                    System.out.println(fileUrl);
+//                    System.out.println(fileUrl);
                     //   ./1234567/
                     //E:\CloudPlatformBackstage\winwin\.\1234567\WW-VSUP5950-778.jpg
                     dest = new File(filePath, fileName+".jpeg");
-                    System.out.println(dest.getAbsolutePath());
+//                    System.out.println(dest.getAbsolutePath());
                     //上传到指定目录
                     ImageAndBase64.GenerateImage(base64Image.getBase64str(),dest);
                     ImageSearchResponse imageSearchResponse =
@@ -73,13 +73,13 @@ public class PicSearchPicUseBase64C {
                         //添加简单的prdtSamp打样字段
                         String url = searchResult.getUrl();
                         String urlAfter=url.substring(url.indexOf("suoLueTuWenJianJia/")+19,url.indexOf("!"));
-                        p.p("----------------urlAfter---------------------------------------");
-                        p.p(urlAfter);
-                        p.p("-------------------------------------------------------");
+//                        p.p("----------------urlAfter---------------------------------------");
+//                        p.p(urlAfter);
+//                        p.p("-------------------------------------------------------");
                         List<SimplePrdtSamp>simplePrdtSamps=a001TongYongMapper.getSimplePrdtSamps("%"+urlAfter+"%");
-                        p.p("------------------simplePrdtSamps-------------------------------------");
-                        p.p(JSON.toJSONString(simplePrdtSamps));
-                        p.p("-------------------------------------------------------");
+//                        p.p("------------------simplePrdtSamps-------------------------------------");
+//                        p.p(JSON.toJSONString(simplePrdtSamps));
+//                        p.p("-------------------------------------------------------");
                         if(p.empty(simplePrdtSamps)){
                             simplePrdtSamps.add(new SimplePrdtSamp());
                         }
@@ -87,7 +87,7 @@ public class PicSearchPicUseBase64C {
                         ////////////////////////////////////////////////
                         list.add(searchResult);
                     }
-                    System.out.println("===================================");
+//                    System.out.println("===================================");
                     //删除指定目录的图片(用完就删掉)
                     FileUtils.forceDelete(dest);
                 } catch (Exception e) {System.out.println("");e.printStackTrace(); }finally{
@@ -95,9 +95,9 @@ public class PicSearchPicUseBase64C {
                 }
 
         }
-        p.p("--------------------list-----------------------------------");
-        p.p(JSON.toJSONString(list));
-        p.p("-------------------------------------------------------");
+//        p.p("--------------------list-----------------------------------");
+//        p.p(JSON.toJSONString(list));
+//        p.p("-------------------------------------------------------");
         return list;
     }
 ///////////////////////////////////////////////////////////////////////////////

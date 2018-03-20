@@ -9,6 +9,8 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -34,7 +36,10 @@ public class A1ReportRestService {
 
     ////////////////////////受订单号成功后是SO/////////////////////////////////////////////
 ///////////////////////注意事务要加在所有调用的方法上面,如果方法套方法,就必须都加事务///////////////////////////////////////////////////
-    @Transactional
+    //timeout=30超时30秒后自动解除事务
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg> listmsg) {
 //        System.out.println(list3);
         //循环插入所有
@@ -70,9 +75,9 @@ public class A1ReportRestService {
             ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-            synchronized (this) {
+//            synchronized (this) {
                 this.saveOneShouDingDanFromExcelToTable(shouDingDanFromExcel, listmsg,iii);
-            }
+//            }
         }
 
 
@@ -121,7 +126,7 @@ public class A1ReportRestService {
                     Integer kk;
                     try {
                         kk = cnst.a001TongYongMapper.countIfSapsoExist(b);
-                    } catch (Exception e) {
+                    } catch (Exception e) {l.error(e.getMessage(),e);
 
                         l.error(e.getMessage(),e);
                         throw new RuntimeException(e.toString());
@@ -142,7 +147,9 @@ public class A1ReportRestService {
 //                        p.p(p.dexhx+"sapso是否有重复数据 重复数量kk="+kk+""+p.dexhx);
                     }
 
-                } catch (Exception e) {
+                } catch (Exception e) {l.error(e.getMessage(),e);
+                    
+                    
                     Msg msg = new Msg();
                     msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(shouDingDanFromExcel.getOsNo());
 
@@ -162,7 +169,9 @@ public class A1ReportRestService {
     }
 
 
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
         Msg msg = new Msg();
         MfPosWithBLOBs m = new MfPosWithBLOBs();
@@ -231,7 +240,7 @@ public class A1ReportRestService {
             //"销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》"
             try {
                 m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -271,28 +280,28 @@ public class A1ReportRestService {
         t.setUnit("1");
         try {
             t.setTax(new BigDecimal(s.getTax().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="tax  税额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
             t.setTaxRto(new BigDecimal(s.getTaxRto().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="taxRto  税率 字段有非法数据  导致excel没有插入 根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
             t.setAmt(new BigDecimal(s.getAmt().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="amt  金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
             t.setAmtn(new BigDecimal(s.getAmtn().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="amtn  未税金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
@@ -313,7 +322,7 @@ public class A1ReportRestService {
         }
         try {
             t.setUp(new BigDecimal(s.getUp().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String sss="单号为"+s.getOsNo()+",货品名称为"+s.getPrdName()+
                     ",的价格《"+s.getUp()+"》在excel中不正确";
             listmsg.add(Msg.gmg().setMsg(sss));
@@ -327,7 +336,7 @@ public class A1ReportRestService {
         } else {
             try {
                 t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -339,7 +348,7 @@ public class A1ReportRestService {
         } else {
             try {
                 t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
                 listmsg.add(msg);
                 p.p(JSON.toJSONString(s));
@@ -372,7 +381,9 @@ public class A1ReportRestService {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveOneShouDingDanFromExcelToTableInsert
     (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
      ShouDingDanFromExcel s, List<Msg> listmsg,int iii) {
@@ -415,7 +426,9 @@ public class A1ReportRestService {
     /**
      * 插入三个主表
      */
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, List<Msg> listmsg,int iii) {
         try {
             MfPosExample mfe = new MfPosExample();
@@ -495,7 +508,7 @@ public class A1ReportRestService {
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);
 
 
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             Msg msg = new Msg();
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
             msg.setMsg("--订单号osNo为--osNo=“" + m.getOsNo() +

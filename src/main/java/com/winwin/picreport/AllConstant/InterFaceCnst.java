@@ -107,4 +107,7 @@ public interface InterFaceCnst {
     String currentCategoryPrdtList="currentCategoryPrdtList";
     String getOneRecordFromAId="getOneRecordFromAId";
     String fenlei="fenlei";
+
+    String mfPssExportExcelOfSap="mfPssExportExcelOfSap";
+    String mfPssDaBao="mfPssDaBao";
 }

@@ -12,7 +12,7 @@ public class IsPhoneNo {
         return false;
     }
 
-    public static void main(String[]args){
-        System.out.println(IsPhoneNo.isPhoneNo("18641928741"));
-    }
+//    public static void main(String[]args){
+//        System.out.println(IsPhoneNo.isPhoneNo("18641928741"));
+//    }
 }

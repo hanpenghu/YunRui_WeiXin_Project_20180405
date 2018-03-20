@@ -15,13 +15,13 @@ import com.winwin.picreport.Futils.hanhan.p;
  */
 public class DataSetSingleModifyExample1 {
 
-    public static void main(String[]args){
-        IWebClient client = GetIWebClientOfMaLong.getIWebClient();
-        DataSetModifyResponse res= g().run(client, Cnst.image_set_idOfWinWinPrdtSamp, Cnst.testPicUrl);
-        p.p("-------------------------------------------------------");
-        p.p(JSON.toJSONString(res));
-        p.p("-------------------------------------------------------");
-    }
+//    public static void main(String[]args){
+//        IWebClient client = GetIWebClientOfMaLong.getIWebClient();
+//        DataSetModifyResponse res= g().run(client, Cnst.image_set_idOfWinWinPrdtSamp, Cnst.testPicUrl);
+//        p.p("-------------------------------------------------------");
+//        p.p(JSON.toJSONString(res));
+//        p.p("-------------------------------------------------------");
+//    }
 
 
     public static DataSetSingleModifyExample1 g(){

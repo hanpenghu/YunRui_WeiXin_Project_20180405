@@ -248,7 +248,7 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
         for(String cus_no:cus_nos){
             List<SalePrdDetailTab1> salePrdDetailTab1sOfDangQianCusNoXia =
                     cnst.manyTabSerch.salePrdDetailTab1(chaXunTiaoJian, cus_no);
-            if(!NotEmpty.notEmpty(salePrdDetailTab1sOfDangQianCusNoXia)){
+            if(p.empty(salePrdDetailTab1sOfDangQianCusNoXia)){
                 continue;
             }
             salePrdDetailTab1ListWeiChaiHang.addAll(salePrdDetailTab1sOfDangQianCusNoXia);

@@ -9,6 +9,8 @@ import com.winwin.picreport.Futils.TimeStampToDate;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -21,11 +23,13 @@ import java.util.Map;
  *非sap销售订单导入
  * */
 @Service
-@Transactional
 public class D3SaleOrderUpLoadFromExcelService {
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveYiPiDingDanHaoXiangTongDe(Map<String, List> listMap, List<Msg>listmsg){
 //        System.out.println(list3);
         //循环插入所有
@@ -47,15 +51,17 @@ public class D3SaleOrderUpLoadFromExcelService {
             ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-            synchronized (this) {
+//            synchronized (this) {
                 this.saveOneShouDingDanFromExcelToTable
                         (shouDingDanFromExcel, listmsg,iii);
-            }
+//            }
         }
 
     }
 
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s,List<Msg>listmsg,int iii){
 
         /**
@@ -138,7 +144,7 @@ public class D3SaleOrderUpLoadFromExcelService {
         }else{
             try {
                 m.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单非sap导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -174,28 +180,28 @@ public class D3SaleOrderUpLoadFromExcelService {
         t.setUnit("1");
         try {
             t.setAmtn(new BigDecimal(s.getAmtn().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="amtn  未税金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
             t.setTax(new BigDecimal(s.getTax().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="tax  税额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
         }
         try {
             t.setAmt(new BigDecimal(s.getAmt().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="amt  金额 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             p.throwE(ss);
         }
         try {
             t.setTaxRto(new BigDecimal(s.getTaxRto().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String ss="taxRto  税率 字段有非法数据  导致excel没有插入 根据品名《"+s.getPrdName()+"》去找";
             listmsg.add(Msg.gmg().setMsg(ss));
             throw new RuntimeException(ss);
@@ -213,7 +219,7 @@ public class D3SaleOrderUpLoadFromExcelService {
 
         try {
             t.setUp(new BigDecimal(s.getUp().trim()));
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             String sss="单号为"+s.getOsNo()+",货品名称为"+s.getPrdName()+
                     ",的价格《"+s.getUp()+"》在excel中不正确";
             listmsg.add(Msg.gmg().setMsg(sss));
@@ -228,7 +234,7 @@ public class D3SaleOrderUpLoadFromExcelService {
         }else{
             try {
                 t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单非sap导入的时候《预交日期》不是有效的时间戳estDd:《"+estDd+"》");
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -241,7 +247,7 @@ public class D3SaleOrderUpLoadFromExcelService {
         }else{
             try {
                 t.setOsDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
-            } catch (Exception e) {
+            } catch (Exception e) {l.error(e.getMessage(),e);
                 msg.setMsg("销售订单导入的时候《订单日期》不是有效的时间戳osDd:《"+osDd+"》");
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -270,8 +276,10 @@ public class D3SaleOrderUpLoadFromExcelService {
         this.saveOneShouDingDanFromExcelToTableInsert(m, t, tz,pdt,listmsg,iii);
 ///////////////////////////////////////////
     }
-
-    private void prdNoGet(ShouDingDanFromExcel s) {
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
+    public void prdNoGet(ShouDingDanFromExcel s) {
         if(p.empty(s.getPrdNo())){
             String prdName = s.getPrdName();
             String s1 = cnst.a001TongYongMapper.selectTop1PrdtNo(prdName);
@@ -283,7 +291,9 @@ public class D3SaleOrderUpLoadFromExcelService {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveOneShouDingDanFromExcelToTableInsert(MfPosWithBLOBs m,
                                                          TfPosWithBLOBs t,
                                                          TfPosZ tz,
@@ -313,7 +323,9 @@ public class D3SaleOrderUpLoadFromExcelService {
 
     }
     //////////////////////////////////////////////////////////////////////////////////
-    @Transactional
+    // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
+    //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation= Propagation.REQUIRED)
     public void saveChuLePrdtDe(MfPosWithBLOBs m,TfPosWithBLOBs t,
                                 TfPosZ tz,List<Msg>listmsg,int iii){
         try {
@@ -353,7 +365,7 @@ public class D3SaleOrderUpLoadFromExcelService {
             cnst.manyTabSerch.updateTfPosNullToNothing001(m);
 
 
-        } catch (Exception e) {
+        } catch (Exception e) {l.error(e.getMessage(),e);
             Msg msg=new Msg();
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(m.getOsNo());
             msg.setMsg("--订单号osNo为--osNo=“"+m.getOsNo()+

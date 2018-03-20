@@ -68,7 +68,7 @@ public class GPrdNo {
 
     @Transactional
     public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp0 prdtSamp){
-        synchronized (this) {
+//        synchronized (this) {
             //得到中类代号,fenLeiNo是最小范围的
             String indx1=prdtSamp.getFenLeiNo();
             //在prdt里面找到相同的indx1的prdNo流水最大的那个
@@ -110,7 +110,7 @@ public class GPrdNo {
 //                }
 
             }
-        }
+//        }
 
     }
     /**

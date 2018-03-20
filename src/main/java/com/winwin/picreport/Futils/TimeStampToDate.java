@@ -23,11 +23,11 @@ public class TimeStampToDate {
     }
 
 
-    public static void main(String[]args) throws ParseException {
-           System.out.println( new TimeStampToDate().timeStampToDate(1483891200000L));
-
-          System.out.println( new SimpleDateFormat("yyyy-MM-dd").parse("2017-12-20").getTime());
-
-    }
+//    public static void main(String[]args) throws ParseException {
+////           System.out.println( new TimeStampToDate().timeStampToDate(1483891200000L));
+//
+//          System.out.println( new SimpleDateFormat("yyyy-MM-dd").parse("2017-12-20").getTime());
+//
+//    }
 
 }

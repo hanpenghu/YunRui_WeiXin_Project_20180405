@@ -60,7 +60,7 @@ public class PicSearchPicUseMultipartFileC {
                 try {
                     // 获取图片的文件名
                     String fileName = file.getOriginalFilename();
-                    System.out.println(fileName);
+//                    System.out.println(fileName);
 
 
 
@@ -69,14 +69,14 @@ public class PicSearchPicUseMultipartFileC {
                     //   ./1234567/
                     //E:\CloudPlatformBackstage\winwin\.\1234567\WW-VSUP5950-778.jpg
                     dest = new File(filePath, fileName);
-                    System.out.println(dest.getAbsolutePath());
+//                    System.out.println(dest.getAbsolutePath());
                     //上传到指定目录
                     file.transferTo(dest);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //得到网址,因为网址在配置文件配置过,所以必须这么
                     //其实就是得到上面存的文件的网址
                     String fileUrl=dirUrl+fileName;
-                    System.out.println(fileUrl);
+//                    System.out.println(fileUrl);
                     ImageSearchResponse imageSearchResponse =
                             new TestExample().fullFlowExample
                                     (fileUrl, tupianserviceId, tupianFanHuiCount);
@@ -91,7 +91,7 @@ public class PicSearchPicUseMultipartFileC {
                         ////////////////////////////////////////////////
                         list.add(searchResult);
                     }
-                    System.out.println("===================================");
+//                    System.out.println("===================================");
                     //删除指定目录的图片(用完就删掉)
                     FileUtils.forceDelete(dest);
                 } catch (Exception e) {System.out.println(""); }finally{
@@ -99,9 +99,9 @@ public class PicSearchPicUseMultipartFileC {
                 }
             }
         }
-        p.p("-------------------------------------------------------");
-        p.p(JSON.toJSONString(list));
-        p.p("-------------------------------------------------------");
+//        p.p("-------------------------------------------------------");
+//        p.p(JSON.toJSONString(list));
+//        p.p("-------------------------------------------------------");
         return list;
     }
 ///////////////////////////////////////////////////////////////////////////////

@@ -33,7 +33,7 @@ public class LoginShiPhoneNoDeQingkuang {
         if(tenantNames.size()>0){
             gongsiMingzi=tenantNames.get(0);
         }
-        System.out.println(loginfoList001.get(0).getUserName()+"login用的phoneNo");
+//        System.out.println(loginfoList001.get(0).getUserName()+"login用的phoneNo");
         if(NotEmpty.notEmpty(ii)&&NotEmpty.notEmpty(cont222)&&ii==1&&cont222==1){//登录成功
             return new MessageGenerate().generateMessage("success","登录成功", token,"1",info.getTenantId(),gongsiMingzi,loginfoList001.get(0).getUserName());
         }else{

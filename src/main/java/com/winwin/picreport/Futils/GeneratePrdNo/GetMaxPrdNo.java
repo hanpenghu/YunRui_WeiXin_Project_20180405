@@ -56,14 +56,14 @@ public class GetMaxPrdNo {
      * */
     public String getMaxPrdNoSecond(String prdNoMax){
        Integer ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
-       System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//       System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
        while(ii>0){
            //如果ii在里面已经存在,就需要加1
            long l = new Long(prdNoMax) + 1L;
            prdNoMax=String.valueOf(l);
            ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
        }
-        System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
        return prdNoMax;
     }
 

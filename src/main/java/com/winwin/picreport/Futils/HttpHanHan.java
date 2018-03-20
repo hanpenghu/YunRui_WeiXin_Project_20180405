@@ -41,7 +41,7 @@ public class HttpHanHan {
 		String spwdsign="womai.itemlist.get14082667wertycdewsf9fasdfgd04d09009211"+jsonstr;
 		
 		sign=MD5Utils.generatePassword(spwdsign);
-		System.out.println(sign+"-----------------------");		
+//		System.out.println(sign+"-----------------------");
 		 //聚合数据  begin
 		  String weatherresult =null;
 	        String url ="http://sandbox.womaiapp.com/api/rest";//请求接口地址
@@ -54,7 +54,7 @@ public class HttpHanHan {
 	  
 	        try {
 	        	weatherresult =net(url, params,"POST");
-	           System.out.println(weatherresult);
+//	           System.out.println(weatherresult);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }

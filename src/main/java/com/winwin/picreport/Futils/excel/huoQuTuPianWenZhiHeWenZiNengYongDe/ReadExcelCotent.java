@@ -141,7 +141,7 @@ public class ReadExcelCotent {
                 break;
             }
         }
-        p.p(p.gp().sad(p.dexhx).sad("ak47=").sad(p.strValeOf(ak47)).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad("ak47=").sad(p.strValeOf(ak47)).sad(p.dexhx).gad());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -234,7 +234,7 @@ public class ReadExcelCotent {
 
             // 对读取Excel表格内容测试
             Map<Integer, Map<Integer,Object>> map = excelReader.readExcelContent();
-            System.out.println("获得Excel表格的内容:");
+//            System.out.println("获得Excel表格的内容:");
             for (int i = 1; i <= map.size(); i++) {
                 System.out.println(map.get(i));
             }

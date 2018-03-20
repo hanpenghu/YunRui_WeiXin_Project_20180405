@@ -7,7 +7,7 @@ public class BaoLiuXiaoShu {
     public static Double m1(Double f,int xiaoShuDianHouDeWeiShu) {
         BigDecimal bg = new BigDecimal(f);
         double f1 = bg.setScale(xiaoShuDianHouDeWeiShu, BigDecimal.ROUND_HALF_UP).doubleValue();
-        System.out.println(f1);
+//        System.out.println(f1);
         return f1;
     }
     /**
@@ -15,7 +15,7 @@ public class BaoLiuXiaoShu {
      */
     public void m2() {
         DecimalFormat df = new DecimalFormat("#.000");
-        System.out.println(df.format(f));
+//        System.out.println(df.format(f));
     }
     /**
      * String.format打印最简便,四舍五入
@@ -32,7 +32,7 @@ public class BaoLiuXiaoShu {
         BaoLiuXiaoShu f = new BaoLiuXiaoShu();
         f.m1(111231.5585,3);
         f.m2();
-       System.out.println(f.m3SiSheWuRuBianStr(111231.5585,3)); ;
+//       System.out.println(f.m3SiSheWuRuBianStr(111231.5585,3)); ;
         f.m4();
     }
 }

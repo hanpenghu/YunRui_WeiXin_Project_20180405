@@ -834,30 +834,30 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
         return !isFirstDateBig(first,second);
     }
     public static boolean isFirstDateBig(String firstStr,Date  second){
-        synchronized (ThreadLocal.class) {
+//        synchronized (ThreadLocal.class) {
             Date first= tod(firstStr,"yyyy/MM/dd");
             return isFirstDateBig(first,second);
-        }
+//        }
     }
 
     public static boolean isFirstDateBig_(String firstStr,Date  second){
-        synchronized (ThreadLocal.class) {
+//        synchronized (ThreadLocal.class) {
             Date first= tod(firstStr,"yyyy-MM-dd");
             return isFirstDateBig(first,second);
-        }
+//        }
     }
     public static boolean isFirstDateSmall(String firstStr,Date  second){
-        synchronized (ThreadLocal.class) {
+//        synchronized (ThreadLocal.class) {
             Date first= tod(firstStr,"yyyy/MM/dd");
             return !isFirstDateBig(first,second);
-        }
+//        }
     }
 
     public static boolean isFirstDateSmall_(String firstStr,Date  second){
-        synchronized (ThreadLocal.class) {
+//        synchronized (ThreadLocal.class) {
             Date first= tod(firstStr,"yyyy-MM-dd");
             return !isFirstDateBig(first,second);
-        }
+//        }
     }
     //@Test
     public void f4() {
@@ -1181,9 +1181,9 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     private void f7(){
         Field[] declaredFields = x.class.getDeclaredFields();
         for(Field field:declaredFields){
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.p(field.getName());
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//            p.p(field.getName());
+//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         }
 
     }
@@ -1627,13 +1627,13 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
          * 我们打包后的springboot 的jar包就在LinZhan文件夹里面
          * */
         String path = p.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        synchronized (p.class) {
+//        synchronized (p.class) {
             path = path.replace("file:/", "");
             int i = path.lastIndexOf("!");
             i = i - 18;
             path = path.substring(0, i);
             path = path.substring(0, path.lastIndexOf("/"));
-        }
+//        }
         //处理路径中的%20为 " "
         if(path!=null&&path.contains(enCodeSpace)){
             path=path.replace(enCodeSpace,space);
@@ -1806,7 +1806,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     public static boolean GenerateImage(String imgStr,File file)
 
     {
-        System.out.println("开始把图片放入文件夹");
+//        System.out.println("开始把图片放入文件夹");
         //对字节数组字符串进行Base64解码并生成图片
         if (imgStr == null) //图像数据为空
             return false;
@@ -1824,7 +1824,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
             }
 //生成jpeg图片
 //新生成的图片
-            System.out.println("==============="+file.getAbsolutePath());
+//            System.out.println("==============="+file.getAbsolutePath());
             OutputStream out = new FileOutputStream(file);
             out.write(b);
             out.flush();

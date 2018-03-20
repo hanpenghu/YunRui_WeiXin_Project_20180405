@@ -9,15 +9,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class D{
-    public static void main(String[]args){
-        try {
-            D d=new D();
-           p.p(new ObjectMapper().writeValueAsString(d));
-        } catch (Exception e) {
-
-        }finally{}
-
-    }
+//    public static void main(String[]args){
+//        try {
+//            D d=new D();
+//           p.p(new ObjectMapper().writeValueAsString(d));
+//        } catch (Exception e) {
+//
+//        }finally{}
+//
+//    }
 
 
 //    @JsonSerialize(include=JsonSeri)

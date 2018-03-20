@@ -60,7 +60,7 @@ public class TestDate {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         PrdtSamp1 prdtSamp1=new PrdtSamp1();
         try {
 
@@ -70,17 +70,17 @@ public class TestDate {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         PrdtSamp1 prdtSamp2=new PrdtSamp1();
         try {
 
-            p.p(JSON.parseObject("{\"isconfirm\":\"\"}",PrdtSamp1.class));
+//            p.p(JSON.parseObject("{\"isconfirm\":\"\"}",PrdtSamp1.class));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }

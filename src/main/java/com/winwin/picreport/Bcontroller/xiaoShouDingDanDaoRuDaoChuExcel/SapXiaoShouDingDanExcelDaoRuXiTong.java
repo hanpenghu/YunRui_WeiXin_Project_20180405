@@ -258,7 +258,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                 }
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
             //此时list0里面装的都是同一（货号+成分代码）下的东西了(需要合并的),我们可以合并同一货号的某些字段了
-            synchronized (this){//这个内部就是为了合并
+//            synchronized (this){//这个内部就是为了合并
                 double qty=0;//数量
                 double amtn=0;//未税金额
                 double tax=0;//税额
@@ -296,7 +296,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     }
                 }
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");*/
-            }
+//            }
         }
 
         map.put("samePrdNoMeraged",list);

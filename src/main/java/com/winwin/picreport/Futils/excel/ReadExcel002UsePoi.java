@@ -31,12 +31,12 @@ public class ReadExcel002UsePoi {
         //得到Excel工作表指定行的单元格//从0开始索引
         HSSFCell cell = row.getCell((short) 2);
         //打印cell里面的String,如果是Stringn的话
-        System.out.println(cell.getRichStringCellValue());
+//        System.out.println(cell.getRichStringCellValue());
         HSSFCell cell001 = row.getCell((short) 1);
         //得到单元格样式
         HSSFCellStyle cellStyle = cell001.getCellStyle();
         //
-        System.out.println(cell001);
+//        System.out.println(cell001);
     }
     public static void test001() throws Exception {
 
@@ -57,15 +57,15 @@ public class ReadExcel002UsePoi {
         for(XSSFShape xs :xShapeList){
             XSSFPicture xsp = (XSSFPicture) xs;
 
-            System.out.println(xsp.getPictureData().getPackagePart().getPartName().getName());
+//            System.out.println(xsp.getPictureData().getPackagePart().getPartName().getName());
             XSSFPictureData pictureData = xsp.getPictureData();
             // 获取图片索引
             String  picName=pictureData.toString();
-            System.out.println(picName);
+//            System.out.println(picName);
             // 获取图片格式
             String ext = pictureData.suggestFileExtension();
-            System.out.println(ext);
-            System.out.println("D:\\pic" + picName + "." + ext);
+//            System.out.println(ext);
+//            System.out.println("D:\\pic" + picName + "." + ext);
             byte[] data = pictureData.getData();
             FileOutputStream out = new FileOutputStream("E:\\1\\00000\\"+i+".png");
             out.write(data);

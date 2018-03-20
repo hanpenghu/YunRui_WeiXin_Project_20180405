@@ -10,7 +10,7 @@ public class ImageAndBase64 {
 
 
         String strImg = GetImageStr("C:\\1234567\\1.png");
-        System.out.println(strImg);
+//        System.out.println(strImg);
         GenerateImage(strImg,"C:\\1234567\\109.jpeg");
     }
     //图片转化成base64字符串
@@ -71,7 +71,7 @@ public class ImageAndBase64 {
 public static boolean GenerateImage(String imgStr,File file)
 
 {
-    System.out.println("开始把图片放入文件夹");
+//    System.out.println("开始把图片放入文件夹");
     //对字节数组字符串进行Base64解码并生成图片
     if (imgStr == null) //图像数据为空
         return false;
@@ -89,7 +89,7 @@ public static boolean GenerateImage(String imgStr,File file)
         }
 //生成jpeg图片
 //新生成的图片
-        System.out.println("==============="+file.getAbsolutePath());
+//        System.out.println("==============="+file.getAbsolutePath());
         OutputStream out = new FileOutputStream(file);
         out.write(b);
         out.flush();

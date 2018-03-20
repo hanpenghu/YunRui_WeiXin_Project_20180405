@@ -113,10 +113,10 @@ public class D1DaYangServiceDataSaveByExcel {
         /**
          *以上list的一行数据正好对应 list0的那一行数据的图片数据
          * */
-         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-         p.p(list.size());
-         p.p(list1.size());
-         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+//         p.p(list.size());
+//         p.p(list1.size());
+//         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         if(NotEmpty.haveSomeEmpty(LstAd.g().ad(list).ad(list1).gt().toArray())){
             hanhanFileUtil.Del(file);
             return mg.gm(Msg.gmg()
