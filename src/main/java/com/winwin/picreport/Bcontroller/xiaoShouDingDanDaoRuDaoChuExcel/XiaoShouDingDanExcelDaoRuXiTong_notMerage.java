@@ -56,7 +56,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
         set1.addAll(shouDingDanFromExcels);
         int size = set1.size();
-//        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOf(size)).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOfNullSpace(size)).sad(p.dexhx).gad());
         if(size ==1){
             //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
 //            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
@@ -68,7 +68,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
         }
        /* try {
-             p.p(p.gp().sad(p.dexhx).sad(p.strValeOf("开始线程等待")).sad(p.dexhx).gad());
+             p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace("开始线程等待")).sad(p.dexhx).gad());
             Thread.sleep(1*60*60*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -164,7 +164,7 @@ public class DingJiaXiuGai {
 //        Date parse = new SimpleDateFormat(p.d16).parse("2017-12-29 19:10:52.717");
 //
 //        p.p(p.gp().sad(p.dexhx)
-//                 .sad(p.strValeOf(parse.getTime())).sad(p.dexhx).gad());//1514545852717
+//                 .sad(p.strValeOfNullSpace(parse.getTime())).sad(p.dexhx).gad());//1514545852717
 //
 //        p.p(p.gp().sad(p.dexhx).sad(p.dtoStr(p.sjc2Date("1514545852717"),p.d16)).sad(p.dexhx).gad());
 //        //_________________2017-12-29 19:10:52.717_________________

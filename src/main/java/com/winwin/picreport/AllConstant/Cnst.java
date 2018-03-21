@@ -61,6 +61,7 @@ public class Cnst {
     public static final String curIdBefore="curIdBefore";
 
 
+
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();
         return jarPath;
@@ -75,6 +76,9 @@ public class Cnst {
 
 
 
+
+    @Autowired
+    public IndxMapper indxMapper;
 
     @Autowired
     public TfPssMapper tfPssMapper;

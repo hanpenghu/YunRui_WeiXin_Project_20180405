@@ -111,7 +111,7 @@ public class A1ReportRestService {
                         throw new RuntimeException(e.toString());
                     }
 
-//                    p.p(p.gp().sad(p.dexhx).sad("sapso是否有重复数据kk=").sad(p.strValeOf(kk)).sad(p.dexhx).gad());
+//                    p.p(p.gp().sad(p.dexhx).sad("sapso是否有重复数据kk=").sad(p.strValeOfNullSpace(kk)).sad(p.dexhx).gad());
 
                     //注意 sapao是excel的原始记录,跟erp系统表没有关系,只是将来sap导出excel的时候拆行用的
                     if (NotEmpty.notEmpty(kk) && kk == 0) {

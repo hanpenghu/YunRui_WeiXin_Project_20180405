@@ -89,7 +89,7 @@ public class D1DaYangS {
                         prdtSampX.setFenLeiNo(fenLeis.get(Cnst.fenLeiNo));
                     } catch (Exception e) {
                         p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
-                        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf("prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));失败")).sad(p.dexhx).gad());
+                        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace("prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));失败")).sad(p.dexhx).gad());
                         p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
 //                e.printStackTrace();
                     }

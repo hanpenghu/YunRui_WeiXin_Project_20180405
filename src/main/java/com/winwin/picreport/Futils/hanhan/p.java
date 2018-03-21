@@ -267,7 +267,7 @@ public strictfp class p {
             int age = v.getAge();
             BigDecimal money = v.getMoney();
             //将要合并的对象的字段转化成字符串连接在一起,为了将来对比用
-            String nameage=p.gp().sad(name).sad(p.strValeOf(age)).gad();
+            String nameage=p.gp().sad(name).sad(p.strValeOfNullSpace(age)).gad();
             //从map工具类中拿到相同的那个对象中的对比字段
             usr usr = map.get(nameage);
             if(p.notEmpty(usr)){
@@ -313,10 +313,10 @@ public strictfp class p {
         Set<usr> usrSet = new TreeSet<>(
 //                (u01, u02)->(
 //                        //将u01去重的字段转换成字符串连接再一起
-//                        p.gp().sad(p.strValeOf(u01.getAge())).sad(u01.getName()).gad()
+//                        p.gp().sad(p.strValeOfNullSpace(u01.getAge())).sad(u01.getName()).gad()
 //                ).compareTo(
 //                        ////将u02去重的字段转换成字符串连接再一起
-//                        p.gp().sad(p.strValeOf(u02.getAge())).sad(u02.getName()).gad()
+//                        p.gp().sad(p.strValeOfNullSpace(u02.getAge())).sad(u02.getName()).gad()
 //                )
                 //上面那个是组合字段去重复,下面这个是单一字段去重复对象
                 Comparator.comparing(usr::getName)
@@ -951,9 +951,9 @@ public static boolean isFirstDateBig(String firstStr,String  secondStr){
     }
     /*public static void main(String[]args){
         //1970-01-01 08:02:01.344得到这种形式
-         p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate("121344"))).sad(p.dexhx).gad());
-        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate(121344L))).sad(p.dexhx).gad());
-        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(sjc2StrDate(121344L,d16))).sad(p.dexhx).gad());
+         p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(sjc2StrDate("121344"))).sad(p.dexhx).gad());
+        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(sjc2StrDate(121344L))).sad(p.dexhx).gad());
+        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(sjc2StrDate(121344L,d16))).sad(p.dexhx).gad());
     }*/
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -1257,9 +1257,24 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     /**
      *下面一个方法是为了解决String.valueOf(str)当str=null的情况的方法
      * */
-    public static String strValeOf(Object o){
+    public static String strValeOfNullSpace(Object o){
         if (null==o){
             return "null";
+        }else {
+            return String.valueOf(o);
+        }
+    }
+
+    public static String strValeOfSpace(Object o){
+        if (null==o){
+            return "";
+        }else {
+            return String.valueOf(o);
+        }
+    }
+    public static String strValeOf0(Object o){
+        if (null==o){
+            return "0";
         }else {
             return String.valueOf(o);
         }
@@ -1466,7 +1481,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 
 //    public static void main(String[]args){
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(p.sizeOfInt(213123))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(p.sizeOfInt(213123))).sad(p.dexhx).gad());
 //    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -1525,7 +1540,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 
 //    public static void main(String[]args){
-//             p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(p.dianHouWeiShu(123123.001D))).sad(p.dexhx).gad());
+//             p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(p.dianHouWeiShu(123123.001D))).sad(p.dexhx).gad());
 //    }
 
 
@@ -1555,13 +1570,13 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
 //    public static void main(String[]args){
 //        //_________________true_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isNumeric("11231212333333333333333333333333333333"))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isNumeric("11231212333333333333333333333333333333"))).sad(p.dexhx).gad());
 //       //_________________false_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isNumeric("1123.213123"))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isNumeric("1123.213123"))).sad(p.dexhx).gad());
 //        //_________________false_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isNumeric(""))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isNumeric(""))).sad(p.dexhx).gad());
 //        //_________________false_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isNumeric(null))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isNumeric(null))).sad(p.dexhx).gad());
 //    }
 
 
@@ -1585,13 +1600,13 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
 //    public static void main(String[]args){
 //        //_________________true_________________
-//         p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isInteger("11111111111111111111111111111111111111111111111111111111111111111111"))).sad(p.dexhx).gad());
+//         p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isInteger("11111111111111111111111111111111111111111111111111111111111111111111"))).sad(p.dexhx).gad());
 //        //_________________false_________________
-//         p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isInteger("11.1"))).sad(p.dexhx).gad());
+//         p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isInteger("11.1"))).sad(p.dexhx).gad());
 //        //_________________false_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isInteger(""))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isInteger(""))).sad(p.dexhx).gad());
 //        //_________________false_________________
-//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOf(isInteger(null))).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isInteger(null))).sad(p.dexhx).gad());
 //    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**

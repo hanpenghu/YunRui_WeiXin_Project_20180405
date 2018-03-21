@@ -15,7 +15,7 @@ public class SalePrdDetailTab1 {//导出excel用
     private String up = "";//,----单价
     private String amt="";//---本位币
     private String amtnNet = "";//,---未税本位币
-    private String os_no = "";// ,----EB单号
+    private String os_no = "";// ,----osno
     private String bat_no = "";//,-----批号
     private String remBody = "";//,	----表身摘要
     private String indxName = "";//,----种类名称

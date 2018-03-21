@@ -53,14 +53,15 @@ public class MfPssDaBaoExcel {
 
 
 
+
             //得到所有的符合条件的单号
             List<String>psNos=new LinkedList<>();
             for(String cusNo:cusNos){
                 List<String>psNos1=cnst.manyTabSerch.selectMfpssOsNo(cusNo,startTime,endTime);
                 psNos.addAll(psNos1);
             }
-
-            List<Order2Excel>order2Excels=new LinkedList<>();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<SalePrdDetailTab1>salePrdDetailTab1s=new LinkedList<>();
             for(String psNo:psNos){
 
                 //从表头得到信息
@@ -68,28 +69,70 @@ public class MfPssDaBaoExcel {
 
 
                 TfPssExample tpe=new TfPssExample();
-                tpe.createCriteria().andPsNoEqualTo(mfps.get("psNo"));
+                tpe.createCriteria().andPsNoEqualTo(psNo);
                 List<TfPss> tfPsses = cnst.tfPssMapper.selectByExample(tpe);
 
-                TfPssZExample tpze=new TfPssZExample();
-                tpze.createCriteria().andPsNoEqualTo(mfps.get("psNo"));
-                List<TfPssZ> tfPssZS = cnst.tfPssZMapper.selectByExample(tpze);
 
                 for(TfPss tfPss:tfPsses){
-                    Order2Excel o2e=new Order2Excel();
-                    o2e.setRemHead(mfps.get("remHead"));
-                    o2e.setPsNo(mfps.get("psNo"));
-                    o2e.setCusOsNo(mfps.get("cusOsNo"));
-                    o2e.setPrdName(tfPss.getPrdName());
-                    o2e.setPrdNo(tfPss.getPrdNo());
-                    o2e.setQty(p.bigDecimal2StringSpace(tfPss.getQty()));
 
+                    SalePrdDetailTab1 salePrdDetailTab11=new SalePrdDetailTab1();
+                    salePrdDetailTab11.setRemHead(mfps.get("remHead"));
+                    salePrdDetailTab11.setPsNo(psNo);
+                    salePrdDetailTab11.setCusOsNo(mfps.get("cusOsNo"));
+
+                    salePrdDetailTab11.setPrdName(tfPss.getPrdName());
+                    salePrdDetailTab11.setPrdNo(tfPss.getPrdNo());
+                    salePrdDetailTab11.setQty(p.bigDecimal2String0(tfPss.getQty()));
+                    salePrdDetailTab11.setUp(p.bigDecimal2String0(tfPss.getUp()));
+                    salePrdDetailTab11.setAmt(p.bigDecimal2String0(tfPss.getAmt()));
+                    salePrdDetailTab11.setAmtnNet(p.bigDecimal2String0(tfPss.getAmtnNet()));
+                    salePrdDetailTab11.setOs_no(tfPss.getOsNo());
+                    salePrdDetailTab11.setBat_no(tfPss.getBatNo());
+                    salePrdDetailTab11.setRemBody(tfPss.getRem());
+                    salePrdDetailTab11.setItm(p.strValeOfSpace(tfPss.getItm()));
+
+
+
+
+                    PrdtExample pse=new PrdtExample();
+                    pse.createCriteria().andPrdNoEqualTo(tfPss.getPrdNo());
+
+                    //下面都是为了得到indxName,中类名称
+                    List<Prdt> prdts = cnst.prdtMapper.selectByExample(pse);//只有一个
+                    if(p.notEmpty(prdts)){
+                        Prdt prdt = prdts.get(0);
+                        //设置单位
+                        salePrdDetailTab11.setUnit(prdt.getUt()==null?"1":prdt.getUt());
+                        Indx indx = cnst.indxMapper.selectByPrimaryKey(prdt.getIdx1());
+                        //设置中类名称
+                        salePrdDetailTab11.setIndxName(indx.getName());
+                    }
+
+                    TfPssZExample tfPssZExample=new TfPssZExample();
+                    tfPssZExample.createCriteria().andPsNoEqualTo(psNo);
+                    TfPssZKey tfPssZKey=new TfPssZKey();
+                    tfPssZKey.setPsId("SA");
+                    tfPssZKey.setItm(tfPss.getItm());
+                    tfPssZKey.setPsNo(psNo);
+                    TfPssZ tfPssZ = cnst.tfPssZMapper.selectByPrimaryKey(tfPssZKey);
+
+                    //设置备次
+                    salePrdDetailTab11.setBc(p.bigDecimal2StringSpace(tfPssZ.getBc()));
+                    //设置毛重
+                    salePrdDetailTab11.setMz(p.bigDecimal2StringSpace(tfPssZ.getMz()));
+                    //设置皮重
+                    salePrdDetailTab11.setPz(tfPssZ.getPz());
+                    //设置成分代码
+                    salePrdDetailTab11.setChengFenDaiMa(tfPssZ.getCfdm());
+
+
+                    salePrdDetailTab1s.add(salePrdDetailTab11);
 
                 }
 
             }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

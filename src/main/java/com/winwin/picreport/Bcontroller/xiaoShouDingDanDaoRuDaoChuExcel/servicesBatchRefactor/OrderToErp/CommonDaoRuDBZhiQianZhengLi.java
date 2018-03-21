@@ -58,7 +58,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
             //收集同一货号的list       samePrdNoList
             List<List<ShouDingDanFromExcel>> samePrdNoList = listMap.get("samePrdNoList");
             ////////////////////////循环未合并要插入sapso的list开始////////////////////////////////////////////////////////////////////////////////////
-            int kkk=0;
+            int kkk=1;
             for (List<ShouDingDanFromExcel> listx : samePrdNoList) {
 
                 ///////////////////////循环同一个货号下的要入sapso的数据开始/////////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
         //数据非法的时候这个方法会抛出异常//数据非法搜集器
-        this.isDataIgll(msg,s, listmsg,iii);
+        this.isDataIgll(msg,s, listmsg,iii+1);
 
 
 
@@ -490,6 +490,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
             String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
             if(p.empty(prdNo)){
                 String s1="有货号为空,根据品名在erp也找不到对应的货号,可能在"+jiShuQi+"行附近";
+                s1=s1+",对应的品名为："+s.getPrdName();
                 msg.setMsg(s1);
                 listmsg.add(msg);
                 throw new RuntimeException(msg.getMsg());
@@ -501,7 +502,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         //如果此时货号还是空的,就抛出异常
         if (p.empty(s.getPrdNo())) {
-            msg.setMsg("有货号为空且根据货品名字在erp找不到货号,可能在"+jiShuQi+"行附近");
+            msg.setMsg("有货号为空且根据货品名字在erp找不到货号,可能在"+jiShuQi+"行附近"+",对应的品名为："+s.getPrdName());
             listmsg.add(msg);
             //这个功能是迎合老郑说的:货品代号（品号） PRDT.PRD_NO里不存在提示整单不能导入
             throw new RuntimeException(msg.getMsg());

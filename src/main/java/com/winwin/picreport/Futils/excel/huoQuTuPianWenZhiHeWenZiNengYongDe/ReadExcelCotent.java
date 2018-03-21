@@ -141,7 +141,7 @@ public class ReadExcelCotent {
                 break;
             }
         }
-//        p.p(p.gp().sad(p.dexhx).sad("ak47=").sad(p.strValeOf(ak47)).sad(p.dexhx).gad());
+//        p.p(p.gp().sad(p.dexhx).sad("ak47=").sad(p.strValeOfNullSpace(ak47)).sad(p.dexhx).gad());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
