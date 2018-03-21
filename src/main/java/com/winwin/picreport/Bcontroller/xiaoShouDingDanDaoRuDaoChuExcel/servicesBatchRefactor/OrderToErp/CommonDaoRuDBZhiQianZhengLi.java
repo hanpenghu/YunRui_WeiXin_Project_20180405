@@ -545,12 +545,12 @@ public class CommonDaoRuDBZhiQianZhengLi {
         }
 
 
-        if(s.getRemhead()!=null&&s.getRemhead().length()>16){//注意这个可以是空字符串
+        /*if(s.getRemhead()!=null&&s.getRemhead().length()>(16*5)){//注意这个可以是空字符串
             String s1="表头备注长度不能大于16个字符";
             msg.setMsg(s1);
             listmsg.add(msg);
             throw new RuntimeException(s1);
-        }
+        }*/
 
 
         if(s.getRemBody()!=null&&s.getRemBody().length()>1000){

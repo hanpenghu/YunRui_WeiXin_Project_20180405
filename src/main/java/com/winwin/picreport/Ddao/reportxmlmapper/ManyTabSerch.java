@@ -283,5 +283,11 @@ public interface ManyTabSerch {
     Integer chuLiWaiBiQuanChongDiao();
 
 
+    @Select({"select ps_no from MF_PSS where cus_no=#{cusNo} and (ps_dd BETWEEN #{startTime} and #{endTime})"})
+    List<String> selectMfpssOsNo(@Param("cusNo") String cusNo,@Param("startTime")String startTime,@Param("endTime") String endTime);
 
+
+
+    @Select({"select top 1 ISNULL(rem,'') as remHead,ISNULL(ps_no,'') AS psNo,RTRIM(LTRIM(ISNULL(cus_os_no,''))) AS cusOsNo from mf_pss where ps_no=#{psNo}"})
+    Map<String,String> selectMfInfo(@Param("psNo")String psNo);
 }

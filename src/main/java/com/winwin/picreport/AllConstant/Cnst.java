@@ -60,6 +60,7 @@ public class Cnst {
     public static final String fu="副:";
     public static final String curIdBefore="curIdBefore";
 
+
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();
         return jarPath;
@@ -71,6 +72,18 @@ public class Cnst {
                 .sad(daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr))
                 .sad(suoLueTuWenJianJia).gad();
     }
+
+
+
+
+    @Autowired
+    public TfPssMapper tfPssMapper;
+
+
+    @Autowired
+    public TfPssZMapper tfPssZMapper;
+
+
 
 
     @Autowired

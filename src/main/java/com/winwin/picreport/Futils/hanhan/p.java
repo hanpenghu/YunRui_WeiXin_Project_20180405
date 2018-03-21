@@ -39,6 +39,7 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+    public static final String knownExceptionSign ="《已知异常》";
     public static final String gq="_____________________RuanJianGuoQi__________________________The software has expired, please contact the supplier_____________________RuanJianGuoQi__________________________";//过期提醒
     public static final String NULL1="NULL";
     public static final String null1="null";
@@ -563,6 +564,26 @@ public strictfp class p {
             } catch (Exception e) {
                 return null;
             }
+        }
+    }
+
+
+    /**
+     *bigdecimal变String
+     * */
+
+    public static String bigDecimal2StringSpace(BigDecimal b){
+        if(b==null){
+            return "";
+        }else{
+            return String.valueOf(b);
+        }
+    }
+    public static String bigDecimal2String0(BigDecimal b){
+        if(b==null){
+            return "0";
+        }else{
+            return String.valueOf(b);
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
