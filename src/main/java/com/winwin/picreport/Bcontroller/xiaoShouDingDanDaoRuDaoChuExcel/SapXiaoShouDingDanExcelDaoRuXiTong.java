@@ -41,6 +41,11 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
+    Date date = p.getDate();
+
+    p.p(date);
+
+
     List<Msg> listmsg=new ArrayList<>();
 
     try {
@@ -97,7 +102,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 
 
-
+    p.p("---------------时间----------------------------------------");
+    p.p(p.xjs(p.getDate(),date));
+    p.p("-------------------------------------------------------");
 
     ////////////////////////////////////////////////////////////////////////
     return listmsg;
@@ -177,7 +184,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     /**
                      *数据库插入数据
                      * */
-                    cnst.a1.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                    cnst.commonDaoRuDBZhiQianZhengLi.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg,"sap");
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
                     listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入001---单号"+list3.get(0).getOsNo()+"已经存在于mfPos"));

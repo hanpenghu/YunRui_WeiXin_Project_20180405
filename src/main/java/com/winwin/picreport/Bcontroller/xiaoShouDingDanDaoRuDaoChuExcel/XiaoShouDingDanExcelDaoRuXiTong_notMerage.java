@@ -192,8 +192,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                     /**
                      *插入数据到数据库
                      * */
-                    this.cnst.d3SaleOrderUpLoadFromExcelService
-                            .saveYiPiDingDanHaoXiangTongDe(listMap,listmsg);
+                    this.cnst.commonDaoRuDBZhiQianZhengLi.saveYiPiDingDanHaoXiangTongDe(listMap,listmsg,"notSap");
                 }else{
 //                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
                     listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入"));

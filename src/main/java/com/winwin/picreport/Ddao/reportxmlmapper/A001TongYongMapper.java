@@ -207,10 +207,10 @@ public interface A001TongYongMapper {
 
    @Select({"select count(id) from sapso\n" +
            "where\n" +
-           "isnull(timeSameBatch,'')!=#{timesamebatch}\n" +
-           "and\n" +
-           "isnull(uuid,'') !=#{uuid}\n" +
-           "and \n" +
+//           "isnull(timeSameBatch,'')!=#{timesamebatch}\n" +
+//           "and\n" +
+//           "isnull(uuid,'') !=#{uuid}\n" +
+//           "and \n" +
            "isnull(osno,'')=#{osno}\n" +
 //           "and\n" +
 //           "isnull(ebno,'')=#{ebno}\n" +
@@ -220,7 +220,7 @@ public interface A001TongYongMapper {
            "isnull(prdno,'')=#{prdno}\n" +
            "and\n" +
            "isnull(saphh,'')=#{saphh}\n" +
-           "and\n" +
+//           "and\n" +
 //           "isnull(sapph,'')=#{sapph}\n" +
 //           "and \n" +
 //           "isnull(sapwlm,'')=#{sapwlm}\n" +
@@ -235,7 +235,8 @@ public interface A001TongYongMapper {
 //           "and\n" +
 //           "isnull(realLength,'')=#{reallength}\n" +
 //           "and\n" +
-           "isnull(chengfendaima,'')=#{chengFenDaiMa}"})
+//           "isnull(chengfendaima,'')=#{chengFenDaiMa}" +
+           ""})
    Integer countIfSapsoExist(Sapso b);
 
    //通过产品名称中的idxNo找到页面的分类名称fenLeiNo和FenLeiName

@@ -1,6 +1,8 @@
 package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Acomponent.SapsoChongfu;
+import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
+import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
@@ -70,6 +72,12 @@ public class Cnst {
                 .sad(suoLueTuWenJianJia).gad();
     }
 
+
+    @Autowired
+    public CommonOrderBatchToDb commonOrderBatchToDb;
+
+    @Autowired
+    public CommonDaoRuDBZhiQianZhengLi commonDaoRuDBZhiQianZhengLi;
     @Autowired
      public  AlterPriceRecMapper alterPriceRecMapper;
     @Autowired
