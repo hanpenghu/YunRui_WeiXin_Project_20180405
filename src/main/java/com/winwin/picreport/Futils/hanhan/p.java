@@ -515,6 +515,27 @@ public strictfp class p {
            }
 
     }
+
+
+
+
+
+
+    /**
+     *解决字段set方法的时候需要null变空的问题
+     * null变空
+     * 一般用于插入数据库不想有空的情况或者字段返回前端不想有空的情况
+     * */
+    public String fieldNull2Space(String str) {
+        return str==null?"":str;
+    }
+
+    /**
+     *这种用于插入数据库的时候想insertSelective(空的不插入的情况)
+     * */
+    public String fieldSpace2Null(String str) {
+        return "".equals(str)?null:str;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //new 一个BigDecimal//非正常情况返回null
     public static BigDecimal b(String s){
