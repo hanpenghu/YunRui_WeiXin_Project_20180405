@@ -10,10 +10,8 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -41,14 +39,7 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
         //得到客户条件的所有未拆行的数据
         List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang =
                 this.salePrdDetailTab1ListWeiChaiHang(cus_nos, chaXunTiaoJian);
-//return salePrdDetailTab1ListWeiChaiHang;
-//        for(SalePrdDetailTab1 v:salePrdDetailTab1ListWeiChaiHang){
-//            if(p.dy(v.getPrdNo(),"11201043")&&p.dy(v.getCusOsNo(),"170856BR3SSYZYP84771")){
-//                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
-//                p.p(v);
-//                p.p(p.gp().sad(p.dexhx).sad(p.nStr(p.zhifgf,p.n3)).sad(p.dexhx).gad());
-//            }
-//        }
+
 
 
 
@@ -62,8 +53,9 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 //
 //
 ////得到将来用于拆行的sapso
-        List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(salePrdDetailTab1ListWeiChaiHang);
+//        List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(salePrdDetailTab1ListWeiChaiHang);
 
+        List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(cus_nos, chaXunTiaoJian);
 
         List<String>danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang=new ArrayList<>();
         for(Sapso sapso:listSapsoWeiChaiHang){
@@ -105,9 +97,10 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 //                                p.p("-------------------------------------------------------");
 //                                p.p(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh());
 //                                p.p("-------------------------------------------------------");
-                                salePrdDetailTab1.setEbNo
-                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+//                                salePrdDetailTab1.setEbNo
+//                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
 
+                                salePrdDetailTab1.setEbNo(sapso.getEbno());
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
                                 break;
                             }
@@ -146,8 +139,9 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 //                                p.p("-------------------------------------------------------");
 //                                p.p(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh());
 //                                p.p("-------------------------------------------------------");
-                                salePrdDetailTab1
-                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+//                                salePrdDetailTab1
+//                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+                                salePrdDetailTab1.setEbNo(sapso.getEbno());
                                 break;//此时不再拆行
                             }else{
 //                                salePrdDetailTab1
@@ -167,8 +161,9 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 //                                p.p("-------------------------------------------------------");
 //                                p.p(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh());
 //                                p.p("-------------------------------------------------------");
-                                salePrdDetailTab1
-                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+//                                salePrdDetailTab1
+//                                        .setEbNo(cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
+                                salePrdDetailTab1.setEbNo(sapso.getEbno());
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
 
                                 //改变salePrdDetailTab1的数量,准备下次拆行
@@ -204,7 +199,7 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
             List<SalePrdDetailTab1> salePrdDetailTab1sOfDangQianCusNoXia =
                     cnst.manyTabSerch.salePrdDetailTab1(chaXunTiaoJian, cus_no);
             if(p.empty(salePrdDetailTab1sOfDangQianCusNoXia)){
-                continue;
+                continue;//下面代码不再执行,继续下一个
             }
             salePrdDetailTab1ListWeiChaiHang.addAll(salePrdDetailTab1sOfDangQianCusNoXia);
         }
@@ -214,14 +209,36 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
 
 
-    public List<Sapso> listSapsoWeiChaiHang(List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang){
-        List<Sapso>listSapsoWeiChaiHang=new ArrayList<>();
-        for(SalePrdDetailTab1 salePrdDetailTab1WeiChaiShang:salePrdDetailTab1ListWeiChaiHang){
-            List<Sapso> sapsos = cnst.manyTabSerch.select001(salePrdDetailTab1WeiChaiShang.getCusOsNo(), salePrdDetailTab1WeiChaiShang.getPrdNo(),salePrdDetailTab1WeiChaiShang.getChengFenDaiMa());
-            if(NotEmpty.notEmpty(sapsos)){
-                listSapsoWeiChaiHang.addAll(sapsos);
+//    public List<Sapso> listSapsoWeiChaiHang(List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang){
+public List<Sapso> listSapsoWeiChaiHang( List<String> cus_nos,ChaXunTiaoJian chaXunTiaoJian){
+        p.p("-------------------------------------------------------");
+        p.p("开始计算封装sapso的时间");
+        p.p("-------------------------------------------------------");
+        Date date = p.getDate();
+//        List<Sapso>listSapsoWeiChaiHang=new ArrayList<>();
+//        for(SalePrdDetailTab1 salePrdDetailTab1WeiChaiShang:salePrdDetailTab1ListWeiChaiHang){
+//            List<Sapso> sapsos = cnst.manyTabSerch.select001(salePrdDetailTab1WeiChaiShang.getCusOsNo(), salePrdDetailTab1WeiChaiShang.getPrdNo(),salePrdDetailTab1WeiChaiShang.getChengFenDaiMa());
+//            if(NotEmpty.notEmpty(sapsos)){
+//                listSapsoWeiChaiHang.addAll(sapsos);
+//            }
+//        }
+
+        List<Sapso>listSapsoWeiChaiHang=new LinkedList<>();
+
+        for(String cus_no:cus_nos){
+            List<Sapso>listsapso= cnst.manyTabSerch.selectSapso(cus_no,chaXunTiaoJian);
+            if(p.empty(listsapso)){
+                continue;
             }
+            listSapsoWeiChaiHang.addAll(listsapso);
         }
+
+
+
+
+        p.p("-----------封装sapso的时间--------------------------------------------");
+        p.p(p.xjs(p.getDate(),date));
+        p.p("-------------------------------------------------------");
         return listSapsoWeiChaiHang;
     }
 

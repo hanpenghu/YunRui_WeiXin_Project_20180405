@@ -290,4 +290,6 @@ public interface ManyTabSerch {
 
     @Select({"select top 1 ISNULL(rem,'') as remHead,ISNULL(ps_no,'') AS psNo,RTRIM(LTRIM(ISNULL(cus_os_no,''))) AS cusOsNo from mf_pss where ps_no=#{psNo}"})
     Map<String,String> selectMfInfo(@Param("psNo")String psNo);
+
+    List<Sapso> selectSapso(@Param("cus_no") String cus_no,@Param("chaXunTiaoJian")ChaXunTiaoJian chaXunTiaoJian);
 }

@@ -79,7 +79,7 @@
         	enableSelectByExample="false"
         ></table> -->
         <!--dept cust salm my_wh-->
-        <table tableName="tf_pss_z"></table><!--产品打样表 -->
+        <table tableName="sapso999999"></table><!--产品打样表 -->
        <!-- <table tableName="up_def"></table>--><!-- 单价表-->
        <!-- <table tableName="cur_id"></table>--><!--币别表 -->
       	<!-- <table tableName="before_same_prdNo_merge"></table>-->

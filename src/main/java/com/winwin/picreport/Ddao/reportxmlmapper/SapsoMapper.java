@@ -1,8 +1,8 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 
-import java.util.List;
 import com.winwin.picreport.Edto.Sapso;
 import com.winwin.picreport.Edto.SapsoExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SapsoMapper {

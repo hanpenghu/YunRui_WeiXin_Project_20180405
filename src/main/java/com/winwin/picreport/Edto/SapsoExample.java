@@ -1204,6 +1204,76 @@ public class SapsoExample {
             addCriterion("realLength not between", value1, value2, "reallength");
             return (Criteria) this;
         }
+
+        public Criteria andChengfendaimaIsNull() {
+            addCriterion("chengFenDaiMa is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaIsNotNull() {
+            addCriterion("chengFenDaiMa is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaEqualTo(String value) {
+            addCriterion("chengFenDaiMa =", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaNotEqualTo(String value) {
+            addCriterion("chengFenDaiMa <>", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaGreaterThan(String value) {
+            addCriterion("chengFenDaiMa >", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaGreaterThanOrEqualTo(String value) {
+            addCriterion("chengFenDaiMa >=", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaLessThan(String value) {
+            addCriterion("chengFenDaiMa <", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaLessThanOrEqualTo(String value) {
+            addCriterion("chengFenDaiMa <=", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaLike(String value) {
+            addCriterion("chengFenDaiMa like", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaNotLike(String value) {
+            addCriterion("chengFenDaiMa not like", value, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaIn(List<String> values) {
+            addCriterion("chengFenDaiMa in", values, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaNotIn(List<String> values) {
+            addCriterion("chengFenDaiMa not in", values, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaBetween(String value1, String value2) {
+            addCriterion("chengFenDaiMa between", value1, value2, "chengfendaima");
+            return (Criteria) this;
+        }
+
+        public Criteria andChengfendaimaNotBetween(String value1, String value2) {
+            addCriterion("chengFenDaiMa not between", value1, value2, "chengfendaima");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

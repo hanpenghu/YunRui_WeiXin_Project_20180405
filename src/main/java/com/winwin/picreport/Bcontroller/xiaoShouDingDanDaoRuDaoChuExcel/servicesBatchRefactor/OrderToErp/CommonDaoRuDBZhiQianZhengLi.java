@@ -111,7 +111,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
                         b.setReallength(shouDingDanFromExcel.getRealLength());
                         b.setRealwidth(shouDingDanFromExcel.getRealWidth());
                         //20171108加了成分代码
-                        b.setChengFenDaiMa(shouDingDanFromExcel.getCfdm());
+                        b.setChengFenDaiMa(shouDingDanFromExcel.getCfdm());//这个是历史遗留问题//这个原来用于导出
+                        b.setChengfendaima(shouDingDanFromExcel.getCfdm());//这个是真正的导入的
                         b.setTimesamebatch(dateStr);
                         b.setUuid(uuid);//uuid相同代表  单号+货号+成分代码  相同
                         /**
@@ -135,6 +136,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
                             //存在就删掉,将来再导入
                             SapsoExample s=new SapsoExample();
                             s.createCriteria()
+                                  .andChengfendaimaEqualTo(b.getChengFenDaiMa().trim())
 //                                .andSapwlmEqualTo(b.getSapwlm().trim())
 //                                .andSapphEqualTo(b.getSapph().trim())
                                     .andSaphhEqualTo(b.getSaphh().trim())

@@ -1,11 +1,8 @@
 package com.winwin.picreport.Edto;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class Sapso  implements Comparable<Sapso>{
+public class Sapso implements Comparable<Sapso>{
     private Integer id=-1;
 
     private String timesamebatch="";
@@ -45,7 +42,10 @@ public class Sapso  implements Comparable<Sapso>{
 
     private String danHao_HuoHao_ChengFenDaiMa="";
 
-    private String chengFenDaiMa="";
+    private String chengFenDaiMa="";//原来用的历史遗留问题//导出订单的时候sql自己 写的用了这个
+
+    private String chengfendaima;//这个是对应数据库的//导入的时候用了这个//这个是后来加在sapso的字段
+
 
 
 
@@ -81,24 +81,9 @@ public class Sapso  implements Comparable<Sapso>{
         return this;
     }
 
-    public String getChengFenDaiMa() {
-        return chengFenDaiMa.trim();
-    }
 
-    public Sapso setChengFenDaiMa(String chengFenDaiMa) {
-        this.chengFenDaiMa = chengFenDaiMa;
-        return this;
-    }
 
-//    public String getDanHao_HuoHao() {
-//       this.danHao_HuoHao= this.osno+this.prdno;
-//        return this.danHao_HuoHao;
-//    }
-//
-//    public Sapso setDanHao_HuoHao(String danHao_HuoHao) {
-//        this.danHao_HuoHao = danHao_HuoHao;
-//        return this;
-//    }
+
 
     public Double getQtyDouble() {
         try {
@@ -252,53 +237,19 @@ public class Sapso  implements Comparable<Sapso>{
 
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.Sapso{");
-        sb.append("id=").append(id);
-        sb.append(", timesamebatch='").append(timesamebatch).append('\'');
-        sb.append(", uuid='").append(uuid).append('\'');
-        sb.append(", osno='").append(osno).append('\'');
-        sb.append(", ebno='").append(ebno).append('\'');
-        sb.append(", caigouno='").append(caigouno).append('\'');
-        sb.append(", prdno='").append(prdno).append('\'');
-        sb.append(", saphh='").append(saphh).append('\'');
-        sb.append(", saphhDouble=").append(saphhDouble);
-        sb.append(", sapph='").append(sapph).append('\'');
-        sb.append(", sapwlm='").append(sapwlm).append('\'');
-        sb.append(", qty=").append(qty);
-        sb.append(", qtyDouble=").append(qtyDouble);
-        sb.append(", maitouno='").append(maitouno).append('\'');
-        sb.append(", luohao='").append(luohao).append('\'');
-        sb.append(", ganghao='").append(ganghao).append('\'');
-        sb.append(", realwidth='").append(realwidth).append('\'');
-        sb.append(", reallength='").append(reallength).append('\'');
-        sb.append(", danHao_HuoHao_ChengFenDaiMa='").append(danHao_HuoHao_ChengFenDaiMa).append('\'');
-        sb.append(", chengFenDaiMa='").append(chengFenDaiMa).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public String getChengFenDaiMa() {
+        return chengFenDaiMa.trim();
     }
 
-    public static void main(String[]args){
-
-        List<Sapso> list=new ArrayList<>();
-        Sapso sapso1=new Sapso();
-        sapso1.setSaphh("34");
-        Sapso sapso2=new Sapso();
-        sapso2.setSaphh("29");
-        Sapso sapso3=new Sapso();
-        sapso3.setSaphh("56");
-        Sapso sapso4=new Sapso();
-        sapso4.setSaphh("1");
-        list.add(sapso1);
-        list.add(sapso2);
-        list.add(sapso3);
-        list.add(sapso4);
-        Collections.sort(list);
-        for(Sapso  sapso:list){
-            System.out.println(sapso.getSaphh());
-        }
+    public Sapso setChengFenDaiMa(String chengFenDaiMa) {
+        this.chengFenDaiMa = chengFenDaiMa;
+        return this;
+    }
+    public String getChengfendaima() {
+        return chengfendaima;
     }
 
-
+    public void setChengfendaima(String chengfendaima) {
+        this.chengfendaima = chengfendaima == null ? null : chengfendaima.trim();
+    }
 }

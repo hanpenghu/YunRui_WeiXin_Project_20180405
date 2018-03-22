@@ -6,9 +6,9 @@ import com.winwin.picreport.Futils.TongJiXiaoShuDianHouDeWeiShu;
 
 public class SalePrdDetailTab1 {//导出excel用
     private String remHead = "";//,	 // ---表头备注
-    private String psNo = "";//,//---销货单号
+    private String psNo = "";//,//---销货单号//供应商送货单号
     private String cusOsNo = "";//,//----客户订单号-------对应sapso的osno
-    private String prdName = "";//, //----货品名称
+    private String prdName = "";//, //----货品名称//物料名称
     private String unit = "";//,//---------单位
     private String qty = "";//,---数量
     private Double qtyDouble=0D;
@@ -17,7 +17,7 @@ public class SalePrdDetailTab1 {//导出excel用
     private String amtnNet = "";//,---未税本位币
     private String os_no = "";// ,----osno
     private String bat_no = "";//,-----批号
-    private String remBody = "";//,	----表身摘要
+    private String remBody = "";//,	----表身摘要--对应excel备注
     private String indxName = "";//,----种类名称
     private String bc = "";//,---------备次
     private String mz = "";//,-------毛重

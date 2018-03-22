@@ -18,7 +18,6 @@
     <result column="gangHao" jdbcType="VARCHAR" property="ganghao" />
     <result column="realWidth" jdbcType="VARCHAR" property="realwidth" />
     <result column="realLength" jdbcType="VARCHAR" property="reallength" />
-    <result column="chengFenDaiMa" jdbcType="VARCHAR" property="chengfendaima" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, timeSameBatch, uuid, osNo, ebNo, caiGouNo, prdNo, saphh, sapph, sapwlm, qty, 
-    maiTouNo, luoHao, gangHao, realWidth, realLength, chengFenDaiMa
+    maiTouNo, luoHao, gangHao, realWidth, realLength
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.SapsoExample" resultMap="BaseResultMap">
     select
@@ -112,20 +111,24 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <!-- 20171108  insert设置了成分代码这一样东西,其他的都没有添加这个字段-->
   <insert id="insert" parameterType="com.winwin.picreport.Edto.Sapso">
     insert into sapso (timeSameBatch, uuid,
       osNo, ebNo, caiGouNo, 
       prdNo, saphh, sapph, 
       sapwlm, qty, maiTouNo, 
       luoHao, gangHao, realWidth, 
-      realLength, chengFenDaiMa)
-    values (#{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
+      realLength,chengFenDaiMa)
+    values ( #{timesamebatch,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR},
       #{osno,jdbcType=VARCHAR}, #{ebno,jdbcType=VARCHAR}, #{caigouno,jdbcType=VARCHAR}, 
       #{prdno,jdbcType=VARCHAR}, #{saphh,jdbcType=VARCHAR}, #{sapph,jdbcType=VARCHAR}, 
       #{sapwlm,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{maitouno,jdbcType=VARCHAR}, 
       #{luohao,jdbcType=VARCHAR}, #{ganghao,jdbcType=VARCHAR}, #{realwidth,jdbcType=VARCHAR}, 
-      #{reallength,jdbcType=VARCHAR}, #{chengfendaima,jdbcType=VARCHAR})
+      #{reallength,jdbcType=VARCHAR},#{chengFenDaiMa,jdbcType=VARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.Sapso">
     insert into sapso
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -177,9 +180,6 @@
       <if test="reallength != null">
         realLength,
       </if>
-      <if test="chengfendaima != null">
-        chengFenDaiMa,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -229,9 +229,6 @@
       </if>
       <if test="reallength != null">
         #{reallength,jdbcType=VARCHAR},
-      </if>
-      <if test="chengfendaima != null">
-        #{chengfendaima,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -292,12 +289,6 @@
       <if test="record.reallength != null">
         realLength = #{record.reallength,jdbcType=VARCHAR},
       </if>
-      <if test="record.chengfendaima != null">
-        chengFenDaiMa = #{record.chengfendaima,jdbcType=VARCHAR},
-      </if>
-      <if test="record.chengfendaima == null">
-        chengFenDaiMa = chengFenDaiMa,
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -306,9 +297,9 @@
   <update id="updateByExample" parameterType="map">
     update sapso
     set
-    ---id = #{record.id,jdbcType=INTEGER},
-      ---timeSameBatch = #{record.timesamebatch,jdbcType=VARCHAR},
-      -----uuid = #{record.uuid,jdbcType=VARCHAR},
+    --- id = #{record.id,jdbcType=INTEGER},
+     --- timeSameBatch = #{record.timesamebatch,jdbcType=VARCHAR},
+     --- uuid = #{record.uuid,jdbcType=VARCHAR},
       osNo = #{record.osno,jdbcType=VARCHAR},
       ebNo = #{record.ebno,jdbcType=VARCHAR},
       caiGouNo = #{record.caigouno,jdbcType=VARCHAR},
@@ -321,8 +312,7 @@
       luoHao = #{record.luohao,jdbcType=VARCHAR},
       gangHao = #{record.ganghao,jdbcType=VARCHAR},
       realWidth = #{record.realwidth,jdbcType=VARCHAR},
-      realLength = #{record.reallength,jdbcType=VARCHAR},
-      chengFenDaiMa = #{record.chengfendaima,jdbcType=VARCHAR}
+      realLength = #{record.reallength,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -375,12 +365,6 @@
       <if test="reallength != null">
         realLength = #{reallength,jdbcType=VARCHAR},
       </if>
-      <if test="chengfendaima != null">
-        chengFenDaiMa = #{chengfendaima,jdbcType=VARCHAR},
-      </if>
-      <if test="chengfendaima == null">
-        chengFenDaiMa = chengFenDaiMa,
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -400,8 +384,7 @@
       luoHao = #{luohao,jdbcType=VARCHAR},
       gangHao = #{ganghao,jdbcType=VARCHAR},
       realWidth = #{realwidth,jdbcType=VARCHAR},
-      realLength = #{reallength,jdbcType=VARCHAR},
-      chengFenDaiMa = #{chengfendaima,jdbcType=VARCHAR}
+      realLength = #{reallength,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
