@@ -70,6 +70,7 @@ public strictfp class p {
     public static final String ys="|";//一竖
     public static final String edyh="'";//英文单引号的一半
     public static final String esyh="\"";//英文双引号的一半
+    public static final String huanHangfu="\n";
     public static final String ejh=".";//英文句号
     public static final String zjh="。";//中文句号
     public static final String zd="，";//中文逗号

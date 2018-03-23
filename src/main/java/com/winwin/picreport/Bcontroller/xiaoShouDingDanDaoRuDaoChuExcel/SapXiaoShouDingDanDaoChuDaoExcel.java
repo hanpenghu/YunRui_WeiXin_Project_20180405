@@ -211,9 +211,9 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
 //    public List<Sapso> listSapsoWeiChaiHang(List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang){
 public List<Sapso> listSapsoWeiChaiHang( List<String> cus_nos,ChaXunTiaoJian chaXunTiaoJian){
-        p.p("-------------------------------------------------------");
-        p.p("开始计算封装sapso的时间");
-        p.p("-------------------------------------------------------");
+//        p.p("-------------------------------------------------------");
+//        p.p("开始计算封装sapso的时间");
+//        p.p("-------------------------------------------------------");
         Date date = p.getDate();
 //        List<Sapso>listSapsoWeiChaiHang=new ArrayList<>();
 //        for(SalePrdDetailTab1 salePrdDetailTab1WeiChaiShang:salePrdDetailTab1ListWeiChaiHang){
@@ -236,9 +236,9 @@ public List<Sapso> listSapsoWeiChaiHang( List<String> cus_nos,ChaXunTiaoJian cha
 
 
 
-        p.p("-----------封装sapso的时间--------------------------------------------");
-        p.p(p.xjs(p.getDate(),date));
-        p.p("-------------------------------------------------------");
+//        p.p("-----------封装sapso的时间--------------------------------------------");
+//        p.p(p.xjs(p.getDate(),date));
+//        p.p("-------------------------------------------------------");
         return listSapsoWeiChaiHang;
     }
 

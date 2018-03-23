@@ -6,6 +6,7 @@ import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ import java.util.*;
  *导入excel
  * */
 public class SapXiaoShouDingDanExcelDaoRuXiTong {
-    @Autowired
+   @Autowired
     private Cnst cnst;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
@@ -43,7 +44,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
     Date date = p.getDate();
 
-    p.p(date);
+//    p.p(date);
 
 
     List<Msg> listmsg=new ArrayList<>();
@@ -102,9 +103,20 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     }
 
 
-    p.p("---------------时间----------------------------------------");
-    p.p(p.xjs(p.getDate(),date));
-    p.p("-------------------------------------------------------");
+
+
+    String sssss=stra.b()
+            .a(p.nStr(p.jh,25))
+            .a("sap销售订单导入时间")
+            .a(p.nStr(p.jh,25))
+            .a(p.huanHangfu)
+            .a(p.strValeOfNullSpace(p.xjs(p.getDate(),date)))
+            .a(p.huanHangfu).a(p.nStr(p.jh,50)).g();
+    l.error(sssss);
+
+//    p.p("---------------sap销售订单导入时间----------------------------------------");
+//    p.p(p.xjs(p.getDate(),date));
+//    p.p("-------------------------------------------------------");
 
     ////////////////////////////////////////////////////////////////////////
     return listmsg;
