@@ -6,6 +6,7 @@ import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.pp;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,9 @@ import java.util.*;
  *导入excel
  * */
 public class SapXiaoShouDingDanExcelDaoRuXiTong {
-   @Autowired
+    private  org.apache.log4j.Logger l = pp.getLogger(this);
+
+    @Autowired
     private Cnst cnst;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
@@ -122,8 +125,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
     return listmsg;
 ////////////////////////////////
 }
-private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
-    private void quChuKongDeMsg(List<Msg> listmsg) {
+
+
+ private void quChuKongDeMsg(List<Msg> listmsg) {
         try {
             if(listmsg.size()>1){
                 for(int i=0;i<listmsg.size();i++){
