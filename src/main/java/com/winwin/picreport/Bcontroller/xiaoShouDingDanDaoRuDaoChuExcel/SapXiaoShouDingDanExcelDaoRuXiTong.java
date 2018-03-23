@@ -106,12 +106,12 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
 
     String sssss=stra.b()
-            .a(p.nStr(p.jh,25))
+            .a(p.dexhx)
             .a("sap销售订单导入时间")
-            .a(p.nStr(p.jh,25))
+            .a(p.dexhx)
             .a(p.huanHangfu)
-            .a(p.strValeOfNullSpace(p.xjs(p.getDate(),date)))
-            .a(p.huanHangfu).a(p.nStr(p.jh,50)).g();
+            .a(p.strValeOfSpace(p.xjs(p.getDate(),date)))
+            .a(p.huanHangfu).a(p.cexhx).a(p.huanHangfu).g();
     l.error(sssss);
 
 //    p.p("---------------sap销售订单导入时间----------------------------------------");

@@ -646,6 +646,7 @@ public strictfp class p {
 
     /**
      *2个日期相减得到的秒数量
+     * 相减second
      * */
     public static Long xjs(Date bigDate,Date samllDate){
         Long xjms = xjms(bigDate, samllDate);
