@@ -39,6 +39,8 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+    public static final String noExceptionSign ="《没有异常》";
+    public static final String unKnownExceptionSign ="《未知异常》";
     public static final String knownExceptionSign ="《已知异常》";
     public static final String gq="_____________________RuanJianGuoQi__________________________The software has expired, please contact the supplier_____________________RuanJianGuoQi__________________________";//过期提醒
     public static final String NULL1="NULL";
@@ -1398,6 +1400,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     public static boolean empty(Object ob){
 
         if(notEmpty(ob)){
+
             return false;
         }else{
             return true;
@@ -1932,6 +1935,25 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 
+    /**
+     *根据list排序参数
+     * 字典排序
+     * */
+    //排序后不拼接字符串
+    public static List<String> ziDianPaiXu(List<String> weiPaiXuDeZiFuChuanJiHe){
+        Collections.sort(weiPaiXuDeZiFuChuanJiHe);
+        return weiPaiXuDeZiFuChuanJiHe;
+    }
+
+    //排序后再拼接字符串
+    public static String ziDianPaiXuBingPinJie(List<String> weiPaiXuDeZiFuChuanJiHe){
+        Collections.sort(weiPaiXuDeZiFuChuanJiHe);
+        StringBuilder sb=new StringBuilder();
+        for(String s:weiPaiXuDeZiFuChuanJiHe){
+            sb.append(s);
+        }
+        return sb.toString();
+    }
 
 
 //    public static void main(String[]args){

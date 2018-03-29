@@ -1,9 +1,9 @@
 package com.winwin.picreport.AllConstant;
-import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
-import com.winwin.picreport.Acomponent.SapsoChongfu;
-import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
-import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
-import com.winwin.picreport.Cservice.*;
+//import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
+//import com.winwin.picreport.Acomponent.SapsoChongfu;
+//import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
+//import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
+//import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
 import com.winwin.picreport.Futils.GeneratePrdNo.GetMaxPrdNo;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Order(2)
+@Order(3)
 @Component("cnst")
 public class Cnst {
     public static final String SamplesSys="SamplesSys";//产品打样的时候我们插入系统表prdt和up_def(定价)的时候做的标记,该标记证明了是打样系统产生的记录
@@ -91,11 +91,6 @@ public class Cnst {
 
 
     @Autowired
-    public CommonOrderBatchToDb commonOrderBatchToDb;
-
-    @Autowired
-    public CommonDaoRuDBZhiQianZhengLi commonDaoRuDBZhiQianZhengLi;
-    @Autowired
      public  AlterPriceRecMapper alterPriceRecMapper;
     @Autowired
     public GPrdNo gPrdNo;
@@ -108,14 +103,12 @@ public class Cnst {
     @Autowired
     public GetMaxPrdNo getMaxPrdNo;
 
-    @Autowired
-    public GetPriceModelUpdef getPriceModelUpdef;
+//    @Autowired
+//    public GetPriceModelUpdef getPriceModelUpdef;
 
-    @Autowired
-    public D3SaleOrderUpLoadFromExcelService d3SaleOrderUpLoadFromExcelService;
 
-    @Autowired
-    public A1ReportRestService a1;
+
+
     @Autowired
     public MfPosMapper mfPosMapper;
 
@@ -128,29 +121,17 @@ public class Cnst {
     @Autowired
     public A001TongYongMapper a001TongYongMapper;
 
-    @Autowired
-    public SaveSaleOrBuyPrice saveSaleOrBuyPrice;
+
 
     public Date getDbDate(){
         return a001TongYongMapper.selectDbDate();
     }
 
     @Autowired
-    public Z100TestPageBeanService zt;
-    @Autowired
-    public  D1DaYangServiceDataSaveByExcel d1DaYangServiceDataSaveByExcel;
-    @Autowired
     public PrdtSampMapper prdtSampMapper;
     @Autowired
     public PrdtMapper prdtMapper;
-    @Autowired
-    public D1DaYangService_ImageUpLoadAndDataSave001_InfoEdit infoEdit;
 
-    @Autowired
-    public D1DaYangService_ConfirmOrder dco;
-
-    @Autowired
-    public InfoEdit_ManyAttach infoEditOfManyAttach;
 
     @Value("${tokenShiXiaoShiJian_haoMiao}")
     public String tokenShiXiaoShiJian_haoMiao;
@@ -158,8 +139,6 @@ public class Cnst {
     @Value("${excelDaoRuDaYangPicLinShiMulu}")
     public String excelDaoRuDaYangPicLinShiMulu;
 
-    @Autowired
-    public D1DaYangService d1DaYangService;
 
     @Value(Cnst.dirUrlStr)
     public String dirUrl;
@@ -181,27 +160,16 @@ public class Cnst {
     public String daYangSuoLueTuAndFuJianZongPath;
 
 
-    @Autowired
-    public SapsoChongfu sapsoChongfu;
+//    @Autowired
+//    public SapsoChongfu sapsoChongfu;
 
-    @Autowired
-    public D1DaYangS fenLei;
+
     @Autowired
     public ManyTabSerch manyTabSerch;
 
 
     //    @Autowired
 //    public PrdtSampMapper prdtSampMapper;
-    @Autowired
-    public D1DaYangServiceOfDeleteSome deleteSome;
-
-
-    @Autowired
-    public DingJiaXiuGaiService dingJiaXiuGaiService;
-
-
-    @Autowired
-    public D1DaYangServiceOfDeleteOneImg deleteOneImg;
 
     /**
      *下面是mybatis分页插件要用的东西
