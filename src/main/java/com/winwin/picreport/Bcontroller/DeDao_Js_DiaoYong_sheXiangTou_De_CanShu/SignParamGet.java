@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.huoQuSheXiangTouDiaoYongCanShu;
+package com.winwin.picreport.Bcontroller.DeDao_Js_DiaoYong_sheXiangTou_De_CanShu;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.C;
@@ -9,8 +9,14 @@ import com.winwin.picreport.Futils.hanhan.stra;
 public class SignParamGet {
 
 
-    public static JsParams f(){
 
+    /**
+     *参数url是前端穿过来的,他的页面将来的url值
+     * */
+    public static JsParams f(Url u){
+//这个是前端传过来的他url当时值,这个我不用了,我写死成已知的他的url
+        //就跟部署在微信官方后端的那个js 域名一样,2个一样,才能进行验证
+        u.getUrl();
         //读取jsApiTicketTxt
         String jsapi_ticket = p.readAllTxt(C.jsApiTicketTxt);
 
@@ -40,7 +46,8 @@ public class SignParamGet {
 
 
     public static void main(String[]args){
-        JsParams f = f();
+
+        JsParams f = f(new Url());
         p.p("-------------------------------------------------------");
         p.p(JSON.toJSONString(f));
         p.p("-------------------------------------------------------");
