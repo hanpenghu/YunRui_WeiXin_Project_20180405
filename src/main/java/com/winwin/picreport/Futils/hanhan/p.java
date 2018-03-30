@@ -39,6 +39,14 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+
+
+
+    public static final String UTF8="UTF-8";
+    public static final String GBK="GBK";
+    public static final String GB2312="GB2312";
+
+
     public static final String noExceptionSign ="《没有异常》";
     public static final String unKnownExceptionSign ="《未知异常》";
     public static final String knownExceptionSign ="《已知异常》";
@@ -1654,12 +1662,13 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         return true;
     }
 
-    public static void main(String[]args){
-        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
-        System.out.println(b);
-    }
+//    public static void main(String[]args){
+//        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
+//        System.out.println(b);
+//    }
     /**
      *读文本的所有内容变为字符串
+     * 这个传入的路径必须是绝对路径
      * */
     public static String readAllTxt(String txtPath){
         File file=null; FileReader fr=null;BufferedReader br=null;
@@ -1720,6 +1729,97 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //       String path="E:/";
         return path;
     }
+
+
+
+    private static final int PROTECTED_LENGTH = 51200;// 输入流保护 50KB
+
+    public static String readInputToString(InputStream input,String charSet){
+
+        if (input == null) {
+            throwE("----InputStream is  null----");
+        }
+        //字节数组
+        byte[] bcache = new byte[2048];
+        int readSize = 0;//每次读取的字节长度
+        int totalSize = 0;//总字节长度
+        ByteArrayOutputStream infoStream = new ByteArrayOutputStream();
+        try {
+            //一次性读取2048字节
+            while ((readSize = input.read(bcache)) > 0) {
+                totalSize += readSize;
+                if (totalSize > PROTECTED_LENGTH) {
+                    throwE("---InputStream more than 50KB-----");
+                }
+                //将bcache中读取的input数据写入infoStream
+                infoStream.write(bcache,0,readSize);
+            }
+        } catch (IOException e1) {
+            throwE("---read inputStream Exception--");
+        } finally {
+            try {
+                //输入流关闭
+                input.close();
+            } catch (IOException e) {
+                throwE("-----inputStream close Exception----");
+            }
+        }
+
+        try {
+            return infoStream.toString(charSet);
+        } catch (UnsupportedEncodingException e) {
+            throwE("---return String Exception---");
+        }
+
+        return "";
+
+
+    }
+
+
+    /**
+     *读当前类所在目录下面的文件
+     *
+     * 在有的项目行有的不行
+     * */
+
+
+    public static String duDangQianLeiMuLuXiaDeWenJian(String wenJianMing,Class dangQianLeiClazz,String charSetOfTxt){
+
+        InputStream resourceAsStream = dangQianLeiClazz.getResourceAsStream(wenJianMing);
+
+
+        return readInputToString(resourceAsStream,charSetOfTxt);
+
+    }
+
+
+
+
+    /**
+     *java读取资源文件
+     * 读取properties文件
+     * 读取properties资源文件
+     * 资源读取不到返回null
+     * 注意   pr.getProperty("key");可以直接拿到 文件里面的东西
+     * */
+
+
+    public static Properties readProp(String propertiesPath){
+        Properties pr=new Properties();
+        try {
+            pr.load(new FileReader(propertiesPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //有异常的话,返回一个null;
+            return null;
+        }
+//        pr.getProperty("key");
+        return pr;
+    }
+
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1967,6 +2067,44 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //    public static void main(String[]args){
 //            p(new BigDecimal("0.10000"));
 //    }
+
+
+
+
+
+    /**
+     *  这种玩意对于导包jar的java启动文件有灾难性的后果,因为jar里面的路径从外面一直读是读不进去的
+     *通过当前类 得到工程根目录,根路径  就是得到src路径
+     * E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/
+     * */
+
+    public static String srcPath(){
+        //得到的很可能是这种路径
+        //          /E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/
+        String s= p.class.getResource("/").getPath();
+        if(p.dy("/",s.substring(0,1))){
+            //得到这种  类所在的文件夹
+            //           E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/
+            s=s.substring(1);
+        }
+        return s;
+    }
+
+
+    //    /E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/  这种
+
+
+    /**
+     /E:/1/work_space/CloudPlatformMobile002/target/classes/
+     这种最前面带/的路径,  跟不带一样  但是这种路径对于打包的springboot来讲,是灾难的
+     因为打包后,就无法深入到jar文件内部去读取了
+     * */
+    public static String srcPathYuan(){
+        //得到的很可能是这种路径
+        //          /E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/
+        String s= p.class.getResource("/").getPath();
+        return s;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public	final	static	int	n0	=	0	;
     public	final	static	int	n1	=	1	;

@@ -2,6 +2,7 @@ package com.winwin.picreport.Bcontroller.TestMyWeiXinServer;
 
 
 import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.AllConstant.C;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.pp;
@@ -27,9 +28,9 @@ public class TestMyServer {
         /**
          *下面代码是注册一个服务器的有效性的时候用的
          * */
-        /*try {
+        try {
 
-            String token = "hanpenghulimengruhanjiacheng123";
+            String token = C.token;
             String timestamp = wi.getTimestamp();
             String nonce = wi.getNonce();
             String echostr = wi.getEchostr();
@@ -53,9 +54,9 @@ public class TestMyServer {
         } catch (Exception e) {
             e.printStackTrace();
             return "";//返回错误信号给微信
-        }*/
+        }
 
-        return "";
+//        return "";
     }
 
 
