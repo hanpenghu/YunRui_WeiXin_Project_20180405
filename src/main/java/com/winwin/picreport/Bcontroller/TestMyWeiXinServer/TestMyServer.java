@@ -24,7 +24,10 @@ public class TestMyServer {
     public String  f(WeiXinTestInfo wi){
 
 
-        try {
+        /**
+         *下面代码是注册一个服务器的有效性的时候用的
+         * */
+        /*try {
 
             String token = "hanpenghulimengruhanjiacheng123";
             String timestamp = wi.getTimestamp();
@@ -50,8 +53,9 @@ public class TestMyServer {
         } catch (Exception e) {
             e.printStackTrace();
             return "";//返回错误信号给微信
-        }
+        }*/
 
+        return "";
     }
 
 

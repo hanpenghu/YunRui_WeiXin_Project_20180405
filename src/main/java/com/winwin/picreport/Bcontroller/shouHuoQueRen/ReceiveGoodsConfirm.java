@@ -1,4 +1,5 @@
-package com.winwin.picreport.Bcontroller.收获确认;
+package com.winwin.picreport.Bcontroller.shouHuoQueRen;
+import com.winwin.picreport.Bcontroller.I;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class ReceiveGoodsConfirm {
 
      * */
 
-    @RequestMapping(value="receiveConfirm",method= RequestMethod.POST)
+    @RequestMapping(value= I.receiveConfirm,method= RequestMethod.POST)
     public @ResponseBody Msg f(@RequestBody List<String> nos){
         try {
 
