@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -32,7 +33,7 @@ public String accessToken="";
 
 
 
-//    @Scheduled(fixedDelay = 7100*1000,initialDelay = 15*1000)//2小时一次,为了安全,提前100秒
+    @Scheduled(fixedDelay = 7100*1000,initialDelay = 15*1000)//2小时一次,为了安全,提前100秒
     public  String get() throws IOException {
 
         //创建文件,将来把accessToken放进来

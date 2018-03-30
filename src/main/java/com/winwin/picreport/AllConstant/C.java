@@ -28,7 +28,7 @@ public class C {
     public static final String jsapi_ticketUrl="https://api.weixin.qq.com/cgi-bin/ticket/getticket";
 
     //当前需要分享的网页的URL
-    public static final String urlWhoShare="";
+    public static final String urlWhoShare="http://xywait.imwork.net";
 
 
 

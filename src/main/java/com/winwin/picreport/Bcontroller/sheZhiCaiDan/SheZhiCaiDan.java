@@ -31,12 +31,16 @@ public class SheZhiCaiDan {
 
     private String url= stra.b().a(url1).a(p.eeh).a("access_token=").a(p.readAllTxt(C.accessTokenTxt)).g();
 
-    private String json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\"http://hanpenghu123.picp.io/index.html\"}]}";
+    private String json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+C.urlWhoShare+"\"}]}";
 
 //    @Scheduled(initialDelay = 12*1000,fixedDelay = 1000*100)
     public  void  f()  {
 
+        //删除原来菜单
+        new DeleteCaiDan().f();
 
+
+        //下面是设置新的菜单
         //获取可关闭的 httpCilent
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
