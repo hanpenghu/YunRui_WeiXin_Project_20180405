@@ -4,6 +4,7 @@ import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @CrossOrigin
@@ -22,9 +23,24 @@ public class ReceiveGoodsConfirm {
      4）图片回传到服务器指定文件夹,图片尽量按照这样命名: 单号.jpeg
      网址存进 select ic_no,shqrpz,* from mf_ic_z where ic_no='IO011801010001'
 
+     参数
+
+     ["单号"]
+
+
+     这个接口是在对方扫描完二维码后得到单号后就调取的
+     调取的结果是我返回给前端详细信息
+
+
+     得到详细信息之后
+
+     前端将再调取一次接口  receiveConfirm 将图片和单号穿过来,我将图片保存在本地文件夹,将图片路径保存在
+     数据库对应字段
+
+
      * */
 
-    @RequestMapping(value= I.receiveConfirm,method= RequestMethod.POST)
+    @RequestMapping(value= I.returnMsg,method= RequestMethod.POST)
     public @ResponseBody Msg f(@RequestBody List<String> nos){
         try {
 
@@ -32,7 +48,12 @@ public class ReceiveGoodsConfirm {
                 p.throwE("前端传过来的《单号》数组是空的"+p.knownExceptionSign);
             }
 
+            List list=new LinkedList();
+
             for(int i=0;i<nos.size();i++){
+                //得到当前单号
+                String s = nos.get(i);
+
 
             }
 

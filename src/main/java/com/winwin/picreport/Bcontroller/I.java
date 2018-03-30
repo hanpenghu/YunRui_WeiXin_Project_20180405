@@ -6,4 +6,5 @@ public interface I {
     String receiveConfirm="receiveConfirm";
     //微信页面跳转所需验证接口,主要是验证跳转后的url
     String signToJs="signToJs";
+    String returnMsg="returnMsg";
 }
