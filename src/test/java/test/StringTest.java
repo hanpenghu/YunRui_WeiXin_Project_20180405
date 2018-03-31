@@ -1,4 +1,4 @@
-package com.winwin.picreport.test;
+package test;
 
 import com.winwin.picreport.Futils.hanhan.p;
 import org.junit.jupiter.api.Test;

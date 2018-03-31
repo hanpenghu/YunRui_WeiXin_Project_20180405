@@ -46,7 +46,9 @@ public strictfp class p {
     public static final String GBK="GBK";
     public static final String GB2312="GB2312";
 
-
+    public static final String xg="/";//斜杠
+    public static final String jpeg=".jpeg";
+    public static final String jpg="jpg";
     public static final String noExceptionSign ="《没有异常》";
     public static final String unKnownExceptionSign ="《未知异常》";
     public static final String knownExceptionSign ="《已知异常》";
@@ -56,6 +58,7 @@ public strictfp class p {
     public static final String excel="excel";
     public static final String zhifgf="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";//至分隔符
     public static final String zhi="~";//至符号
+    public static final String zuHeFenGeFu="{~}";//组合分隔符,常用于分隔各种字符串组合
     public static final String dexhx="_________________";//短英文下划线
     public static final String cexhx="____________________________________________";//长英文下划线
     public static final String dzwxhx="————————————————";//短中文下划线
@@ -192,6 +195,86 @@ public strictfp class p {
     /*public static void main(String[]args){
          p.p(p.gp().sad(p.dexhx).sad(p.uuid()).sad(p.dexhx).gad());
     }*/
+
+
+
+
+
+
+
+    /**
+     *按顺序拆分带组合分隔符的字符串
+     * 适用于
+     *
+     * 阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的{~}
+     *
+     * 这种
+     * 最后还带分隔符的组合
+     * 截取后是
+     * [阿拉山口打飞, 机爱丽丝打飞, 机埃里克的]
+     * */
+    public static List<String>chaiFenZuHeFenGeFu(String s){
+        List<String>list=new LinkedList<>();
+        while(s.contains(zuHeFenGeFu)){
+            //就是按照{~}拆分
+            String ss = s.substring(0, s.indexOf(zuHeFenGeFu));
+            list.add(ss);
+            s=s.substring(s.indexOf(zuHeFenGeFu)+3);
+        }
+
+        return list;
+    }
+
+
+    /**
+     ** 适用于
+     *
+     * 阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的
+     *
+     * 这种最后没有分隔符的组合
+     * 截取后是
+     * [阿拉山口打飞, 机爱丽丝打飞, 机埃里克的]
+     * */
+    public static List<String>chaiFenZuHeFenGeFu0(String s){
+        return chaiFenZuHeFenGeFu(s+zuHeFenGeFu);
+
+    }
+
+
+    /**
+     *自定义组合符号的拆分
+     * 用于字符串最后有分隔符的
+     * 阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的{~}
+     * */
+    public static List<String>chaiFenZuHeFenGeFu(String s,String zuHeFenGeFuHao,int zuHeFuHaoChangDu){
+        List<String>list=new LinkedList<>();
+        while(s.contains(zuHeFenGeFuHao)){
+            //就是按照{~}拆分
+            String ss = s.substring(0, s.indexOf(zuHeFenGeFuHao));
+            list.add(ss);
+            s=s.substring(s.indexOf(zuHeFenGeFuHao)+zuHeFuHaoChangDu);
+        }
+
+        return list;
+    }
+
+    /**
+     *用于字符串最后没有分隔符的
+     * 阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的
+     * 根据  ~  拆完是
+     * [阿拉山口打飞{, }机爱丽丝打飞{, }机埃里克的]
+     * */
+    public static List<String>chaiFenZuHeFenGeFu0(String s,String zuHeFenGeFuHao,int zuHeFuHaoChangDu){
+        return chaiFenZuHeFenGeFu(s+zuHeFenGeFuHao,zuHeFenGeFuHao,zuHeFuHaoChangDu);
+
+    }
+
+//    public static void main(String[]args){
+//            String s="阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的";
+//        p.p("-------------------------------------------------------");
+//        p.p(chaiFenZuHeFenGeFu0(s,"~",1));
+//        p.p("-------------------------------------------------------");
+//    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1785,11 +1868,15 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
 
     public static String duDangQianLeiMuLuXiaDeWenJian(String wenJianMing,Class dangQianLeiClazz,String charSetOfTxt){
+        try {
+            InputStream resourceAsStream = dangQianLeiClazz.getResourceAsStream(wenJianMing);
 
-        InputStream resourceAsStream = dangQianLeiClazz.getResourceAsStream(wenJianMing);
 
-
-        return readInputToString(resourceAsStream,charSetOfTxt);
+            return readInputToString(resourceAsStream,charSetOfTxt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
 
     }
 

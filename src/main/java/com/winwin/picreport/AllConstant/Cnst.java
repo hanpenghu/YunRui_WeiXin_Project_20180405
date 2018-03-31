@@ -78,6 +78,8 @@ public class Cnst {
 
 
     @Autowired
+    public MfIcZMapper mfIcZMapper;
+    @Autowired
     public IndxMapper indxMapper;
 
     @Autowired

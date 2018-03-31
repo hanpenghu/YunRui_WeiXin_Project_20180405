@@ -1,4 +1,4 @@
-package com.winwin.picreport.test;
+package test;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;

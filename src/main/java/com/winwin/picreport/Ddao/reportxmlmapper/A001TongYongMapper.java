@@ -2,6 +2,7 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.Model;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.ModelUsers;
+import com.winwin.picreport.Bcontroller.shouHuoQueRen.Detail;
 import com.winwin.picreport.Edto.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -286,4 +287,7 @@ public interface A001TongYongMapper {
 
    @Select({"update prdt set ut=#{mainUnit} where prd_no=#{prdtNo}"})
    int updateUtToPrdtUsePrdNo(@Param("prdtNo") String prdtNo,@Param("mainUnit")  String mainUnit);
+
+
+    List<Detail> getShouHuoMingXiOfYunRui(@Param("osNo") String osNo);
 }

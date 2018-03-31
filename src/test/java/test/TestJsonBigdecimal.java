@@ -1,4 +1,4 @@
-package com.winwin.picreport.test;
+package test;
 
 
 import com.alibaba.fastjson.JSON;
