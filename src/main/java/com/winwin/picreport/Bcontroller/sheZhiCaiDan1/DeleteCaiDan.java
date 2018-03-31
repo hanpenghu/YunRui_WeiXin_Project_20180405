@@ -16,7 +16,7 @@ import java.io.IOException;
 public class DeleteCaiDan {
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     //https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN
-    private   String url1="https://api.weixin.qq.com/cgi-bin/menu/delete?access_token="+ p.readAllTxt(C.accessTokenTxt);
+    private   String url1=C.deleteMenu+ p.readAllTxt(C.accessTokenTxt);
 
     public  void f(){
 

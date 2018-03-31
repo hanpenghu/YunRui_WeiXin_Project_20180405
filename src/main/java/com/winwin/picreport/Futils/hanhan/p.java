@@ -22,7 +22,15 @@ import java.util.stream.Collectors;
 
 public strictfp class p {
 
-
+    /**
+     *对于打包后的springboot项目
+     * 我们怎么读取资源路径？
+     * 其实很简单
+     * 所有  资源文件放到跟jar包同级目录  然后用
+     * String pa = p.readAllTxt("资源文件.txt")
+     * 在项目中就能读取
+     *
+     * */
     /*public static void main(String[]args){
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
@@ -1726,6 +1734,9 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isInteger(null))).sad(p.dexhx).gad());
 //    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     /**
      *将字符串写入文本,注意会覆盖原来的文本内容
      * 注意,这个写入文件,如果文件不存在,会自动创建并写入,但是文件 路径中的文件夹必须存在
@@ -1749,6 +1760,20 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
 //        System.out.println(b);
 //    }
+
+
+    //String pa = p.readAllTxt("新建文本文档.bat")
+
+    /**
+     *对于打包后的springboot项目
+     * 我们怎么读取资源路径？
+     * 其实很简单
+     * 所有  资源文件放到跟jar包同级目录  然后用
+     * String pa = p.readAllTxt("资源文件.txt")
+     * 在项目中就能读取
+     *
+     * */
+
     /**
      *读文本的所有内容变为字符串
      * 这个传入的路径必须是绝对路径
@@ -1777,6 +1802,30 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 
+
+    public static String readAllTxt(File file){
+
+         FileReader fr=null;BufferedReader br=null;
+        try {
+            fr=new FileReader(file);
+            br=new BufferedReader(fr);
+            StringBuffer sb=new StringBuffer();
+            String str="";
+            while((str=br.readLine())!=null){
+                sb.append(str);
+            }
+            return sb.toString().trim();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try {
+                fr.close();
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 //    public static void main(String[]args){
 //         p.p(p.gp().sad(p.dexhx).sad(readAllTxt("E:\\1\\新建文本文档.txt")).sad(p.dexhx).gad());
 //

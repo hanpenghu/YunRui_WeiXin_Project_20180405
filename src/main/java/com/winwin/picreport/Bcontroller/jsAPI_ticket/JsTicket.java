@@ -3,6 +3,7 @@ package com.winwin.picreport.Bcontroller.jsAPI_ticket;
 
 import com.alibaba.fastjson.JSONObject;
 import com.winwin.picreport.AllConstant.C;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.apache.http.HttpResponse;
@@ -11,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,9 +26,12 @@ import java.io.IOException;
 public class JsTicket {
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
+@Autowired
+private Cnst cnst;
+
     public String jsApiticket="";
 
-//    @Scheduled(fixedDelay = 7100*1000,initialDelay = 25*1000)//2小时一次,为了安全,提前100秒
+    @Scheduled(fixedDelay = 7100*1000,initialDelay = 7100*1000)//2小时一次,为了安全,提前100秒
     public String get() throws IOException {
 
         //创建文件,将来把accessToken放进来
@@ -45,7 +50,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
 
         //拼接获取微信jsTicket的url
-        String  url= stra.b().a(C.jsapi_ticketUrl)
+        String  url= stra.b().a(cnst.c.jsapi_ticketUrl)
                 .a(p.eeh).a("access_token=")
                 .a(accessToken).a(p.qdz).a("type=jsapi").g();
 

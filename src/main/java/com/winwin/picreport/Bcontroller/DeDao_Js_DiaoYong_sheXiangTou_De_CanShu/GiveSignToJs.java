@@ -1,13 +1,17 @@
 package com.winwin.picreport.Bcontroller.DeDao_Js_DiaoYong_sheXiangTou_De_CanShu;
 
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.I;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 public class GiveSignToJs {
 
+    @Autowired
+   private Cnst cnst;
 
     /**
      *传参
@@ -18,7 +22,7 @@ public class GiveSignToJs {
      * */
     @RequestMapping(value= I.signToJs,method= RequestMethod.POST)
     public @ResponseBody JsParams f(@RequestBody Url url){
-        return  SignParamGet.f(url);
+        return  cnst.signParamGet.f(url);
     }
 
 

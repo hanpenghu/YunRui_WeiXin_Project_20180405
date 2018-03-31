@@ -3,9 +3,11 @@ package com.winwin.picreport.Bcontroller.TestMyWeiXinServer;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.C;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.pp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 public class TestMyServer {
 
+    @Autowired
+    private Cnst cnst;
     //token  hanpenghulimengruhanjiacheng123
     //外网url  http://hanpenghu123.picp.io/
     //EncodingAESKey  hanpenghulimengruhanjiacheng123hanpenghu123
@@ -30,7 +34,7 @@ public class TestMyServer {
          * */
         try {
 
-            String token = C.token;
+            String token = cnst.c.token;
             String timestamp = wi.getTimestamp();
             String nonce = wi.getNonce();
             String echostr = wi.getEchostr();

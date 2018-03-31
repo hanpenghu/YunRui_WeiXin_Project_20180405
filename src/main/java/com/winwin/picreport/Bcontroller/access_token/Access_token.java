@@ -2,6 +2,7 @@ package com.winwin.picreport.Bcontroller.access_token;
 
 import com.alibaba.fastjson.JSONObject;
 import com.winwin.picreport.AllConstant.C;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.apache.http.HttpResponse;
@@ -10,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -28,12 +30,15 @@ import java.io.IOException;
 public class Access_token {
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
+@Autowired
+private Cnst cnst;
 
 public String accessToken="";
 
 
 
-//    @Scheduled(fixedDelay = 7100*1000,initialDelay = 15*1000)//2小时一次,为了安全,提前100秒
+//延迟2小时再加载,服务器启动需要手动在index.html进行各种生成,其他的
+    @Scheduled(fixedDelay = 7100*1000,initialDelay = 7100*1000)//2小时一次,为了安全,提前100秒
     public  String get() throws IOException {
 
         //创建文件,将来把accessToken放进来
@@ -54,10 +59,13 @@ public String accessToken="";
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true)//默认允许自动重定向
                 .build();
-        String url= stra.b().a(C.accessTokenGetUrl)
-                .a(p.eeh).a("grant_type=").a(C.grant_type)
-                .a(p.qdz).a("appid=").a(C.AppID)
-                .a(p.qdz).a("secret=").a(C.AppSecret).g();
+        String url= stra.b().a(cnst.c.accessTokenGetUrl)
+                .a(p.eeh).a("grant_type=").a(cnst.c.grant_type)
+                .a(p.qdz).a("appid=").a(cnst.c.AppID)
+                .a(p.qdz).a("secret=").a(cnst.c.AppSecret).g();
+        p.p("-------------------------------------------------------");
+        p.p(url);
+        p.p("-------------------------------------------------------");
         HttpGet httpGet2 = new HttpGet(url);
         httpGet2.setConfig(requestConfig);
 

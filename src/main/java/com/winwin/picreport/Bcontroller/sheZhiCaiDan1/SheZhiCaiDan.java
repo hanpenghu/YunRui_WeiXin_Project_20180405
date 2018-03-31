@@ -1,6 +1,7 @@
 package com.winwin.picreport.Bcontroller.sheZhiCaiDan1;
 
 import com.winwin.picreport.AllConstant.C;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.apache.commons.io.IOUtils;
@@ -11,6 +12,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -22,20 +24,43 @@ import java.nio.charset.Charset;
 import java.util.Properties;
 
 
-//@Component
+@Component
 public class SheZhiCaiDan {
+private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
+    @Autowired
+    private Cnst cnst;
 
 //    https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
     private String url1="https://api.weixin.qq.com/cgi-bin/menu/create";
 
     private String url= stra.b().a(url1).a(p.eeh).a("access_token=").a(p.readAllTxt(C.accessTokenTxt)).g();
 
-    private String json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+C.urlWhoShare+"\"}]}";
+    private String json="";
 
-//    @Scheduled(initialDelay = 12*1000,fixedDelay = 1000*100)
-    public  void  f()  {
+//    public static void main(String[]args){
+//       new SheZhiCaiDan().f();
+//    }
 
+//    @Scheduled(initialDelay = 5*1000,fixedDelay = 1000*100)
+    public  void  f() throws IOException {
+
+        try {
+            //这种读法,必须打包后才生效
+            json=p.readAllTxt(C.menu);
+            json=json.replace("\"url\": \"\"","\"url\": \""+cnst.c.urlWhoShare+"\"");
+            p.p("----------读取json文件后得到的json---------------------------------------------");
+            p.p(json);
+            p.p("-------------------------------------------------------");
+            if(p.empty(json))json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+cnst.c.urlWhoShare+"\"}]}";
+        } catch (Exception e) {
+            json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+cnst.c.urlWhoShare+"\"}]}";
+            l.error(e.getMessage(),e);
+        }
+
+        p.p("-------------------------最后得到的json------------------------------");
+        p.p(json);
+        p.p("-------------------------------------------------------");
         //删除原来菜单
         new DeleteCaiDan().f();
 
@@ -120,6 +145,7 @@ public class SheZhiCaiDan {
         } catch (Exception e) {
 
             e.printStackTrace();
+            throw e;
 
         }finally {
 
@@ -150,10 +176,6 @@ public class SheZhiCaiDan {
 
 
 
-    public static void main(String[]args) throws IOException {
-        new SheZhiCaiDan().f();
-
-    }
 
 
 
