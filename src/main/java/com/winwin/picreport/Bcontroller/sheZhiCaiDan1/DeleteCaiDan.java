@@ -51,6 +51,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
         } catch (IOException e) {
             e.printStackTrace();
             l.error(e.getMessage(),e);
+            p.throwE("删除菜单异常");
         }finally {
             try {
                 httpCilent2.close();

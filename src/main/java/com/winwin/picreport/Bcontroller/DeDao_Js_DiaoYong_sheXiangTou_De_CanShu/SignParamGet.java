@@ -19,8 +19,10 @@ private Cnst cnst;
      * */
     public  JsParams f(Url u){
 //这个是前端传过来的他url当时值,这个我不用了,我写死成已知的他的url
+
+        //后来想想还是用他传入的url吧
         //就跟部署在微信官方后端的那个js 域名一样,2个一样,才能进行验证
-        u.getUrl();
+        String url1 = u.getUrl();
         //读取jsApiTicketTxt
         String jsapi_ticket = p.readAllTxt(C.jsApiTicketTxt);
 
@@ -28,8 +30,15 @@ private Cnst cnst;
         String noncestr=p.uuid();
         //得到时间戳
         String timestamp = String.valueOf(p.getTimeStamp()/1000);
-        //得到url
-        String url=cnst.c.urlWhoShare;
+
+        String url=null;
+        if(p.empty(url1)){
+            //如果前端传过来的url是空,就用自己的url
+           url=cnst.c.urlWhoShare;
+        }else{
+            url=url1;
+        }
+
 
 
         // 注意这里参数名必须全部小写，且必须有序

@@ -90,6 +90,7 @@ public String accessToken="";
         } catch (IOException e) {
             e.printStackTrace();
             l.error(e.getMessage(),e);
+            p.throwE("http请求accessToken异常");
         }finally {
             try {
                 httpCilent2.close();

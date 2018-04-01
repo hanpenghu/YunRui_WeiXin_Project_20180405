@@ -39,7 +39,7 @@ public class Test生成JS票据 {
             return "生成jsTicket成功";
         } catch (IOException e) {
             e.printStackTrace();
-            return "生成jsTicket失败";
+            return "生成jsTicket失败"+e.getMessage();
         }
 
 

@@ -55,7 +55,8 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             if(p.empty(json))json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+cnst.c.urlWhoShare+"\"}]}";
         } catch (Exception e) {
             json="{\"button\":[{\"name\":\"菜单\",\"type\":\"view\",\"name\":\"确认收货\",\"url\":\""+cnst.c.urlWhoShare+"\"}]}";
-            l.error(e.getMessage(),e);
+
+
         }
 
         p.p("-------------------------最后得到的json------------------------------");
@@ -145,7 +146,8 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
         } catch (Exception e) {
 
             e.printStackTrace();
-            throw e;
+            l.error(e.getMessage(),e);
+            p.throwE("http请求异常设置菜单异常");
 
         }finally {
 

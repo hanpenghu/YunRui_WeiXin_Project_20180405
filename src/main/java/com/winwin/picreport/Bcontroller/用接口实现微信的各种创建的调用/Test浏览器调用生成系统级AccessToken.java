@@ -38,7 +38,7 @@ public class Test浏览器调用生成系统级AccessToken {
             return "生成accessToken完成";
         } catch (IOException e) {
             e.printStackTrace();
-            return "生成accessToken异常";
+            return "生成accessToken异常"+e.getMessage();
         }
     }
 

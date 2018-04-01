@@ -30,7 +30,7 @@ public class Test生成菜单按钮 {
             return "生成菜单成功";
         } catch (Exception e) {
             e.printStackTrace();
-            return "生成菜单失败";
+            return "生成菜单失败"+e.getMessage();
         }
 
 
