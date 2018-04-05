@@ -2,12 +2,22 @@ package com.winwin.picreport.Bcontroller.shouHuoQueRen;
 
 public class Detail {
 
+    private String beforeImgUrl;
     private String  icNo;
     private String cusNo2;
     private String name;
     private String prdName;
     private String qty;
 
+
+    public String getBeforeImgUrl() {
+        return beforeImgUrl;
+    }
+
+    public Detail setBeforeImgUrl(String beforeImgUrl) {
+        this.beforeImgUrl = beforeImgUrl;
+        return this;
+    }
 
     public String getIcNo() {
         return icNo;

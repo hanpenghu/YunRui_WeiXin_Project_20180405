@@ -4,6 +4,7 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import sun.misc.IOUtils;
 
 
 import java.io.File;
@@ -32,6 +33,8 @@ public class Test001 {
 //
 ////        p.p(p.readAllTxt(new File(pa)));
 //        p.p("-------------------------------------------------------");
+
+
 
     }
 

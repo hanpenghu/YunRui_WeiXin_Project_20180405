@@ -53,19 +53,34 @@ public class ReturnDetailToFront {
      * */
 
     @RequestMapping(value= I.returnMsg,method= RequestMethod.POST)
-    public @ResponseBody Msg f(@RequestBody List<String> nos){
+    public @ResponseBody Msg f(@RequestBody OsNo nos){
         try {
 
+            p.p("--------------------前端传过来的单号-----------------------------------");
+            p.p(nos);
+            p.p("-------------------------------------------------------");
             if(p.empty(nos)){
                 p.throwE("前端传过来的《单号》数组是空的"+p.knownExceptionSign);
             }
 
             //得到当前单号
-            String s = nos.get(0);
+            String s = nos.getOsNo();
+
+            //得到当前单号下的收货明细,注意,里面包含了一个图片的url,如果url为空,则代表以前没有,不为空,则代表有
             List<Detail>details=cnst.a001TongYongMapper.getShouHuoMingXiOfYunRui(s);
+
+
+
+
+
+
 
             Data data=new Data();
             data.setList(details);
+
+
+
+
 
             return Msg.gmg().setMsg("成功"+p.noExceptionSign).setStatus(p.s1).setData(data);
         } catch (Exception e) {

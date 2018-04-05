@@ -3,6 +3,7 @@ package com.winwin.picreport.Bcontroller.shouHuoQueRen;
 import com.alibaba.fastjson.JSONObject;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.I;
+import com.winwin.picreport.Edto.Data;
 import com.winwin.picreport.Edto.MfIcZExample;
 import com.winwin.picreport.Edto.MfIcZWithBLOBs;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -30,7 +31,8 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
      *consumes是对方穿过来的过程的参数类型
      * procedure是我返回的类型
      * */
-    @RequestMapping(value= I.saveImg,method= RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= I.saveImg,method= RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+            , produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Msg f(@RequestParam("img")MultipartFile img, HttpServletRequest request){
         try {
             String osNoJson = request.getParameter("osNo");//传参类似  osNo    {"osNo":"12323"}
@@ -87,12 +89,19 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             String urlCanSave= stra.b().a(serverUrl).a(p.xg).a(imgFileName).g();
 
             int  i=0;
+            Detail detail=null;
             try {
                 MfIcZExample mfIcZExample=new MfIcZExample();
                 mfIcZExample.createCriteria().andIcNoEqualTo(osNo);
                 MfIcZWithBLOBs mfIcZWithBLOBs=new MfIcZWithBLOBs();
                 mfIcZWithBLOBs.setShqrpz(urlCanSave);
                 i=cnst.mfIcZMapper.updateByExampleSelective(mfIcZWithBLOBs,mfIcZExample);
+
+
+                //从新拿一下图片地址,返回给徐勇
+                detail= cnst.a001TongYongMapper.getImgUrlOf1OsNo(osNo);
+
+
             } catch (Exception e) {
                 //此时数据库没有存储地址,需要删除
                 if(i==0)p.Del(imgFile);
@@ -102,7 +111,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             }
 
 
-            return Msg.gmg().setMsg("成功"+p.noExceptionSign).setStatus(p.s1);
+            return Msg.gmg().setMsg("成功"+p.noExceptionSign).setData(new Data().setObj(detail)).setStatus(p.s1);
         } catch (Exception e) {
             l.error(e.getMessage(),e);
             String sss=e.getMessage();

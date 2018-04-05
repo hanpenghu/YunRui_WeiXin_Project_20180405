@@ -80,7 +80,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                 .setSocketTimeout(1000).setRedirectsEnabled(true).build();
 
 
-        p.p("----------------------url---------------------------------");
+        p.p("---------------------微信的-url---------------------------------");
         p.p(url);
         p.p("-------------------------------------------------------");
         HttpPost httpPost = new HttpPost(url);
@@ -107,6 +107,9 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
             httpPost.setEntity(new StringEntity(json, Charset.forName("UTF-8")));
 
+            p.p("--------设置在httpPostEntity里面又取出来的参数-----------------------------------------------");
+            p.p(httpPost.getEntity().getContent().toString());
+            p.p("-------------------------------------------------------");
             HttpResponse httpResponse = httpClient.execute(httpPost);
 
             String strResult = "";

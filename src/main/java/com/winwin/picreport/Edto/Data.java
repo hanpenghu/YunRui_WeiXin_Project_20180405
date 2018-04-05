@@ -7,6 +7,8 @@ public class Data {
 
 
 
+    Object obj=null;
+
     private List list=new LinkedList();
 
     public List getList() {
@@ -15,6 +17,15 @@ public class Data {
 
     public Data setList(List list) {
         this.list = list;
+        return this;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public Data setObj(Object obj) {
+        this.obj = obj;
         return this;
     }
 

@@ -2,7 +2,6 @@ package com.winwin.picreport.Bcontroller.TestMyWeiXinServer;
 
 
 import com.alibaba.fastjson.JSON;
-import com.winwin.picreport.AllConstant.C;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
@@ -25,7 +24,9 @@ public class TestMyServer {
     //外网url  http://hanpenghu123.picp.io/
     //EncodingAESKey  hanpenghulimengruhanjiacheng123hanpenghu123
     //value为空就是为了直接访问域名就访问到这里
-    @RequestMapping(value="",method= RequestMethod.GET )
+    //原来这个接口是什么都不写,也就是访问域名就访问到这里,现在为了不产生冲突,在测试好后
+    //就在这里加了接口名字,不让再访问到这里
+    @RequestMapping(value="testMyServer",method= RequestMethod.GET )
     public String  f(WeiXinTestInfo wi){
 
 

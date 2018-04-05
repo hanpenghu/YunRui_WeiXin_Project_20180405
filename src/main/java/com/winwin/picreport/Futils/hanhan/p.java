@@ -1777,6 +1777,10 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     /**
      *读文本的所有内容变为字符串
      * 这个传入的路径必须是绝对路径
+     *
+     *
+     * 注意读springboot jar外面的txt的时候,如果在win平台,会有乱码,解决办法,把txt文件里面用
+     * notPad++ 改为ANSI
      * */
     public static String readAllTxt(String txtPath){
         File file=null; FileReader fr=null;BufferedReader br=null;

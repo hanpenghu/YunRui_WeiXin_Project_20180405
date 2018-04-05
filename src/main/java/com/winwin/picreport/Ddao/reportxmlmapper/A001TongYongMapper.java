@@ -290,4 +290,8 @@ public interface A001TongYongMapper {
 
 
     List<Detail> getShouHuoMingXiOfYunRui(@Param("osNo") String osNo);
+
+
+    //通过单号得到一个url地址
+   Detail getImgUrlOf1OsNo(@Param("osNo") String osNo);
 }
