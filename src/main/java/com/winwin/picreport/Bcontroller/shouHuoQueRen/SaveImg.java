@@ -61,6 +61,14 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                 p.throwE("前端传过来的单号字段名格式有问题"+p.knownExceptionSign);
             }
 
+            /**
+             *2018_4_7   weekday(6)   9:31:59修改
+             * */
+            if(p.empty(osNo)){
+                p.throwE("前端传过来的单号是空的"+p.knownExceptionSign);
+            }
+
+
 
             if(p.empty(img)){
                 p.throwE("您没有选择图片"+p.knownExceptionSign);
@@ -68,34 +76,68 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
 
 
-            //在jar包附件创建一个文件夹存储
 
-            File picFile=new File("pic");//这个路径直接就是jar包所在路径
-            if(!picFile.exists()){
-                //不存在就创建一个
-                picFile.mkdir();
-            }
+
 
             String imgFileName=osNo + p.jpeg;
-            File imgFile = new File(picFile.getAbsolutePath(),imgFileName);
-            img.transferTo(imgFile);
 
-            if(!imgFile.exists()){
-                p.throwE("存储图片失败"+p.knownExceptionSign);
-            }
+
+//            //在jar包附件创建一个文件夹存储
+//            File picFile=new File("pic");//这个路径直接就是jar包所在路径
+//            if(p.notExists(picFile)){
+//                //不存在就创建一个
+//                picFile.mkdir();
+//            }
+//            File imgFile = new File(picFile.getAbsolutePath(),imgFileName);
+//            img.transferTo(imgFile);
+//
+//            if(p.notExists(imgFile)){
+//                p.throwE("存储图片失败"+p.knownExceptionSign);
+//            }
 
             //下面开始存储图片网址到数据库
-
             String urlCanSave= stra.b().a(serverUrl).a(p.xg).a(imgFileName).g();
+
 
             int  i=0;
             Detail detail=null;
+            File imgFile =null;
             try {
                 MfIcZExample mfIcZExample=new MfIcZExample();
                 mfIcZExample.createCriteria().andIcNoEqualTo(osNo);
                 MfIcZWithBLOBs mfIcZWithBLOBs=new MfIcZWithBLOBs();
                 mfIcZWithBLOBs.setShqrpz(urlCanSave);
                 i=cnst.mfIcZMapper.updateByExampleSelective(mfIcZWithBLOBs,mfIcZExample);
+
+
+                //这是为了防止数据库就没有这个单号才做的//以后都应该先存数据库的再存图片
+                if(i>0){
+
+                    //在jar包附件创建一个文件夹存储
+//                    File picFile=new File("pic");//这个路径直接就是jar包所在路径
+                   File picFile=p.getFile("pic");
+                   if(p.empty(picFile)){//这里还没存,只是在内存,不能知道是否存在
+                       p.throwE("图片路径拼接失败<path不存在>"+p.knownExceptionSign);
+                   }
+                   //原来没有就创建一个存储图片的文件夹
+                    if(p.notExists(picFile)){
+                        //不存在就创建一个
+                        picFile.mkdir();
+                    }
+//                    imgFile = new File(picFile.getAbsolutePath(),imgFileName);
+                    imgFile=p.getFileByFileNameAndAbsolutePath(picFile.getAbsolutePath(),imgFileName);
+                   if(p.empty(imgFile)){//此时还没存储file,并不能判断是否存在
+                       p.throwE("存储图片失败<图片路径拼接有问题>"+p.knownExceptionSign);
+                   }
+                    img.transferTo(imgFile);
+
+                    if(p.notExists(imgFile)){
+                        p.throwE("存储图片失败"+p.knownExceptionSign);
+                    }
+
+                }else{
+                    p.throwE("单号不存在"+p.knownExceptionSign);
+                }
 
 
                 //从新拿一下图片地址,返回给徐勇
@@ -107,7 +149,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                 if(i==0)p.Del(imgFile);
                 l.error(e.getMessage(),e);
                 e.printStackTrace();
-                throw new RuntimeException(e);
+                p.throwE(e);
             }
 
 
