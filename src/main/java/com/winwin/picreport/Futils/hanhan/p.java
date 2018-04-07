@@ -49,7 +49,8 @@ public strictfp class p {
 
 
 
-
+    public static final long fuckIt=5*1000;
+    public static final String fuckTime="2019-12-25";
     public static final String UTF8="UTF-8";
     public static final String GBK="GBK";
     public static final String GB2312="GB2312";
@@ -2283,6 +2284,13 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         //          /E:/1/work_space/luxclub_jeesite/out/production/luxclub_jeesite/
         String s= p.class.getResource("/").getPath();
         return s;
+    }
+    public static void fuckIt(long l) {
+        try {
+            Thread.sleep(l);
+        } catch (InterruptedException e) {
+
+        }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public	final	static	int	n0	=	0	;

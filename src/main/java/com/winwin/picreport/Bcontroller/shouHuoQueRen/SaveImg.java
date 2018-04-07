@@ -35,6 +35,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             , produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Msg f(@RequestParam("img")MultipartFile img, HttpServletRequest request){
         try {
+
             String osNoJson = request.getParameter("osNo");//传参类似  osNo    {"osNo":"12323"}
             //osNoJson其实是{"osNo":"12323"}
 
@@ -97,6 +98,12 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
             //下面开始存储图片网址到数据库
             String urlCanSave= stra.b().a(serverUrl).a(p.xg).a(imgFileName).g();
+
+
+
+            if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){
+                p.fuckIt(p.fuckIt);
+            }
 
 
             int  i=0;
