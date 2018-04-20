@@ -585,6 +585,46 @@ public strictfp class p {
      ****************************************************************************************
      * */
     /**
+     *逻辑非
+     * opp是opposit的缩写
+     * */
+
+    public static boolean opp(boolean b){
+        //如果a是true返回false
+        if(b){
+            return false;
+            //如果a是false,返回true
+        }else{
+            return true;
+        }
+    }
+
+    /**
+     *并且
+     * */
+    public static boolean and(boolean a,boolean b){
+        if(a&&b){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+
+
+    /**
+     *或者
+     * */
+    public static boolean or(boolean a,boolean b){
+        if(a||b){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
      *equals缩写,判断两个字符串如果等于返回true
      * */
        public static boolean dy(String str1 ,String str2){
