@@ -48,7 +48,7 @@ public strictfp class p {
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
 
-
+    public static final String runTimeE="java.lang.RuntimeException: ";
     public static final long fuckIt=5*1000;
     public static final String fuckTime="2019-12-25";
     public static final String UTF8="UTF-8";

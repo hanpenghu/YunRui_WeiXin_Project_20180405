@@ -12,4 +12,5 @@ public interface I {
     //收获确认主接口//post 返回json
     String saveImg="saveImg";
     String saveImg64="saveImg64";
+    String saveImg64OneByOne="saveImg64OneByOne";
 }
