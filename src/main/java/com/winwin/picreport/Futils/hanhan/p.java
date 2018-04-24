@@ -1471,6 +1471,8 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
      * fileName是文件名字
      *
      *
+     * dirAbsolutePath是后面带/的
+     *
      * */
     public static File getFileByFileNameAndAbsolutePath(String dirAbsolutePath,String fileName){
         return new File(dirAbsolutePath, fileName);
@@ -2233,6 +2235,12 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //抛出异常并记录异常到list
+    public static void throwEAddToList(String strException,List<String> msgExceptions){
+        msgExceptions.add(strException);
+        throw new RuntimeException(strException);
+    }
+
 
     //异常抛出
     public static void throwE(String s){

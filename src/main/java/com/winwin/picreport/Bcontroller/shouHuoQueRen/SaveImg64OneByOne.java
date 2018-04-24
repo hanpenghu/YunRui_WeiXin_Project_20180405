@@ -187,7 +187,7 @@ public class SaveImg64OneByOne {
                 }
 
 
-                //trim started 2 space//keep the most back 2 space
+                //trim started 2 space//keep the most back 2 space//后置分隔符, 2个空格
                 String urls = (shqrpzOriginal + p.nStr(p.spac,p.n2)+ urlImgNames).trim()+p.nStr(p.spac,p.n2);
                 if(urls.length()>200){
                     p.throwE("shqrpz字段中的所有网址字符串长度超过系统设定长度"+p.knownExceptionSign);
