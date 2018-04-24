@@ -80,8 +80,10 @@ public class SaveImg64OneByOne {
 
 
             List<String> urls1=new LinkedList<>();
-            if(p.notEmpty(allUrls.trim())){
-                urls1 = p.chaiFenZuHeFenGeFu(allUrls, p.nStr(p.spac,p.n2), p.n2);
+            if(p.notEmpty(allUrls)){
+                if(p.notEmpty(allUrls.trim())){
+                    urls1 = p.chaiFenZuHeFenGeFu(allUrls, p.nStr(p.spac,p.n2), p.n2);
+                }
             }
 
             int maxSufix=0;
