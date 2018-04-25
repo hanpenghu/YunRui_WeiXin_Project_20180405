@@ -38,7 +38,7 @@ public String accessToken="";
 
 
 //延迟2小时再加载,服务器启动需要手动在index.html进行各种生成,其他的
-    @Scheduled(fixedDelay = 7100*1000,initialDelay = 15*1000)//2小时一次,为了安全,提前100秒
+//    @Scheduled(fixedDelay = 7100*1000,initialDelay = 15*1000)//2小时一次,为了安全,提前100秒
     public  String get() throws IOException {
 
         //创建文件,将来把accessToken放进来

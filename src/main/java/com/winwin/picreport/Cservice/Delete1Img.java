@@ -86,9 +86,9 @@ public class Delete1Img {
 
         p.Del(fileImg);
 
-        if(p.exists(fileImg)){
-            p.throwEAddToList("无法删除该图片,请联系管理员",list);
-        }
+//        if(p.exists(fileImg)){
+//            p.throwEAddToList("无法删除该图片,请联系管理员",list);
+//        }
 
 
 

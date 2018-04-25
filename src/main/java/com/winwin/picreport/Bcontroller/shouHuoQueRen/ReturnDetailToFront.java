@@ -2,6 +2,8 @@ package com.winwin.picreport.Bcontroller.shouHuoQueRen;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.I;
 import com.winwin.picreport.Edto.Data;
+import com.winwin.picreport.Edto.MfIcZ;
+import com.winwin.picreport.Edto.MfIcZExample;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,17 @@ public class ReturnDetailToFront {
 
             //得到当前单号
             String s = nos.getOsNo();
+
+
+
+
+            MfIcZExample mfIcZExample1=new MfIcZExample();
+            mfIcZExample1.createCriteria().andIcNoEqualTo(s);
+            List<MfIcZ> mfIcZS1 = cnst.mfIcZMapper.selectByExample(mfIcZExample1);
+            if(p.empty(mfIcZS1)){
+                p.throwE("该单号不存在"+p.knownExceptionSign);
+            }
+
 
             //得到当前单号下的收货明细,注意,里面包含了一个图片的url,如果url为空,则代表以前没有,不为空,则代表有
             List<Detail>details=cnst.a001TongYongMapper.getShouHuoMingXiOfYunRui(s);
