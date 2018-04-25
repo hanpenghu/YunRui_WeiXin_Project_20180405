@@ -13,4 +13,5 @@ public interface I {
     String saveImg="saveImg";
     String saveImg64="saveImg64";
     String saveImg64OneByOne="saveImg64OneByOne";
+    String saveImgFormData="saveImgFormData";
 }

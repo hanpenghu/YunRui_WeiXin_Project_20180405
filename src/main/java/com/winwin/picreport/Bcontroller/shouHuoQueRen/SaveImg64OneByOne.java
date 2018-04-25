@@ -10,7 +10,9 @@ import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +22,8 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class SaveImg64OneByOne {
+
+
 
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
@@ -39,7 +43,7 @@ public class SaveImg64OneByOne {
      *
      *
      * */
-
+private  int varcharOfUrlsLength=200;
     @Autowired
     private  SaveImg64OneByOneService saveImg64OneByOneService;
 
@@ -50,7 +54,7 @@ public class SaveImg64OneByOne {
         Detail detail=null;
         try {
 
-             detail=saveImg64OneByOneService.f(ise);
+             detail=saveImg64OneByOneService.f(ise,varcharOfUrlsLength);
 
         } catch (Exception e) {
             l.error(e.getMessage(),e);
@@ -63,6 +67,42 @@ public class SaveImg64OneByOne {
         }
         return Msg.gmg().setMsg("成功"+p.noExceptionSign).setData(new Data().setObj(detail)).setStatus(p.s1);
     }
+
+
+
+    @Autowired
+    private SaveImgFormDataService saveImgFormDataService;
+
+
+
+    //request.getParameter("osNo");//单号名字是osNo
+    //{"imgs":["formData1","formData2"],"osNo":"1111"}
+
+    @RequestMapping(value= I.saveImgFormData,method= RequestMethod.POST)
+    public @ResponseBody
+    Msg f1(@RequestParam("imgs")List<MultipartFile> imgs ,HttpServletRequest request){
+        Detail detail=null;
+        try {
+
+            p.p("-------------------------------------------------------");
+            p.p(imgs);
+            p.p("-------------------------------------------------------");
+            detail=saveImgFormDataService.f(imgs,request,varcharOfUrlsLength);
+
+        } catch (Exception e) {
+            l.error(e.getMessage(),e);
+            String sss=e.getMessage();
+            if(sss.contains(p.knownExceptionSign)){
+                return Msg.gmg().setMsg(sss.replace(p.knownExceptionSign,p.space).replace(p.runTimeE,p.space)).setStatus(p.s0).setData(null);
+            }else{
+                return Msg.gmg().setMsg(p.unKnownExceptionSign).setStatus(p.s0).setData(null);
+            }
+        }
+        return Msg.gmg().setMsg("成功"+p.noExceptionSign).setData(new Data().setObj(detail)).setStatus(p.s1);
+    }
+
+
+
 
 
 
