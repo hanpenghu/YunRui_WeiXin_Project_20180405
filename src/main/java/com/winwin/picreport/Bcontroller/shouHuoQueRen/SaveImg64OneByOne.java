@@ -133,6 +133,20 @@ private  int varcharOfUrlsLength=600;
            @RequestParam(value="img8",required = false)MultipartFile img8 ,
            @RequestParam(value="img9",required = false)MultipartFile img9 ,
            HttpServletRequest request){
+
+        p.p("----------------img1到img9---------------------------------------");
+        p.p(img1);
+        p.p(img2);
+        p.p(img3);
+        p.p(img4);
+        p.p(img5);
+        p.p(img6);
+        p.p(img7);
+        p.p(img8);
+        p.p(img9);
+        p.p("-------------------------------------------------------");
+
+
         p.p("--------------------开始时间-----------------------------------");
         p.p(p.dtoStr(p.getDate(),"yyyy-MM-dd HH:mm:ss,sss"));
         p.p("-------------------------------------------------------");
