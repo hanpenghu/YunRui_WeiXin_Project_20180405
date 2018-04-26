@@ -91,6 +91,9 @@ private  int varcharOfUrlsLength=600;
             produces = MediaType.APPLICATION_JSON_VALUE )
     public @ResponseBody
     Msg f1(@RequestParam("imgs")List<MultipartFile> imgs ,HttpServletRequest request){
+
+
+
         Detail detail=null;
         try {
 
