@@ -45,3 +45,31 @@ js验证其实很复杂,首先在我这里调用签名(根据urlWhoShere,需要�
 
 8
 生成菜单我将菜单放在了jar的统计目录命名为menu.json,只要将菜单放入,调取接口就会重新生成
+
+
+
+
+以下是云蕊接口配置
+
+
+server{
+		listen 80;
+		server_name yr.api.cloudhere.cn;
+		location / {
+			#proxy_redirect off;
+			proxy_pass http://yr.api.cloudhere.cn:8080;
+		}
+		client_max_body_size 20m;
+   }
+
+
+    server{
+		listen 80;
+		server_name yr.cloudhere.cn;
+		location / {
+			#proxy_redirect off;
+			proxy_pass http://yr.cloudhere.cn:8002;
+		}
+		client_max_body_size 20m;
+   }
+

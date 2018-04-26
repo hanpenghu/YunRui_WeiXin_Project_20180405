@@ -202,6 +202,8 @@ public class SaveImg64OneByOneService {
 
                 int ii=0;
                 for(String base64Str:base64Strs){
+
+                    p.p("-------------------开始---保存第一个--base64图片开始-----"+p.dtoStr(p.getDate(),"yyyy-MM-dd HH:ss:mm,SSS")+"--------------------------");
                     //                    imgFile = new File(picFile.getAbsolutePath(),imgFileName);
                     imgFile=p.getFileByFileNameAndAbsolutePath(picFile.getAbsolutePath(),imgNames.get(ii));
                     p.GenerateImage(base64Str,imgFile);
@@ -209,6 +211,7 @@ public class SaveImg64OneByOneService {
 //                    if(p.notExists(imgFile)){
 //                        p.throwE("存储图片失败"+p.knownExceptionSign);
 //                    }
+                    p.p("------------------结束---保存第一个--base64图片结束----------"+p.dtoStr(p.getDate(),"yyyy-MM-dd HH:ss:mm,SSS")+"---------------------------");
                     ii=ii+1;
                 }
 

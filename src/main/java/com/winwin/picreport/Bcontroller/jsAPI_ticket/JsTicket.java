@@ -31,7 +31,7 @@ private Cnst cnst;
 
     public String jsApiticket="";
 
-    @Scheduled(fixedDelay = 7100*1000,initialDelay = 22*1000)//2小时一次,为了安全,提前100秒
+//    @Scheduled(fixedDelay = 7100*1000,initialDelay = 22*1000)//2小时一次,为了安全,提前100秒
     public String get() throws IOException {
 
         //创建文件,将来把accessToken放进来
