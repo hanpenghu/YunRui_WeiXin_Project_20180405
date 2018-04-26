@@ -43,7 +43,7 @@ public class SaveImg64OneByOne {
      *
      *
      * */
-private  int varcharOfUrlsLength=200;
+private  int varcharOfUrlsLength=600;
     @Autowired
     private  SaveImg64OneByOneService saveImg64OneByOneService;
 
