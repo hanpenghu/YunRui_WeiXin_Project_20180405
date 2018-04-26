@@ -9,6 +9,7 @@ import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +79,9 @@ private  int varcharOfUrlsLength=600;
     //request.getParameter("osNo");//单号名字是osNo
     //{"imgs":["formData1","formData2"],"osNo":"1111"}
 
-    @RequestMapping(value= I.saveImgFormData,method= RequestMethod.POST)
+    @RequestMapping(value= I.saveImgFormData,method= RequestMethod.POST
+            ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE )
     public @ResponseBody
     Msg f1(@RequestParam("imgs")List<MultipartFile> imgs ,HttpServletRequest request){
         Detail detail=null;
