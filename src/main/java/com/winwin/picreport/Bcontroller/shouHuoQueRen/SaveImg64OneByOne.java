@@ -50,6 +50,9 @@ private  int varcharOfUrlsLength=600;
     private  SaveImg64OneByOneService saveImg64OneByOneService;
 
 
+    /**
+     *虽然名字起的是OneByOne,但是实际上是一个数组就过去了
+     * */
     @RequestMapping(value= I.saveImg64OneByOne,method= RequestMethod.POST)
     public @ResponseBody
     Msg f(@RequestBody ImgSaveEntity ise){

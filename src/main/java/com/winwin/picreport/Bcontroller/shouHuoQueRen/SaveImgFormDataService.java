@@ -2,9 +2,7 @@ package com.winwin.picreport.Bcontroller.shouHuoQueRen;
 
 
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.MfIcZ;
-import com.winwin.picreport.Edto.MfIcZExample;
-import com.winwin.picreport.Edto.MfIcZWithBLOBs;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,8 +153,19 @@ private Cnst cnst;
 
 
 
+
+        /**
+         *2018_4_28   weekday(6)   14:44:01
+         * 老郑让加上备注,到tf_ic 一份标注
+         * */
+        TfIcExample tfIcExample=new TfIcExample();
+        tfIcExample.createCriteria().andIcNoEqualTo(osNo);
+        TfIc tfIc=new TfIc();
+        tfIc.setRem(Cnst.youShouHuoQueRenPinZheng);
+        int k=cnst.tfIcMapper.updateByExampleSelective(tfIc,tfIcExample);
+
         //这是为了防止数据库就没有这个单号才做的//以后都应该先存数据库的再存图片
-        if(i>0){
+        if(i>0&&k>0){
 
             //在jar包附件创建一个文件夹存储
 //                    File picFile=new File("pic");//这个路径直接就是jar包所在路径
