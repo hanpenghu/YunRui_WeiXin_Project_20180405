@@ -21,7 +21,6 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     public  void f(){
 
 
-
         CloseableHttpClient httpCilent2 = HttpClients.createDefault();
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)   //设置连接超时时间
@@ -29,7 +28,6 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true)//默认允许自动重定向
                 .build();
-
 
 
         HttpGet httpGet2 = new HttpGet(url1);
@@ -60,17 +58,14 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             }
         }
 
-
-
-
-
-
-
-
     }
 
 
+    public static void main(String[]args){
 
+            new DeleteCaiDan().f();
+
+    }
 
 
 }
